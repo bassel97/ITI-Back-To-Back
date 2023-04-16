@@ -72,3 +72,7 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Added by Ahmed Sameh (for Jet Brains Rider)
+Plugins/Developer/RiderLink/*
+.idea/*
