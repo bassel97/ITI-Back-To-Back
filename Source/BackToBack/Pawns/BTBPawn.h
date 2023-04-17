@@ -13,5 +13,5 @@
 UCLASS()
 class BACKTOBACK_API ABTBPawn : public APawn
 {
-	GENERATED_BODY()
+	GENERATED_BODY() 
 };

@@ -13,5 +13,4 @@ UCLASS()
 class BACKTOBACK_API ABTBGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
 };
