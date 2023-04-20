@@ -13,6 +13,6 @@
 UCLASS()
 class BACKTOBACK_API ABTBCharacter : public ACharacter
 {
-	GENERATED_BODY()
+	GENERATED_BODY()	
 
 };
