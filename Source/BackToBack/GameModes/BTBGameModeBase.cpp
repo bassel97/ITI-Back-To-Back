@@ -132,9 +132,14 @@ void ABTBGameModeBase::SpawnInputReceivers()
 					PlayerControllerArray.AddUnique(CastedController);
 				}
 			}
-			
-			PlayerControllerArray.Swap(0, PlayerControllerArray.Num() - 1);
 
+			/** Get the last element, put it as the first one, shift all elements by 1. */
+			if (PlayerControllerArray.Num() > 1)
+			{
+				PlayerControllerArray.Insert(PlayerControllerArray.Pop(), 0);
+			}
+
+			/** Each controller can now posses its corresponding input receiver safely. */
 			for (int i = 0; i < PlayerControllerArray.Num(); i++)
 			{
 				PlayerControllerArray[i]->Possess(PlayerInputReceiverArray[i]);
@@ -153,7 +158,7 @@ void ABTBGameModeBase::SpawnInputReceivers()
 					*PlayerInputReceiverArray[i]->GetName(), *PlayerInputReceiverArray[i]->GetController()->GetName()));
 		}
 #endif
-		
+
 		
 	}
 }
