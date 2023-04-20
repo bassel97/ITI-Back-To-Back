@@ -17,6 +17,7 @@ UCLASS()
 class BACKTOBACK_API ABTBGameModeBase : public AGameModeBase, public IBTBGameModeInterface
 {
 	GENERATED_BODY()
+	ABTBGameModeBase();
 
 public:
 	virtual void SpawnPlayer_Implementation(int32 CurrentPlayerIndex, ABTBInputReceiverPawn* InputReceiverPawn) override;
@@ -39,4 +40,5 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="InputReceiver")
 	TSubclassOf<ABTBInputReceiverPawn> BTBInputReceiverClass;
+	
 };

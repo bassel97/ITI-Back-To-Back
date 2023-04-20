@@ -9,6 +9,19 @@
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 
+ABTBGameModeBase::ABTBGameModeBase()
+{
+	GameSessionClass = nullptr;
+	GameStateClass = nullptr;
+	PlayerControllerClass = nullptr;
+	PlayerStateClass = nullptr;
+	HUDClass = nullptr;
+	DefaultPawnClass = nullptr;
+	SpectatorClass = nullptr;
+	ReplaySpectatorPlayerControllerClass = nullptr;
+	ServerStatReplicatorClass = nullptr;
+}
+
 void ABTBGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
@@ -103,7 +116,14 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		{
 			UKismetSystemLibrary::PrintString(GetWorld(),
 				FString::Printf(TEXT("InputReceiverName = %s, Its Controller = %s"),
-					PlayerInputReceiverArray[i]->GetName(), PlayerInputReceiverArray[i]->GetController()->GetName()));
+					*PlayerInputReceiverArray[i]->GetName(), *PlayerInputReceiverArray[i]->GetController()->GetName()));
+		}
+
+		for(int i = 0 ; i < PlayerControllerArray.Num() ; i++)
+		{
+			UKismetSystemLibrary::PrintString(GetWorld(),
+				FString::Printf(TEXT("PlayerControllerArray[%i] = %s "), i, *PlayerControllerArray[i]->GetName()));
 		}
 	}
 }
+
