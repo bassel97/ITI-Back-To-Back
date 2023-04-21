@@ -3,26 +3,12 @@
 
 #include "BTBInputReceiverPawn.h"
 
-#include "BackToBack/GameModes/BTBGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
 ABTBInputReceiverPawn::ABTBInputReceiverPawn()
 {
 	BaseTurnAtRate = 45.0f;
 	BaseLookUpAtRate = 45.0f;
-}
-
-void ABTBInputReceiverPawn::Start()
-{
-	if(const UWorld* World = GetWorld())
-	{
-		if(ABTBGameModeBase* GameMode = Cast<ABTBGameModeBase>(UGameplayStatics::GetGameMode(World)))
-		{
-			GameMode->SpawnPlayer(PlayerIndex, this);
-			UE_LOG(LogTemp, Display, TEXT("HELLO"));
-		}
-	}
-	
 }
 
 void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -35,12 +21,6 @@ void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ABTBInputReceiverPawn::LookUpAtRate);
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-}
-
-void ABTBInputReceiverPawn::BeginPlay()
-{
-	Super::BeginPlay();
-	
 }
 
 void ABTBInputReceiverPawn::MoveForward(const float Value)

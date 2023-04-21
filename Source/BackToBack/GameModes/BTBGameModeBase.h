@@ -3,42 +3,39 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BackToBack/Interfaces/BTBGameModeInterface.h"
-#include "BackToBack/PlayerControllers/BTBPlayerController.h"
 #include "GameFramework/GameModeBase.h"
 #include "BTBGameModeBase.generated.h"
 
 class APlayerStart;
+class ABTBInputReceiverPawn;
+class ABTBPlayerController;
 
 /**
  * Our Version of GameModeBase.
  */
 UCLASS()
-class BACKTOBACK_API ABTBGameModeBase : public AGameModeBase, public IBTBGameModeInterface
+class BACKTOBACK_API ABTBGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	ABTBGameModeBase();
 
-public:
-	virtual void SpawnPlayer_Implementation(int32 CurrentPlayerIndex, ABTBInputReceiverPawn* InputReceiverPawn) override;
-	virtual void SpawnPlayerPure(int32 CurrentPlayerIndex, ABTBInputReceiverPawn* InputReceiverPawn) override;
-
-
-protected:
-	virtual void BeginPlay() override;
 	
-	UFUNCTION()
-	void GetPlayerStartPoints();
+public:
 
-	UFUNCTION()
-	void SpawnInputReceivers();
+
 	
 private:
-	TArray<APlayerStart*> PlayerStartArray;
-	TArray<ABTBInputReceiverPawn*> PlayerInputReceiverArray;
+	TArray<ABTBInputReceiverPawn*> InputReceiverArray;
 	TArray<ABTBPlayerController*> PlayerControllerArray;
 
 	UPROPERTY(EditAnywhere, Category="InputReceiver")
 	TSubclassOf<ABTBInputReceiverPawn> BTBInputReceiverClass;
+
+
+	
+protected:
+	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void SpawnInputReceivers();
 	
 };

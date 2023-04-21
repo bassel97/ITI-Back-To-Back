@@ -23,27 +23,19 @@ public:
 
 	
 private:
-	void Start();
+
 
 	
 protected:
-#pragma region UPROPERTIES
-	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera");
 	float BaseTurnAtRate;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera");
 	float BaseLookUpAtRate;
-
-#pragma endregion UPROPERTIES
-
-#pragma region UFUNCTIONS
 	
-	virtual void BeginPlay() override;
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void TurnAtRate(float Value);
 	void LookUpAtRate(float Value);
-
-#pragma endregion UFUNCTIONS
+	
 };

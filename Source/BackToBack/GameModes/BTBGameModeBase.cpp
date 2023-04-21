@@ -3,163 +3,82 @@
 
 #include "BTBGameModeBase.h"
 
-#include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/Pawns/BTBInputReceiverPawn.h"
 #include "BackToBack/PlayerControllers/BTBPlayerController.h"
-#include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 
-ABTBGameModeBase::ABTBGameModeBase()
-{
-	GameSessionClass = nullptr;
-	GameStateClass = nullptr;
-	PlayerControllerClass = nullptr;
-	PlayerStateClass = nullptr;
-	HUDClass = nullptr;
-	DefaultPawnClass = nullptr;
-	SpectatorClass = nullptr;
-	ReplaySpectatorPlayerControllerClass = nullptr;
-	ServerStatReplicatorClass = nullptr;
-}
 
 void ABTBGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	GetPlayerStartPoints();
 	SpawnInputReceivers();
-}
-
-void ABTBGameModeBase::SpawnPlayer_Implementation(int32 CurrentPlayerIndex, ABTBInputReceiverPawn* InputReceiverPawn)
-{
-	IBTBGameModeInterface::SpawnPlayer_Implementation(CurrentPlayerIndex, InputReceiverPawn);
-	UE_LOG(LogTemp, Warning, TEXT("SpawnPawn_Implementation"));
-
-	if(UWorld* World = GetWorld())
-	{
-		const FTransform Transform = InputReceiverPawn->GetTransform();
-		const ABTBPlayableCharacter* SpawnedPlayableCharacter =
-			World->SpawnActor<ABTBPlayableCharacter>(ABTBPlayableCharacter::StaticClass(), Transform);
-		
-		SpawnedPlayableCharacter->Controller->Possess(InputReceiverPawn);
-	}
-}
-
-void ABTBGameModeBase::SpawnPlayerPure(int32 CurrentPlayerIndex, ABTBInputReceiverPawn* InputReceiverPawn)
-{
-	UE_LOG(LogTemp, Warning, TEXT("SpawnPawnPure"));
-
-	if(UWorld* World = GetWorld())
-	{
-		const FTransform Transform = InputReceiverPawn->GetTransform();
-		const ABTBPlayableCharacter* SpawnedPlayableCharacter =
-			World->SpawnActor<ABTBPlayableCharacter>(ABTBPlayableCharacter::StaticClass(), Transform);
-		
-		SpawnedPlayableCharacter->Controller->Possess(InputReceiverPawn);
-	}
-}
-
-
-void ABTBGameModeBase::GetPlayerStartPoints()
-{
-	if(const UWorld* World = GetWorld())
-	{
-		TArray<AActor*> ResultActors;
-		UGameplayStatics::GetAllActorsOfClass(World, APlayerStart::StaticClass(), ResultActors);
-		for (const auto Actor : ResultActors)
-		{
-			if(APlayerStart* PlayerStartActor = Cast<APlayerStart>(Actor))
-			{
-				PlayerStartArray.AddUnique(PlayerStartActor);
-			}
-		}
-
-#if UE_EDITOR
-		UKismetSystemLibrary::PrintString(World,
-			TEXT("PlayerStartArray = " + FString::FromInt(PlayerStartArray.Num())));
-#endif
-		
-	}
 }
 
 void ABTBGameModeBase::SpawnInputReceivers()
 {
-	if(!PlayerStartArray.IsEmpty())
+	if(UWorld* World = GetWorld())
 	{
-		if(UWorld* World = GetWorld())
+		/**
+		* Hard coding the first "InputReceiverPawn" spawning, cuz our BP_BTBGameModeBase has a DefaultPawnClass = None. 
+		* @see BP_BTBGameModeBase in Unreal Engine's Content Browser
+		*/
+		ABTBInputReceiverPawn* SpawnedPlayerAsDefaultWithIndexZero = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
+		InputReceiverArray.AddUnique(SpawnedPlayerAsDefaultWithIndexZero);
+
+		/** Then we create another InputReceiverPawns & A BTBPlayerController for it. */
+		if(UGameplayStatics::CreatePlayer(World, 1))
 		{
-			/**
-			* Hard coding the first "InputReceiverPawn" spawning, cuz our BP_BTBGameModeBase has a DefaultPawnClass = None. 
-			* @see BP_BTBGameModeBase in Unreal Engine's Content Browser
-			*/
-			const FTransform Transform = PlayerStartArray[0]->GetTransform();
-			ABTBInputReceiverPawn* SpawnedPlayerAsDefaultWithIndexZero =
-								World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass, Transform);
-			PlayerInputReceiverArray.AddUnique(SpawnedPlayerAsDefaultWithIndexZero);
-
-			/** Then we create the rest InputReceiverPawns & A BTBPlayerController for each one of them. */
-			for(int i = 1 ; i < PlayerStartArray.Num() ; i++)
-			{
-				for(int j = 1 ; j < PlayerStartArray.Num() ; j++)
-				{
-					if(FCString::Atoi(*PlayerStartArray[j]->PlayerStartTag.ToString()) == i)
-					{
-						if(UGameplayStatics::CreatePlayer(World, i))
-						{
-							ABTBInputReceiverPawn* SpawnedPlayer =
-								World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass, Transform);
-						
-							SpawnedPlayer->PlayerIndex = i;
-							PlayerInputReceiverArray.AddUnique(SpawnedPlayer);
-							
-							if(ABTBPlayerController* BtbPlayerController =
-							Cast<ABTBPlayerController>(UGameplayStatics::GetPlayerController(World, SpawnedPlayer->PlayerIndex)))
-							{
-								PlayerControllerArray.AddUnique(BtbPlayerController);
-								PlayerControllerArray[SpawnedPlayer->PlayerIndex - 1]->Possess(SpawnedPlayer);
-							}
-						}
-					}
-				}
-			}
+			ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
+		
+			SpawnedPlayer->PlayerIndex = 1;
+			InputReceiverArray.AddUnique(SpawnedPlayer);
 			
-			/** Get all BTBPlayerControllers & Add them to our PlayerControllerArray. */
-			TArray<AActor*> ResultControllers;
-			UGameplayStatics::GetAllActorsOfClass(World, ABTBPlayerController::StaticClass(), ResultControllers);
-			for (const auto Controller : ResultControllers)
+			if(ABTBPlayerController* BtbPlayerController =
+				Cast<ABTBPlayerController>(UGameplayStatics::GetPlayerController(World, SpawnedPlayer->PlayerIndex)))
 			{
-				if(auto CastedController = Cast<ABTBPlayerController>(Controller))
-				{
-					PlayerControllerArray.AddUnique(CastedController);
-				}
-			}
-
-			/** Get the last element, put it as the first one, shift all elements by 1. */
-			if (PlayerControllerArray.Num() > 1)
-			{
-				PlayerControllerArray.Insert(PlayerControllerArray.Pop(), 0);
-			}
-
-			/** Each controller can now posses its corresponding input receiver safely. */
-			for (int i = 0; i < PlayerControllerArray.Num(); i++)
-			{
-				PlayerControllerArray[i]->Possess(PlayerInputReceiverArray[i]);
+				PlayerControllerArray.AddUnique(BtbPlayerController);
+				PlayerControllerArray[SpawnedPlayer->PlayerIndex - 1]->Possess(SpawnedPlayer);
 			}
 		}
+		
+		/** Get all BTBPlayerControllers & Add them to our PlayerControllerArray. */
+		TArray<AActor*> ResultControllers;
+		UGameplayStatics::GetAllActorsOfClass(World, ABTBPlayerController::StaticClass(), ResultControllers);
+		for (const auto Controller : ResultControllers)
+		{
+			if(auto CastedController = Cast<ABTBPlayerController>(Controller))
+			{
+				PlayerControllerArray.AddUnique(CastedController);
+			}
+		}
+
+		/** Get the last element, put it as the first one, shift all elements by 1. */
+		if (PlayerControllerArray.Num() > 1)
+		{
+			PlayerControllerArray.Insert(PlayerControllerArray.Pop(), 0);
+		}
+
+		/** Each controller can now posses its corresponding input receiver safely. */
+		if(PlayerControllerArray.Num() == InputReceiverArray.Num())
+		{
+			for (int i = 0; i < PlayerControllerArray.Num(); i++)
+			{
+				PlayerControllerArray[i]->Possess(InputReceiverArray[i]);
+			}
+		}
+	}
 
 
 #if UE_EDITOR
-		UKismetSystemLibrary::PrintString(GetWorld(),TEXT("PlayerInputReceiverArray = " + FString::FromInt(PlayerInputReceiverArray.Num())));
+		UKismetSystemLibrary::PrintString(GetWorld(),TEXT("InputReceiverArray = " + FString::FromInt(InputReceiverArray.Num())));
 		UKismetSystemLibrary::PrintString(GetWorld(),TEXT("PlayerControllerArray = " + FString::FromInt(PlayerControllerArray.Num())));
 
-		for(int i = 0 ; i < PlayerInputReceiverArray.Num() ; i++)
+		for(int i = 0 ; i < InputReceiverArray.Num() ; i++)
 		{
 			UKismetSystemLibrary::PrintString(GetWorld(),
-				FString::Printf(TEXT("InputReceiverName = %s, Its Controller = %s"),
-					*PlayerInputReceiverArray[i]->GetName(), *PlayerInputReceiverArray[i]->GetController()->GetName()));
+				FString::Printf(TEXT("InputReceiverArray[%i] = %s, Its Controller = %s"),
+					i, *InputReceiverArray[i]->GetName(), *InputReceiverArray[i]->GetController()->GetName()));
 		}
 #endif
-
-		
-	}
+	
 }
-
