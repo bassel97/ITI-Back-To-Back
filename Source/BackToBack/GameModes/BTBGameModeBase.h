@@ -17,25 +17,17 @@ UCLASS()
 class BACKTOBACK_API ABTBGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-
 	
-public:
+protected:
+	virtual void BeginPlay() override;
 
-
+	void SpawnInputReceivers();
 	
 private:
 	TArray<ABTBInputReceiverPawn*> InputReceiverArray;
 	TArray<ABTBPlayerController*> PlayerControllerArray;
 
-	UPROPERTY(EditAnywhere, Category="InputReceiver")
+	UPROPERTY(EditDefaultsOnly, Category = "InputReceiver")
 	TSubclassOf<ABTBInputReceiverPawn> BTBInputReceiverClass;
 
-
-	
-protected:
-	virtual void BeginPlay() override;
-
-	UFUNCTION()
-	void SpawnInputReceivers();
-	
 };

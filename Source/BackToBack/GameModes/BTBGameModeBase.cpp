@@ -16,69 +16,47 @@ void ABTBGameModeBase::BeginPlay()
 
 void ABTBGameModeBase::SpawnInputReceivers()
 {
-	if(UWorld* World = GetWorld())
+	UWorld* World = GetWorld();
+	if (!ensure(World != nullptr))
 	{
-		/**
-		* Hard coding the first "InputReceiverPawn" spawning, cuz our BP_BTBGameModeBase has a DefaultPawnClass = None. 
-		* @see BP_BTBGameModeBase in Unreal Engine's Content Browser
-		*/
-		ABTBInputReceiverPawn* SpawnedPlayerAsDefaultWithIndexZero = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
-		InputReceiverArray.AddUnique(SpawnedPlayerAsDefaultWithIndexZero);
-
-		/** Then we create another InputReceiverPawns & A BTBPlayerController for it. */
-		if(UGameplayStatics::CreatePlayer(World, 1))
-		{
-			ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
-		
-			SpawnedPlayer->PlayerIndex = 1;
-			InputReceiverArray.AddUnique(SpawnedPlayer);
-			
-			if(ABTBPlayerController* BtbPlayerController =
-				Cast<ABTBPlayerController>(UGameplayStatics::GetPlayerController(World, SpawnedPlayer->PlayerIndex)))
-			{
-				PlayerControllerArray.AddUnique(BtbPlayerController);
-				PlayerControllerArray[SpawnedPlayer->PlayerIndex - 1]->Possess(SpawnedPlayer);
-			}
-		}
-		
-		/** Get all BTBPlayerControllers & Add them to our PlayerControllerArray. */
-		TArray<AActor*> ResultControllers;
-		UGameplayStatics::GetAllActorsOfClass(World, ABTBPlayerController::StaticClass(), ResultControllers);
-		for (const auto Controller : ResultControllers)
-		{
-			if(auto CastedController = Cast<ABTBPlayerController>(Controller))
-			{
-				PlayerControllerArray.AddUnique(CastedController);
-			}
-		}
-
-		/** Get the last element, put it as the first one, shift all elements by 1. */
-		if (PlayerControllerArray.Num() > 1)
-		{
-			PlayerControllerArray.Insert(PlayerControllerArray.Pop(), 0);
-		}
-
-		/** Each controller can now posses its corresponding input receiver safely. */
-		if(PlayerControllerArray.Num() == InputReceiverArray.Num())
-		{
-			for (int i = 0; i < PlayerControllerArray.Num(); i++)
-			{
-				PlayerControllerArray[i]->Possess(InputReceiverArray[i]);
-			}
-		}
+		return;
 	}
 
+	ABTBPlayerController* playerOne = Cast<ABTBPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (ensure(playerOne != nullptr))
+	{
+		ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
+
+		// PLayer 1 (indexed with zero)
+		SpawnedPlayer->PlayerIndex = 0;
+		InputReceiverArray.AddUnique(SpawnedPlayer);
+
+		PlayerControllerArray.AddUnique(playerOne);
+		playerOne->Possess(SpawnedPlayer);
+	}
+
+	ABTBPlayerController* PlayerTwo = Cast<ABTBPlayerController>(UGameplayStatics::CreatePlayer(World, 1));
+	if (ensure(PlayerTwo != nullptr))
+	{
+		ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
+		
+		// PLayer 2 (indexed with one)
+		SpawnedPlayer->PlayerIndex = 1;
+		InputReceiverArray.AddUnique(SpawnedPlayer);
+			
+		PlayerControllerArray.AddUnique(PlayerTwo);
+		PlayerTwo->Possess(SpawnedPlayer);
+	}
 
 #if UE_EDITOR
-		UKismetSystemLibrary::PrintString(GetWorld(),TEXT("InputReceiverArray = " + FString::FromInt(InputReceiverArray.Num())));
-		UKismetSystemLibrary::PrintString(GetWorld(),TEXT("PlayerControllerArray = " + FString::FromInt(PlayerControllerArray.Num())));
+	UKismetSystemLibrary::PrintString(GetWorld(),TEXT("InputReceiverArray = " + FString::FromInt(InputReceiverArray.Num())));
+	UKismetSystemLibrary::PrintString(GetWorld(),TEXT("PlayerControllerArray = " + FString::FromInt(PlayerControllerArray.Num())));
 
-		for(int i = 0 ; i < InputReceiverArray.Num() ; i++)
-		{
-			UKismetSystemLibrary::PrintString(GetWorld(),
-				FString::Printf(TEXT("InputReceiverArray[%i] = %s, Its Controller = %s"),
-					i, *InputReceiverArray[i]->GetName(), *InputReceiverArray[i]->GetController()->GetName()));
-		}
-#endif
-	
+	for(int i = 0 ; i < InputReceiverArray.Num() ; i++)
+	{
+		UKismetSystemLibrary::PrintString(GetWorld(),
+			FString::Printf(TEXT("InputReceiverArray[%i] = %s, Its Controller = %s"),
+				i, *InputReceiverArray[i]->GetName(), *InputReceiverArray[i]->GetController()->GetName()));
+	}
+#endif	
 }
