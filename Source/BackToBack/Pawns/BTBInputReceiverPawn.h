@@ -18,7 +18,6 @@ class BACKTOBACK_API ABTBInputReceiverPawn final : public ABTBPawn
 	GENERATED_BODY()
 
 public:
-	ABTBInputReceiverPawn();
 	virtual void Tick(float DeltaSeconds) override;
 	
 	[[nodiscard]] ABTBPlayableCharacter* Get_PlayerCharacter() const
