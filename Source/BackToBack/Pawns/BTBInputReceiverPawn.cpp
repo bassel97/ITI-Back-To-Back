@@ -2,57 +2,11 @@
 
 
 #include "BTBInputReceiverPawn.h"
+#include "BackToBack/GameStructs/GameStructs.h"
 
-#include "Kismet/GameplayStatics.h"
 
-ABTBInputReceiverPawn::ABTBInputReceiverPawn()
+void ABTBInputReceiverPawn::Tick(float DeltaSeconds)
 {
-	BaseTurnAtRate = 45.0f;
-	BaseLookUpAtRate = 45.0f;
-}
-
-void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::Tick(DeltaSeconds);
 	
-	PlayerInputComponent->BindAxis("MoveForward", this, &ABTBInputReceiverPawn::MoveForward);
-	PlayerInputComponent->BindAxis("MoveRight", this, &ABTBInputReceiverPawn::MoveRight);
-	PlayerInputComponent->BindAxis("TurnRate", this, &ABTBInputReceiverPawn::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUpRate", this, &ABTBInputReceiverPawn::LookUpAtRate);
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-}
-
-void ABTBInputReceiverPawn::MoveForward(const float Value)
-{
-	if(IsValid(Controller) && Value != 0.0f)
-	{
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		AddMovementInput(Direction, Value);
-	}
-}
-
-void ABTBInputReceiverPawn::MoveRight(const float Value)
-{
-	if(IsValid(Controller) && Value != 0.0f)
-	{
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-		AddMovementInput(Direction, Value);
-	}
-}
-
-void ABTBInputReceiverPawn::TurnAtRate(const float Value)
-{
-	AddControllerYawInput(Value * BaseTurnAtRate * GetWorld()->GetDeltaSeconds());
-}
-
-void ABTBInputReceiverPawn::LookUpAtRate(const float Value)
-{
-	AddControllerYawInput(Value * BaseLookUpAtRate * GetWorld()->GetDeltaSeconds());
 }
