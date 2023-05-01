@@ -5,10 +5,12 @@
 #include "CoreMinimal.h"
 #include "BTBPawn.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
-#include "BackToBack/GameStructs/GameStructs.h"
+#include "BackToBack/GameStructs/BTBStructs.h"
 #include "BTBInputReceiverPawn.generated.h"
 
 class FGameStructs;
+class UInputAction;
+struct FInputActionValue;
 /**
  * Our InputReceiverPawn
  */
@@ -31,15 +33,25 @@ public:
 	}
 
 protected:
-
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	void PrintXYZ(const FInputActionValue& Val);
+	
 private:
 	
 	
 public:
 	UPROPERTY(VisibleAnywhere, Category="Class Variables")
 	int32 PlayerIndex;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TObjectPtr<UInputAction> InputMove;
 	
 protected:
+
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input")
+	TObjectPtr<UInputMappingContext> InputMapping;
+
 	
 private:
 	TObjectPtr<ABTBPlayableCharacter> PlayerCharacter;

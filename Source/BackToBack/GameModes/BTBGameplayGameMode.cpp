@@ -32,8 +32,11 @@ void ABTBGameplayGameMode::CreatePlayers()
 	ABTBPlayableCharacter* PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>();
 	PlayerCharacterArray.AddUnique(PlayerCharacterTwo);
 
-	InputReceiverArray[0]->Set_PlayerCharacter(PlayerCharacterArray[0]);
-	InputReceiverArray[1]->Set_PlayerCharacter(PlayerCharacterArray[1]);
+	if(InputReceiverArray.Num() >= 1)
+	{
+		InputReceiverArray[0]->Set_PlayerCharacter(PlayerCharacterArray[0]);
+		InputReceiverArray[1]->Set_PlayerCharacter(PlayerCharacterArray[1]);
+	}
 
 
 #if UE_EDITOR

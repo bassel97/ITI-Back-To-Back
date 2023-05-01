@@ -8,6 +8,7 @@
 
 
 class UBTBCharacterAction;
+class UInputMappingContext;
 
 /**
  * Our Version of Character.
@@ -27,5 +28,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	TArray<UBTBCharacterAction*> CharacterActions;
-
+	
 };

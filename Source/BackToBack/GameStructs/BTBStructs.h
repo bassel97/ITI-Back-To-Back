@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameStructs.generated.h"
+#include "BTBStructs.generated.h"
 
 /**
  * This will hold all the structs that we need for our game
@@ -18,13 +18,22 @@ struct FButtonState
  GENERATED_BODY()
 
  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
- bool bIsDown;
+ bool bIsDown = false;
 
  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
- bool bIsHeld;
-
+ bool bIsHeld = false;
+ 
  UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
- bool bIsReleased;
+ bool bIsReleased = false;
+
+ // Constructor
+ FButtonState()
+ {
+  bIsDown = false;
+  bIsHeld = false;
+  bIsReleased = false;
+ }
+ 
 };
 
 
