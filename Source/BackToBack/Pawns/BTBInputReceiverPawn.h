@@ -48,7 +48,7 @@ private:
 	void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
 	
 public:
-	UPROPERTY(VisibleAnywhere, Category="Class Variables")
+	UPROPERTY(VisibleAnywhere, Category = "Class Variables")
 	int32 PlayerIndex;
 
 	/** Input Actions start*/

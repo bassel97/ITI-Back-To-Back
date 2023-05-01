@@ -18,7 +18,7 @@ class BACKTOBACK_API UBTBCharacterAction : public UBTBDataAsset
 
 
 public:
-	virtual void Act(ABTBCharacter* character) PURE_VIRTUAL(UBTBCharacterAction::Act);
+	virtual void Act(ABTBCharacter* Character) PURE_VIRTUAL(UBTBCharacterAction::Act);
 	
 };
 

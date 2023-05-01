@@ -26,7 +26,9 @@ void ABTBGameplayGameMode::CreatePlayers()
 	{
 		return;
 	}
+	
 	UGameplayStatics::GetAllActorsOfClass(World, APlayerStart::StaticClass(), PlayerStartArray);
+	
 	ABTBPlayableCharacter* PlayerCharacterOne = World->SpawnActor<ABTBPlayableCharacter>();
 	PlayerCharacterArray.AddUnique(PlayerCharacterOne);
 

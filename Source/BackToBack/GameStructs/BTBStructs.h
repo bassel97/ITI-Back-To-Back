@@ -17,14 +17,14 @@ struct FButtonState
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsDown = false;
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsDown;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsHeld = false;
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsHeld;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	bool bIsReleased = false;
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsReleased;
 
 	void ResetDownReleaseState()
 	{

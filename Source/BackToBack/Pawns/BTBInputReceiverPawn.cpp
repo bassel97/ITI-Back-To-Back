@@ -11,7 +11,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "InputActionValue.h"
 
-void ABTBInputReceiverPawn::Tick(float DeltaSeconds)
+void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	
@@ -32,8 +32,10 @@ void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	const ABTBPlayerController* PC = Cast<ABTBPlayerController>(GetController());
-	UEnhancedInputLocalPlayerSubsystem* Subsystem = PC != nullptr ?
-		ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()) : nullptr;
+	
+	UEnhancedInputLocalPlayerSubsystem* Subsystem =
+		PC != nullptr ? ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()) : nullptr;
+	
 	UEnhancedInputComponent* PEI = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
 	if (IsValid(Subsystem))

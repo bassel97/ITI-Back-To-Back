@@ -8,7 +8,7 @@
 void ABTBCharacter::Tick(float DeltaTime)
 {
 	
-	for (auto& Action : CharacterActions)
+	for (const auto& Action : CharacterActions)
 	{
 		Action->Act(this);
 	}
