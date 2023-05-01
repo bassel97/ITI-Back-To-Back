@@ -3,17 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BTBDataAsset.h"
+#include "BTBCharacterAction.h"
 #include "BTBCharacterJumpAction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BACKTOBACK_API UBTBCharacterJumpAction : public UBTBDataAsset
+class BACKTOBACK_API UBTBCharacterJumpAction : public UBTBCharacterAction
 {
 	GENERATED_BODY()
 
-		
+public:
+	virtual void Act(ABTBCharacter* character) override;
+
 	
 };

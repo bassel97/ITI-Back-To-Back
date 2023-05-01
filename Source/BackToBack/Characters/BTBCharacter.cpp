@@ -7,7 +7,9 @@
 
 void ABTBCharacter::Tick(float DeltaTime)
 {
-	for (int i = 0; i < CharacterActions.Num(); i++) {
-		//TODO
+	
+	for (auto& Action : CharacterActions)
+	{
+		Action->Act(this);
 	}
 }

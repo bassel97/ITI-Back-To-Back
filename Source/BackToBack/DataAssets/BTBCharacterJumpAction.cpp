@@ -3,4 +3,6 @@
 
 #include "BTBCharacterJumpAction.h"
 
-
+void UBTBCharacterJumpAction::Act(ABTBCharacter* character)
+{
+}
