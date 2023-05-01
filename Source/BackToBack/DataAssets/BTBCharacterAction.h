@@ -15,6 +15,8 @@ UCLASS(abstract)
 class BACKTOBACK_API UBTBCharacterAction : public UBTBDataAsset
 {
 	GENERATED_BODY()
+
+
 public:
 	virtual void Act(ABTBCharacter* character) PURE_VIRTUAL(UBTBCharacterAction::Act);
 	
