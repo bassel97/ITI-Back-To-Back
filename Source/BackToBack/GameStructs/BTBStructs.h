@@ -15,25 +15,31 @@
 USTRUCT(BlueprintType)
 struct FButtonState
 {
- GENERATED_BODY()
+	GENERATED_BODY()
 
- UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
- bool bIsDown = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bIsDown = false;
 
- UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
- bool bIsHeld = false;
- 
- UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
- bool bIsReleased = false;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bIsHeld = false;
 
- // Constructor
- FButtonState()
- {
-  bIsDown = false;
-  bIsHeld = false;
-  bIsReleased = false;
- }
- 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	bool bIsReleased = false;
+
+	void ResetDownReleaseState()
+	{
+		bIsDown = false;
+		bIsReleased = false;
+	}
+
+	// Constructor
+	FButtonState()
+	{
+		bIsDown = false;
+		bIsHeld = false;
+		bIsReleased = false;
+	}
+
 };
 
 
