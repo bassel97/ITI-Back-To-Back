@@ -2,20 +2,20 @@
 
 #pragma once
 
-//#include "BackToBack/Characters/BTBCharacter.h"
 #include "CoreMinimal.h"
 #include "BTBCharacterAction.h"
-#include "BTBCharacterMoveAction.generated.h"
+#include "BTBCharacterJumpAction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BACKTOBACK_API UBTBCharacterMoveAction : public UBTBCharacterAction
+class BACKTOBACK_API UBTBCharacterJumpAction : public UBTBCharacterAction
 {
 	GENERATED_BODY()
 
 public:
 	virtual void Act(ABTBCharacter* character) override;
 
+	
 };

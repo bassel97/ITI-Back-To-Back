@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright di-tri studio, Inc. All Rights Reserved.
 
 
 #include "BTBGameModeBase.h"
@@ -17,13 +17,13 @@ void ABTBGameModeBase::BeginPlay()
 void ABTBGameModeBase::SpawnInputReceivers()
 {
 	UWorld* World = GetWorld();
-	if (!ensure(World != nullptr))
+	if (!ensure(World != nullptr && BTBInputReceiverClass != nullptr))
 	{
 		return;
 	}
 
-	ABTBPlayerController* playerOne = Cast<ABTBPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-	if (ensure(playerOne != nullptr))
+	ABTBPlayerController* PlayerOne = Cast<ABTBPlayerController>(UGameplayStatics::GetPlayerController(World, 0));
+	if (ensure(PlayerOne != nullptr))
 	{
 		ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
 
@@ -31,8 +31,8 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		SpawnedPlayer->PlayerIndex = 0;
 		InputReceiverArray.AddUnique(SpawnedPlayer);
 
-		PlayerControllerArray.AddUnique(playerOne);
-		playerOne->Possess(SpawnedPlayer);
+		PlayerControllerArray.AddUnique(PlayerOne);
+		PlayerOne->Possess(SpawnedPlayer);
 	}
 
 	ABTBPlayerController* PlayerTwo = Cast<ABTBPlayerController>(UGameplayStatics::CreatePlayer(World, 1));
@@ -49,12 +49,12 @@ void ABTBGameModeBase::SpawnInputReceivers()
 	}
 
 #if UE_EDITOR
-	UKismetSystemLibrary::PrintString(GetWorld(),TEXT("InputReceiverArray = " + FString::FromInt(InputReceiverArray.Num())));
-	UKismetSystemLibrary::PrintString(GetWorld(),TEXT("PlayerControllerArray = " + FString::FromInt(PlayerControllerArray.Num())));
+	UKismetSystemLibrary::PrintString(World,TEXT("InputReceiverArray = " + FString::FromInt(InputReceiverArray.Num())));
+	UKismetSystemLibrary::PrintString(World,TEXT("PlayerControllerArray = " + FString::FromInt(PlayerControllerArray.Num())));
 
 	for(int i = 0 ; i < InputReceiverArray.Num() ; i++)
 	{
-		UKismetSystemLibrary::PrintString(GetWorld(),
+		UKismetSystemLibrary::PrintString(World,
 			FString::Printf(TEXT("InputReceiverArray[%i] = %s, Its Controller = %s"),
 				i, *InputReceiverArray[i]->GetName(), *InputReceiverArray[i]->GetController()->GetName()));
 	}
