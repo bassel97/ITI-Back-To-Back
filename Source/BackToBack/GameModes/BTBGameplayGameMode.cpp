@@ -66,16 +66,11 @@ void ABTBGameplayGameMode::AssignCameras()
 		return;
 	}
 	
-	if (SplitScreenClass->CameraMode == ECameraMode::SplitScreen)
+	if (SplitScreenClass->CameraMode == ECameraMode::SingleCamera)
 	{
-		for(int i = 0 ; i < InputReceiverArray.Num() ; i++)
-		{
-			ABTBPlayableCharacter* PlayerCharacter = InputReceiverArray[i]->Get_PlayerCharacter();
-			PlayerCharacter->AddCamera();
-		}
-	}
-	else
-	{
+		InputReceiverArray[0]->Get_PlayerCharacter()->RemoveCamera();
+		InputReceiverArray[1]->Get_PlayerCharacter()->RemoveCamera();
+
 		AActor* Camera = World->SpawnActor<AActor>(CameraClass);
 		UGameplayStatics::GetPlayerController(World, 0)->SetViewTarget(Camera);
 		UGameplayStatics::GetPlayerController(World, 1)->SetViewTarget(Camera);

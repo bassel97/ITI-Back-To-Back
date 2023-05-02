@@ -18,7 +18,8 @@ class BACKTOBACK_API ABTBPlayableCharacter : public ABTBHumanoidCharacter
 	GENERATED_BODY()
 
 public:
-	void AddCamera();
+	ABTBPlayableCharacter();
+	void RemoveCamera() const;
 	
 protected:
 

@@ -7,20 +7,20 @@
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/SpringArmComponent.h"
 
-void ABTBPlayableCharacter::AddCamera()
+ABTBPlayableCharacter::ABTBPlayableCharacter()
 {
-	CameraArm = NewObject<USpringArmComponent>(this, USpringArmComponent::StaticClass(),TEXT("CameraArm"));
-	
-	SceneCaptureCamera = NewObject<USceneCaptureComponent2D>(this, USceneCaptureComponent2D::StaticClass(),TEXT("SceneCaptureCamera"));
-	
-	if(!ensure(CameraArm != nullptr && SceneCaptureCamera != nullptr))
-	{
-		return;
-	}
-	
-	CameraArm->SetupAttachment(RootComponent.Get());
+	CameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
+	CameraArm->SetupAttachment(GetRootComponent());
+
+	SceneCaptureCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureCamera"));
 	SceneCaptureCamera->SetupAttachment(CameraArm);
-	
-	CameraArm->RegisterComponent();
-	SceneCaptureCamera->RegisterComponent();
 }
+
+void ABTBPlayableCharacter::RemoveCamera() const
+{
+	if(SceneCaptureCamera != nullptr)
+	{
+		SceneCaptureCamera->DestroyComponent();
+	}
+}
+
