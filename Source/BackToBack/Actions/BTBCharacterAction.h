@@ -5,7 +5,7 @@
 
 #include "BackToBack/Characters/BTBCharacter.h"
 #include "CoreMinimal.h"
-#include "BTBDataAsset.h"
+#include "BackToBack/DataAssets/BTBDataAsset.h"
 #include "BTBCharacterAction.generated.h"
 
 /**
@@ -18,7 +18,7 @@ class BACKTOBACK_API UBTBCharacterAction : public UBTBDataAsset
 
 
 public:
-	virtual void Act(ABTBCharacter* character) PURE_VIRTUAL(UBTBCharacterAction::Act);
+	virtual void Act(ABTBCharacter* Character) PURE_VIRTUAL(UBTBCharacterAction::Act);
 	
 };
 

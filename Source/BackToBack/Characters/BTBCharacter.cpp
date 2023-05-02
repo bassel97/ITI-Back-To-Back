@@ -3,13 +3,24 @@
 
 #include "BTBCharacter.h"
 
-#include "BackToBack/DataAssets/BTBCharacterAction.h"
+#include "BackToBack/Actions/BTBCharacterAction.h"
+
 
 void ABTBCharacter::Tick(float DeltaTime)
-{
-	
+{	
 	for (auto& Action : CharacterActions)
 	{
 		Action->Act(this);
 	}
 }
+
+bool ABTBCharacter::GetbStartJump()
+{
+	return bStartJump;
+}
+
+void ABTBCharacter::SetbStartJump(bool value)
+{
+	bStartJump = value;
+}
+

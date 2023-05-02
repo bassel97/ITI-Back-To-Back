@@ -20,12 +20,17 @@ class BACKTOBACK_API ABTBCharacter : public ACharacter
 
 public:
 
-	bool bCanJump;
-	
-	bool bCanMove;
-
 	virtual void Tick(float DeltaTime) override;
 
+	bool GetbStartJump();
+	
+	void SetbStartJump(bool bStartJump);
+
+
+private:
+	bool bStartJump = false;
+
+	UPROPERTY(EditDefaultsOnly)
 	TArray<UBTBCharacterAction*> CharacterActions;
 
 };
