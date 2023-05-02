@@ -3,15 +3,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/HUD.h"
+#include "Blueprint/UserWidget.h"
 #include "BTBMainHUD.generated.h"
 
 /**
- * Our Version of The HUD
+ * Our version of the HUD MainMenu + PauseMenu
  */
 UCLASS()
-class BACKTOBACK_API ABTBMainHUD : public AHUD
+class BACKTOBACK_API UBTBMainHUD : public UUserWidget
 {
 	GENERATED_BODY()
 	
+protected:
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* Start_BTN;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* Quit_BTN;
+
+	virtual void NativeConstruct() override;
+
+	UFUNCTION()
+		void OnStartClick();
+
+	UFUNCTION()
+		void OnQuitClick();
 };
