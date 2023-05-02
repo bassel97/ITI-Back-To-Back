@@ -5,9 +5,9 @@
 
 UBTBCharacterRotateAction::UBTBCharacterRotateAction()
 {
-	PitchValue = 0.f;
+	/*PitchValue = 0.f;
 	YawValue = 0.f;
-	RollValue = 0.f;
+	RollValue = 0.f;*/
 }
 
 void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
