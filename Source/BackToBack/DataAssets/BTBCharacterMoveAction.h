@@ -14,8 +14,9 @@ UCLASS()
 class BACKTOBACK_API UBTBCharacterMoveAction : public UBTBCharacterAction
 {
 	GENERATED_BODY()
-
 public:
-	virtual void Act(ABTBCharacter* character) override;
-
+    virtual void Act(ABTBCharacter* character) override
+    {
+        // Implement the Act function here
+    }
 };

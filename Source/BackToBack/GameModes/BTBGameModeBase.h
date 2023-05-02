@@ -1,4 +1,4 @@
-// Copyright di-tri studio, Inc. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -18,23 +18,15 @@ class BACKTOBACK_API ABTBGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
-public:
-	
 protected:
 	virtual void BeginPlay() override;
+
 	void SpawnInputReceivers();
 	
 private:
+	TArray<ABTBInputReceiverPawn*> InputReceiverArray;
+	TArray<ABTBPlayerController*> PlayerControllerArray;
 
-	
-	
-public:
-	
-protected:
-	TArray<TObjectPtr<ABTBInputReceiverPawn>> InputReceiverArray;
-	TArray<TObjectPtr<ABTBPlayerController>> PlayerControllerArray;
-	
-private:
 	UPROPERTY(EditDefaultsOnly, Category = "InputReceiver")
 	TSubclassOf<ABTBInputReceiverPawn> BTBInputReceiverClass;
 

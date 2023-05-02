@@ -2,103 +2,57 @@
 
 
 #include "BTBInputReceiverPawn.h"
-#include "BackToBack/GameStructs/BTBStructs.h"
-#include "InputMappingContext.h"
-#include "EnhancedInputSubsystems.h"
-#include "BackToBack/PlayerControllers/BTBPlayerController.h"
-#include "EnhancedInputComponent.h"
-#include "InputAction.h"
-#include "Kismet/KismetSystemLibrary.h"
-#include "InputActionValue.h"
 
-void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
+#include "Kismet/GameplayStatics.h"
+
+ABTBInputReceiverPawn::ABTBInputReceiverPawn()
 {
-	Super::Tick(DeltaSeconds);
-	
-	// Send Data to player character
-
-
-	//Reset Button states
-	RightTrigger.ResetDownReleaseState();
-	LeftTrigger.ResetDownReleaseState();
-	RightButton.ResetDownReleaseState();
-	LeftButton.ResetDownReleaseState();
-	DownButton.ResetDownReleaseState();
-	UpButton.ResetDownReleaseState();
+	BaseTurnAtRate = 45.0f;
+	BaseLookUpAtRate = 45.0f;
 }
 
 void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	const ABTBPlayerController* PC = Cast<ABTBPlayerController>(GetController());
 	
-	UEnhancedInputLocalPlayerSubsystem* Subsystem =
-		PC != nullptr ? ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()) : nullptr;
-	
-	UEnhancedInputComponent* PEI = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	PlayerInputComponent->BindAxis("MoveForward", this, &ABTBInputReceiverPawn::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &ABTBInputReceiverPawn::MoveRight);
+	PlayerInputComponent->BindAxis("TurnRate", this, &ABTBInputReceiverPawn::TurnAtRate);
+	PlayerInputComponent->BindAxis("LookUpRate", this, &ABTBInputReceiverPawn::LookUpAtRate);
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+}
 
-	if (IsValid(Subsystem))
+void ABTBInputReceiverPawn::MoveForward(const float Value)
+{
+	if(IsValid(Controller) && Value != 0.0f)
 	{
-		Subsystem->ClearAllMappings();
-		Subsystem->AddMappingContext(InputMapping, 0);
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		PEI->BindAction(RightTriggerInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::RightTriggerInputTriggered);
-		PEI->BindAction(LeftTriggerInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::LeftTriggerInputTriggered);
-		PEI->BindAction(RightButtonInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::RightButtonInputTriggered);
-		PEI->BindAction(LeftButtonInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::LeftButtonInputTriggered);
-		PEI->BindAction(UpButtonInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::UpButtonInputTriggered);
-		PEI->BindAction(DownButtonInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::DownButtonInputTriggered);
-
-		PEI->BindAction(AxisInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::SetAxisInput);
-		PEI->BindAction(AxisInputAction, ETriggerEvent::Completed, this, &ABTBInputReceiverPawn::SetAxisInput);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(Direction, Value);
 	}
 }
 
-void ABTBInputReceiverPawn::RightTriggerInputTriggered(const FInputActionValue& Val)
+void ABTBInputReceiverPawn::MoveRight(const float Value)
 {
-	ButtonStateSetData(RightTrigger, Val.Get<bool>());
-}
-
-void ABTBInputReceiverPawn::LeftTriggerInputTriggered(const FInputActionValue& Val)
-{
-	ButtonStateSetData(LeftTrigger, Val.Get<bool>());
-}
-
-void ABTBInputReceiverPawn::RightButtonInputTriggered(const FInputActionValue& Val)
-{
-	ButtonStateSetData(RightButton, Val.Get<bool>());
-}
-
-void ABTBInputReceiverPawn::LeftButtonInputTriggered(const FInputActionValue& Val)
-{
-	ButtonStateSetData(LeftButton, Val.Get<bool>());
-}
-
-void ABTBInputReceiverPawn::DownButtonInputTriggered(const FInputActionValue& Val)
-{
-	ButtonStateSetData(DownButton, Val.Get<bool>());
-}
-
-void ABTBInputReceiverPawn::UpButtonInputTriggered(const FInputActionValue& Val)
-{
-	ButtonStateSetData(UpButton, Val.Get<bool>());
-}
-
-void ABTBInputReceiverPawn::SetAxisInput(const FInputActionValue& Val)
-{
-	AxisInput = Val.Get<FInputActionValue::Axis2D>();
-}
-
-void ABTBInputReceiverPawn::ButtonStateSetData(FButtonState& ButtonState, const bool Value)
-{
-	ButtonState.bIsHeld = Value;
-	if (Value)
+	if(IsValid(Controller) && Value != 0.0f)
 	{
-		ButtonState.bIsDown = true;
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		AddMovementInput(Direction, Value);
 	}
-	else
-	{
-		ButtonState.bIsReleased = true;
-	}
+}
+
+void ABTBInputReceiverPawn::TurnAtRate(const float Value)
+{
+	AddControllerYawInput(Value * BaseTurnAtRate * GetWorld()->GetDeltaSeconds());
+}
+
+void ABTBInputReceiverPawn::LookUpAtRate(const float Value)
+{
+	AddControllerYawInput(Value * BaseLookUpAtRate * GetWorld()->GetDeltaSeconds());
 }

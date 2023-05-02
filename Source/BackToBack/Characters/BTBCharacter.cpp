@@ -3,13 +3,4 @@
 
 #include "BTBCharacter.h"
 
-#include "BackToBack/DataAssets/BTBCharacterAction.h"
 
-void ABTBCharacter::Tick(float DeltaTime)
-{
-	
-	for (const auto& Action : CharacterActions)
-	{
-		Action->Act(this);
-	}
-}

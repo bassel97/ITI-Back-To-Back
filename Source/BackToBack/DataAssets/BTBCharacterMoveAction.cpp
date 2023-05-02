@@ -3,6 +3,3 @@
 
 #include "BTBCharacterMoveAction.h"
 
-void UBTBCharacterMoveAction::Act(ABTBCharacter* character)
-{
-}

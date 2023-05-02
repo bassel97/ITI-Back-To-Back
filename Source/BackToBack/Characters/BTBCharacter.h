@@ -6,10 +6,6 @@
 #include "GameFramework/Character.h"
 #include "BTBCharacter.generated.h"
 
-
-class UBTBCharacterAction;
-class UInputMappingContext;
-
 /**
  * Our Version of Character.
  */
@@ -17,16 +13,6 @@ class UInputMappingContext;
 UCLASS()
 class BACKTOBACK_API ABTBCharacter : public ACharacter
 {
-	GENERATED_BODY()
+	GENERATED_BODY()	
 
-public:
-
-	bool bCanJump;
-	
-	bool bCanMove;
-
-	virtual void Tick(float DeltaTime) override;
-
-	TArray<UBTBCharacterAction*> CharacterActions;
-	
 };
