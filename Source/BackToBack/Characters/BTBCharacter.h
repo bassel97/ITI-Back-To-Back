@@ -8,6 +8,7 @@
 
 
 class UBTBCharacterAction;
+class UInputMappingContext;
 
 /**
  * Our Version of Character.
@@ -32,5 +33,5 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<UBTBCharacterAction*> CharacterActions;
-
+	
 };

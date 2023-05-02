@@ -33,9 +33,10 @@ public:
 protected:
 	
 private:
-	TArray<ABTBPlayableCharacter*> PlayerCharacterArray;
-
-	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
+	TArray<TObjectPtr<ABTBPlayableCharacter>> PlayerCharacterArray;
+	TArray<TObjectPtr<AActor>> PlayerStartArray;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "GlobalGameScreen")
 	TObjectPtr<UBTBSplitScreenDataAsset> SplitScreenClass = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")

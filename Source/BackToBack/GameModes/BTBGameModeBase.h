@@ -31,8 +31,8 @@ private:
 public:
 	
 protected:
-	TArray<ABTBInputReceiverPawn*> InputReceiverArray;
-	TArray<ABTBPlayerController*> PlayerControllerArray;
+	TArray<TObjectPtr<ABTBInputReceiverPawn>> InputReceiverArray;
+	TArray<TObjectPtr<ABTBPlayerController>> PlayerControllerArray;
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "InputReceiver")

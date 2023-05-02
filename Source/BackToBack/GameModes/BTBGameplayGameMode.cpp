@@ -8,6 +8,7 @@
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/DataAssets/BTBSplitScreenDataAsset.h"
 #include "BackToBack/PlayerControllers/BTBPlayerController.h"
+#include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -26,14 +27,25 @@ void ABTBGameplayGameMode::CreatePlayers()
 		return;
 	}
 	
+	UGameplayStatics::GetAllActorsOfClass(World, APlayerStart::StaticClass(), PlayerStartArray);
+	
 	ABTBPlayableCharacter* PlayerCharacterOne = World->SpawnActor<ABTBPlayableCharacter>();
 	PlayerCharacterArray.AddUnique(PlayerCharacterOne);
 
 	ABTBPlayableCharacter* PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>();
 	PlayerCharacterArray.AddUnique(PlayerCharacterTwo);
 
-	InputReceiverArray[0]->Set_PlayerCharacter(PlayerCharacterArray[0]);
-	InputReceiverArray[1]->Set_PlayerCharacter(PlayerCharacterArray[1]);
+	if(PlayerStartArray.Num() >= 2)
+	{
+		PlayerCharacterOne->SetActorLocation(PlayerStartArray[0]->GetActorLocation());
+		PlayerCharacterTwo->SetActorLocation(PlayerStartArray[1]->GetActorLocation());
+	}
+
+	if(InputReceiverArray.Num() >= 2)
+	{
+		InputReceiverArray[0]->Set_PlayerCharacter(PlayerCharacterArray[0]);
+		InputReceiverArray[1]->Set_PlayerCharacter(PlayerCharacterArray[1]);
+	}
 
 
 #if UE_EDITOR
