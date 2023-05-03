@@ -8,6 +8,7 @@
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/DataAssets/BTBSplitScreenDataAsset.h"
 #include "BackToBack/PlayerControllers/BTBPlayerController.h"
+#include "Engine/TextureRenderTarget2D.h"
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -17,6 +18,7 @@ void ABTBGameplayGameMode::BeginPlay()
 	Super::BeginPlay();
 	CreatePlayers();
 	AssignCameras();
+	CreateRenderTextures();
 }
 
 void ABTBGameplayGameMode::CreatePlayers()
@@ -84,4 +86,36 @@ void ABTBGameplayGameMode::AssignCameras()
 				i, *PlayerControllerArray[i]->GetName(), *PlayerControllerArray[i]->GetViewTarget()->GetName()));
 	}
 #endif	
+}
+
+void ABTBGameplayGameMode::CreateRenderTextures()
+{
+	const FVector2d ScreenSize = GetScreenResolution();
+	RenderTexture_1 = NewObject<UTextureRenderTarget2D>(this, UTextureRenderTarget2D::StaticClass());
+	RenderTexture_1->InitAutoFormat(ScreenSize.X, ScreenSize.Y);
+	
+	RenderTexture_2 = NewObject<UTextureRenderTarget2D>(this, UTextureRenderTarget2D::StaticClass());
+	RenderTexture_2->InitAutoFormat(ScreenSize.X, ScreenSize.Y);
+}
+
+FVector2d ABTBGameplayGameMode::GetScreenResolution()
+{
+	FVector2D Result;
+	
+	Result.X = GSystemResolution.ResX;
+	Result.Y = GSystemResolution.ResY;
+	
+	return Result;
+}
+
+FVector2D ABTBGameplayGameMode::GetGameViewportSize()
+{
+	FVector2D Result;
+	
+	if (GEngine && GEngine->GameViewport)
+	{
+		GEngine->GameViewport->GetViewportSize(Result);
+	}
+	
+	 return Result;
 }

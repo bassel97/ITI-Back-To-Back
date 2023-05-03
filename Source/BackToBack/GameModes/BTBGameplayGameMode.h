@@ -8,6 +8,7 @@
 
 class ABTBPlayableCharacter;
 class UBTBSplitScreenDataAsset;
+class UTextureRenderTarget2D;
 
 /**
  * Our Gameplay Game Mode
@@ -23,6 +24,10 @@ protected:
 	virtual void BeginPlay() override;
 	void CreatePlayers();
 	void AssignCameras();
+	void CreateRenderTextures();
+
+	static FVector2d GetScreenResolution();
+	static FVector2D GetGameViewportSize();
 	
 private:
 
@@ -41,4 +46,7 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
 	TSubclassOf<AActor> CameraClass;
+	
+    TObjectPtr<UTextureRenderTarget2D> RenderTexture_1;
+	TObjectPtr<UTextureRenderTarget2D> RenderTexture_2;
 };
