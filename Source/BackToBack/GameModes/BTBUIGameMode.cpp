@@ -1,10 +1,10 @@
 // Copyright di-tri studio, Inc. All Rights Reserved.
 
 
-#include "BTBMainMenuGameMode.h"
+#include "BTBUIGameMode.h"
 #include "Blueprint/UserWidget.h"
 
-void ABTBMainMenuGameMode::BeginPlay()
+void ABTBUIGameMode::BeginPlay()
 {
 	if (IsValid(BTBMainMenuWidgetClass))
 	{

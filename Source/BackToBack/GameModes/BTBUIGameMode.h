@@ -3,18 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BTBGameModeBase.h"
 #include "GameFramework/GameModeBase.h"
-#include "BTBMainMenuGameMode.generated.h"
+#include "BTBUIGameMode.generated.h"
 
 /**
  * Our Version of the mainmenu gamemode
  */
 UCLASS()
-class BACKTOBACK_API ABTBMainMenuGameMode : public AGameModeBase
+class BACKTOBACK_API ABTBUIGameMode : public ABTBGameModeBase
 {
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnyWhere, Category = "Config")
 		TSubclassOf<UUserWidget> BTBMainMenuWidgetClass;
+
 	virtual void BeginPlay() override;
 };

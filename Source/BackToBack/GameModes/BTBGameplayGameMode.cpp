@@ -19,6 +19,16 @@ void ABTBGameplayGameMode::BeginPlay()
 	CreatePlayers();
 	AssignCameras();
 	CreateRenderTextures();
+
+	if(IsValid(BTBGameHUDWidgetClass))
+	{
+		Widget = CreateWidget(GetWorld(), BTBGameHUDWidgetClass);
+
+		if (Widget)
+		{
+			Widget->AddToViewport();
+		}
+	}
 }
 
 void ABTBGameplayGameMode::CreatePlayers()

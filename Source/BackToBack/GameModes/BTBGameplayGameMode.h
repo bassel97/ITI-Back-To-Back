@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BTBGameModeBase.h"
+#include "Blueprint/UserWidget.h"
 #include "BTBGameplayGameMode.generated.h"
 
 class ABTBPlayableCharacter;
@@ -49,4 +50,8 @@ private:
 	
     TObjectPtr<UTextureRenderTarget2D> RenderTexture_1;
 	TObjectPtr<UTextureRenderTarget2D> RenderTexture_2;
+
+	UPROPERTY(EditAnyWhere, Category = "Config")
+		TSubclassOf<UUserWidget> BTBGameHUDWidgetClass;
+	UUserWidget* Widget;
 };
