@@ -2,6 +2,7 @@
 
 
 #include "BTBGameHUD.h"
+#include "Components/RetainerBox.h"
 
 FVector2d UBTBGameHUD::GetScreenResolution()
 {

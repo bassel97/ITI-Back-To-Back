@@ -24,3 +24,11 @@ void ABTBPlayableCharacter::RemoveCamera() const
 	}
 }
 
+void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget)
+{
+	if(IsValid(SceneCaptureCamera))
+	{
+		SceneCaptureCamera->TextureTarget = RenderTarget;
+	}
+}
+

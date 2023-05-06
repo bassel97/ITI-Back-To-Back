@@ -7,7 +7,9 @@
 #include "BackToBack/Pawns/BTBInputReceiverPawn.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/DataAssets/BTBSplitScreenDataAsset.h"
+#include "BackToBack/HUD/BTBGameHUD.h"
 #include "BackToBack/PlayerControllers/BTBPlayerController.h"
+#include "Components/RetainerBox.h"
 #include "Engine/TextureRenderTarget2D.h"
 #include "GameFramework/PlayerStart.h"
 #include "Kismet/GameplayStatics.h"
@@ -19,16 +21,8 @@ void ABTBGameplayGameMode::BeginPlay()
 	CreatePlayers();
 	AssignCameras();
 	CreateRenderTextures();
-
-	if(IsValid(BTBGameHUDWidgetClass))
-	{
-		Widget = CreateWidget(GetWorld(), BTBGameHUDWidgetClass);
-
-		if (Widget)
-		{
-			Widget->AddToViewport();
-		}
-	}
+	CreateUIWidget();
+	SetSplitScreenTextureToMaterial();
 }
 
 void ABTBGameplayGameMode::CreatePlayers()
@@ -106,6 +100,38 @@ void ABTBGameplayGameMode::CreateRenderTextures()
 	
 	RenderTexture_2 = NewObject<UTextureRenderTarget2D>(this, UTextureRenderTarget2D::StaticClass());
 	RenderTexture_2->InitAutoFormat(ScreenSize.X, ScreenSize.Y);
+}
+
+void ABTBGameplayGameMode::CreateUIWidget()
+{
+	UWorld* World = GetWorld();
+	if(!ensure(World != nullptr))
+	{
+		return;
+	}
+	
+	if(IsValid(BTBGameHUDWidgetClass))
+	{
+		Widget = CreateWidget(World, BTBGameHUDWidgetClass);
+		if (Widget)
+		{
+			Widget->AddToViewport();
+			PlayerCharacterArray[0]->AssignRenderTextureToCamera(RenderTexture_1);
+			PlayerCharacterArray[1]->AssignRenderTextureToCamera(RenderTexture_2);
+		}
+	}
+}
+
+void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
+{
+	UMaterialInstanceDynamic* DynamicMI = UMaterialInstanceDynamic::Create(SplitScreenMaterialInstance, nullptr);
+	DynamicMI->SetTextureParameterValue(TEXT("MyTextureSample"), RenderTexture_1);
+
+	UBTBGameHUD* HUD = Cast<UBTBGameHUD>(BTBGameHUDWidgetClass);
+	if(HUD)
+	{
+		HUD->MainScreenBox->SetEffectMaterial(DynamicMI);
+	}
 }
 
 FVector2d ABTBGameplayGameMode::GetScreenResolution()

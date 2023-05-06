@@ -9,6 +9,7 @@
 
 class URetainerBox;
 class UOverlay;
+
 /**
  * 
  */
@@ -16,11 +17,11 @@ UCLASS()
 class BACKTOBACK_API UBTBGameHUD : public UUserWidget
 {
 	GENERATED_BODY()
-protected:
-
+public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		TObjectPtr<URetainerBox> MainScreenBox;
-
+	TObjectPtr<URetainerBox> MainScreenBox;
+	
+protected:
 	static FVector2d GetScreenResolution();
 
 	void SetOverlayResolution();

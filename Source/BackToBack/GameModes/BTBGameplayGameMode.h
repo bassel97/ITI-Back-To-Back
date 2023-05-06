@@ -26,6 +26,8 @@ protected:
 	void CreatePlayers();
 	void AssignCameras();
 	void CreateRenderTextures();
+	void CreateUIWidget();
+	void SetSplitScreenTextureToMaterial() const;
 
 	static FVector2d GetScreenResolution();
 	static FVector2D GetGameViewportSize();
@@ -52,6 +54,10 @@ private:
 	TObjectPtr<UTextureRenderTarget2D> RenderTexture_2;
 
 	UPROPERTY(EditAnyWhere, Category = "Config")
-		TSubclassOf<UUserWidget> BTBGameHUDWidgetClass;
-	UUserWidget* Widget;
+	TSubclassOf<UUserWidget> BTBGameHUDWidgetClass;
+
+	TObjectPtr<UUserWidget> Widget;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
 };

@@ -20,6 +20,7 @@ class BACKTOBACK_API ABTBPlayableCharacter : public ABTBHumanoidCharacter
 public:
 	ABTBPlayableCharacter();
 	void RemoveCamera() const;
+	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget);
 	
 protected:
 
@@ -29,6 +30,7 @@ private:
 	
 
 public:
+	
 
 	
 protected:
