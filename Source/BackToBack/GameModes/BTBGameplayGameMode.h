@@ -10,6 +10,7 @@
 class ABTBPlayableCharacter;
 class UBTBSplitScreenDataAsset;
 class UTextureRenderTarget2D;
+class UBTBGameHUD;
 
 /**
  * Our Gameplay Game Mode
@@ -56,7 +57,7 @@ private:
 	UPROPERTY(EditAnyWhere, Category = "Config")
 	TSubclassOf<UUserWidget> BTBGameHUDWidgetClass;
 
-	TObjectPtr<UUserWidget> Widget;
+	TObjectPtr<UBTBGameHUD> GameWidget;
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;

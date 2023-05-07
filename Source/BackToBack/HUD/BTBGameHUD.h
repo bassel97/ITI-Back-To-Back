@@ -24,7 +24,7 @@ public:
 protected:
 	static FVector2d GetScreenResolution();
 
-	void SetOverlayResolution();
+	void SetScreenBoxEffectMaterial(FName TextureName);
 
 	virtual void NativeConstruct() override;
 

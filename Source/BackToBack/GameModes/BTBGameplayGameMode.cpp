@@ -15,6 +15,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
+
 void ABTBGameplayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -23,6 +24,7 @@ void ABTBGameplayGameMode::BeginPlay()
 	CreateRenderTextures();
 	CreateUIWidget();
 	SetSplitScreenTextureToMaterial();
+	/*GameWidget = CreateDefaultSubobject<>()*/
 }
 
 void ABTBGameplayGameMode::CreatePlayers()
@@ -112,13 +114,14 @@ void ABTBGameplayGameMode::CreateUIWidget()
 	
 	if(IsValid(BTBGameHUDWidgetClass))
 	{
-		Widget = CreateWidget(World, BTBGameHUDWidgetClass);
-		if (Widget)
+		GameWidget = Cast<UBTBGameHUD>(CreateWidget(World, BTBGameHUDWidgetClass));
+		if (GameWidget)
 		{
-			Widget->AddToViewport();
+			GameWidget->AddToViewport();
 			PlayerCharacterArray[0]->AssignRenderTextureToCamera(RenderTexture_1);
 			PlayerCharacterArray[1]->AssignRenderTextureToCamera(RenderTexture_2);
 		}
+		
 	}
 }
 
@@ -126,12 +129,18 @@ void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 {
 	UMaterialInstanceDynamic* DynamicMI = UMaterialInstanceDynamic::Create(SplitScreenMaterialInstance, nullptr);
 	DynamicMI->SetTextureParameterValue(TEXT("MyTextureSample"), RenderTexture_1);
+	//GameWidget->MainScreenBox->SetTextureParameter(RenderTexture_1.GetFName());
 
-	UBTBGameHUD* HUD = Cast<UBTBGameHUD>(BTBGameHUDWidgetClass);
-	if(HUD)
-	{
-		HUD->MainScreenBox->SetEffectMaterial(DynamicMI);
-	}
+	UKismetSystemLibrary::PrintString(GetWorld(),
+		FString::Printf(TEXT("Render texture 1 name is %s"), *RenderTexture_1.GetName()));
+	
+	//BTBGameHUDWidgetClass
+	//UBTBGameHUD* HUD = Cast<UBTBGameHUD>(BTBGameHUDWidgetClass);
+	//if(HUD)
+	//{
+	//	//HUD->MainScreenBox->SetEffectMaterial(DynamicMI);
+	//	HUD->MainScreenBox->SetTextureParameter(RenderTexture_1.GetFName());
+	//}
 }
 
 FVector2d ABTBGameplayGameMode::GetScreenResolution()
