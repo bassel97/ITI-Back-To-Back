@@ -2,6 +2,7 @@
 
 
 #include "BTBGameHUD.h"
+#include "Components/RetainerBox.h"
 
 FVector2d UBTBGameHUD::GetScreenResolution()
 {
@@ -13,9 +14,9 @@ FVector2d UBTBGameHUD::GetScreenResolution()
 	return Result;
 }
 
-void UBTBGameHUD::SetOverlayResolution()
+void UBTBGameHUD::SetScreenBoxEffectMaterial(FName TextureName)
 {
-	
+	MainScreenBox->SetTextureParameter(TextureName);
 }
 
 void UBTBGameHUD::NativeConstruct()

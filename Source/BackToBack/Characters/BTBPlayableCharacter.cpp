@@ -31,6 +31,14 @@ void ABTBPlayableCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget)
+{
+	if(IsValid(SceneCaptureCamera))
+	{
+		SceneCaptureCamera->TextureTarget = RenderTarget;
+	}
+}
+
 
 
 

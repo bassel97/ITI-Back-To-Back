@@ -10,6 +10,7 @@
 class ABTBPlayableCharacter;
 class UBTBSplitScreenDataAsset;
 class UTextureRenderTarget2D;
+class UBTBGameHUD;
 
 /**
  * Our Gameplay Game Mode
@@ -26,6 +27,8 @@ protected:
 	void CreatePlayers();
 	void AssignCameras();
 	void CreateRenderTextures();
+	void CreateUIWidget();
+	void SetSplitScreenTextureToMaterial() const;
 
 	static FVector2d GetScreenResolution();
 	static FVector2D GetGameViewportSize();
@@ -55,6 +58,10 @@ private:
 	TObjectPtr<UTextureRenderTarget2D> RenderTexture_2;
 
 	UPROPERTY(EditAnyWhere, Category = "Config")
-		TSubclassOf<UUserWidget> BTBGameHUDWidgetClass;
-	UUserWidget* Widget;
+	TSubclassOf<UUserWidget> BTBGameHUDWidgetClass;
+
+	TObjectPtr<UBTBGameHUD> GameWidget;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
 };

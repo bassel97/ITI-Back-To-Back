@@ -20,6 +20,7 @@ class BACKTOBACK_API ABTBPlayableCharacter : public ABTBHumanoidCharacter
 public:
 	ABTBPlayableCharacter();
 	void RemoveCamera() const;
+	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget);
 	
 protected:
 	virtual void Tick(float DeltaTime) override;
@@ -30,6 +31,7 @@ private:
 	
 
 public:
+	
 
 	
 protected:
