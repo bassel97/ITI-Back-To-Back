@@ -4,10 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "BTBHumanoidCharacter.h"
+#include "BackToBack/Actions/BTBCharacterAction.h"
 #include "BTBPlayableCharacter.generated.h"
 
 class USpringArmComponent;
 class USceneCaptureComponent2D;
+class UBTBCharacterJumpAction;
+//class UBTBCharacterAction;
 
 /**
  * Our Playable Character
@@ -24,6 +27,7 @@ public:
 	
 protected:
 	virtual void Tick(float DeltaTime) override;
+	//virtual void BeginPlay() override;
 	
 	
 private:
@@ -40,8 +44,11 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
-	
-	
+
+	//UPROPERTY(EditDefaultsOnly,Category="Actions")
+	///*TObjectPtr<UBTBCharacterAction> CharacterActionClass;*/
+
+	//TObjectPtr<UBTBCharacterJumpAction> JumpAction;
 private:
 	
 

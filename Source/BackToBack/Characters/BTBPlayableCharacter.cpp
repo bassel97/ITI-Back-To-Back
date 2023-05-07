@@ -3,6 +3,7 @@
 
 #include "BTBPlayableCharacter.h"
 
+#include "BackToBack/Actions/BTBCharacterJumpAction.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -30,6 +31,15 @@ void ABTBPlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
+
+//void ABTBPlayableCharacter::BeginPlay()
+//{
+//	Super::BeginPlay();
+//	//JumpAction = NewObject<UBTBCharacterJumpAction>(this, UBTBCharacterJumpAction::StaticClass());
+//	//JumpAction = Cast<UBTBCharacterJumpAction>(CharacterActionClass);
+//	
+//	CharacterActions.AddUnique(JumpAction);
+//}
 
 void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget)
 {

@@ -18,6 +18,8 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	// Send Data to player character
 	HandleJumpAction();
 
+	HandleRotateAction();
+
 	//Reset Button states
 	RightTrigger.ResetDownReleaseState();
 	LeftTrigger.ResetDownReleaseState();
@@ -98,20 +100,60 @@ void ABTBInputReceiverPawn::HandleJumpAction()
 	if (UpButton.bIsDown)
 	{
 		PlayerCharacter->SetbStartJump(true);
-		UE_LOG(LogTemp, Warning, TEXT(" the jump is pressed"));
+
 	}
 	if (UpButton.bIsReleased)
 	{
 		PlayerCharacter->SetbStartJump(false);
-		UE_LOG(LogTemp, Warning, TEXT(" the jump is Released"));
+
 	}
 
 	if (UpButton.bIsHeld)
 	{
 		PlayerCharacter->SetbStartJump(true);
-		UE_LOG(LogTemp, Warning, TEXT(" the jump is Held"));
+
 	}
 }
+
+void ABTBInputReceiverPawn::HandleRotateAction()
+{
+	if (DownButton.bIsDown)
+	{
+		PlayerCharacter->SetbStartRotate(true);
+
+	}
+	if (DownButton.bIsReleased)
+	{
+		PlayerCharacter->SetbStartRotate(false);
+
+	}
+
+	if (DownButton.bIsHeld)
+	{
+		PlayerCharacter->SetbStartRotate(true);
+
+	}
+}
+
+//void ABTBInputReceiverPawn::HandleRotateAction()
+//{
+//	if (DownButton.bIsDown)
+//	{
+//		PlayerCharacter->SetbStartRotate(true);
+//		UE_LOG(LogTemp, Warning, TEXT(" the Rotate is pressed"));
+//	}
+//	if (DownButton.bIsReleased)
+//	{
+//		PlayerCharacter->SetbStartRotate(false);
+//		UE_LOG(LogTemp, Warning, TEXT(" the Rotate is Released"));
+//	}
+//
+//	if (DownButton.bIsHeld)
+//	{
+//		PlayerCharacter->SetbStartRotate(true);
+//		UE_LOG(LogTemp, Warning, TEXT(" the Rotate is Held"));
+//	}
+//}
 
 void ABTBInputReceiverPawn::ButtonStateSetData(FButtonState& ButtonState, const bool Value)
 {

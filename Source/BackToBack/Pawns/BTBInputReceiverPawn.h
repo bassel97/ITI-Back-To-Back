@@ -45,6 +45,7 @@ protected:
 	void SetAxisInput(const FInputActionValue& Val);
 	
 	void HandleJumpAction();
+	void HandleRotateAction();
 
 private:
 	void ButtonStateSetData(FButtonState& ButtonState, const bool Value);

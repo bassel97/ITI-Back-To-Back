@@ -20,6 +20,8 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 		FQuat QuatRotation = FQuat(NewRotation);
 
 		Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
+
+		
 	}
 
 
