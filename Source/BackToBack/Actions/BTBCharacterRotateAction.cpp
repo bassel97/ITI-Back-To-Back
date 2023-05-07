@@ -3,12 +3,6 @@
 
 #include "BTBCharacterRotateAction.h"
 
-UBTBCharacterRotateAction::UBTBCharacterRotateAction()
-{
-	/*PitchValue = 0.f;
-	YawValue = 0.f;
-	RollValue = 0.f;*/
-}
 
 void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 {
@@ -16,12 +10,19 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 	{
 		return;
 	}
-	
-	FRotator NewRotation = FRotator(Rotation.X, Rotation.Y, Rotation.Z);
 
-	FQuat QuatRotation = FQuat(NewRotation);
+	if (Character->GetbStartRotate())
+	{
+		FRotator CharRotation = Character->GetActorRotation();
 
-	Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
+		FRotator NewRotation = CharRotation.Add(0, 1, 0);
+		
+		FQuat QuatRotation = FQuat(NewRotation);
+
+		Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
+	}
+
+
 
 
 

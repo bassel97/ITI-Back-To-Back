@@ -22,7 +22,8 @@ public:
 	void RemoveCamera() const;
 	
 protected:
-
+	virtual void Tick(float DeltaTime) override;
+	
 	
 private:
 	

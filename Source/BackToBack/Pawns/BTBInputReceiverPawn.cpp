@@ -16,7 +16,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	
 	// Send Data to player character
-
+	HandleJumpAction();
 
 	//Reset Button states
 	RightTrigger.ResetDownReleaseState();
@@ -73,21 +73,44 @@ void ABTBInputReceiverPawn::RightButtonInputTriggered(const FInputActionValue& V
 void ABTBInputReceiverPawn::LeftButtonInputTriggered(const FInputActionValue& Val)
 {
 	ButtonStateSetData(LeftButton, Val.Get<bool>());
+
 }
 
 void ABTBInputReceiverPawn::DownButtonInputTriggered(const FInputActionValue& Val)
 {
 	ButtonStateSetData(DownButton, Val.Get<bool>());
+	
 }
 
 void ABTBInputReceiverPawn::UpButtonInputTriggered(const FInputActionValue& Val)
 {
 	ButtonStateSetData(UpButton, Val.Get<bool>());
+
 }
 
 void ABTBInputReceiverPawn::SetAxisInput(const FInputActionValue& Val)
 {
 	AxisInput = Val.Get<FInputActionValue::Axis2D>();
+}
+
+void ABTBInputReceiverPawn::HandleJumpAction()
+{
+	if (UpButton.bIsDown)
+	{
+		PlayerCharacter->SetbStartJump(true);
+		UE_LOG(LogTemp, Warning, TEXT(" the jump is pressed"));
+	}
+	if (UpButton.bIsReleased)
+	{
+		PlayerCharacter->SetbStartJump(false);
+		UE_LOG(LogTemp, Warning, TEXT(" the jump is Released"));
+	}
+
+	if (UpButton.bIsHeld)
+	{
+		PlayerCharacter->SetbStartJump(true);
+		UE_LOG(LogTemp, Warning, TEXT(" the jump is Held"));
+	}
 }
 
 void ABTBInputReceiverPawn::ButtonStateSetData(FButtonState& ButtonState, const bool Value)

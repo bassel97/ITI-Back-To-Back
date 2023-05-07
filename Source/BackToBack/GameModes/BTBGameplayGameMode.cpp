@@ -47,6 +47,7 @@ void ABTBGameplayGameMode::CreatePlayers()
 	ABTBPlayableCharacter* PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>();
 	PlayerCharacterArray.AddUnique(PlayerCharacterTwo);
 
+
 	if(PlayerStartArray.Num() >= 2)
 	{
 		PlayerCharacterOne->SetActorLocation(PlayerStartArray[0]->GetActorLocation());
@@ -57,6 +58,7 @@ void ABTBGameplayGameMode::CreatePlayers()
 	{
 		InputReceiverArray[0]->Set_PlayerCharacter(PlayerCharacterArray[0]);
 		InputReceiverArray[1]->Set_PlayerCharacter(PlayerCharacterArray[1]);
+
 	}
 
 

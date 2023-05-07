@@ -27,11 +27,18 @@ public:
 	
 	void SetbStartJump(bool bStartJump);
 
+	bool GetbStartRotate();
+
+	void SetbStartRotate(bool bStartRotate);
+
+	UPROPERTY(EditDefaultsOnly)
+	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
 
 private:
 	bool bStartJump = false;
 
-	UPROPERTY(EditDefaultsOnly)
-	TArray<UBTBCharacterAction*> CharacterActions;
+	bool bStartRotate = false;
+	
+
 	
 };

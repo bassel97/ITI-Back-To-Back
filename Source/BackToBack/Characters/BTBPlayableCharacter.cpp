@@ -7,6 +7,8 @@
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/SpringArmComponent.h"
 
+
+
 ABTBPlayableCharacter::ABTBPlayableCharacter()
 {
 	CameraArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraArm"));
@@ -23,4 +25,12 @@ void ABTBPlayableCharacter::RemoveCamera() const
 		SceneCaptureCamera->DestroyComponent();
 	}
 }
+
+void ABTBPlayableCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+
+
 

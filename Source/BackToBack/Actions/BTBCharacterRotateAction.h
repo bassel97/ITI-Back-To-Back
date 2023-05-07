@@ -15,12 +15,17 @@ class BACKTOBACK_API UBTBCharacterRotateAction : public UBTBCharacterAction
 	GENERATED_BODY()
 
 public:
-	UBTBCharacterRotateAction();
-	
-public:
-	UPROPERTY(EditAnywhere, Category = "Movement")
-		FVector Rotation;
+
+protected:
+
+	virtual void Act(ABTBCharacter* Character) override;
+
+private:
 
 public:
-	virtual void Act(ABTBCharacter* Character) override;
+
+protected:
+
+private:
+
 };

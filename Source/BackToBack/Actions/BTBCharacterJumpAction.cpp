@@ -13,6 +13,8 @@ void UBTBCharacterJumpAction::Act(ABTBCharacter* Character)
 	if (Character->GetbStartJump())
 	{
 		Character->Jump();
+		UE_LOG(LogTemp, Warning, TEXT("JUMP From Action"));
+
 	}
 	
 }
