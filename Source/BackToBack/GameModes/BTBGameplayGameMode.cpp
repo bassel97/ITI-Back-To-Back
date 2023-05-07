@@ -24,7 +24,6 @@ void ABTBGameplayGameMode::BeginPlay()
 	CreateRenderTextures();
 	CreateUIWidget();
 	SetSplitScreenTextureToMaterial();
-	/*GameWidget = CreateDefaultSubobject<>()*/
 }
 
 void ABTBGameplayGameMode::CreatePlayers()
@@ -127,20 +126,17 @@ void ABTBGameplayGameMode::CreateUIWidget()
 
 void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 {
-	UMaterialInstanceDynamic* DynamicMI = UMaterialInstanceDynamic::Create(SplitScreenMaterialInstance, nullptr);
-	DynamicMI->SetTextureParameterValue(TEXT("MyTextureSample"), RenderTexture_1);
-	//GameWidget->MainScreenBox->SetTextureParameter(RenderTexture_1.GetFName());
+	if(!ensure(GameWidget!=nullptr))
+	{
+		return;
+	}
 
-	UKismetSystemLibrary::PrintString(GetWorld(),
-		FString::Printf(TEXT("Render texture 1 name is %s"), *RenderTexture_1.GetName()));
+	const TObjectPtr<UMaterialInstanceDynamic> DynamicMI =
+		UMaterialInstanceDynamic::Create(SplitScreenMaterialInstance, nullptr);
 	
-	//BTBGameHUDWidgetClass
-	//UBTBGameHUD* HUD = Cast<UBTBGameHUD>(BTBGameHUDWidgetClass);
-	//if(HUD)
-	//{
-	//	//HUD->MainScreenBox->SetEffectMaterial(DynamicMI);
-	//	HUD->MainScreenBox->SetTextureParameter(RenderTexture_1.GetFName());
-	//}
+	DynamicMI->SetTextureParameterValue(TEXT("Texture1"), RenderTexture_1);
+	DynamicMI->SetTextureParameterValue(TEXT("Texture2"), RenderTexture_2);
+	GameWidget->MainScreenBox->SetEffectMaterial(DynamicMI);
 }
 
 FVector2d ABTBGameplayGameMode::GetScreenResolution()
