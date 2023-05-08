@@ -29,17 +29,18 @@ void ABTBGameplayGameMode::BeginPlay()
 void ABTBGameplayGameMode::CreatePlayers()
 {
 	UWorld* World = GetWorld();
-	if(!ensure(World != nullptr))
+	if(!ensure(World != nullptr && PlayableCharOneClass != nullptr
+	 && PlayableCharTwoClass != nullptr))
 	{
 		return;
 	}
-	
+
 	UGameplayStatics::GetAllActorsOfClass(World, APlayerStart::StaticClass(), PlayerStartArray);
 	
-	ABTBPlayableCharacter* PlayerCharacterOne = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharClass);
+	ABTBPlayableCharacter* PlayerCharacterOne = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass);
 	PlayerCharacterArray.AddUnique(PlayerCharacterOne);
 
-	ABTBPlayableCharacter* PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharClass);
+	ABTBPlayableCharacter* PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharTwoClass);
 	PlayerCharacterArray.AddUnique(PlayerCharacterTwo);
 
 

@@ -45,7 +45,8 @@ protected:
 	void SetAxisInput(const FInputActionValue& Val);
 	
 	void HandleJumpAction();
-	void HandleRotateAction();
+	void HandleRotateAction(float dTime);
+	void HandleButtonDown();
 
 private:
 	void ButtonStateSetData(FButtonState& ButtonState, const bool Value);

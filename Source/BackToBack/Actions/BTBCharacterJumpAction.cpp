@@ -13,7 +13,7 @@ void UBTBCharacterJumpAction::Act(ABTBCharacter* Character)
 	if (Character->GetbStartJump())
 	{
 		Character->Jump();
-
+		UE_LOG(LogTemp, Warning, TEXT("We are jumping, we are sinking"));
 
 	}
 	

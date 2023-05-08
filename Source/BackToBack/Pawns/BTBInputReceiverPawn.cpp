@@ -17,7 +17,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	
 	// Send Data to player character
 	HandleJumpAction();
-	HandleRotateAction();
+	HandleRotateAction(DeltaSeconds);
 
 	//Reset Button states
 	RightTrigger.ResetDownReleaseState();
@@ -99,7 +99,7 @@ void ABTBInputReceiverPawn::HandleJumpAction()
 	if (UpButton.bIsDown)
 	{
 		PlayerCharacter->SetbStartJump(true);
-
+		UE_LOG(LogTemp, Warning, TEXT("Jump btn clicked"));
 	}
 	if (UpButton.bIsReleased)
 	{
@@ -114,9 +114,26 @@ void ABTBInputReceiverPawn::HandleJumpAction()
 	}
 }
 
-void ABTBInputReceiverPawn::HandleRotateAction()
+void ABTBInputReceiverPawn::HandleRotateAction(float dTime)
 {
-	PlayerCharacter->SetRotationValue(AxisInput.X);
+	if(AxisInput.X != 0)
+	{
+		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
+		float rotSpeed = 30;
+		PlayerCharacter->SetbStartRotate(true);
+		PlayerCharacter->SetRotationValue(input * rotSpeed);
+		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"),input);
+	}
+	else
+	{
+		PlayerCharacter->SetbStartRotate(false);
+	}
+	
+}
+
+void ABTBInputReceiverPawn::HandleButtonDown()
+{
+
 }
 
 void ABTBInputReceiverPawn::ButtonStateSetData(FButtonState& ButtonState, const bool Value)
