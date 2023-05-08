@@ -31,6 +31,10 @@ public:
 
 	void SetbStartRotate(bool bStartRotate);
 
+	float GetRotationValue();
+
+	void SetRotationValue(float Value);
+
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
 
@@ -38,6 +42,8 @@ private:
 	bool bStartJump = false;
 
 	bool bStartRotate = false;
+
+	float RotationValue;
 	
 
 	

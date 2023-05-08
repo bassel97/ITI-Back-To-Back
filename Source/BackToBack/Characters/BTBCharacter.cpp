@@ -36,3 +36,14 @@ void ABTBCharacter::SetbStartRotate(bool value)
 	bStartRotate = value;
 }
 
+float ABTBCharacter::GetRotationValue()
+{
+	return RotationValue;
+}
+
+void ABTBCharacter::SetRotationValue(float Value)
+{
+	RotationValue = Value;
+
+}
+

@@ -15,7 +15,7 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 	{
 		FRotator CharRotation = Character->GetActorRotation();
 
-		FRotator NewRotation = CharRotation.Add(0, 1, 0);
+		FRotator NewRotation = CharRotation.Add(0, Character->GetRotationValue(), 0);
 		
 		FQuat QuatRotation = FQuat(NewRotation);
 
