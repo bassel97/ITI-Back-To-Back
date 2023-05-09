@@ -20,10 +20,9 @@ void ABTBGameplayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	CreatePlayers();
-	AssignCameras();
-	CreateRenderTextures();
 	CreateUIWidget();
-	SetSplitScreenTextureToMaterial();
+	AssignCameras();
+	
 }
 
 void ABTBGameplayGameMode::CreatePlayers()
@@ -84,6 +83,16 @@ void ABTBGameplayGameMode::AssignCameras()
 		AActor* Camera = World->SpawnActor<AActor>(CameraClass);
 		UGameplayStatics::GetPlayerController(World, 0)->SetViewTarget(Camera);
 		UGameplayStatics::GetPlayerController(World, 1)->SetViewTarget(Camera);
+
+		GameWidget->MainScreenBox->SetEffectMaterial(nullptr);
+		//GameWidget->MainScreenImage->SetOpacity(0.f);
+		GameWidget->MainScreenImage->SetRenderOpacity(0.f);
+	}
+	else
+	{
+		CreateRenderTextures();
+		
+		SetSplitScreenTextureToMaterial();
 	}
 
 #if UE_EDITOR
@@ -104,6 +113,9 @@ void ABTBGameplayGameMode::CreateRenderTextures()
 	
 	RenderTexture_2 = NewObject<UTextureRenderTarget2D>(this, UTextureRenderTarget2D::StaticClass());
 	RenderTexture_2->InitAutoFormat(ScreenSize.X, ScreenSize.Y);
+
+	PlayerCharacterArray[0]->AssignRenderTextureToCamera(RenderTexture_1);
+	PlayerCharacterArray[1]->AssignRenderTextureToCamera(RenderTexture_2);
 }
 
 void ABTBGameplayGameMode::CreateUIWidget()
@@ -120,8 +132,6 @@ void ABTBGameplayGameMode::CreateUIWidget()
 		if (GameWidget)
 		{
 			GameWidget->AddToViewport();
-			PlayerCharacterArray[0]->AssignRenderTextureToCamera(RenderTexture_1);
-			PlayerCharacterArray[1]->AssignRenderTextureToCamera(RenderTexture_2);
 		}
 		
 	}
@@ -140,6 +150,8 @@ void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 	DynamicMI->SetTextureParameterValue(TEXT("Texture1"), RenderTexture_1);
 	DynamicMI->SetTextureParameterValue(TEXT("Texture2"), RenderTexture_2);
 	GameWidget->MainScreenBox->SetEffectMaterial(DynamicMI);
+	GameWidget->MainScreenImage->SetRenderOpacity(1.f);
+	//GameWidget->MainScreenImage->SetOpacity(1.f);
 }
 
 FVector2d ABTBGameplayGameMode::GetScreenResolution()

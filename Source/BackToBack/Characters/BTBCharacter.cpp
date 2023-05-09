@@ -21,9 +21,9 @@ bool ABTBCharacter::GetbStartJump()
 	return bStartJump;
 }
 
-void ABTBCharacter::SetbStartJump(bool value)
+void ABTBCharacter::SetbStartJump(bool Value)
 {
-	bStartJump = value;
+	bStartJump = Value;
 }
 
 bool ABTBCharacter::GetbStartRotate()
@@ -31,9 +31,19 @@ bool ABTBCharacter::GetbStartRotate()
 	return bStartRotate;
 }
 
-void ABTBCharacter::SetbStartRotate(bool value)
+void ABTBCharacter::SetbStartRotate(bool Value)
 {
-	bStartRotate = value;
+	bStartRotate = Value;
+}
+
+bool ABTBCharacter::GetbStartMove()
+{
+	return bStartMove;
+}
+
+void ABTBCharacter::SetbStartMove(bool Value)
+{
+	bStartMove = Value;
 }
 
 float ABTBCharacter::GetRotationValue()
@@ -45,5 +55,15 @@ void ABTBCharacter::SetRotationValue(float Value)
 {
 	RotationValue = Value;
 
+}
+
+float ABTBCharacter::GetMoveValue()
+{
+	return MoveValue;
+}
+
+void ABTBCharacter::SetMoveValue(float Value)
+{
+	MoveValue = Value;
 }
 
