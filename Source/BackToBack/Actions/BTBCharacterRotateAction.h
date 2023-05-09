@@ -17,7 +17,6 @@ class BACKTOBACK_API UBTBCharacterRotateAction : public UBTBCharacterAction
 public:
 
 protected:
-
 	virtual void Act(ABTBCharacter* Character) override;
 
 private:

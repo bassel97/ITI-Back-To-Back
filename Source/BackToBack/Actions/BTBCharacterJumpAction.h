@@ -16,5 +16,5 @@ class BACKTOBACK_API UBTBCharacterJumpAction : public UBTBCharacterAction
 
 public:
 	virtual void Act(ABTBCharacter* Character) override;
-
+	
 };
