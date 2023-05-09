@@ -19,6 +19,14 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	HandleJumpAction();
 	HandleRotateAction();
 	HandleMoveAction();
+
+	HandleDownButton();
+	HandleUpButton();
+	HandleLeftButton();
+	HandleRightButton();
+	HandleRightTrigger();
+	HandleLeftTrigger();
+	HandleAxisInputAction();
 	//Reset Button states
 	RightTrigger.ResetDownReleaseState();
 	LeftTrigger.ResetDownReleaseState();
@@ -95,23 +103,113 @@ void ABTBInputReceiverPawn::SetAxisInput(const FInputActionValue& Val)
 	AxisInput = Val.Get<FInputActionValue::Axis2D>();
 }
 
-void ABTBInputReceiverPawn::HandleJumpAction()
+void ABTBInputReceiverPawn::HandleDownButton()
+{
+	if (DownButton.bIsDown)
+	{
+	}
+
+	if (DownButton.bIsReleased)
+	{
+	}
+
+	if (DownButton.bIsHeld)
+	{
+	}
+}
+
+void ABTBInputReceiverPawn::HandleUpButton()
 {
 	if (UpButton.bIsDown)
 	{
 		PlayerCharacter->SetbStartJump(true);
-		UE_LOG(LogTemp, Warning, TEXT("Jump btn clicked"));
 	}
+
 	if (UpButton.bIsReleased)
 	{
 		PlayerCharacter->SetbStartJump(false);
-
 	}
 
 	if (UpButton.bIsHeld)
 	{
 		PlayerCharacter->SetbStartJump(true);
+	}
 
+}
+
+void ABTBInputReceiverPawn::HandleLeftButton()
+{
+	if (LeftButton.bIsDown)
+	{
+	}
+
+	if (LeftButton.bIsReleased)
+	{
+	}
+
+	if (LeftButton.bIsHeld)
+	{
+	}
+}
+
+void ABTBInputReceiverPawn::HandleRightButton()
+{
+	if (RightButton.bIsDown)
+	{
+	}
+
+	if (RightButton.bIsReleased)
+	{
+	}
+
+	if (RightButton.bIsHeld)
+	{
+	}
+}
+
+void ABTBInputReceiverPawn::HandleRightTrigger()
+{
+	if (RightTrigger.bIsDown)
+	{
+	}
+
+	if (RightTrigger.bIsReleased)
+	{
+	}
+
+	if (RightTrigger.bIsHeld)
+	{
+	}
+}
+
+void ABTBInputReceiverPawn::HandleLeftTrigger()
+{
+	if (LeftTrigger.bIsDown)
+	{
+	}
+
+	if (LeftTrigger.bIsReleased)
+	{
+	}
+
+	if (LeftTrigger.bIsHeld)
+	{
+	}
+}
+
+void ABTBInputReceiverPawn::HandleAxisInputAction()
+{
+	if (AxisInput.X != 0)
+	{
+		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
+		float rotSpeed = 30;
+		PlayerCharacter->SetbStartRotate(true);
+		PlayerCharacter->SetRotationValue(input * rotSpeed);
+		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
+	}
+	else
+	{
+		PlayerCharacter->SetbStartRotate(false);
 	}
 }
 
@@ -154,10 +252,6 @@ void ABTBInputReceiverPawn::HandleMoveAction()
 	}
 }
 
-void ABTBInputReceiverPawn::HandleButtonDown()
-{
-
-}
 
 
 

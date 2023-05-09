@@ -43,11 +43,17 @@ protected:
 	void UpButtonInputTriggered(const FInputActionValue& Val);
 
 	void SetAxisInput(const FInputActionValue& Val);
-	
-	void HandleJumpAction();
+
 	void HandleRotateAction();
-	void HandleButtonDown();
 	void HandleMoveAction();
+
+	void HandleDownButton();
+	void HandleUpButton();
+	void HandleLeftButton();
+	void HandleRightButton();
+	void HandleRightTrigger();
+	void HandleLeftTrigger();
+	void HandleAxisInputAction();
 private:
 	void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
 	
