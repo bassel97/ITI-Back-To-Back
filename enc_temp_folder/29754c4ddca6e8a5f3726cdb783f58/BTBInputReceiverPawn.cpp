@@ -17,7 +17,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	
 	// Send Data to player character
 	
-	//HandleRotateAction();
+	HandleRotateAction();
 	HandleMoveAction();
 
 	HandleDownButton();
@@ -202,7 +202,7 @@ void ABTBInputReceiverPawn::HandleAxisInputAction()
 	if (AxisInput.X != 0)
 	{
 		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-		float rotSpeed = 5;
+		float rotSpeed = 30;
 		PlayerCharacter->SetbStartRotate(true);
 		PlayerCharacter->SetRotationValue(input * rotSpeed);
 		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
@@ -225,7 +225,7 @@ void ABTBInputReceiverPawn::HandleRotateAction()
 		
 		//float rotSpeed = 30;
 		PlayerCharacter->SetbStartRotate(true);
-		PlayerCharacter->SetRotationValue(input * 0.1);
+		PlayerCharacter->SetRotationValue(input);
 		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
 	}
 	else
