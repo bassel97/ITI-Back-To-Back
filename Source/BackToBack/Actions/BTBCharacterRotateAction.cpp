@@ -20,8 +20,32 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 
 		FQuat QuatRotation = FQuat(NewRotation);
 
-		Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
-
+		//Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
+		
+		//Character->GetController()->SetControlRotation(NewRotation);
+		
+		if(APlayerController* PC = Cast<APlayerController>(Character))
+		{
+			PC->Possess(Character);
+			Character->AddControllerYawInput(Character->GetRotationValue());
+			PC->Destroy();
+			UE_LOG(LogTemp, Warning, TEXT("Using On-the-fly Controller"));
+		}
+		else
+		{
+			Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
+			UE_LOG(LogTemp, Warning, TEXT("Using Actor Rotation"));
+		}
+		/*if(Character->GetController())
+		{
+			Character->AddControllerYawInput(Character->GetRotationValue());
+			UE_LOG(LogTemp, Warning, TEXT("Using Actor Controller"));
+		}
+		else
+		{
+			Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
+			UE_LOG(LogTemp, Warning, TEXT("Using Actor Rotation"));
+		}*/
 		UE_LOG(LogTemp, Warning, TEXT("Yaw angle is : %f"), Character->GetActorRotation().Yaw);
 		
 	}
