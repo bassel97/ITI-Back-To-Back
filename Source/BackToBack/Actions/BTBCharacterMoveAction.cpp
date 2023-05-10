@@ -22,9 +22,9 @@ void UBTBCharacterMoveAction::Act(ABTBCharacter* Character)
 			Character->AddActorLocalTransform(Transform, false, 0, ETeleportType::None);
 		}
 	}
-	else
+	/*else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Move btn not clicked, %f"), moveValue);
-	}
+	}*/
 	
 }

@@ -16,7 +16,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	
 	// Send Data to player character
-	HandleJumpAction();
+	
 	HandleRotateAction();
 	HandleMoveAction();
 
@@ -220,8 +220,8 @@ void ABTBInputReceiverPawn::HandleRotateAction()
 	
 	if(AxisInput.X != 0)
 	{
-		//float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-		float input = AxisInput.X;
+		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
+		//float input = AxisInput.X;
 		
 		//float rotSpeed = 30;
 		PlayerCharacter->SetbStartRotate(true);
@@ -238,8 +238,8 @@ void ABTBInputReceiverPawn::HandleMoveAction()
 {
 	if (AxisInput.Y != 0)
 	{
-		//float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-		float input = AxisInput.Y;
+		float input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
+		//float input = AxisInput.Y;
 
 		//float rotSpeed = 30;
 		PlayerCharacter->SetbStartMove(true);
