@@ -19,12 +19,11 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 		FRotator NewRotation = FRotator(0, Character->GetRotationValue(), 0);
 
 		FQuat QuatRotation = FQuat(NewRotation);
-
-		//Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
+		Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 		
 		//Character->GetController()->SetControlRotation(NewRotation);
 		
-		if(APlayerController* PC = Cast<APlayerController>(Character))
+		/*if(APlayerController* PC = Cast<APlayerController>(Character))
 		{
 			PC->Possess(Character);
 			Character->AddControllerYawInput(Character->GetRotationValue());
@@ -35,7 +34,7 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 		{
 			Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
 			UE_LOG(LogTemp, Warning, TEXT("Using Actor Rotation"));
-		}
+		}*/
 		/*if(Character->GetController())
 		{
 			Character->AddControllerYawInput(Character->GetRotationValue());

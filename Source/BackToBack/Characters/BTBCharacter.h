@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
 #include "BTBCharacter.generated.h"
 
 
@@ -43,6 +44,8 @@ public:
 
 	void SetMoveValue(float Value);
 
+	
+
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
 
@@ -56,7 +59,6 @@ private:
 	float RotationValue;
 
 	float MoveValue;
-	
 
 	
 };
