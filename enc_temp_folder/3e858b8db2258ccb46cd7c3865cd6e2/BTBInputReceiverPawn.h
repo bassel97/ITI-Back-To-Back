@@ -44,8 +44,8 @@ protected:
 
 	void SetAxisInput(const FInputActionValue& Val);
 
-	/*void HandleRotateAction();
-	void HandleMoveAction();*/
+	void HandleRotateAction();
+	void HandleMoveAction();
 
 	void HandleDownButton();
 	void HandleUpButton();

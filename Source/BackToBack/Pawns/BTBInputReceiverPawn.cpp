@@ -18,7 +18,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	// Send Data to player character
 	
 	//HandleRotateAction();
-	HandleMoveAction();
+	//HandleMoveAction();
 
 	HandleDownButton();
 	HandleUpButton();
@@ -199,6 +199,7 @@ void ABTBInputReceiverPawn::HandleLeftTrigger()
 
 void ABTBInputReceiverPawn::HandleAxisInputAction()
 {
+	//Jumping
 	if (AxisInput.X != 0)
 	{
 		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
@@ -211,31 +212,7 @@ void ABTBInputReceiverPawn::HandleAxisInputAction()
 	{
 		PlayerCharacter->SetbStartRotate(false);
 	}
-}
-
-void ABTBInputReceiverPawn::HandleRotateAction()
-{
-	//const ABTBPlayerController* PC = Cast<ABTBPlayerController>(GetController());
-
-	
-	if(AxisInput.X != 0)
-	{
-		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-		//float input = AxisInput.X;
-		
-		//float rotSpeed = 30;
-		PlayerCharacter->SetbStartRotate(true);
-		PlayerCharacter->SetRotationValue(input * 0.1);
-		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
-	}
-	else
-	{
-		PlayerCharacter->SetbStartRotate(false);
-	}
-	
-}
-void ABTBInputReceiverPawn::HandleMoveAction()
-{
+	//Moving
 	if (AxisInput.Y != 0)
 	{
 		float input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
@@ -252,7 +229,46 @@ void ABTBInputReceiverPawn::HandleMoveAction()
 	}
 }
 
-
+#pragma region BeforeRefactoring
+//void ABTBInputReceiverPawn::HandleRotateAction()
+//{
+//	//const ABTBPlayerController* PC = Cast<ABTBPlayerController>(GetController());
+//
+//	
+//	if(AxisInput.X != 0)
+//	{
+//		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
+//		//float input = AxisInput.X;
+//		
+//		//float rotSpeed = 30;
+//		PlayerCharacter->SetbStartRotate(true);
+//		PlayerCharacter->SetRotationValue(input * 0.1);
+//		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
+//	}
+//	else
+//	{
+//		PlayerCharacter->SetbStartRotate(false);
+//	}
+//	
+//}
+//void ABTBInputReceiverPawn::HandleMoveAction()
+//{
+//	if (AxisInput.Y != 0)
+//	{
+//		float input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
+//		//float input = AxisInput.Y;
+//
+//		//float rotSpeed = 30;
+//		PlayerCharacter->SetbStartMove(true);
+//		PlayerCharacter->SetMoveValue(input);
+//		//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), input);
+//	}
+//	else
+//	{
+//		PlayerCharacter->SetbStartMove(false);
+//	}
+//}  
+#pragma endregion
 
 
 void ABTBInputReceiverPawn::ButtonStateSetData(FButtonState& ButtonState, const bool Value)
