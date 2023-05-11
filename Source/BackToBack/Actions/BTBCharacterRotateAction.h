@@ -6,6 +6,8 @@
 #include "BTBCharacterAction.h"
 #include "BTBCharacterRotateAction.generated.h"
 
+class ABTBCharacter;
+
 /**
  * 
  */

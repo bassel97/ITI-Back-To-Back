@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/BTTaskNode.h"
+#include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BTBBTActAction.generated.h"
 
 class UBTBCharacterAction;
@@ -12,7 +12,7 @@ class UBTBCharacterAction;
  * Our Behaviour Tree Task Node
  */
 UCLASS()
-class BACKTOBACK_API UBTBBTActAction : public UBTTaskNode
+class BACKTOBACK_API UBTTask_ActAction : public UBTTask_BlackboardBase
 {
 	GENERATED_UCLASS_BODY()
 

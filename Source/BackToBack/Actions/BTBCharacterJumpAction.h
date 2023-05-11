@@ -6,6 +6,8 @@
 #include "BTBCharacterAction.h"
 #include "BTBCharacterJumpAction.generated.h"
 
+class ABTBCharacter;
+
 /**
  * 
  */

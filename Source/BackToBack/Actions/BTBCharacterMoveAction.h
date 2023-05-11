@@ -7,6 +7,10 @@
 #include "BTBCharacterAction.h"
 #include "BTBCharacterMoveAction.generated.h"
 
+class ABTBCharacter;
+class ABTBAICharacter;
+
+
 /**
  * 
  */

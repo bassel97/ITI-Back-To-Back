@@ -3,10 +3,12 @@
 #pragma once
 
 
-#include "BackToBack/Characters/BTBCharacter.h"
 #include "CoreMinimal.h"
 #include "BackToBack/DataAssets/BTBDataAsset.h"
 #include "BTBCharacterAction.generated.h"
+
+class ABTBCharacter;
+class ABTBAICharacter;
 
 /**
  * 

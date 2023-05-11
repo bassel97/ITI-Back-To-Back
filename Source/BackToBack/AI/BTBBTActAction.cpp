@@ -3,22 +3,25 @@
 
 #include "BTBBTActAction.h"
 #include "BackToBack/Actions/BTBCharacterAction.h"
+#include "BackToBack/AIControllers/BTBAIController.h"
+#include "BackToBack/Characters/BTBAICharacter.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 
-UBTBBTActAction::UBTBBTActAction(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer), Action(nullptr)
+UBTTask_ActAction::UBTTask_ActAction(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer), Action(nullptr)
 {
 	NodeName = "ActAction";
 }
 
-EBTNodeResult::Type UBTBBTActAction::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTask_ActAction::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	const auto Result = Super::ExecuteTask(OwnerComp, NodeMemory);
+	Super::ExecuteTask(OwnerComp, NodeMemory);
 	
-	const AController* MyController = Cast<AController>(OwnerComp.GetOwner());
+	const ABTBAIController* MyController = Cast<ABTBAIController>(OwnerComp.GetOwner());
 	APawn* MyPawn = MyController ? MyController->GetPawn() : nullptr;
 	
-	const auto Character = Cast<ABTBCharacter>(MyPawn);
+	const auto Character = Cast<ABTBAICharacter>(MyPawn);
 	Action->Act(Character);
 	
-	return Result;
+	return EBTNodeResult::Succeeded;
 }

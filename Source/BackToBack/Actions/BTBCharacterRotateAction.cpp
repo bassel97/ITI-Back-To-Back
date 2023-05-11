@@ -4,6 +4,7 @@
 #include "BTBCharacterRotateAction.h"
 
 #include "GameFramework/PawnMovementComponent.h"
+#include "BackToBack/Characters/BTBCharacter.h"
 
 
 void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)

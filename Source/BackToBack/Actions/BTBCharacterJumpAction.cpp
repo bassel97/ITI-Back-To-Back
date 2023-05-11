@@ -2,6 +2,7 @@
 
 
 #include "BTBCharacterJumpAction.h"
+#include "BackToBack/Characters/BTBCharacter.h"
 
 void UBTBCharacterJumpAction::Act(ABTBCharacter* Character)
 {
