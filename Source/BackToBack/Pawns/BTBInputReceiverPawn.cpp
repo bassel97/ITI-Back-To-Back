@@ -199,19 +199,20 @@ void ABTBInputReceiverPawn::HandleLeftTrigger()
 
 void ABTBInputReceiverPawn::HandleAxisInputAction()
 {
-	//Jumping
+	//Rotating
 	if (AxisInput.X != 0)
 	{
 		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-		float rotSpeed = 5;
+		//float rotSpeed = 10;
 		PlayerCharacter->SetbStartRotate(true);
-		PlayerCharacter->SetRotationValue(input * rotSpeed);
+		PlayerCharacter->SetRotationValue(input);
 		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
 	}
 	else
 	{
 		PlayerCharacter->SetbStartRotate(false);
 	}
+
 	//Moving
 	if (AxisInput.Y != 0)
 	{
