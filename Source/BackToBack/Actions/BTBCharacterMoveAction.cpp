@@ -19,14 +19,14 @@ void UBTBCharacterMoveAction::Act(ABTBCharacter* Character)
 	
 	if(auto PlayablerCharacter = Cast<ABTBPlayableCharacter>(Character))
 	{
-		float moveValue = Character->GetMoveValue();
+		float MoveValue = Character->GetMoveValue();
 		if(Character->GetbStartMove())
 		{
 		
-			UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), moveValue);
-			if (moveValue != 0.f)
+			UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), MoveValue);
+			if (MoveValue != 0.f)
 			{
-				const FVector Forward = FVector(Character->GetMoveValue(), 0.f, 0.f);
+				const FVector Forward = FVector(MoveValue * 5.f, 0.f, 0.f);
 				const FTransform Transform = FTransform(Forward);
 				Character->AddActorLocalTransform(Transform, false, 0, ETeleportType::None);
 			}

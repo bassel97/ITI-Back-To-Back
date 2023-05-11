@@ -17,36 +17,42 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 	if (Character->GetbStartRotate())
 	{
 
-		FRotator NewRotation = FRotator(0, Character->GetRotationValue(), 0);
+		FVector CurrentLocation = Character->GetActorLocation();
+		float RotationValue = Character->GetRotationValue();
+		int32 orientation;
+		if (RotationValue > 0)
+		{
+			orientation = -1;
+		}
+		else
+		{
+			orientation = 1;
+		}
+		Angle += RotationValue;
+		if (Angle > 360.0f) Angle = 1;
 
+		//Rotation around an offset (Radius)
+		FVector Radius = FVector(5.f * orientation, 0 * orientation, 0);
+		FVector RotatedRadius = Radius.RotateAngleAxis(Angle, FVector(0, 0, 1));
+		CurrentLocation.X += RotatedRadius.X;
+		CurrentLocation.Y += RotatedRadius.Y;
+		CurrentLocation.Z += RotatedRadius.Z;
+
+		//Orientation
+		FRotator NewRotation = FRotator(0, RotationValue, 0);
 		FQuat QuatRotation = FQuat(NewRotation);
+
+		//Applying the rotation
 		Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
-		
-		//Character->GetController()->SetControlRotation(NewRotation);
-		
-		/*if(APlayerController* PC = Cast<APlayerController>(Character))
-		{
-			PC->Possess(Character);
-			Character->AddControllerYawInput(Character->GetRotationValue());
-			PC->Destroy();
-			UE_LOG(LogTemp, Warning, TEXT("Using On-the-fly Controller"));
-		}
-		else
-		{
-			Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
-			UE_LOG(LogTemp, Warning, TEXT("Using Actor Rotation"));
-		}*/
-		/*if(Character->GetController())
-		{
-			Character->AddControllerYawInput(Character->GetRotationValue());
-			UE_LOG(LogTemp, Warning, TEXT("Using Actor Controller"));
-		}
-		else
-		{
-			Character->AddActorLocalRotation(QuatRotation, false, 0, ETeleportType::None);
-			UE_LOG(LogTemp, Warning, TEXT("Using Actor Rotation"));
-		}*/
+		Character->SetActorLocation(CurrentLocation);
+
+		//Debugging
+#if UE_EDITOR
 		UE_LOG(LogTemp, Warning, TEXT("Yaw angle is : %f"), Character->GetActorRotation().Yaw);
+		UE_LOG(LogTemp, Warning, TEXT("Rotation Angle is : %f"), Angle);
+		UE_LOG(LogTemp, Warning, TEXT("Input Value is : %f"), RotationValue);
+#endif
+
 		
 	}
 
