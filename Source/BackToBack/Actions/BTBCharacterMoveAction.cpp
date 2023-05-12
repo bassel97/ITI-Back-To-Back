@@ -26,9 +26,10 @@ void UBTBCharacterMoveAction::Act(ABTBCharacter* Character)
 			UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), MoveValue);
 			if (MoveValue != 0.f)
 			{
-				const FVector Forward = FVector(MoveValue * 5.f, 0.f, 0.f);
+				FVector Forward = Character->GetActorForwardVector();
 				const FTransform Transform = FTransform(Forward);
-				Character->AddActorLocalTransform(Transform, false, 0, ETeleportType::None);
+				//Character->AddActorLocalTransform(Transform, false, 0, ETeleportType::None);
+				Character->AddMovementInput(Forward, MoveValue);
 			}
 		}
 	}

@@ -203,6 +203,7 @@ void ABTBInputReceiverPawn::HandleAxisInputAction()
 	if (AxisInput.X != 0)
 	{
 		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
+		float rotSpeed = 3.f;
 		//float rotSpeed = 10;
 		PlayerCharacter->SetbStartRotate(true);
 		PlayerCharacter->SetRotationValue(input);

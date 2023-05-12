@@ -19,6 +19,7 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character)
 
 		FVector CurrentLocation = Character->GetActorLocation();
 		float RotationValue = Character->GetRotationValue();
+		//Character->AddControllerYawInput(RotationValue);
 		int32 orientation;
 		if (RotationValue > 0)
 		{
