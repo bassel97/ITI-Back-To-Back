@@ -23,7 +23,6 @@ private:
 	
 
 public:
-	//FVector LocationToMoveTo = FVector(0,0,0);
 	
 protected:
 	

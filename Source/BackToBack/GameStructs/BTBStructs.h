@@ -16,16 +16,18 @@ USTRUCT(BlueprintType)
 struct FButtonState
 {
 	GENERATED_BODY()
+	
+	/* Bit-field booleans start. */
+	UPROPERTY(BlueprintReadOnly)
+	uint16 bIsDown:1;	
 
 	UPROPERTY(BlueprintReadOnly)
-	bool bIsDown;
+	uint16 bIsHeld:1;
 
 	UPROPERTY(BlueprintReadOnly)
-	bool bIsHeld;
-
-	UPROPERTY(BlueprintReadOnly)
-	bool bIsReleased;
-
+	uint16 bIsReleased:1;
+	/* Bit-field booleans end. */
+	
 	void ResetDownReleaseState()
 	{
 		bIsDown = false;

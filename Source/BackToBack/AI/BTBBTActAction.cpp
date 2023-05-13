@@ -17,11 +17,16 @@ EBTNodeResult::Type UBTTask_ActAction::ExecuteTask(UBehaviorTreeComponent& Owner
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 	
-	const ABTBAIController* MyController = Cast<ABTBAIController>(OwnerComp.GetOwner());
-	APawn* MyPawn = MyController ? MyController->GetPawn() : nullptr;
+	const TObjectPtr<AAIController> OwnerAIController = OwnerComp.GetAIOwner();
+	if(!ensure(OwnerAIController != nullptr))
+	{
+		return EBTNodeResult::Failed;
+	}
 	
-	const auto Character = Cast<ABTBAICharacter>(MyPawn);
-	Action->Act(Character);
+	const TObjectPtr<APawn> OwnerPawn = OwnerAIController->GetPawn();
+	const TObjectPtr<ABTBCharacter> BTBCharacter = Cast<ABTBCharacter>(OwnerPawn);
+	
+	Action->Act(BTBCharacter, true);
 	
 	return EBTNodeResult::Succeeded;
 }

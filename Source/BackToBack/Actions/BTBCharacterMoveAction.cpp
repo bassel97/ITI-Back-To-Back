@@ -10,19 +10,18 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
-void UBTBCharacterMoveAction::Act(ABTBCharacter* Character)
+void UBTBCharacterMoveAction::Act(ABTBCharacter* Character, const bool bIsAI)
 {
 	if (Character == nullptr)
 	{
 		return;
 	}
-	
-	if(auto PlayablerCharacter = Cast<ABTBPlayableCharacter>(Character))
+
+	if(!bIsAI)
 	{
-		float MoveValue = Character->GetMoveValue();
+		const float MoveValue = Character->GetMoveValue();
 		if(Character->GetbStartMove())
 		{
-		
 			UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), MoveValue);
 			if (MoveValue != 0.f)
 			{
@@ -33,15 +32,17 @@ void UBTBCharacterMoveAction::Act(ABTBCharacter* Character)
 			}
 		}
 	}
+	
 
-	if(const auto BTBAICharacter = Cast<ABTBAICharacter>(Character))
+	if(bIsAI)
 	{
-		if(const auto BTBAIController = Cast<ABTBAIController>(BTBAICharacter->GetController()))
+
+		if(const TObjectPtr<ABTBAIController> BTBAIController = Cast<ABTBAIController>(Character->GetController()))
 		{
-			const auto PlayerObject =
+			const TObjectPtr<UObject> PlayerObject =
 				BTBAIController->GetBlackboardComponent()->GetValueAsObject("PlayerActor");
 
-			const auto PlayerActor = Cast<AActor>(PlayerObject);
+			const TObjectPtr<AActor> PlayerActor = Cast<AActor>(PlayerObject);
 			if(PlayerActor)
 			{
 				BTBAIController->MoveToActor(PlayerActor);
@@ -49,6 +50,6 @@ void UBTBCharacterMoveAction::Act(ABTBCharacter* Character)
 			}
 		}
 	}
-
+	
 	
 }

@@ -33,6 +33,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "BTB_AI")
 	TSubclassOf<ABTBPlayableCharacter> PlayableCharacter;
+	
 private:
 	
 };

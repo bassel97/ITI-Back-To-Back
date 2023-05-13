@@ -11,15 +11,15 @@ void ABTBAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UWorld* World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(World != nullptr && AIBehaviorTree != nullptr && PlayableCharacter != nullptr))
 	{
 		return;
 	}
 
 	RunBehaviorTree(AIBehaviorTree);
+	
 	const TObjectPtr<AActor> PlayerActor = UGameplayStatics::GetActorOfClass(World, PlayableCharacter);
-
 	if(PlayerActor)
 	{
 		GetBlackboardComponent()->SetValueAsObject("PlayerActor", PlayerActor);
