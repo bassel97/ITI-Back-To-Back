@@ -24,27 +24,79 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	bool GetbStartJump();
+	virtual void BeginPlay() override;
+
+	bool GetbStartJump()
+	{
+		return bStartJump;
+	}
 	
-	void SetbStartJump(bool Value);
+	void SetbStartJump(bool Value)
+	{
+		bStartJump = Value;
+	}
 
-	bool GetbStartRotate();
+	bool GetbStartRotate()
+	{
+		return bStartRotate;
+	}
 
-	void SetbStartRotate(bool Value);
+	void SetbStartRotate(bool Value)
+	{
+		bStartRotate = Value;
+	}
 
-	bool GetbStartMove();
+	bool GetbStartMove()
+	{
+		return bStartMove;
+	}
 
-	void SetbStartMove(bool Value);
 
-	float GetRotationValue();
+	void SetbStartMove(bool Value)
+	{
+		bStartMove = Value;
+	}
 
-	void SetRotationValue(float Value);
+	float GetRotationValue()
+	{
+		return RotationValue;
+	}
 
-	float GetMoveValue();
+	void SetRotationValue(float Value)
+	{
+		RotationValue = Value;
 
-	void SetMoveValue(float Value);
+	}
 
-	
+	float GetMoveValue()
+	{
+		return MoveValue;
+	}
+
+	void SetMoveValue(float Value)
+	{
+		MoveValue = Value;
+	}
+
+	bool GetbStartShoot()
+	{
+		return bStartShoot;
+	}
+
+	void SetbStartShoot(bool Value)
+	{
+		bStartShoot = Value;
+	}
+
+	bool GetbStartPool()
+	{
+		return bStartPool;
+	}
+
+	void SetbStartPool(bool Value)
+	{
+		bStartPool = Value;
+	}
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
@@ -55,6 +107,10 @@ private:
 	bool bStartRotate = false;
 
 	bool bStartMove = false;
+
+	bool bStartShoot = false;
+
+	bool bStartPool = false;
 
 	float RotationValue;
 

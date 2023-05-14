@@ -171,14 +171,21 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 {
 	if (RightTrigger.bIsDown)
 	{
+		
+		PlayerCharacter->SetbStartShoot(true);
+		UE_LOG(LogTemp, Warning, TEXT("Left click pressed"));
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 1.f, false);
 	}
-
 	if (RightTrigger.bIsReleased)
 	{
+		PlayerCharacter->SetbStartShoot(false);
+		UE_LOG(LogTemp, Warning, TEXT("Left click Released"));
+		
 	}
 
 	if (RightTrigger.bIsHeld)
 	{
+		PlayerCharacter->SetbStartShoot(true);
 	}
 }
 
@@ -205,6 +212,7 @@ void ABTBInputReceiverPawn::HandleAxisInputAction()
 		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
 		float rotSpeed = 3.f;
 		//float rotSpeed = 10;
+		//this->AddControllerYawInput(input);
 		PlayerCharacter->SetbStartRotate(true);
 		PlayerCharacter->SetRotationValue(input);
 		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);

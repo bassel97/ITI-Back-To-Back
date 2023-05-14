@@ -22,6 +22,8 @@ protected:
 	virtual void Act(ABTBCharacter* Character, bool bIsAI = false) override;
 	float Angle;
 
+	UPROPERTY(EditDefaultsOnly)
+		float XCenterOfRotation;
 private:
 
 public:

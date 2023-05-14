@@ -56,6 +56,7 @@ protected:
 	void HandleAxisInputAction();
 private:
 	void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
+	FTimerHandle TimerHandle;
 	
 public:
 	UPROPERTY(VisibleAnywhere, Category = "Class Variables")

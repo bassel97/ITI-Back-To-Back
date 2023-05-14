@@ -16,56 +16,31 @@ void ABTBCharacter::Tick(float DeltaTime)
 	}
 }
 
-bool ABTBCharacter::GetbStartJump()
+void ABTBCharacter::BeginPlay()
 {
-	return bStartJump;
+	Super::BeginPlay();
+
+	SetbStartPool(true);
 }
 
-void ABTBCharacter::SetbStartJump(bool Value)
-{
-	bStartJump = Value;
-}
 
-bool ABTBCharacter::GetbStartRotate()
-{
-	return bStartRotate;
-}
 
-void ABTBCharacter::SetbStartRotate(bool Value)
-{
-	bStartRotate = Value;
-}
 
-bool ABTBCharacter::GetbStartMove()
-{
-	return bStartMove;
-}
 
-void ABTBCharacter::SetbStartMove(bool Value)
-{
-	bStartMove = Value;
-}
 
-float ABTBCharacter::GetRotationValue()
-{
-	return RotationValue;
-}
 
-void ABTBCharacter::SetRotationValue(float Value)
-{
-	RotationValue = Value;
 
-}
 
-float ABTBCharacter::GetMoveValue()
-{
-	return MoveValue;
-}
 
-void ABTBCharacter::SetMoveValue(float Value)
-{
-	MoveValue = Value;
-}
+
+
+
+
+
+
+
+
+
 
 
 

@@ -4,8 +4,8 @@
 #include "BTBCharacterRotateAction.h"
 
 #include "BackToBack/AIControllers/BTBAIController.h"
-#include "BackToBack/Characters/BTBAICharacter.h"
-#include "GameFramework/PawnMovementComponent.h"
+//#include "BackToBack/Characters/BTBAICharacter.h"
+//#include "GameFramework/PawnMovementComponent.h"
 #include "BackToBack/Characters/BTBCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
@@ -16,15 +16,31 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character, const bool bIsAI)
 	{
 		return;
 	}
-
-	if(!bIsAI)
+#pragma region AddingControllerAndRotating
+	//Character->AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+//Character->AutoPossessPlayer = EAutoReceiveInput::Player2;
+//Character->AutoReceiveInput = EAutoReceiveInput::Player0;
+//if(Character->GetController())
+//{
+//	UE_LOG(LogTemp, Warning, TEXT("We assigned a controller to the player and it's name is %s"),*Character->GetController()->GetName());
+//	
+//	//Character->GetController()
+//	Character->bUseControllerRotationYaw = true;
+//	Character->AddControllerYawInput(RotationValue);
+//}
+	//When passing the yaw angle if we rotated the input receiver
+	/*Character->SetActorRotation(FRotator(0.f,Character->GetRotationValue(),0.f));
+	UE_LOG(LogTemp, Warning, TEXT("Input Value is : %f"), RotationValue);*/
+#pragma endregion
+	if (!bIsAI)
 	{
 		if (Character->GetbStartRotate())
 		{
 
 			FVector CurrentLocation = Character->GetActorLocation();
 			float RotationValue = Character->GetRotationValue();
-			//Character->AddControllerYawInput(RotationValue);
+
+
 			int32 orientation;
 			if (RotationValue > 0)
 			{
@@ -38,11 +54,12 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character, const bool bIsAI)
 			if (Angle > 360.0f) Angle = 1;
 
 			//Rotation around an offset (Radius)
-			FVector Radius = FVector(5.f * orientation, 0 * orientation, 0);
+			FVector Radius = FVector(XCenterOfRotation * orientation, 0 * orientation, 0);
 			FVector RotatedRadius = Radius.RotateAngleAxis(Angle, FVector(0, 0, 1));
 			CurrentLocation.X += RotatedRadius.X;
 			CurrentLocation.Y += RotatedRadius.Y;
 			CurrentLocation.Z += RotatedRadius.Z;
+
 
 			//Orientation
 			FRotator NewRotation = FRotator(0, RotationValue, 0);
@@ -53,30 +70,29 @@ void UBTBCharacterRotateAction::Act(ABTBCharacter* Character, const bool bIsAI)
 			Character->SetActorLocation(CurrentLocation);
 
 			//Debugging
-			#if UE_EDITOR
+#if UE_EDITOR
 			UE_LOG(LogTemp, Warning, TEXT("Yaw angle is : %f"), Character->GetActorRotation().Yaw);
 			UE_LOG(LogTemp, Warning, TEXT("Rotation Angle is : %f"), Angle);
 			UE_LOG(LogTemp, Warning, TEXT("Input Value is : %f"), RotationValue);
 #endif
 		}
 	}
-
-	
-	if(bIsAI)
+	//if (bIsAI)
+	else
 	{
-		if(const TObjectPtr<ABTBAIController> BTBAIController = Cast<ABTBAIController>(Character->GetController()))
+		if (const TObjectPtr<ABTBAIController> BTBAIController = Cast<ABTBAIController>(Character->GetController()))
 		{
 			const TObjectPtr<UObject> PlayerObject =
 				BTBAIController->GetBlackboardComponent()->GetValueAsObject("PlayerActor");
 
 			const TObjectPtr<AActor> PlayerActor = Cast<AActor>(PlayerObject);
-			if(PlayerActor)
+			if (PlayerActor)
 			{
 				BTBAIController->SetFocus(PlayerActor);
 			}
 		}
 	}
-
+	
 }
 
 
