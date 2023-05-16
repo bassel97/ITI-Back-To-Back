@@ -31,7 +31,10 @@ public:
 		float BulletVelocity;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		UStaticMeshComponent* GunMesh;
+		USkeletalMeshComponent* GunSkeletal;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		UMeshComponent* GunMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class UBoxComponent* CollisionBox;

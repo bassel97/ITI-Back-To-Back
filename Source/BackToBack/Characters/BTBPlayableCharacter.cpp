@@ -19,13 +19,13 @@ ABTBPlayableCharacter::ABTBPlayableCharacter()
 	SceneCaptureCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureCamera"));
 	SceneCaptureCamera->SetupAttachment(CameraArm);
 
-	mySkeleton->GetDefaultSubobjectByName("Mesh");
+	//mySkeleton = GetMesh()->GetSkinnedAsset();
 
-	mySkeleton->Sockets.Empty(); //Clears all sockets
-	mySkeleton->Modify(); //Not sure what this does but it is needed.
-	mySocket->SocketName = "mySocket"; //Obviously sets the sockets name
-	mySocket->BoneName = "hand_r"; //Attaches to the bone you choose
-	mySkeleton->Sockets.Add(mySocket); //Finally adds the socket to the skeleton
+	//mySkeleton->Sockets.Empty(); //Clears all sockets
+	//mySkeleton->Modify(); //Not sure what this does but it is needed.
+	//mySocket->SocketName = FName("mySocket"); //Obviously sets the sockets name
+	//mySocket->BoneName = FName("hand_r"); //Attaches to the bone you choose
+	//mySkeleton->Sockets.Add(mySocket); //Finally adds the socket to the skeleton
 }
 
 void ABTBPlayableCharacter::RemoveCamera() const
@@ -51,15 +51,16 @@ void ABTBPlayableCharacter::BeginPlay()
 	//Switching Related
 	
 
-	TArray<TObjectPtr<AActor>> ActorsGuns;
+	/*TArray<TObjectPtr<AActor>> ActorsGuns;
 
-	UGameplayStatics* TheGun;
-
-	TheGun->GetAllActorsOfClass(GetWorld(), GunActorClass, ActorsGuns);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GunActorClass, ActorsGuns);
 
 	GunActor = Cast<ABTBGun>(ActorsGuns[0]);
-
-	GunActor->SetIsOverlapping(true);
+	if(GunActor)
+	{
+		GunActor->SetIsOverlapping(true);
+	}*/
+	
 
 	
 }

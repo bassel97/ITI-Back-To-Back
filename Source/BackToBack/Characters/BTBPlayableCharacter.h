@@ -11,6 +11,7 @@
 class USpringArmComponent;
 class USceneCaptureComponent2D;
 class UBTBCharacterJumpAction;
+class ABTBGun;
 //class UBTBCharacterAction;
 
 /**
@@ -47,16 +48,16 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
 
-	USkeleton* mySkeleton;
+	//USkeleton* mySkeleton;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Testing")
-	//USkeleton* mySkeleton = CreateDefaultSubobject<USkeleton>(TEXT("mySkeleton"));
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Testing")
+	USkeleton* mySkeleton = CreateDefaultSubobject<USkeleton>(TEXT("mySkeleton"));
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Testing")
-	USkeletalMeshSocket* mySocket = NewObject<USkeletalMeshSocket>(mySkeleton);
+	USkeletalMeshSocket* mySocket = NewObject<USkeletalMeshSocket>(mySkeleton);*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	TSubclassOf<ABTBGun> GunActorClass;
+	TSubclassOf<AActor> GunActorClass;
 
 	TObjectPtr<ABTBGun> GunActor;
 

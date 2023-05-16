@@ -13,11 +13,14 @@ ABTBGun::ABTBGun()
 	BulletPool = CreateDefaultSubobject<UBTBObjectPoolComponent>(TEXT("BulletPool"));
 	AddOwnedComponent(BulletPool);
 
-	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	GunMesh = CreateDefaultSubobject<UMeshComponent>(TEXT("Gun Mesh"));
 	GunMesh->SetupAttachment(SceneComponent);
 
+	GunSkeletal = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun Mesh"));
+	GunSkeletal->SetupAttachment(GunMesh);
+
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("SphereCollider"));
-	CollisionBox->SetupAttachment(GunMesh);
+	CollisionBox->SetupAttachment(SceneComponent);
 }
 
 void ABTBGun::BeginPlay()
