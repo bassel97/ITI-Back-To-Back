@@ -21,6 +21,9 @@ class BACKTOBACK_API ABTBCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
+	
+
+public:
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -98,6 +101,16 @@ public:
 		bStartPool = Value;
 	}
 
+	bool GetbStartSwitching()
+	{
+		return bStartSwitching;
+	}
+
+	void SetbStartSwitching(bool Value)
+	{
+		bStartSwitching = Value;
+	}
+
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
 
@@ -111,6 +124,8 @@ private:
 	bool bStartShoot = false;
 
 	bool bStartPool = false;
+
+	bool bStartSwitching = false;
 
 	float RotationValue;
 

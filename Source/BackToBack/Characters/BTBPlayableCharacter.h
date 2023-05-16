@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BTBHumanoidCharacter.h"
 #include "BackToBack/Actions/BTBCharacterAction.h"
+#include "Engine/SkeletalMeshSocket.h"
 #include "BTBPlayableCharacter.generated.h"
 
 class USpringArmComponent;
@@ -27,7 +28,7 @@ public:
 	
 protected:
 	virtual void Tick(float DeltaTime) override;
-	//virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 	
 	
 private:
@@ -35,7 +36,8 @@ private:
 	
 
 public:
-	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
+	bool bGunAttached;
 
 	
 protected:
@@ -44,6 +46,21 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
+
+	USkeleton* mySkeleton;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Testing")
+	//USkeleton* mySkeleton = CreateDefaultSubobject<USkeleton>(TEXT("mySkeleton"));
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Testing")
+	USkeletalMeshSocket* mySocket = NewObject<USkeletalMeshSocket>(mySkeleton);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
+	TSubclassOf<ABTBGun> GunActorClass;
+
+	TObjectPtr<ABTBGun> GunActor;
+
+
 
 	//UPROPERTY(EditDefaultsOnly,Category="Actions")
 	///*TObjectPtr<UBTBCharacterAction> CharacterActionClass;*/

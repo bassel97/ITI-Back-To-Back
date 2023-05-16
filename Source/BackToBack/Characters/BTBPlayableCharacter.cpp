@@ -4,10 +4,11 @@
 #include "BTBPlayableCharacter.h"
 
 #include "BackToBack/Actions/BTBCharacterJumpAction.h"
+#include "BackToBack/Actors/BTBGun.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/SpringArmComponent.h"
-
+#include "Kismet/GameplayStatics.h"
 
 
 ABTBPlayableCharacter::ABTBPlayableCharacter()
@@ -17,6 +18,14 @@ ABTBPlayableCharacter::ABTBPlayableCharacter()
 
 	SceneCaptureCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureCamera"));
 	SceneCaptureCamera->SetupAttachment(CameraArm);
+
+	mySkeleton->GetDefaultSubobjectByName("Mesh");
+
+	mySkeleton->Sockets.Empty(); //Clears all sockets
+	mySkeleton->Modify(); //Not sure what this does but it is needed.
+	mySocket->SocketName = "mySocket"; //Obviously sets the sockets name
+	mySocket->BoneName = "hand_r"; //Attaches to the bone you choose
+	mySkeleton->Sockets.Add(mySocket); //Finally adds the socket to the skeleton
 }
 
 void ABTBPlayableCharacter::RemoveCamera() const
@@ -30,6 +39,29 @@ void ABTBPlayableCharacter::RemoveCamera() const
 void ABTBPlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+
+
+void ABTBPlayableCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+
+	//Switching Related
+	
+
+	TArray<TObjectPtr<AActor>> ActorsGuns;
+
+	UGameplayStatics* TheGun;
+
+	TheGun->GetAllActorsOfClass(GetWorld(), GunActorClass, ActorsGuns);
+
+	GunActor = Cast<ABTBGun>(ActorsGuns[0]);
+
+	GunActor->SetIsOverlapping(true);
+
+	
 }
 
 //void ABTBPlayableCharacter::BeginPlay()
