@@ -4,6 +4,8 @@
 #include "BTBGun.h"
 #include"BackToBack/Actors/BTBObjectPoolComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Components/MeshComponent.h"
 #include "BackToBack/Actors/BTBPooledObject.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -13,14 +15,14 @@ ABTBGun::ABTBGun()
 	BulletPool = CreateDefaultSubobject<UBTBObjectPoolComponent>(TEXT("BulletPool"));
 	AddOwnedComponent(BulletPool);
 
-	GunMesh = CreateDefaultSubobject<UMeshComponent>(TEXT("Gun Mesh"));
+	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gun Mesh"));
 	GunMesh->SetupAttachment(SceneComponent);
-
-	GunSkeletal = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun Mesh"));
-	GunSkeletal->SetupAttachment(GunMesh);
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("SphereCollider"));
 	CollisionBox->SetupAttachment(SceneComponent);
+
+	GunSkeletal = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun Skeleton"));
+	GunSkeletal->SetupAttachment(GunMesh);
 }
 
 void ABTBGun::BeginPlay()

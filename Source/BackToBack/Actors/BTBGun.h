@@ -7,7 +7,8 @@
 #include "BTBGun.generated.h"
 
 class ABTBPooledObject;
-
+class USkeletalMeshComponent;
+class UMeshComponent;
 /**
  * 
  */
@@ -34,7 +35,7 @@ public:
 		USkeletalMeshComponent* GunSkeletal;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		UMeshComponent* GunMesh;
+		UStaticMeshComponent* GunMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class UBoxComponent* CollisionBox;
