@@ -4,6 +4,14 @@
 #include "BTBPooledObject.h"
 
 
+ABTBPooledObject::ABTBPooledObject()
+{
+	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
+	RootComponent = SceneComponent;
+
+	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
+	StaticMeshComponent->SetupAttachment(SceneComponent);
+}
 
 void ABTBPooledObject::DeactivatePooledObject()
 {

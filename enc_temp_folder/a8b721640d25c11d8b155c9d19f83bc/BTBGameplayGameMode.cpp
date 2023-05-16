@@ -23,7 +23,6 @@ void ABTBGameplayGameMode::BeginPlay()
 	CreatePlayers();
 	CreateUIWidget();
 	AssignCameras();
-	AssignGunToPlayer();
 }
 
 void ABTBGameplayGameMode::CreatePlayers()
@@ -161,7 +160,7 @@ void ABTBGameplayGameMode::AssignGunToPlayer()
 	Gun = GetWorld()->SpawnActor<ABTBGun>(GunClass);
 	if (Gun)
 	{
-		Gun->AttachToActor(PlayerCharacterArray[0],FAttachmentTransformRules::KeepRelativeTransform,FName("Gun Socket"));
+		Gun->AttachToActor(PlayerCharacterArray[0],FAttachmentTransformRules::KeepRelativeTransform);
 	}
 }
 

@@ -3,46 +3,46 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BTBActor.h"
+#include "BTBWeaponBase.h"
 #include "BTBGun.generated.h"
+
+class ABTBPooledObject;
 
 /**
  * 
  */
 UCLASS()
-class BACKTOBACK_API ABTBGun : public ABTBActor
+class BACKTOBACK_API ABTBGun : public ABTBWeaponBase 
 {
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	class USceneComponent* SceneComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	class UStaticMeshComponent* GunMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	class UBoxComponent* CollisionBox;
-
-
-protected:
-
-private:
-
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	bool bIsOverlapping;
-
-public:
 	ABTBGun();
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class UBTBObjectPoolComponent* BulletPool;
+	UPROPERTY(EditAnywhere, Category = "Bullets")
+		ABTBPooledObject* Bullet;
+	UPROPERTY(EditAnywhere, Category = "Bullet")
+		FVector SpawnPosition;
+	UPROPERTY(EditAnywhere, Category = "Bullet")
+		FRotator BulletOrientation;
+	UPROPERTY(EditAnywhere, Category = "Bullet")
+		float BulletVelocity;
 
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		UStaticMeshComponent* GunMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class UBoxComponent* CollisionBox;
 
 	bool GetbIsOverlapping();
 
 	void SetIsOverlapping(bool Value);
 
+	void Shoot();
+
 protected:
-	virtual void BeginPlay() override;
 
 	UFUNCTION()
 		void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -51,4 +51,9 @@ protected:
 		void OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	     
 private:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		bool bIsOverlapping;
 };

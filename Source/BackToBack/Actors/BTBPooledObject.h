@@ -17,6 +17,7 @@ class BACKTOBACK_API ABTBPooledObject : public ABTBActor
 	GENERATED_BODY()
 
 public:
+	ABTBPooledObject();
 
 	FOnPooledObjectDespawn OnPooledObjectDespawn;
 	
@@ -54,6 +55,15 @@ protected:
 	float LifeSpan = 0.f;
 
 	FTimerHandle LifeSpanTimer;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class USceneComponent* SceneComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+		class UStaticMeshComponent* StaticMeshComponent;
+
+	
+
 
 	
 };

@@ -11,6 +11,7 @@ class ABTBPlayableCharacter;
 class UBTBSplitScreenDataAsset;
 class UTextureRenderTarget2D;
 class UBTBGameHUD;
+class ABTBGun;
 
 /**
  * Our Gameplay Game Mode
@@ -29,6 +30,7 @@ protected:
 	void CreateRenderTextures();
 	void CreateUIWidget();
 	void SetSplitScreenTextureToMaterial() const;
+	void AssignGunToPlayer();
 
 	static FVector2d GetScreenResolution();
 	static FVector2D GetGameViewportSize();
@@ -67,4 +69,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
+
+	UPROPERTY(EditDefaultsOnly, Category="Player Weapons")
+		TSubclassOf<ABTBGun> GunClass;
+
+	TObjectPtr<ABTBGun> Gun;
 };

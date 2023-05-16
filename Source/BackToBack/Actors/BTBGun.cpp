@@ -2,14 +2,16 @@
 
 
 #include "BTBGun.h"
+#include"BackToBack/Actors/BTBObjectPoolComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+#include "BackToBack/Actors/BTBPooledObject.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 
-
 ABTBGun::ABTBGun()
 {
-	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
-	RootComponent = SceneComponent;
+	BulletPool = CreateDefaultSubobject<UBTBObjectPoolComponent>(TEXT("BulletPool"));
+	AddOwnedComponent(BulletPool);
 
 	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	GunMesh->SetupAttachment(SceneComponent);
@@ -18,14 +20,25 @@ ABTBGun::ABTBGun()
 	CollisionBox->SetupAttachment(GunMesh);
 }
 
-void ABTBGun::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
 void ABTBGun::BeginPlay()
 {
 	Super::BeginPlay();
+	
+}
+
+void ABTBGun::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+}
+
+void ABTBGun::Shoot()
+{
+	Bullet = BulletPool->SpawnPooledObject(SpawnPosition,BulletOrientation);
+	
+	UProjectileMovementComponent* BulletProjectile = Bullet->CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
+	BulletProjectile->ProjectileGravityScale = 0.f;
+	BulletProjectile->Velocity = this->GetActorForwardVector() * BulletVelocity;
+	
 }
 
 void ABTBGun::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,

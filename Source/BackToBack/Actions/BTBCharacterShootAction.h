@@ -5,9 +5,11 @@
 #include "CoreMinimal.h"
 #include "BTBCharacterAction.h"
 
+
 #include "BTBCharacterShootAction.generated.h"
 
 class UBTBObjectPoolComponent;
+class ABTBGun;
 
 /**
  * 
@@ -30,6 +32,10 @@ public:
 	//
 	//	//TObjectPtr<UBTBObjectPoolComponent> Bullet;
 	UBTBObjectPoolComponent* Bullet;
+
+	/*UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<ABTBGun> GunClass;
+	ABTBGun* Gun;*/
 
 
 };
