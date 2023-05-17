@@ -29,6 +29,7 @@ void ABTBGun::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	
 }
 
 void ABTBGun::Tick(float DeltaSeconds)
@@ -38,6 +39,7 @@ void ABTBGun::Tick(float DeltaSeconds)
 
 void ABTBGun::Shoot()
 {
+	SpawnPosition = GunMesh->GetSocketLocation(TEXT("GunSocket")) + FVector(20.f, 0.f, 20.f);
 	Bullet = BulletPool->SpawnPooledObject(SpawnPosition,BulletOrientation);
 	
 	
@@ -54,7 +56,7 @@ void ABTBGun::Shoot()
 		BulletProjectile->ProjectileGravityScale = 0.f;
 		/*BulletProjectile->InitialSpeed = 1300.f;
 		BulletProjectile->MaxSpeed = 2000.f;*/
-		BulletProjectile->AddForce(FVector(500000.f, 0.f, 0.f));
+		BulletProjectile->AddForce(GetActorRightVector() * 5000.f);
 	}
 	/*BulletProjectile->ProjectileGravityScale = 0.f;
 	BulletProjectile->Velocity = this->GetActorForwardVector() * BulletVelocity;*/
