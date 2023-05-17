@@ -164,7 +164,9 @@ void ABTBGameplayGameMode::AssignGunToPlayer()
 	if (Gun)
 	{
 		Gun->AttachToComponent(PlayerCharacterArray[0]->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
+
 		PlayerCharacterArray[0]->GetGunFromGameplayMode(Gun);
+		PlayerCharacterArray[1]->GetGunFromGameplayMode(Gun);
 	}
 }
 

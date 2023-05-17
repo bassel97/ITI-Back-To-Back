@@ -141,7 +141,7 @@ void ABTBInputReceiverPawn::HandleLeftButton()
 {
 	if (LeftButton.bIsDown)
 	{
-		PlayerCharacter->SetbStartSwitching(true);
+		
 
 	}
 
@@ -152,6 +152,7 @@ void ABTBInputReceiverPawn::HandleLeftButton()
 
 	if (LeftButton.bIsHeld)
 	{
+		PlayerCharacter->SetbStartSwitching(true);
 	}
 }
 

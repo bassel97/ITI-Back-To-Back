@@ -48,6 +48,7 @@ void ABTBPlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//TArray<TObjectPtr<AActor>> ActorsGuns;
 
 	//Switching Related
 	
@@ -56,16 +57,24 @@ void ABTBPlayableCharacter::BeginPlay()
 	
 
 	
+	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), GunActorClass, ActorsGuns);
+
+	//GunActor = Cast<ABTBGun>(ActorsGuns[0]);
+
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Switching %d", GunActor));
+
+	//if (GunActor)
+	//{
+	//	GunActor->SetIsOverlapping(true);
+	//}
+	//
+	//GunActor->SetIsOverlapping(true);
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Switching"));
+	
 }
 
-//void ABTBPlayableCharacter::BeginPlay()
-//{
-//	Super::BeginPlay();
-//	//JumpAction = NewObject<UBTBCharacterJumpAction>(this, UBTBCharacterJumpAction::StaticClass());
-//	//JumpAction = Cast<UBTBCharacterJumpAction>(CharacterActionClass);
-//	
-//	CharacterActions.AddUnique(JumpAction);
-//}
+
+
 
 void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget)
 {

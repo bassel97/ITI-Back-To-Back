@@ -3,6 +3,7 @@
 
 #include "BTBCharacterSwitchAction.h"
 
+#include "BackToBack/Actors/BTBGun.h"
 #include "BackToBack/AIControllers/BTBAIController.h"
 #include "BackToBack/Characters/BTBCharacter.h"
 #include "BackToBack/Characters/BTBAICharacter.h"
@@ -12,6 +13,11 @@
 
 void UBTBCharacterSwitchAction::Act(ABTBCharacter* Character, const bool bIsAI)
 {
+
+	ABTBPlayableCharacter* PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
+
+	ABTBGun* myGun = PlayableCharacter->GetGun();
+
 	if (Character == nullptr)
 	{
 		return;
@@ -21,8 +27,23 @@ void UBTBCharacterSwitchAction::Act(ABTBCharacter* Character, const bool bIsAI)
 	{ 
 		if (Character->GetbStartSwitching() )
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Screen Message"));
-			UE_LOG(LogTemp, Warning, TEXT("Switching 2")); 
+			
+
+			if (!PlayableCharacter->bGunAttached)
+			{
+				if (myGun->GetbIsOverlapping())
+				{
+					myGun->GunMesh->SetSimulatePhysics(false);
+
+					myGun->AttachToComponent(PlayableCharacter->GetMesh()->GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
+
+					PlayableCharacter->bGunAttached = true;
+
+				}
+
+			}
+			
+
 		}
 	}
 

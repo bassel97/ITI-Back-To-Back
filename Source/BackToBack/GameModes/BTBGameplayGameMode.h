@@ -71,7 +71,7 @@ private:
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
 
 	UPROPERTY(EditDefaultsOnly, Category="Player Weapons")
-		TSubclassOf<ABTBGun> GunClass;
+	TSubclassOf<ABTBGun> GunClass;
 
 	TObjectPtr<ABTBGun> Gun;
 };

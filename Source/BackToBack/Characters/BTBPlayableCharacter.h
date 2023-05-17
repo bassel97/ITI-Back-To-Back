@@ -50,14 +50,6 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
 
-	//USkeleton* mySkeleton;
-
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Testing")
-	USkeleton* mySkeleton = CreateDefaultSubobject<USkeleton>(TEXT("mySkeleton"));
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Testing")
-	USkeletalMeshSocket* mySocket = NewObject<USkeletalMeshSocket>(mySkeleton);*/
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 	TSubclassOf<AActor> GunActorClass;
 
