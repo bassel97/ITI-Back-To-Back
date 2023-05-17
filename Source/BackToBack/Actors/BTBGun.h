@@ -9,6 +9,7 @@
 class ABTBPooledObject;
 class USkeletalMeshComponent;
 class UMeshComponent;
+class UProjectileMovementComponent;
 /**
  * 
  */
@@ -60,4 +61,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 		bool bIsOverlapping;
+
+	TSubclassOf<UProjectileMovementComponent> ProjectileComponent;
 };

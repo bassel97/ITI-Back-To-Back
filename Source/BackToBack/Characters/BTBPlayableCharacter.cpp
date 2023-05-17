@@ -39,6 +39,7 @@ void ABTBPlayableCharacter::RemoveCamera() const
 void ABTBPlayableCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 }
 
 
@@ -50,16 +51,8 @@ void ABTBPlayableCharacter::BeginPlay()
 
 	//Switching Related
 	
-
-	/*TArray<TObjectPtr<AActor>> ActorsGuns;
-
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), GunActorClass, ActorsGuns);
-
-	GunActor = Cast<ABTBGun>(ActorsGuns[0]);
-	if(GunActor)
-	{
-		GunActor->SetIsOverlapping(true);
-	}*/
+	
+	
 	
 
 	
@@ -80,6 +73,17 @@ void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextur
 	{
 		SceneCaptureCamera->TextureTarget = RenderTarget;
 	}
+	
+}
+
+void ABTBPlayableCharacter::GetGunFromGameplayMode(ABTBGun* Gun)
+{
+	GunActor = Gun;
+}
+
+ABTBGun* ABTBPlayableCharacter::GetGun()
+{
+	return GunActor;
 }
 
 

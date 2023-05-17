@@ -40,6 +40,8 @@ void ABTBGameplayGameMode::CreatePlayers()
 	ABTBPlayableCharacter* PlayerCharacterOne = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass);
 	PlayerCharacterArray.AddUnique(PlayerCharacterOne);
 
+	
+
 	ABTBPlayableCharacter* PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharTwoClass);
 	PlayerCharacterArray.AddUnique(PlayerCharacterTwo);
 
@@ -162,6 +164,7 @@ void ABTBGameplayGameMode::AssignGunToPlayer()
 	if (Gun)
 	{
 		Gun->AttachToComponent(PlayerCharacterArray[0]->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
+		PlayerCharacterArray[0]->GetGunFromGameplayMode(Gun);
 	}
 }
 

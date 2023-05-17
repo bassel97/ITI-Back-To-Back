@@ -40,9 +40,24 @@ void ABTBGun::Shoot()
 {
 	Bullet = BulletPool->SpawnPooledObject(SpawnPosition,BulletOrientation);
 	
-	UProjectileMovementComponent* BulletProjectile = Bullet->CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement Component"));
-	BulletProjectile->ProjectileGravityScale = 0.f;
-	BulletProjectile->Velocity = this->GetActorForwardVector() * BulletVelocity;
+	
+	UProjectileMovementComponent* BulletProjectile = NewObject<UProjectileMovementComponent>(Bullet, UProjectileMovementComponent::StaticClass(), TEXT("Projectile Movement"));
+	Bullet->AddOwnedComponent(BulletProjectile);
+	Bullet->FinishAddComponent(BulletProjectile,true,Bullet->GetActorTransform());
+	if(!BulletProjectile)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is is not added"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is added"));
+		BulletProjectile->ProjectileGravityScale = 0.f;
+		/*BulletProjectile->InitialSpeed = 1300.f;
+		BulletProjectile->MaxSpeed = 2000.f;*/
+		BulletProjectile->AddForce(FVector(500000.f, 0.f, 0.f));
+	}
+	/*BulletProjectile->ProjectileGravityScale = 0.f;
+	BulletProjectile->Velocity = this->GetActorForwardVector() * BulletVelocity;*/
 	
 }
 

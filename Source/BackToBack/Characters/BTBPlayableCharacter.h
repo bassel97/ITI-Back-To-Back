@@ -11,6 +11,7 @@
 class USpringArmComponent;
 class USceneCaptureComponent2D;
 class UBTBCharacterJumpAction;
+
 class ABTBGun;
 //class UBTBCharacterAction;
 
@@ -26,7 +27,8 @@ public:
 	ABTBPlayableCharacter();
 	void RemoveCamera() const;
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget);
-	
+	void GetGunFromGameplayMode(ABTBGun* Gun);
+	ABTBGun* GetGun();
 protected:
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
@@ -61,7 +63,7 @@ protected:
 
 	TObjectPtr<ABTBGun> GunActor;
 
-
+	
 
 	//UPROPERTY(EditDefaultsOnly,Category="Actions")
 	///*TObjectPtr<UBTBCharacterAction> CharacterActionClass;*/

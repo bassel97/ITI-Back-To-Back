@@ -5,6 +5,7 @@
 #include "BackToBack/Actors/BTBObjectPoolComponent.h"
 #include "BackToBack/Actors/BTBGun.h"
 #include "BackToBack/Characters/BTBCharacter.h"
+#include "BackToBack/Characters/BTBPlayableCharacter.h"
 
 void UBTBCharacterShootAction::Act(ABTBCharacter* Character, const bool bIsAI)
 {
@@ -15,18 +16,19 @@ void UBTBCharacterShootAction::Act(ABTBCharacter* Character, const bool bIsAI)
 		{
 			return;
 		}
-		if (Character->GetbStartPool())
-		{
-			Bullet = Cast<UBTBObjectPoolComponent>(Character->GetDefaultSubobjectByName(FName("BTBObjectPool")));
-			//Gun = Cast<ABTBGun>(GunClass);
-			
-
-		}
+		//if (Character->GetbStartPool())
+		//{
+		//	//Bullet = Cast<UBTBObjectPoolComponent>(Character->GetDefaultSubobjectByName(FName("BTBObjectPool")));
+		//	Gun = Cast<ABTBGun>(GunClass);
+		//	
+		//	UE_LOG(LogTemp, Warning, TEXT("bStartPool is true"));
+		//	Character->SetbStartPool(false);
+		//}
 		if (Character->GetbStartShoot())
 		{
 			
 	#pragma region Shooting using player
-			if (Bullet)
+			/*if (Bullet)
 			{
 				if (GEngine)
 				{
@@ -45,11 +47,12 @@ void UBTBCharacterShootAction::Act(ABTBCharacter* Character, const bool bIsAI)
 					GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("Bullet is nullptr"));
 					UE_LOG(LogTemp, Warning, TEXT("Bullet is nullptr"));
 				}
-			}
+			}*/
 		#pragma endregion
 
 	#pragma region Shooting using Gun
-			/*if (Gun)
+			Gun = Cast<ABTBPlayableCharacter>(Character)->GetGun();
+			if (Gun)
 			{
 				if (GEngine)
 				{
@@ -66,9 +69,9 @@ void UBTBCharacterShootAction::Act(ABTBCharacter* Character, const bool bIsAI)
 				if (GEngine)
 				{
 					GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("Gun is nullptr"));
-					UE_LOG(LogTemp, Warning, TEXT("Bullet is nullptr"));
+					UE_LOG(LogTemp, Warning, TEXT("Gun is nullptr"));
 				}
-			}*/
+			}
 		#pragma endregion
 
 		}

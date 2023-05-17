@@ -33,9 +33,9 @@ public:
 	//	//TObjectPtr<UBTBObjectPoolComponent> Bullet;
 	UBTBObjectPoolComponent* Bullet;
 
-	/*UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<ABTBGun> GunClass;
-	ABTBGun* Gun;*/
+	ABTBGun* Gun;
 
 
 };
