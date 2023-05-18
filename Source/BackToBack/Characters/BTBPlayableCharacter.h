@@ -27,7 +27,7 @@ public:
 	ABTBPlayableCharacter();
 	void RemoveCamera() const;
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget);
-	void GetGunFromGameplayMode(ABTBGun* Gun);
+	void SetGun(ABTBGun* Gun);
 	ABTBGun* GetGun();
 protected:
 	virtual void Tick(float DeltaTime) override;

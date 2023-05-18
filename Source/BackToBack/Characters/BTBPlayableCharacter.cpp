@@ -85,7 +85,7 @@ void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextur
 	
 }
 
-void ABTBPlayableCharacter::GetGunFromGameplayMode(ABTBGun* Gun)
+void ABTBPlayableCharacter::SetGun(ABTBGun* Gun)
 {
 	GunActor = Gun;
 }

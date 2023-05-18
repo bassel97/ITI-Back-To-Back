@@ -67,12 +67,14 @@ void ABTBGun::Shoot()
 void ABTBGun::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Gun Overlapped"));
 	SetIsOverlapping(true);
 }
 
 void ABTBGun::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Gun Overlap end"));
 	SetIsOverlapping(false);
 }
 
