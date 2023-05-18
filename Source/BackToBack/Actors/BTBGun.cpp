@@ -40,7 +40,7 @@ void ABTBGun::Tick(float DeltaSeconds)
 
 void ABTBGun::Shoot()
 {
-	SpawnPosition = GunMesh->GetSocketLocation(TEXT("GunSocket")) + FVector(20.f, 0.f, 20.f);
+	SpawnPosition = GetActorLocation() + FVector(20.f, 0.f, 20.f);
 	Bullet = BulletPool->SpawnPooledObject(SpawnPosition,BulletOrientation);
 	
 	
