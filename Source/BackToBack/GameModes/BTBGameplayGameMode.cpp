@@ -25,7 +25,6 @@ void ABTBGameplayGameMode::BeginPlay()
 	CreateUIWidget();
 	AssignCameras();
 	AssignGunToPlayer();
-
 	SetCenterOfPlayersInEnemySpawner();
 }
 
@@ -168,9 +167,9 @@ void ABTBGameplayGameMode::AssignGunToPlayer()
 	{
 		Gun->AttachToComponent(PlayerCharacterArray[0]->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
 
-		PlayerCharacterArray[0]->GetGunFromGameplayMode(Gun);
+		PlayerCharacterArray[0]->SetGun(Gun);
 		PlayerCharacterArray[0]->bGunAttached = true;
-		PlayerCharacterArray[1]->GetGunFromGameplayMode(Gun);
+		//PlayerCharacterArray[1]->SetGun(Gun);
 	}
 }
 

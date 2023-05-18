@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BTBCharacterAction.h"
-#include "BTBCharacterRotateAction.generated.h"
+#include "BackToBack/Actions/Character/BTBCharacterAction.h"
+#include "BTBPlayerRotateAction.generated.h"
 
 class ABTBCharacter;
 
@@ -12,20 +12,22 @@ class ABTBCharacter;
  * 
  */
 UCLASS()
-class BACKTOBACK_API UBTBCharacterRotateAction : public UBTBCharacterAction
+class BACKTOBACK_API UBTBPlayerRotateAction : public UBTBCharacterAction
 {
 	GENERATED_BODY()
 
 public:
 
 protected:
-	virtual void Act(ABTBCharacter* Character, bool bIsAI = false) override;
+	virtual void Act(ABTBCharacter* Character) override;
 	float Angle;
 
 	UPROPERTY(EditDefaultsOnly)
-		float XCenterOfRotation;
+	float XCenterOfRotation;
+	
 private:
 
+	
 public:
 
 protected:

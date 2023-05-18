@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BTBHumanoidCharacter.h"
-#include "BackToBack/Actions/BTBCharacterAction.h"
+#include "BackToBack/Actions/Character/BTBCharacterAction.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "BTBPlayableCharacter.generated.h"
 
@@ -28,7 +28,7 @@ public:
 	ABTBPlayableCharacter();
 	void RemoveCamera() const;
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget);
-	void GetGunFromGameplayMode(ABTBGun* Gun);
+	void SetGun(ABTBGun* Gun);
 	ABTBGun* GetGun();
 protected:
 	virtual void Tick(float DeltaTime) override;
@@ -50,12 +50,6 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	class UBoxComponent* CollisionBox;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	TSubclassOf<AActor> GunActorClass;
 
 	TObjectPtr<ABTBGun> GunActor;
 

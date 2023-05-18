@@ -15,6 +15,9 @@ ABTBGun::ABTBGun()
 	BulletPool = CreateDefaultSubobject<UBTBObjectPoolComponent>(TEXT("BulletPool"));
 	AddOwnedComponent(BulletPool);
 
+	ShootingLocation = CreateDefaultSubobject<UChildActorComponent>(TEXT("Shooting Location"));
+	ShootingLocation->SetupAttachment(SceneComponent);
+
 	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gun Mesh"));
 	GunMesh->SetupAttachment(SceneComponent);
 
@@ -40,13 +43,12 @@ void ABTBGun::Tick(float DeltaSeconds)
 
 void ABTBGun::Shoot()
 {
-	SpawnPosition = GetActorLocation() + FVector(20.f, 0.f, 20.f);
-	Bullet = BulletPool->SpawnPooledObject(SpawnPosition,BulletOrientation);
+	Bullet = BulletPool->SpawnPooledObject(ShootingLocation->GetComponentLocation(),BulletOrientation);
 	
 	
 	UProjectileMovementComponent* BulletProjectile = NewObject<UProjectileMovementComponent>(Bullet, UProjectileMovementComponent::StaticClass(), TEXT("Projectile Movement"));
 	Bullet->AddOwnedComponent(BulletProjectile);
-	Bullet->FinishAddComponent(BulletProjectile,true,Bullet->GetActorTransform());
+	Bullet->FinishAddComponent(BulletProjectile,true, Bullet->GetActorTransform());
 	if(!BulletProjectile)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is is not added"));
@@ -57,10 +59,9 @@ void ABTBGun::Shoot()
 		BulletProjectile->ProjectileGravityScale = 0.f;
 		/*BulletProjectile->InitialSpeed = 1300.f;
 		BulletProjectile->MaxSpeed = 2000.f;*/
-		BulletProjectile->AddForce(GetActorRightVector() * 5000.f);
+		BulletProjectile->AddForce(GetActorForwardVector() * 5000.f);
 	}
-	/*BulletProjectile->ProjectileGravityScale = 0.f;
-	BulletProjectile->Velocity = this->GetActorForwardVector() * BulletVelocity;*/
+	
 	
 }
 
@@ -74,7 +75,7 @@ void ABTBGun::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 void ABTBGun::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Gun overlapping END "));
+	UE_LOG(LogTemp, Warning, TEXT("Gun Overlap end"));
 	SetIsOverlapping(false);
 }
 
