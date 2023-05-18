@@ -56,8 +56,6 @@ void UBTBPlayerShootAction::Act(ABTBCharacter* Character)
 			GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("We are shooting"));
 			UE_LOG(LogTemp, Warning, TEXT("Gun is shooting"));
 		}
-		const FVector ShootingOffset = FVector(100.f, 0, 0);
-		const FVector SpawnPos = Character->GetActorLocation() + ShootingOffset;
 		Gun->Shoot();
 		Character->SetbStartShoot(false);
 	}

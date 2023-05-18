@@ -15,6 +15,9 @@ ABTBGun::ABTBGun()
 	BulletPool = CreateDefaultSubobject<UBTBObjectPoolComponent>(TEXT("BulletPool"));
 	AddOwnedComponent(BulletPool);
 
+	ShootingLocation = CreateDefaultSubobject<UChildActorComponent>(TEXT("Shooting Location"));
+	ShootingLocation->SetupAttachment(SceneComponent);
+
 	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gun Mesh"));
 	GunMesh->SetupAttachment(SceneComponent);
 
@@ -30,6 +33,9 @@ void ABTBGun::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBGun::OnBoxOverlap);
+	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBGun::OnBoxEndOverlap);
+
 	
 }
 
@@ -40,8 +46,7 @@ void ABTBGun::Tick(float DeltaSeconds)
 
 void ABTBGun::Shoot()
 {
-	SpawnPosition = GetActorLocation() + FVector(20.f, 0.f, 20.f);
-	Bullet = BulletPool->SpawnPooledObject(SpawnPosition,BulletOrientation);
+	Bullet = BulletPool->SpawnPooledObject(ShootingLocation->GetComponentLocation(),BulletOrientation);
 	
 	
 	UProjectileMovementComponent* BulletProjectile = NewObject<UProjectileMovementComponent>(Bullet, UProjectileMovementComponent::StaticClass(), TEXT("Projectile Movement"));
@@ -57,10 +62,9 @@ void ABTBGun::Shoot()
 		BulletProjectile->ProjectileGravityScale = 0.f;
 		/*BulletProjectile->InitialSpeed = 1300.f;
 		BulletProjectile->MaxSpeed = 2000.f;*/
-		BulletProjectile->AddForce(GetActorRightVector() * 5000.f);
+		BulletProjectile->AddForce(GetActorForwardVector() * 5000.f);
 	}
-	/*BulletProjectile->ProjectileGravityScale = 0.f;
-	BulletProjectile->Velocity = this->GetActorForwardVector() * BulletVelocity;*/
+	
 	
 }
 

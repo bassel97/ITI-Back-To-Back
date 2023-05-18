@@ -50,9 +50,6 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	TSubclassOf<AActor> GunActorClass;
-
 	TObjectPtr<ABTBGun> GunActor;
 
 	

@@ -23,10 +23,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class UBTBObjectPoolComponent* BulletPool;
-	UPROPERTY(EditAnywhere, Category = "Bullets")
+	
 		ABTBPooledObject* Bullet;
-	UPROPERTY(EditAnywhere, Category = "Bullet")
-		FVector SpawnPosition;
+
 	UPROPERTY(EditAnywhere, Category = "Bullet")
 		FRotator BulletOrientation;
 	UPROPERTY(EditAnywhere, Category = "Bullet")
@@ -40,6 +39,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class UBoxComponent* CollisionBox;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UChildActorComponent* ShootingLocation;
 
 	bool GetbIsOverlapping();
 

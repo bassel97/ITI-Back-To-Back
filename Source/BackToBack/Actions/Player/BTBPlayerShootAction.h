@@ -19,20 +19,9 @@ class BACKTOBACK_API UBTBPlayerShootAction : public UBTBCharacterAction
 public:
 
 	virtual void Act(ABTBCharacter* Character) override;
-	/*UFUNCTION()
-		void OnPooledObjectDespawn(ABTBPooledObject* PooledActor);*/
-	UPROPERTY(EditDefaultsOnly)
-		FVector SpawnPosition;
-	UPROPERTY(EditDefaultsOnly)
-		FRotator BulletOrientation;
+	
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<UBTBObjectPoolComponent> BulletClass;
-	//
-	//	//TObjectPtr<UBTBObjectPoolComponent> Bullet;
-	UBTBObjectPoolComponent* Bullet;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ABTBGun> GunClass;
 	
 	ABTBGun* Gun;
 
