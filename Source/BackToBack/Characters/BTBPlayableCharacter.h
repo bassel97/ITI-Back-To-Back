@@ -11,6 +11,7 @@
 class USpringArmComponent;
 class USceneCaptureComponent2D;
 class UBTBCharacterJumpAction;
+class UMeshComponent;
 
 class ABTBGun;
 //class UBTBCharacterAction;

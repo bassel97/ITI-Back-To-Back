@@ -32,11 +32,8 @@ ABTBGun::ABTBGun()
 void ABTBGun::BeginPlay()
 {
 	Super::BeginPlay();
-	
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBGun::OnBoxOverlap);
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBGun::OnBoxEndOverlap);
-
-	
 }
 
 void ABTBGun::Tick(float DeltaSeconds)
@@ -71,7 +68,7 @@ void ABTBGun::Shoot()
 void ABTBGun::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Gun Overlapped"));
+	UE_LOG(LogTemp, Warning, TEXT("Gun Overlapping"));
 	SetIsOverlapping(true);
 }
 
