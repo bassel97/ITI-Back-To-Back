@@ -3,7 +3,7 @@
 
 #include "BTBCharacter.h"
 
-#include "BackToBack/Actions/BTBCharacterAction.h"
+#include "BackToBack/Actions/Character/BTBCharacterAction.h"
 
 
 void ABTBCharacter::Tick(float DeltaTime)

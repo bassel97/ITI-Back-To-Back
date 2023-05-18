@@ -46,7 +46,7 @@ void ABTBGun::Shoot()
 	
 	UProjectileMovementComponent* BulletProjectile = NewObject<UProjectileMovementComponent>(Bullet, UProjectileMovementComponent::StaticClass(), TEXT("Projectile Movement"));
 	Bullet->AddOwnedComponent(BulletProjectile);
-	Bullet->FinishAddComponent(BulletProjectile,true,Bullet->GetActorTransform());
+	Bullet->FinishAddComponent(BulletProjectile,true, Bullet->GetActorTransform());
 	if(!BulletProjectile)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is is not added"));

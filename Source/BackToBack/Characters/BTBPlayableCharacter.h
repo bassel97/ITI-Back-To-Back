@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BTBHumanoidCharacter.h"
-#include "BackToBack/Actions/BTBCharacterAction.h"
+#include "BackToBack/Actions/Character/BTBCharacterAction.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "BTBPlayableCharacter.generated.h"
 

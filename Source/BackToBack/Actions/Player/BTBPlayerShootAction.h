@@ -3,10 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BTBCharacterAction.h"
-
-
-#include "BTBCharacterShootAction.generated.h"
+#include "BackToBack/Actions/Character/BTBCharacterAction.h"
+#include "BTBPlayerShootAction.generated.h"
 
 class UBTBObjectPoolComponent;
 class ABTBGun;
@@ -15,12 +13,12 @@ class ABTBGun;
  * 
  */
 UCLASS()
-class BACKTOBACK_API UBTBCharacterShootAction : public UBTBCharacterAction
+class BACKTOBACK_API UBTBPlayerShootAction : public UBTBCharacterAction
 {
 	GENERATED_BODY()
 public:
 
-	virtual void Act(ABTBCharacter* Character, const bool bIsAI) override;
+	virtual void Act(ABTBCharacter* Character) override;
 	/*UFUNCTION()
 		void OnPooledObjectDespawn(ABTBPooledObject* PooledActor);*/
 	UPROPERTY(EditDefaultsOnly)
@@ -34,7 +32,8 @@ public:
 	UBTBObjectPoolComponent* Bullet;
 
 	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<ABTBGun> GunClass;
+	TSubclassOf<ABTBGun> GunClass;
+	
 	ABTBGun* Gun;
 
 

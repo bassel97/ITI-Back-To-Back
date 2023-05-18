@@ -25,7 +25,6 @@ void ABTBGameplayGameMode::BeginPlay()
 	CreateUIWidget();
 	AssignCameras();
 	AssignGunToPlayer();
-
 	SetCenterOfPlayersInEnemySpawner();
 }
 

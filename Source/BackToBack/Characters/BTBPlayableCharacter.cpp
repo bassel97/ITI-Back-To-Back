@@ -3,7 +3,7 @@
 
 #include "BTBPlayableCharacter.h"
 
-#include "BackToBack/Actions/BTBCharacterJumpAction.h"
+#include "BackToBack/Actions/Player/BTBPlayerJumpAction.h"
 #include "BackToBack/Actors/BTBGun.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SceneCaptureComponent2D.h"

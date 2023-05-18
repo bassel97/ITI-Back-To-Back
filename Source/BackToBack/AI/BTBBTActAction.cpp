@@ -2,7 +2,7 @@
 
 
 #include "BTBBTActAction.h"
-#include "BackToBack/Actions/BTBCharacterAction.h"
+#include "BackToBack/Actions/Character/BTBCharacterAction.h"
 #include "BackToBack/AIControllers/BTBAIController.h"
 #include "BackToBack/Characters/BTBAICharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -26,7 +26,7 @@ EBTNodeResult::Type UBTTask_ActAction::ExecuteTask(UBehaviorTreeComponent& Owner
 	const TObjectPtr<APawn> OwnerPawn = OwnerAIController->GetPawn();
 	const TObjectPtr<ABTBCharacter> BTBCharacter = Cast<ABTBCharacter>(OwnerPawn);
 	
-	Action->Act(BTBCharacter, true);
+	Action->Act(BTBCharacter);
 	
 	return EBTNodeResult::Succeeded;
 }
