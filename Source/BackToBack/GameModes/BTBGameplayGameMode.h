@@ -25,6 +25,7 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 	void CreatePlayers();
 	void AssignCameras();
 	void CreateRenderTextures();
@@ -52,7 +53,7 @@ private:
 	TSubclassOf<ABTBPlayableCharacter> PlayableCharOneClass;
 
 	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<ABTBPlayableCharacter> PlayableCharTwoClass;
+	TSubclassOf<ABTBPlayableCharacter> PlayableCharTwoClass;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GlobalGameScreen")
 	TObjectPtr<UBTBSplitScreenDataAsset> SplitScreenClass = nullptr;

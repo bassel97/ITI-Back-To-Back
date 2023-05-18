@@ -10,23 +10,26 @@
 #include "InputAction.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "InputActionValue.h"
+#include "BackToBack/GameModes/BTBGameplayGameMode.h"
+
+ABTBInputReceiverPawn::ABTBInputReceiverPawn()
+{
+	OnPlayersPressedRightTrigger.AddDynamic(this, &ABTBInputReceiverPawn::HandleAxisInputAction);
+}
 
 void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	
 	// Send Data to player character
-	
-	//HandleRotateAction();
-	//HandleMoveAction();
-
 	HandleDownButton();
 	HandleUpButton();
 	HandleLeftButton();
 	HandleRightButton();
 	HandleRightTrigger();
 	HandleLeftTrigger();
-	HandleAxisInputAction();
+	//HandleAxisInputAction(0);
+	
 	//Reset Button states
 	RightTrigger.ResetDownReleaseState();
 	LeftTrigger.ResetDownReleaseState();
@@ -208,39 +211,43 @@ void ABTBInputReceiverPawn::HandleLeftTrigger()
 	}
 }
 
-void ABTBInputReceiverPawn::HandleAxisInputAction()
+void ABTBInputReceiverPawn::HandleAxisInputAction(const uint8 Val)
 {
-	//Rotating
-	if (AxisInput.X != 0)
+	if(Val)
 	{
-		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-		float rotSpeed = 3.f;
-		//float rotSpeed = 10;
-		//this->AddControllerYawInput(input);
-		PlayerCharacter->SetbStartRotate(true);
-		PlayerCharacter->SetRotationValue(input);
-		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
-	}
-	else
-	{
-		PlayerCharacter->SetbStartRotate(false);
+		//Rotating
+		if (AxisInput.X != 0)
+		{
+			float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
+			float rotSpeed = 3.f;
+			//float rotSpeed = 10;
+			//this->AddControllerYawInput(input);
+			PlayerCharacter->SetbStartRotate(true);
+			PlayerCharacter->SetRotationValue(input);
+			UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
+		}
+		else
+		{
+			PlayerCharacter->SetbStartRotate(false);
+		}
+
+		//Moving
+		if (AxisInput.Y != 0)
+		{
+			float input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
+			//float input = AxisInput.Y;
+
+			//float rotSpeed = 30;
+			PlayerCharacter->SetbStartMove(true);
+			PlayerCharacter->SetMoveValue(input);
+			//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), input);
+		}
+		else
+		{
+			PlayerCharacter->SetbStartMove(false);
+		}
 	}
 
-	//Moving
-	if (AxisInput.Y != 0)
-	{
-		float input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
-		//float input = AxisInput.Y;
-
-		//float rotSpeed = 30;
-		PlayerCharacter->SetbStartMove(true);
-		PlayerCharacter->SetMoveValue(input);
-		//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), input);
-	}
-	else
-	{
-		PlayerCharacter->SetbStartMove(false);
-	}
 }
 
 #pragma region BeforeRefactoring

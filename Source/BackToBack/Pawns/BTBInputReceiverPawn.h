@@ -11,6 +11,10 @@
 class FGameStructs;
 class UInputAction;
 struct FInputActionValue;
+
+// Events
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayersPressedRightTrigger, const uint8, val);
+
 /**
  * Our InputReceiverPawn
  */
@@ -20,7 +24,9 @@ class BACKTOBACK_API ABTBInputReceiverPawn final : public ABTBPawn
 	GENERATED_BODY()
 
 public:
-	virtual void Tick(float DeltaSeconds) override;
+	ABTBInputReceiverPawn();
+	uint8 PlayersPressingRightTrigger:1;
+
 	
 	[[nodiscard]] ABTBPlayableCharacter* Get_PlayerCharacter() const
 	{
@@ -31,8 +37,11 @@ public:
 	{
 		this->PlayerCharacter = Player_Character;
 	}
+	
+	FOnPlayersPressedRightTrigger OnPlayersPressedRightTrigger;
 
 protected:
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	
 	void RightTriggerInputTriggered(const FInputActionValue& Val);
@@ -53,7 +62,7 @@ protected:
 	void HandleRightButton();
 	void HandleRightTrigger();
 	void HandleLeftTrigger();
-	void HandleAxisInputAction();
+	void HandleAxisInputAction(const uint8 Val);
 private:
 	void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
 	FTimerHandle TimerHandle;
@@ -85,14 +94,6 @@ public:
 	TObjectPtr<UInputAction> AxisInputAction;
 	/** Input Actions end*/
 
-protected:	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input")
-	TObjectPtr<UInputMappingContext> InputMapping;
-
-	
-private:
-	TObjectPtr<ABTBPlayableCharacter> PlayerCharacter;
-
 	/** Buttons States start*/
 	UPROPERTY(VisibleAnywhere, Category = "Buttons States")
 	FButtonState RightTrigger = {};
@@ -115,4 +116,13 @@ private:
 	UPROPERTY(VisibleAnywhere, meta = (ClampMin = -1, ClampMax = 1), Category = "Buttons")
 	FVector2D AxisInput;
 	/** Buttons States end*/
+
+protected:	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input")
+	TObjectPtr<UInputMappingContext> InputMapping;
+
+	
+private:
+	TObjectPtr<ABTBPlayableCharacter> PlayerCharacter;
+	
 };

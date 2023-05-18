@@ -21,11 +21,24 @@
 void ABTBGameplayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	CreatePlayers();
 	CreateUIWidget();
 	AssignCameras();
 	AssignGunToPlayer();
 	SetCenterOfPlayersInEnemySpawner();
+}
+
+void ABTBGameplayGameMode::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if(InputReceiverArray[0]->AxisInput.X == 1 && InputReceiverArray[1]->AxisInput.X == 1)
+	{
+		InputReceiverArray[0]->OnPlayersPressedRightTrigger.Broadcast(1);
+		InputReceiverArray[1]->OnPlayersPressedRightTrigger.Broadcast(1);
+	}
+	
 }
 
 void ABTBGameplayGameMode::CreatePlayers()
@@ -39,26 +52,22 @@ void ABTBGameplayGameMode::CreatePlayers()
 
 	UGameplayStatics::GetAllActorsOfClass(World, APlayerStart::StaticClass(), PlayerStartArray);
 	
-	ABTBPlayableCharacter* PlayerCharacterOne = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass);
+	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterOne = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass);
 	PlayerCharacterArray.AddUnique(PlayerCharacterOne);
 
-	
-
-	ABTBPlayableCharacter* PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharTwoClass);
+	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharTwoClass);
 	PlayerCharacterArray.AddUnique(PlayerCharacterTwo);
 
-
-	if(PlayerStartArray.Num() >= 2)
+	if(PlayerCharacterArray.Num() >= 2)
 	{
-		PlayerCharacterOne->SetActorLocation(PlayerStartArray[0]->GetActorLocation());
-		PlayerCharacterTwo->SetActorLocation(PlayerStartArray[1]->GetActorLocation());
+		PlayerCharacterOne->SetActorLocationAndRotation(PlayerStartArray[0]->GetActorLocation(), PlayerStartArray[0]->GetActorRotation());
+		PlayerCharacterOne->SetActorLocationAndRotation(PlayerStartArray[1]->GetActorLocation(), PlayerStartArray[1]->GetActorRotation());
 	}
 
 	if(InputReceiverArray.Num() >= 2)
 	{
 		InputReceiverArray[0]->Set_PlayerCharacter(PlayerCharacterArray[0]);
 		InputReceiverArray[1]->Set_PlayerCharacter(PlayerCharacterArray[1]);
-
 	}
 
 
@@ -69,7 +78,8 @@ void ABTBGameplayGameMode::CreatePlayers()
 			FString::Printf(TEXT("PlayableCharacter[%i] = %s, Its InputReceiverPawn = %s"),
 				i, *PlayerCharacterArray[i]->GetName(), *InputReceiverArray[i]->Get_PlayerCharacter()->GetName()));
 	}
-#endif	
+#endif
+	
 }
 
 void ABTBGameplayGameMode::AssignCameras()
@@ -85,18 +95,16 @@ void ABTBGameplayGameMode::AssignCameras()
 		InputReceiverArray[0]->Get_PlayerCharacter()->RemoveCamera();
 		InputReceiverArray[1]->Get_PlayerCharacter()->RemoveCamera();
 
-		AActor* Camera = World->SpawnActor<AActor>(CameraClass);
+		const TObjectPtr<AActor>  Camera = World->SpawnActor<AActor>(CameraClass);
 		UGameplayStatics::GetPlayerController(World, 0)->SetViewTarget(Camera);
 		UGameplayStatics::GetPlayerController(World, 1)->SetViewTarget(Camera);
 
 		GameWidget->MainScreenBox->SetEffectMaterial(nullptr);
-		//GameWidget->MainScreenImage->SetOpacity(0.f);
-		GameWidget->MainScreenImage->SetRenderOpacity(0.f);
+		GameWidget->MainScreenImage->SetRenderOpacity(0.0f);
 	}
 	else
 	{
 		CreateRenderTextures();
-		
 		SetSplitScreenTextureToMaterial();
 	}
 
@@ -107,7 +115,8 @@ void ABTBGameplayGameMode::AssignCameras()
 			FString::Printf(TEXT("PlayerControllerArray[%i] = %s, Its ViewTarget = %s"),
 				i, *PlayerControllerArray[i]->GetName(), *PlayerControllerArray[i]->GetViewTarget()->GetName()));
 	}
-#endif	
+#endif
+	
 }
 
 void ABTBGameplayGameMode::CreateRenderTextures()
@@ -138,7 +147,6 @@ void ABTBGameplayGameMode::CreateUIWidget()
 		{
 			GameWidget->AddToViewport();
 		}
-		
 	}
 }
 
@@ -155,13 +163,11 @@ void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 	DynamicMI->SetTextureParameterValue(TEXT("Texture1"), RenderTexture_1);
 	DynamicMI->SetTextureParameterValue(TEXT("Texture2"), RenderTexture_2);
 	GameWidget->MainScreenBox->SetEffectMaterial(DynamicMI);
-	GameWidget->MainScreenImage->SetRenderOpacity(1.f);
-	//GameWidget->MainScreenImage->SetOpacity(1.f);
+	GameWidget->MainScreenImage->SetRenderOpacity(1.0f);
 }
 
 void ABTBGameplayGameMode::AssignGunToPlayer()
 {
-	
 	Gun = GetWorld()->SpawnActor<ABTBGun>(GunClass);
 	if (Gun)
 	{
@@ -169,7 +175,6 @@ void ABTBGameplayGameMode::AssignGunToPlayer()
 
 		PlayerCharacterArray[0]->SetGun(Gun);
 		PlayerCharacterArray[0]->bGunAttached = true;
-		//PlayerCharacterArray[1]->SetGun(Gun);
 	}
 }
 
@@ -191,7 +196,6 @@ void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 	
 	EnemySpawner->Center = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
 	EnemySpawner->Center.Z = 0;
-
 }
 
 FVector2d ABTBGameplayGameMode::GetScreenResolution()
