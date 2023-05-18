@@ -64,7 +64,7 @@ void ABTBPlayableCharacter::BeginPlay()
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Switching %d", GunActor));
 
 	//if (GunActor)
-	//{
+	//{ 
 	//	GunActor->SetIsOverlapping(true);
 	//}
 	//

@@ -18,11 +18,12 @@ ABTBGun::ABTBGun()
 	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gun Mesh"));
 	GunMesh->SetupAttachment(SceneComponent);
 
-	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("SphereCollider"));
-	CollisionBox->SetupAttachment(SceneComponent);
-
 	GunSkeletal = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun Skeleton"));
 	GunSkeletal->SetupAttachment(GunMesh);
+
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
+	CollisionBox->SetupAttachment(GunSkeletal);
+	CollisionBox->SetAllMassScale(0.5f);
 }
 
 void ABTBGun::BeginPlay()
