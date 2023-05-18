@@ -170,7 +170,7 @@ void ABTBGameplayGameMode::AssignGunToPlayer()
 
 		PlayerCharacterArray[0]->GetGunFromGameplayMode(Gun);
 		PlayerCharacterArray[0]->bGunAttached = true;
-		PlayerCharacterArray[1]->GetGunFromGameplayMode(Gun);
+		//PlayerCharacterArray[1]->GetGunFromGameplayMode(Gun);
 	}
 }
 
