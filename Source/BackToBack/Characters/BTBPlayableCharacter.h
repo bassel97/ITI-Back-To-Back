@@ -11,6 +11,7 @@
 class USpringArmComponent;
 class USceneCaptureComponent2D;
 class UBTBCharacterJumpAction;
+class UMeshComponent;
 
 class ABTBGun;
 //class UBTBCharacterAction;
@@ -49,6 +50,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UBoxComponent* CollisionBox;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 	TSubclassOf<AActor> GunActorClass;

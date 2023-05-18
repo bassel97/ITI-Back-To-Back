@@ -29,8 +29,8 @@ ABTBGun::ABTBGun()
 void ABTBGun::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBGun::OnBoxOverlap);
+	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBGun::OnBoxEndOverlap);
 }
 
 void ABTBGun::Tick(float DeltaSeconds)
@@ -40,7 +40,7 @@ void ABTBGun::Tick(float DeltaSeconds)
 
 void ABTBGun::Shoot()
 {
-	SpawnPosition = GunMesh->GetSocketLocation(TEXT("GunSocket")) + FVector(20.f, 0.f, 20.f);
+	SpawnPosition = GetActorLocation() + FVector(20.f, 0.f, 20.f);
 	Bullet = BulletPool->SpawnPooledObject(SpawnPosition,BulletOrientation);
 	
 	
@@ -67,12 +67,14 @@ void ABTBGun::Shoot()
 void ABTBGun::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Gun Overlapping"));
 	SetIsOverlapping(true);
 }
 
 void ABTBGun::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Gun overlapping END "));
 	SetIsOverlapping(false);
 }
 

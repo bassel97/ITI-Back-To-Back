@@ -33,7 +33,7 @@ void ABTBEnemySpawner::Tick(float DeltaSeconds)
 			EnemySpawnHandle,
 			this,
 			&ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers,
-			2.25f /*SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(GetWorld()))*/,
+			20 /*SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(GetWorld()))*/,
 			false
 		);
 	}

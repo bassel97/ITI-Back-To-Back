@@ -7,6 +7,7 @@
 #include "BackToBack/Actors/BTBGun.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -18,6 +19,9 @@ ABTBPlayableCharacter::ABTBPlayableCharacter()
 
 	SceneCaptureCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureCamera"));
 	SceneCaptureCamera->SetupAttachment(CameraArm);
+
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
+	CollisionBox->SetupAttachment(this->GetMesh());
 
 	//mySkeleton = GetMesh()->GetSkinnedAsset();
 

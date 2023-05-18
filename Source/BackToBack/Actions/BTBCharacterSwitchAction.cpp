@@ -37,13 +37,13 @@ void UBTBCharacterSwitchAction::Act(ABTBCharacter* Character, const bool bIsAI)
 
 					myGun->GunMesh->SetSimulatePhysics(false);
 
-					myGun->AttachToComponent(PlayableCharacter->GetMesh()->GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
+					myGun->AttachToComponent(PlayableCharacter->GetMesh()->GetAttachmentRoot(), FAttachmentTransformRules::SnapToTargetIncludingScale, "GunSocket");
 
 					PlayableCharacter->bGunAttached = true;
-					
 				}
 			}
-			else if (PlayableCharacter->bGunAttached)
+
+			if (PlayableCharacter->bGunAttached)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("ditch it!!"));
 				myGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
