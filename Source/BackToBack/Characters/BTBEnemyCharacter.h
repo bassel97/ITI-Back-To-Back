@@ -13,5 +13,17 @@ UCLASS()
 class BACKTOBACK_API ABTBEnemyCharacter : public ABTBAICharacter
 {
 	GENERATED_BODY()
-	
+
+public:
+
+protected:
+
+private:
+
+
+public:
+
+protected:
+
+private:
 };
