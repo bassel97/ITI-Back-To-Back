@@ -20,8 +20,7 @@ ABTBPlayableCharacter::ABTBPlayableCharacter()
 	SceneCaptureCamera = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureCamera"));
 	SceneCaptureCamera->SetupAttachment(CameraArm);
 
-	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	CollisionBox->SetupAttachment(this->GetMesh());
+	
 
 	//mySkeleton = GetMesh()->GetSkinnedAsset();
 
