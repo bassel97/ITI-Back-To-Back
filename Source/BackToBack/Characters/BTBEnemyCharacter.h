@@ -17,13 +17,7 @@ class BACKTOBACK_API ABTBEnemyCharacter : public ABTBAICharacter
 public:
 
 protected:
-
+	virtual void Die() override;
 private:
 
-
-public:
-
-protected:
-
-private:
 };

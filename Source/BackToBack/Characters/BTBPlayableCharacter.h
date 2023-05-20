@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "BTBHumanoidCharacter.h"
-#include "BackToBack/Actions/Character/BTBCharacterAction.h"
-#include "Engine/SkeletalMeshSocket.h"
 #include "BTBPlayableCharacter.generated.h"
 
 class USpringArmComponent;
@@ -14,7 +12,6 @@ class UBTBCharacterJumpAction;
 class UMeshComponent;
 
 class ABTBGun;
-//class UBTBCharacterAction;
 
 /**
  * Our Playable Character
@@ -30,15 +27,6 @@ public:
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget);
 	void SetGun(ABTBGun* Gun);
 	ABTBGun* GetGun();
-	
-protected:
-	virtual void Tick(float DeltaTime) override;
-	virtual void BeginPlay() override;
-	
-	
-private:
-	
-	
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
@@ -54,14 +42,7 @@ protected:
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
 
 	TObjectPtr<ABTBGun> GunActor;
-
-	
-
-	//UPROPERTY(EditDefaultsOnly,Category="Actions")
-	///*TObjectPtr<UBTBCharacterAction> CharacterActionClass;*/
-
-	//TObjectPtr<UBTBCharacterJumpAction> JumpAction;
-private:
+	virtual void Die() override;
 
 
 };

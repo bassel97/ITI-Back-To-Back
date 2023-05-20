@@ -28,7 +28,7 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 		{
 			if (myGun->GetbIsOverlapping())
 			{
-				myGun->GunMesh->SetSimulatePhysics(false);
+				//myGun->GunMesh->SetSimulatePhysics(false);
 
 				myGun->AttachToComponent(PlayableCharacter->GetMesh()->GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
 

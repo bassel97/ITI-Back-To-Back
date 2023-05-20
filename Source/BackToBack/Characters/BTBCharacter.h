@@ -20,15 +20,13 @@ class BACKTOBACK_API ABTBCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	
-
-public:
 	bool bStartRotate = false;
 	float RotationValue;
 
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void BeginPlay() override;
+
 
 	bool GetbStartJump()
 	{
@@ -40,7 +38,7 @@ public:
 		bStartJump = Value;
 	}
 
-	virtual float GetRotationValue()
+	/*virtual */float GetRotationValue()
 	{
 		return RotationValue;
 	}
@@ -92,7 +90,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
-
+protected:
+	virtual void Die() PURE_VIRTUAL(ABTBCharacter::Die);
 private:
 	bool bStartJump = false;
 	

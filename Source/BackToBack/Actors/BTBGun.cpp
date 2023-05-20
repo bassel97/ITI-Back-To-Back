@@ -18,11 +18,8 @@ ABTBGun::ABTBGun()
 	ShootingLocation = CreateDefaultSubobject<UChildActorComponent>(TEXT("Shooting Location"));
 	ShootingLocation->SetupAttachment(SceneComponent);
 
-	GunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gun Mesh"));
-	GunMesh->SetupAttachment(SceneComponent);
-
 	GunSkeletal = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun Skeleton"));
-	GunSkeletal->SetupAttachment(GunMesh);
+	GunSkeletal->SetupAttachment(SceneComponent);
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
 	CollisionBox->SetupAttachment(GunSkeletal);
@@ -36,31 +33,33 @@ void ABTBGun::BeginPlay()
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBGun::OnBoxEndOverlap);
 }
 
-void ABTBGun::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-}
-
 void ABTBGun::Shoot()
 {
-	Bullet = BulletPool->SpawnPooledObject(ShootingLocation->GetComponentLocation(),BulletOrientation);
-	
-	
-	UProjectileMovementComponent* BulletProjectile = NewObject<UProjectileMovementComponent>(Bullet, UProjectileMovementComponent::StaticClass(), TEXT("Projectile Movement"));
-	Bullet->AddOwnedComponent(BulletProjectile);
-	Bullet->FinishAddComponent(BulletProjectile,true, Bullet->GetActorTransform());
-	if(!BulletProjectile)
+	if(Ammo <= 5)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is is not added"));
+		Bullet = BulletPool->SpawnPooledObject(ShootingLocation->GetComponentLocation(), BulletOrientation);
+		Ammo++;
+		UProjectileMovementComponent* BulletProjectile = NewObject<UProjectileMovementComponent>(Bullet, UProjectileMovementComponent::StaticClass(), TEXT("Projectile Movement"));
+		Bullet->AddOwnedComponent(BulletProjectile);
+		Bullet->FinishAddComponent(BulletProjectile, true, Bullet->GetActorTransform());
+		if (!BulletProjectile)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is is not added"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is added"));
+			BulletProjectile->ProjectileGravityScale = 0.f;
+			BulletProjectile->AddForce(GetActorForwardVector() * 5000.f);
+			GunSkeletal->PlayAnimation(ShootingAnim, false);
+		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is added"));
-		BulletProjectile->ProjectileGravityScale = 0.f;
-		/*BulletProjectile->InitialSpeed = 1300.f;
-		BulletProjectile->MaxSpeed = 2000.f;*/
-		BulletProjectile->AddForce(GetActorForwardVector() * 5000.f);
+		Ammo = 0;
+		GunSkeletal->PlayAnimation(ReloadingAnim, false);
 	}
+	
 	
 	
 }

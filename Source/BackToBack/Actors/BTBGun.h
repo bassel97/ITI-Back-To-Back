@@ -35,12 +35,14 @@ public:
 		USkeletalMeshComponent* GunSkeletal;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		UStaticMeshComponent* GunMesh;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 		class UBoxComponent* CollisionBox;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UChildActorComponent* ShootingLocation;
+
+	UPROPERTY(EditAnywhere)
+		TObjectPtr<UAnimationAsset> ShootingAnim;
+	UPROPERTY(EditAnywhere)
+		TObjectPtr<UAnimationAsset> ReloadingAnim;
 
 	bool GetbIsOverlapping();
 
@@ -58,10 +60,10 @@ protected:
 	     
 private:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaSeconds) override;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 		bool bIsOverlapping;
 
 	TSubclassOf<UProjectileMovementComponent> ProjectileComponent;
+	int32 Ammo{ 0 };
 };

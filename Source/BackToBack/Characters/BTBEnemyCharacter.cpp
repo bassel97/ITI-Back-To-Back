@@ -2,7 +2,10 @@
 
 
 #include "BTBEnemyCharacter.h"
-
 #include "Kismet/GameplayStatics.h"
 
 
+void ABTBEnemyCharacter::Die()
+{
+	
+}
