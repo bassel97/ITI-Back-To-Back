@@ -41,6 +41,9 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
 
+	UPROPERTY(EditAnywhere)
+		TObjectPtr<UAnimationAsset> DeathAnimation;
+
 	TObjectPtr<ABTBGun> GunActor;
 	virtual void Die() override;
 

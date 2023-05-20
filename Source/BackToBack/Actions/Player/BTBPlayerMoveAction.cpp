@@ -23,7 +23,7 @@ void UBTBPlayerMoveAction::Act(ABTBCharacter* Character)
 	const FTransform Transform = FTransform(Forward);
 	Character->AddMovementInput(Forward, MoveValue);
 	
-	UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), MoveValue);
+	//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), MoveValue);
 
 	
 }

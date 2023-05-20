@@ -27,7 +27,7 @@ void UBTBPlayerRotateAction::Act(ABTBCharacter* Character)
 
 	//Debugging
 #if UE_EDITOR
-		UE_LOG(LogTemp, Warning, TEXT("Yaw angle is : %f"), Character->GetActorRotation().Yaw);
+		//UE_LOG(LogTemp, Warning, TEXT("Yaw angle is : %f"), Character->GetActorRotation().Yaw);
 #endif
 	
 }

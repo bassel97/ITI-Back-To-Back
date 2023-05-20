@@ -46,7 +46,7 @@ ABTBGun* ABTBPlayableCharacter::GetGun()
 
 void ABTBPlayableCharacter::Die()
 {
-	Super::Die();
+	GetMesh()->PlayAnimation(DeathAnimation, false);
 }
 
 

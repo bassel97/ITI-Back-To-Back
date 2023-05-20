@@ -13,14 +13,6 @@ void UBTBPlayerShootAction::Act(ABTBCharacter* Character)
 	{
 		return;
 	}
-	//if (Character->GetbStartPool())
-	//{
-	//	//Bullet = Cast<UBTBObjectPoolComponent>(Character->GetDefaultSubobjectByName(FName("BTBObjectPool")));
-	//	Gun = Cast<ABTBGun>(GunClass);
-	//	
-	//	UE_LOG(LogTemp, Warning, TEXT("bStartPool is true"));
-	//	Character->SetbStartPool(false);
-	//}
 	if (Character->GetbStartShoot())
 	{
 		
@@ -51,11 +43,11 @@ void UBTBPlayerShootAction::Act(ABTBCharacter* Character)
 	Gun = Cast<ABTBPlayableCharacter>(Character)->GetGun();
 	if (Gun)
 	{
-		if (GEngine)
+		/*if (GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("We are shooting"));
 			UE_LOG(LogTemp, Warning, TEXT("Gun is shooting"));
-		}
+		}*/
 		Gun->Shoot();
 		Character->SetbStartShoot(false);
 	}
