@@ -23,24 +23,3 @@ void ABTBCharacter::BeginPlay()
 	SetbStartPool(true);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

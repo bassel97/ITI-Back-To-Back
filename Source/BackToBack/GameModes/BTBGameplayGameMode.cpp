@@ -23,23 +23,13 @@ void ABTBGameplayGameMode::BeginPlay()
 	Super::BeginPlay();
 	
 	CreatePlayers();
+	SetupPlayersCommunication();
 	CreateUIWidget();
 	AssignCameras();
 	AssignGunToPlayer();
 	SetCenterOfPlayersInEnemySpawner();
 }
 
-void ABTBGameplayGameMode::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-
-	if(InputReceiverArray[0]->AxisInput.X == 1 && InputReceiverArray[1]->AxisInput.X == 1)
-	{
-		InputReceiverArray[0]->OnPlayersPressedRightTrigger.Broadcast(1);
-		InputReceiverArray[1]->OnPlayersPressedRightTrigger.Broadcast(1);
-	}
-	
-}
 
 void ABTBGameplayGameMode::CreatePlayers()
 {
@@ -51,18 +41,21 @@ void ABTBGameplayGameMode::CreatePlayers()
 	}
 
 	UGameplayStatics::GetAllActorsOfClass(World, APlayerStart::StaticClass(), PlayerStartArray);
+
+	FVector PS1_Location = PlayerStartArray[0]->GetActorLocation();
+	FRotator PS1_Rotation = PlayerStartArray[0]->GetActorRotation();
+
+	FVector PS2_Location = PlayerStartArray[1]->GetActorLocation();
+	FRotator PS2_Rotation = PlayerStartArray[1]->GetActorRotation();
 	
-	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterOne = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass);
+	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterOne =
+		World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass, PS1_Location, PS1_Rotation);
+	
+	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterTwo =
+		World->SpawnActor<ABTBPlayableCharacter>(PlayableCharTwoClass, PS2_Location, PS2_Rotation);
+
 	PlayerCharacterArray.AddUnique(PlayerCharacterOne);
-
-	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterTwo = World->SpawnActor<ABTBPlayableCharacter>(PlayableCharTwoClass);
 	PlayerCharacterArray.AddUnique(PlayerCharacterTwo);
-
-	if(PlayerCharacterArray.Num() >= 2)
-	{
-		PlayerCharacterOne->SetActorLocationAndRotation(PlayerStartArray[0]->GetActorLocation(), PlayerStartArray[0]->GetActorRotation());
-		PlayerCharacterOne->SetActorLocationAndRotation(PlayerStartArray[1]->GetActorLocation(), PlayerStartArray[1]->GetActorRotation());
-	}
 
 	if(InputReceiverArray.Num() >= 2)
 	{
@@ -82,9 +75,18 @@ void ABTBGameplayGameMode::CreatePlayers()
 	
 }
 
+void ABTBGameplayGameMode::SetupPlayersCommunication()
+{
+	if(ensure(PlayerCharacterArray.Num() == 2))
+	{
+		PlayerCharacterArray[0]->OtherPlayer = PlayerCharacterArray[1];
+		PlayerCharacterArray[1]->OtherPlayer = PlayerCharacterArray[0];
+	}
+}
+
 void ABTBGameplayGameMode::AssignCameras()
 {
-	UWorld* World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(SplitScreenClass != nullptr && World != nullptr && CameraClass != nullptr))
 	{
 		return;
@@ -134,7 +136,7 @@ void ABTBGameplayGameMode::CreateRenderTextures()
 
 void ABTBGameplayGameMode::CreateUIWidget()
 {
-	UWorld* World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(World != nullptr))
 	{
 		return;

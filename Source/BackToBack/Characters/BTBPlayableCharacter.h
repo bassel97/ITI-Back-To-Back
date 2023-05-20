@@ -30,6 +30,7 @@ public:
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget);
 	void SetGun(ABTBGun* Gun);
 	ABTBGun* GetGun();
+	
 protected:
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
@@ -43,6 +44,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 	bool bGunAttached;
 
+	TObjectPtr<ABTBPlayableCharacter> OtherPlayer;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, Category="Camera")
@@ -60,6 +62,6 @@ protected:
 
 	//TObjectPtr<UBTBCharacterJumpAction> JumpAction;
 private:
-	
+
 
 };

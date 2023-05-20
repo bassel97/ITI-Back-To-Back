@@ -17,7 +17,7 @@ class ABTBGun;
  * Our Gameplay Game Mode
  */
 UCLASS()
-class BACKTOBACK_API ABTBGameplayGameMode final : public ABTBGameModeBase
+class BACKTOBACK_API ABTBGameplayGameMode : public ABTBGameModeBase
 {
 	GENERATED_BODY()
 
@@ -25,8 +25,8 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaSeconds) override;
 	void CreatePlayers();
+	void SetupPlayersCommunication();
 	void AssignCameras();
 	void CreateRenderTextures();
 	void CreateUIWidget();
@@ -44,8 +44,6 @@ private:
 public:
 	
 protected:
-	
-private:
 	TArray<TObjectPtr<ABTBPlayableCharacter>> PlayerCharacterArray;
 	TArray<TObjectPtr<AActor>> PlayerStartArray;
 
@@ -56,12 +54,12 @@ private:
 	TSubclassOf<ABTBPlayableCharacter> PlayableCharTwoClass;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GlobalGameScreen")
-	TObjectPtr<UBTBSplitScreenDataAsset> SplitScreenClass = nullptr;
+	TObjectPtr<UBTBSplitScreenDataAsset> SplitScreenClass;
 	
 	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
 	TSubclassOf<AActor> CameraClass;
 	
-    TObjectPtr<UTextureRenderTarget2D> RenderTexture_1;
+	TObjectPtr<UTextureRenderTarget2D> RenderTexture_1;
 	TObjectPtr<UTextureRenderTarget2D> RenderTexture_2;
 
 	UPROPERTY(EditAnyWhere, Category = "Config")
@@ -76,4 +74,7 @@ private:
 	TSubclassOf<ABTBGun> GunClass;
 
 	TObjectPtr<ABTBGun> Gun;
+	
+private:
+	
 };

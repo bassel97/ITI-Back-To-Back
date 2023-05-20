@@ -23,6 +23,8 @@ public:
 	
 
 public:
+	bool bStartRotate = false;
+	float RotationValue;
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -38,16 +40,6 @@ public:
 		bStartJump = Value;
 	}
 
-	bool GetbStartRotate()
-	{
-		return bStartRotate;
-	}
-
-	void SetbStartRotate(bool Value)
-	{
-		bStartRotate = Value;
-	}
-
 	bool GetbStartMove()
 	{
 		return bStartMove;
@@ -59,7 +51,7 @@ public:
 		bStartMove = Value;
 	}
 
-	float GetRotationValue()
+	virtual float GetRotationValue()
 	{
 		return RotationValue;
 	}
@@ -67,7 +59,6 @@ public:
 	void SetRotationValue(float Value)
 	{
 		RotationValue = Value;
-
 	}
 
 	float GetMoveValue()
@@ -116,8 +107,6 @@ public:
 private:
 	bool bStartJump = false;
 
-	bool bStartRotate = false;
-
 	bool bStartMove = false;
 
 	bool bStartShoot = false;
@@ -125,8 +114,6 @@ private:
 	bool bStartPool = false;
 
 	bool bStartSwitching = false;
-
-	float RotationValue;
 
 	float MoveValue;
 

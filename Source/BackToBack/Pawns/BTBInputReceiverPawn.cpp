@@ -12,10 +12,6 @@
 #include "InputActionValue.h"
 #include "BackToBack/GameModes/BTBGameplayGameMode.h"
 
-ABTBInputReceiverPawn::ABTBInputReceiverPawn()
-{
-	OnPlayersPressedRightTrigger.AddDynamic(this, &ABTBInputReceiverPawn::HandleAxisInputAction);
-}
 
 void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 {
@@ -28,7 +24,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	HandleRightButton();
 	HandleRightTrigger();
 	HandleLeftTrigger();
-	//HandleAxisInputAction(0);
+	HandleAxisInputAction();
 	
 	//Reset Button states
 	RightTrigger.ResetDownReleaseState();
@@ -37,6 +33,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	LeftButton.ResetDownReleaseState();
 	DownButton.ResetDownReleaseState();
 	UpButton.ResetDownReleaseState();
+	AxisInput.Zero();
 }
 
 void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -181,7 +178,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		
 		PlayerCharacter->SetbStartShoot(true);
 		UE_LOG(LogTemp, Warning, TEXT("Left click pressed"));
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.f, false);
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
 	}
 	if (RightTrigger.bIsReleased)
 	{
@@ -211,44 +208,40 @@ void ABTBInputReceiverPawn::HandleLeftTrigger()
 	}
 }
 
-void ABTBInputReceiverPawn::HandleAxisInputAction(const uint8 Val)
+void ABTBInputReceiverPawn::HandleAxisInputAction()
 {
-	if(Val)
+	//Rotating
+	if (AxisInput.X != 0)
 	{
-		//Rotating
-		if (AxisInput.X != 0)
-		{
-			float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-			float rotSpeed = 3.f;
-			//float rotSpeed = 10;
-			//this->AddControllerYawInput(input);
-			PlayerCharacter->SetbStartRotate(true);
-			PlayerCharacter->SetRotationValue(input);
-			UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
-		}
-		else
-		{
-			PlayerCharacter->SetbStartRotate(false);
-		}
+		float Input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
 
-		//Moving
-		if (AxisInput.Y != 0)
-		{
-			float input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
-			//float input = AxisInput.Y;
-
-			//float rotSpeed = 30;
-			PlayerCharacter->SetbStartMove(true);
-			PlayerCharacter->SetMoveValue(input);
-			//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), input);
-		}
-		else
-		{
-			PlayerCharacter->SetbStartMove(false);
-		}
+		//this->AddControllerYawInput(input);
+		PlayerCharacter->bStartRotate = true;
+		PlayerCharacter->SetRotationValue(Input);
+		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), Input);
+	}
+	else
+	{
+		PlayerCharacter->bStartRotate = false;
 	}
 
+	
+	//Moving
+	if (AxisInput.Y != 0)
+	{
+		const float Input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
+
+		PlayerCharacter->SetbStartMove(true);
+		PlayerCharacter->SetMoveValue(Input);
+		UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), Input);
+	}
+	else
+	{
+		PlayerCharacter->SetbStartMove(false);
+	}
 }
+
+
 
 #pragma region BeforeRefactoring
 //void ABTBInputReceiverPawn::HandleRotateAction()

@@ -30,27 +30,27 @@ void UBTBPlayerRotateAction::Act(ABTBCharacter* Character)
 	/*Character->SetActorRotation(FRotator(0.f,Character->GetRotationValue(),0.f));
 	UE_LOG(LogTemp, Warning, TEXT("Input Value is : %f"), RotationValue);*/
 #pragma endregion
-
-	if (Character->GetbStartRotate())
+	if(Character->bStartRotate)
 	{
 		FVector CurrentLocation = Character->GetActorLocation();
-		float RotationValue = Character->GetRotationValue();
+		const float RotationValue = Character->GetRotationValue();
 
-		int32 orientation;
+		int32 Orientation = 0;
 		if (RotationValue > 0)
 		{
-			orientation = -1;
+			Orientation = -1;
 		}
-		else
+		
+		if (RotationValue < 0)
 		{
-			orientation = 1;
+			Orientation = 1;
 		}
 		
 		Angle += RotationValue;
 		if (Angle > 360.0f) Angle = 1;
 
 		//Rotation around an offset (Radius)
-		FVector Radius = FVector(XCenterOfRotation * orientation, 0 * orientation, 0);
+		FVector Radius = FVector(XCenterOfRotation * Orientation, 0 * Orientation, 0);
 		FVector RotatedRadius = Radius.RotateAngleAxis(Angle, FVector(0, 0, 1));
 		CurrentLocation.X += RotatedRadius.X;
 		CurrentLocation.Y += RotatedRadius.Y;
@@ -70,10 +70,12 @@ void UBTBPlayerRotateAction::Act(ABTBCharacter* Character)
 		UE_LOG(LogTemp, Warning, TEXT("Rotation Angle is : %f"), Angle);
 		UE_LOG(LogTemp, Warning, TEXT("Input Value is : %f"), RotationValue);
 #endif
+
 	}
 	
 
-	
+
+
 }
 
 

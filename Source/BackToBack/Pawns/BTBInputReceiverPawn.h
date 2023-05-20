@@ -12,9 +12,6 @@ class FGameStructs;
 class UInputAction;
 struct FInputActionValue;
 
-// Events
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayersPressedRightTrigger, const uint8, val);
-
 /**
  * Our InputReceiverPawn
  */
@@ -24,10 +21,6 @@ class BACKTOBACK_API ABTBInputReceiverPawn final : public ABTBPawn
 	GENERATED_BODY()
 
 public:
-	ABTBInputReceiverPawn();
-	uint8 PlayersPressingRightTrigger:1;
-
-	
 	[[nodiscard]] ABTBPlayableCharacter* Get_PlayerCharacter() const
 	{
 		return PlayerCharacter;
@@ -37,8 +30,6 @@ public:
 	{
 		this->PlayerCharacter = Player_Character;
 	}
-	
-	FOnPlayersPressedRightTrigger OnPlayersPressedRightTrigger;
 
 protected:
 	virtual void Tick(float DeltaSeconds) override;
@@ -62,7 +53,8 @@ protected:
 	void HandleRightButton();
 	void HandleRightTrigger();
 	void HandleLeftTrigger();
-	void HandleAxisInputAction(const uint8 Val);
+	void HandleAxisInputAction();
+	
 private:
 	void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
 	FTimerHandle TimerHandle;
@@ -70,7 +62,7 @@ private:
 public:
 	UPROPERTY(VisibleAnywhere, Category = "Class Variables")
 	int32 PlayerIndex;
-
+	
 	/** Input Actions start*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input Actions")
 	TObjectPtr<UInputAction> RightTriggerInputAction;
@@ -93,6 +85,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input Actions")
 	TObjectPtr<UInputAction> AxisInputAction;
 	/** Input Actions end*/
+	
+	
+protected:	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input")
+	TObjectPtr<UInputMappingContext> InputMapping;
+
+	
+private:
+	TObjectPtr<ABTBPlayableCharacter> PlayerCharacter;
 
 	/** Buttons States start*/
 	UPROPERTY(VisibleAnywhere, Category = "Buttons States")
@@ -116,13 +117,5 @@ public:
 	UPROPERTY(VisibleAnywhere, meta = (ClampMin = -1, ClampMax = 1), Category = "Buttons")
 	FVector2D AxisInput;
 	/** Buttons States end*/
-
-protected:	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input")
-	TObjectPtr<UInputMappingContext> InputMapping;
-
-	
-private:
-	TObjectPtr<ABTBPlayableCharacter> PlayerCharacter;
 	
 };
