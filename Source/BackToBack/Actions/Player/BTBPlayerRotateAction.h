@@ -20,13 +20,13 @@ public:
 
 protected:
 	virtual void Act(ABTBCharacter* Character) override;
-	float Angle;
 
 	UPROPERTY(EditDefaultsOnly)
-	float XCenterOfRotation;
+	FVector RelativeCenterOfRotation;
 	
 private:
 
+	
 	
 public:
 

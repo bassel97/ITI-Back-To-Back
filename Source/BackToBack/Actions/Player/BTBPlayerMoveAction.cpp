@@ -18,16 +18,12 @@ void UBTBPlayerMoveAction::Act(ABTBCharacter* Character)
 	}
 	
 	const float MoveValue = Character->GetMoveValue();
-	if(Character->GetbStartMove())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), MoveValue);
-		if (MoveValue != 0.f)
-		{
-			FVector Forward = Character->GetActorForwardVector();
-			const FTransform Transform = FTransform(Forward);
-			Character->AddMovementInput(Forward, MoveValue);
-		}
-	}
+	const FVector Forward = Character->GetActorForwardVector();
+	
+	const FTransform Transform = FTransform(Forward);
+	Character->AddMovementInput(Forward, MoveValue);
+	
+	UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), MoveValue);
 
 	
 }

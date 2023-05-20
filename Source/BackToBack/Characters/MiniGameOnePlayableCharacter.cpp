@@ -5,7 +5,7 @@
 
 float AMiniGameOnePlayableCharacter::GetRotationValue()
 {
-	if(RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)	        return 1;
-	// else if(Super::GetRotationValue() <= 0.5f && OtherPlayer->RotationValue <= 0.5f)	return -1;
-	 else return 0;
+	if(RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 1;
+	if(RotationValue <= -0.975f && OtherPlayer->RotationValue <= -0.975f)		return -1;
+	return 0;
 }

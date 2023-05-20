@@ -40,17 +40,6 @@ public:
 		bStartJump = Value;
 	}
 
-	bool GetbStartMove()
-	{
-		return bStartMove;
-	}
-
-
-	void SetbStartMove(bool Value)
-	{
-		bStartMove = Value;
-	}
-
 	virtual float GetRotationValue()
 	{
 		return RotationValue;
@@ -106,9 +95,7 @@ public:
 
 private:
 	bool bStartJump = false;
-
-	bool bStartMove = false;
-
+	
 	bool bStartShoot = false;
 
 	bool bStartPool = false;

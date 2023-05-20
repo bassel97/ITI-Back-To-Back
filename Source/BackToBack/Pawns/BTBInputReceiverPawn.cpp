@@ -46,8 +46,7 @@ void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInp
 		PC != nullptr ? ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()) : nullptr;
 	
 	UEnhancedInputComponent* PEI = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-
-	/*UE_LOG(LogTemp, Warning, TEXT("Deprecated yaw angle input is, %f"), PC->GetDeprecatedInputYawScale());*/
+	
 	if (IsValid(Subsystem))
 	{
 		Subsystem->ClearAllMappings();
@@ -83,19 +82,16 @@ void ABTBInputReceiverPawn::RightButtonInputTriggered(const FInputActionValue& V
 void ABTBInputReceiverPawn::LeftButtonInputTriggered(const FInputActionValue& Val)
 {
 	ButtonStateSetData(LeftButton, Val.Get<bool>());
-
 }
 
 void ABTBInputReceiverPawn::DownButtonInputTriggered(const FInputActionValue& Val)
 {
 	ButtonStateSetData(DownButton, Val.Get<bool>());
-	
 }
 
 void ABTBInputReceiverPawn::UpButtonInputTriggered(const FInputActionValue& Val)
 {
 	ButtonStateSetData(UpButton, Val.Get<bool>());
-
 }
 
 void ABTBInputReceiverPawn::SetAxisInput(const FInputActionValue& Val)
@@ -175,17 +171,16 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 {
 	if (RightTrigger.bIsDown)
 	{
-		
 		PlayerCharacter->SetbStartShoot(true);
 		UE_LOG(LogTemp, Warning, TEXT("Left click pressed"));
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
 	}
+	
 	if (RightTrigger.bIsReleased)
 	{
 		PlayerCharacter->SetbStartShoot(false);
 		UE_LOG(LogTemp, Warning, TEXT("Left click Released"));
 		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
-
 	}
 	/*if (RightTrigger.bIsHeld)
 	{
@@ -211,78 +206,16 @@ void ABTBInputReceiverPawn::HandleLeftTrigger()
 void ABTBInputReceiverPawn::HandleAxisInputAction()
 {
 	//Rotating
-	if (AxisInput.X != 0)
-	{
-		float Input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-
-		//this->AddControllerYawInput(input);
-		PlayerCharacter->bStartRotate = true;
-		PlayerCharacter->SetRotationValue(Input);
-		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), Input);
-	}
-	else
-	{
-		PlayerCharacter->bStartRotate = false;
-	}
-
+	//const float InputX = FMath::Clamp(AxisInput.X, -1.f, 1.f);
+	PlayerCharacter->SetRotationValue(AxisInput.X);
+	UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), AxisInput.X);
+	
 	
 	//Moving
-	if (AxisInput.Y != 0)
-	{
-		const float Input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
-
-		PlayerCharacter->SetbStartMove(true);
-		PlayerCharacter->SetMoveValue(Input);
-		UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), Input);
-	}
-	else
-	{
-		PlayerCharacter->SetbStartMove(false);
-	}
+	//const float InputY = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
+	PlayerCharacter->SetMoveValue(AxisInput.Y);
+	UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), AxisInput.Y);
 }
-
-
-
-#pragma region BeforeRefactoring
-//void ABTBInputReceiverPawn::HandleRotateAction()
-//{
-//	//const ABTBPlayerController* PC = Cast<ABTBPlayerController>(GetController());
-//
-//	
-//	if(AxisInput.X != 0)
-//	{
-//		float input = FMath::Clamp(AxisInput.X, -1.f, 1.f);
-//		//float input = AxisInput.X;
-//		
-//		//float rotSpeed = 30;
-//		PlayerCharacter->SetbStartRotate(true);
-//		PlayerCharacter->SetRotationValue(input * 0.1);
-//		UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), input);
-//	}
-//	else
-//	{
-//		PlayerCharacter->SetbStartRotate(false);
-//	}
-//	
-//}
-//void ABTBInputReceiverPawn::HandleMoveAction()
-//{
-//	if (AxisInput.Y != 0)
-//	{
-//		float input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
-//		//float input = AxisInput.Y;
-//
-//		//float rotSpeed = 30;
-//		PlayerCharacter->SetbStartMove(true);
-//		PlayerCharacter->SetMoveValue(input);
-//		//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), input);
-//	}
-//	else
-//	{
-//		PlayerCharacter->SetbStartMove(false);
-//	}
-//}  
-#pragma endregion
 
 
 void ABTBInputReceiverPawn::ButtonStateSetData(FButtonState& ButtonState, const bool Value)
