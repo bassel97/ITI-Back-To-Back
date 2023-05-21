@@ -8,7 +8,8 @@
 void ABTBEnemyCharacter::Die()
 {
 	GetMesh()->PlayAnimation(DeathAnimation,false);
-	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 5.f, false);
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, DeathAnimation->GetPlayLength(), false);
+	
 }
 
 void ABTBEnemyCharacter::BeginPlay()
