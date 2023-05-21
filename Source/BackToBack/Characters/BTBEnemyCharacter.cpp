@@ -7,14 +7,18 @@
 #include "Kismet/GameplayStatics.h"
 
 
+
+
 void ABTBEnemyCharacter::Die()
 {
-	GetMesh()->PlayAnimation(DeathAnimation, false);
-	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, DeathAnimation->GetPlayLength(), false);
+	GetMesh()->PlayAnimation(DeathAnimation,false);
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 5.f, false);
+	
 }
 
 void ABTBEnemyCharacter::BeginPlay()
 {
+	Super::BeginPlay();
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBEnemyCharacter::OnWeaponHit);
 }
 
@@ -29,15 +33,17 @@ void ABTBEnemyCharacter::Damage()
 
 void ABTBEnemyCharacter::DestroyEnemy()
 {
-	/*if (Destroy())
+	//GetController()->Destroy();
+	GetMesh()->SetSimulatePhysics(false);
+	if (Destroy())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Enemy is Destroyed"));
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Enemy is not destroyed"));
-	}*/
-	SetActorHiddenInGame(true);
+	}
+	//SetActorHiddenInGame(true);
 }
 
 void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -45,6 +51,7 @@ void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent* OverlappedComponent, A
 {
 	if(ABTBPooledObject* bullet = Cast<ABTBPooledObject>(OtherActor))
 	{
+		bullet->DeactivatePooledObject();
 		UE_LOG(LogTemp, Warning, TEXT("Bullet hit the enemy"));
 		Damage();
 	}

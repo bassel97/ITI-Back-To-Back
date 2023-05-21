@@ -5,11 +5,12 @@
 #include  "BTBEnemyCharacter.h"
 #include "Components/CapsuleComponent.h"
 
-//void AMiniGameOnePlayableCharacter::BeginPlay()
-//{
-//	//GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMiniGameOnePlayableCharacter::OnEnemyHit);
-//}
-//
+void AMiniGameOnePlayableCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMiniGameOnePlayableCharacter::OnEnemyHit);
+}
+
 void AMiniGameOnePlayableCharacter::Die()
 {
 	Super::Die();

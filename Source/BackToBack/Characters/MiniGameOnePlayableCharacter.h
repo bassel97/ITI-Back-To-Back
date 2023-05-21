@@ -18,7 +18,7 @@ public:
 
 protected:
 	//virtual float GetRotationValue() override;
-	//virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 	virtual void Die() override;
 	UFUNCTION()
 		void OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
