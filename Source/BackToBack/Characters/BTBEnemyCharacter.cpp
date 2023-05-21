@@ -4,16 +4,11 @@
 #include "BTBEnemyCharacter.h"
 #include "BackToBack/Actors/BTBPooledObject.h"
 #include "Components/CapsuleComponent.h"
-#include "Kismet/GameplayStatics.h"
-
-
-
 
 void ABTBEnemyCharacter::Die()
 {
 	GetMesh()->PlayAnimation(DeathAnimation,false);
 	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 5.f, false);
-	
 }
 
 void ABTBEnemyCharacter::BeginPlay()
@@ -33,7 +28,6 @@ void ABTBEnemyCharacter::Damage()
 
 void ABTBEnemyCharacter::DestroyEnemy()
 {
-	//GetController()->Destroy();
 	GetMesh()->SetSimulatePhysics(false);
 	if (Destroy())
 	{
@@ -43,7 +37,6 @@ void ABTBEnemyCharacter::DestroyEnemy()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Enemy is not destroyed"));
 	}
-	//SetActorHiddenInGame(true);
 }
 
 void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
