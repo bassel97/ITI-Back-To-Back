@@ -40,12 +40,12 @@ void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	const ABTBPlayerController* PC = Cast<ABTBPlayerController>(GetController());
+	const TObjectPtr<ABTBPlayerController> PC = Cast<ABTBPlayerController>(GetController());
 	
-	UEnhancedInputLocalPlayerSubsystem* Subsystem =
+	const TObjectPtr<UEnhancedInputLocalPlayerSubsystem> Subsystem =
 		PC != nullptr ? ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()) : nullptr;
-	
-	UEnhancedInputComponent* PEI = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+
+	const TObjectPtr<UEnhancedInputComponent> PEI = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	
 	if (IsValid(Subsystem))
 	{
@@ -114,7 +114,7 @@ void ABTBInputReceiverPawn::HandleDownButton()
 	}
 }
 
-void ABTBInputReceiverPawn::HandleUpButton()
+void ABTBInputReceiverPawn::HandleUpButton() const
 {
 	if (UpButton.bIsDown)
 	{
@@ -133,7 +133,7 @@ void ABTBInputReceiverPawn::HandleUpButton()
 
 }
 
-void ABTBInputReceiverPawn::HandleLeftButton()
+void ABTBInputReceiverPawn::HandleLeftButton() const
 {
 	if (LeftButton.bIsDown)
 	{
@@ -151,7 +151,7 @@ void ABTBInputReceiverPawn::HandleLeftButton()
 	}
 }
 
-void ABTBInputReceiverPawn::HandleRightButton()
+void ABTBInputReceiverPawn::HandleRightButton() const
 {
 	if (RightButton.bIsDown)
 	{
@@ -188,7 +188,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 	}*/
 }
 
-void ABTBInputReceiverPawn::HandleLeftTrigger()
+void ABTBInputReceiverPawn::HandleLeftTrigger() const
 {
 	if (LeftTrigger.bIsDown)
 	{
@@ -203,7 +203,7 @@ void ABTBInputReceiverPawn::HandleLeftTrigger()
 	}
 }
 
-void ABTBInputReceiverPawn::HandleAxisInputAction()
+void ABTBInputReceiverPawn::HandleAxisInputAction() const
 {
 	//Rotating
 	PlayerCharacter->SetRotationValue(AxisInput.X);

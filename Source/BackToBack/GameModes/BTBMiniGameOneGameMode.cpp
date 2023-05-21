@@ -2,5 +2,3 @@
 
 
 #include "BTBMiniGameOneGameMode.h"
-
-#include "BackToBack/Characters/BTBPlayableCharacter.h"
