@@ -206,13 +206,11 @@ void ABTBInputReceiverPawn::HandleLeftTrigger()
 void ABTBInputReceiverPawn::HandleAxisInputAction()
 {
 	//Rotating
-	//const float InputX = FMath::Clamp(AxisInput.X, -1.f, 1.f);
 	PlayerCharacter->SetRotationValue(AxisInput.X);
 	//UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), AxisInput.X);
 	
 	
 	//Moving
-	//const float InputY = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
 	PlayerCharacter->SetMoveValue(AxisInput.Y);
 	//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), AxisInput.Y);
 }

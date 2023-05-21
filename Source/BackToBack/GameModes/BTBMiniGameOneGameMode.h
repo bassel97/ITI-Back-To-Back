@@ -17,7 +17,6 @@ class BACKTOBACK_API ABTBMiniGameOneGameMode : public ABTBGameplayGameMode
 public:
 
 protected:
-	virtual void Tick(float DeltaSeconds) override;
 
 private:
 

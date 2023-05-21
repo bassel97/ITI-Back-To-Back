@@ -11,11 +11,17 @@ void AMiniGameOnePlayableCharacter::BeginPlay()
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMiniGameOnePlayableCharacter::OnEnemyHit);
 }
 
+float AMiniGameOnePlayableCharacter::GetRotationValue()
+{
+	if(RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 1;
+	if(RotationValue <= -0.975f && OtherPlayer->RotationValue <= -0.975f)		return -1;
+	return 0;
+}
+
 void AMiniGameOnePlayableCharacter::Die()
 {
 	Super::Die();
 }
-
 
 void AMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -25,10 +31,3 @@ void AMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedCo
 		Die();
 	}
 }
-
-//float AMiniGameOnePlayableCharacter::GetRotationValue()
-//{
-//	if(RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 1;
-//	if(RotationValue <= -0.975f && OtherPlayer->RotationValue <= -0.975f)		return -1;
-//	return 0;
-//}

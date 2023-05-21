@@ -21,12 +21,12 @@ protected:
 	void Damage();
 	void DestroyEnemy();
 	UPROPERTY(EditAnywhere,Category="Death Animation")
-		TObjectPtr<UAnimationAsset> DeathAnimation;
-	/*UPROPERTY(EditAnywhere)
-		TObjectPtr<UAnimMontage> DeathAnimationMontage;*/
+	TObjectPtr<UAnimationAsset> DeathAnimation;
+	
 	UFUNCTION()
-		void OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	void OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 private:
 	FTimerHandle DestroyTimeHandle;
 };

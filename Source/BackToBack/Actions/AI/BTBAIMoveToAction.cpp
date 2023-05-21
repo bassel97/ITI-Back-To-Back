@@ -6,6 +6,7 @@
 #include "BackToBack/Characters/BTBCharacter.h"
 #include "BackToBack/AIControllers/BTBAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 void UBTBAIMoveToAction::Act(ABTBCharacter* Character)
 {
