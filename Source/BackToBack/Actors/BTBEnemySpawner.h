@@ -48,5 +48,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "AI")
 	float DistanceFromCenterOfDonutToInnerRange;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	float SpawnEnemyEvery;
+
 	FTimerHandle EnemySpawnHandle;
 };
