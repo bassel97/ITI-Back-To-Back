@@ -5,17 +5,17 @@
 #include "BackToBack/Actors/BTBPooledObject.h"
 #include "Components/CapsuleComponent.h"
 
+void ABTBEnemyCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBEnemyCharacter::OnWeaponHit);
+}
+
 void ABTBEnemyCharacter::Die()
 {
 	GetMesh()->PlayAnimation(DeathAnimation,false);
 	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, DeathAnimation->GetPlayLength(), false);
 	
-}
-
-void ABTBEnemyCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBEnemyCharacter::OnWeaponHit);
 }
 
 void ABTBEnemyCharacter::Damage()

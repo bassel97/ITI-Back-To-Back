@@ -16,8 +16,8 @@ class BACKTOBACK_API ABTBEnemyCharacter : public ABTBAICharacter
 
 
 protected:
-	virtual void Die() override;
 	virtual void BeginPlay() override;
+	virtual void Die() override;
 	void Damage();
 	void DestroyEnemy();
 	UPROPERTY(EditAnywhere,Category="Death Animation")

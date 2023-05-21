@@ -13,25 +13,21 @@
 
 void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 {
-	ABTBPlayableCharacter* PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
-
-	ABTBGun* myGun = PlayableCharacter->GetGun();
+	const TObjectPtr<ABTBPlayableCharacter> PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
+	const TObjectPtr<ABTBGun> MyGun = PlayableCharacter->GetGun();
 
 	if (Character == nullptr)
 	{
 		return;
 	} 
 	
-	if (Character->GetbStartSwitching() )
+	if (Character->GetbStartSwitching())
 	{
 		if (!PlayableCharacter->bGunAttached)
 		{
-			if (myGun->GetbIsOverlapping())
+			if (MyGun->GetbIsOverlapping())
 			{
-				//myGun->GunMesh->SetSimulatePhysics(false);
-
-				myGun->AttachToComponent(PlayableCharacter->GetMesh()->GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
-
+				MyGun->AttachToComponent(PlayableCharacter->GetMesh()->GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
 				PlayableCharacter->bGunAttached = true;
 			}
 		}
