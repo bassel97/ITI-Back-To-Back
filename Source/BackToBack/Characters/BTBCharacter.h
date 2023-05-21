@@ -38,7 +38,7 @@ public:
 		bStartJump = Value;
 	}
 
-	/*virtual */float GetRotationValue()
+	virtual float GetRotationValue()
 	{
 		return RotationValue;
 	}

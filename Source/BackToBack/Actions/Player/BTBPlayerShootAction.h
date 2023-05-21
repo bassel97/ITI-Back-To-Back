@@ -21,9 +21,9 @@ public:
 	virtual void Act(ABTBCharacter* Character) override;
 	
 	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<UBTBObjectPoolComponent> BulletClass;
+	TSubclassOf<UBTBObjectPoolComponent> BulletClass;
 	
-	ABTBGun* Gun;
+	TObjectPtr<ABTBGun> Gun;
 
 
 };

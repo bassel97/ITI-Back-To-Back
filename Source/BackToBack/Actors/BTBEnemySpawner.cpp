@@ -60,7 +60,6 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 
 FVector ABTBEnemySpawner::GetARandomLocationInPlayersRange()
 {
-	//const FVector Center = GetPlayersMidPoint();
 	const double RandomX = FMath::FRandRange(Center.X - OuterRange,Center.X + OuterRange);
 	const double RandomY = FMath::FRandRange(Center.Y - OuterRange,Center.Y + OuterRange);
 

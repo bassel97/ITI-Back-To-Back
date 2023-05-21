@@ -24,9 +24,9 @@ class BACKTOBACK_API ABTBPlayableCharacter : public ABTBHumanoidCharacter
 public:
 	ABTBPlayableCharacter();
 	void RemoveCamera() const;
-	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget);
+	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget) const;
 	void SetGun(ABTBGun* Gun);
-	ABTBGun* GetGun();
+	ABTBGun* GetGun() const;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")

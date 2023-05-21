@@ -48,15 +48,15 @@ protected:
 	void HandleMoveAction();*/
 
 	void HandleDownButton();
-	void HandleUpButton();
-	void HandleLeftButton();
-	void HandleRightButton();
+	void HandleUpButton() const;
+	void HandleLeftButton() const;
+	void HandleRightButton() const;
 	void HandleRightTrigger();
-	void HandleLeftTrigger();
-	void HandleAxisInputAction();
+	void HandleLeftTrigger() const;
+	void HandleAxisInputAction() const;
 	
 private:
-	void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
+	static void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
 	FTimerHandle TimerHandle;
 	
 public:

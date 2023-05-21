@@ -43,9 +43,9 @@ void ABTBEnemyCharacter::DestroyEnemy()
 void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(ABTBPooledObject* bullet = Cast<ABTBPooledObject>(OtherActor))
+	if(ABTBPooledObject* Bullet = Cast<ABTBPooledObject>(OtherActor))
 	{
-		bullet->DeactivatePooledObject();
+		Bullet->DeactivatePooledObject();
 		UE_LOG(LogTemp, Warning, TEXT("Bullet hit the enemy"));
 		Damage();
 	}

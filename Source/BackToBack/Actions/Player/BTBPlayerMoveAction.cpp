@@ -24,6 +24,4 @@ void UBTBPlayerMoveAction::Act(ABTBCharacter* Character)
 	Character->AddMovementInput(Forward, MoveValue);
 	
 	//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), MoveValue);
-
-	
 }
