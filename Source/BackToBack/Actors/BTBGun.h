@@ -22,20 +22,22 @@ public:
 	ABTBGun();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		class UBTBObjectPoolComponent* BulletPool;
+	class UBTBObjectPoolComponent* BulletPool;
 	
-		ABTBPooledObject* Bullet;
+	ABTBPooledObject* Bullet;
 
 	UPROPERTY(EditAnywhere, Category = "Bullet")
-		FRotator BulletOrientation;
+	FRotator BulletOrientation;
+
 	UPROPERTY(EditAnywhere, Category = "Bullet")
-		float BulletVelocity;
+	float BulletVelocity;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		USkeletalMeshComponent* GunSkeletal;
+	USkeletalMeshComponent* GunSkeletal;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		class UBoxComponent* CollisionBox;
+	class UBoxComponent* CollisionBox;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UChildActorComponent* ShootingLocation;
 
@@ -44,25 +46,26 @@ public:
 	UPROPERTY(EditAnywhere)
 		TObjectPtr<UAnimationAsset> ReloadingAnim;
 
-	bool GetbIsOverlapping();
+	//bool GetbIsOverlapping();
 
-	void SetIsOverlapping(bool Value);
+	//void SetIsOverlapping(bool Value);
 
 	void Shoot();
 
 protected:
 
-	UFUNCTION()
-		void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	//UFUNCTION()
+	//	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	UFUNCTION()
-		void OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-	     
+	//UFUNCTION()
+	//	void OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	//     
 private:
+
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-		bool bIsOverlapping;
+	//UPROPERTY(VisibleAnywhere, Category = "Components")
+	//bool bIsOverlapping;
 
 	TSubclassOf<UProjectileMovementComponent> ProjectileComponent;
 	int32 Ammo{ 0 };

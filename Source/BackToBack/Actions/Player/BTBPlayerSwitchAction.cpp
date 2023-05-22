@@ -4,16 +4,16 @@
 #include "BTBPlayerSwitchAction.h"
 
 #include "BackToBack/Actors/BTBGun.h"
-#include "BackToBack/AIControllers/BTBAIController.h"
 #include "BackToBack/Characters/BTBCharacter.h"
-#include "BackToBack/Characters/BTBAICharacter.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
-#include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 {
+
 	ABTBPlayableCharacter* PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
+
+	
 
 	ABTBGun* myGun = PlayableCharacter->GetGun();
 
@@ -22,19 +22,42 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 		return;
 	} 
 	
-	if (Character->GetbStartSwitching() )
+	if (Character->GetbStartSwitching())
 	{
-		if (!PlayableCharacter->bGunAttached)
-		{
-			if (myGun->GetbIsOverlapping())
-			{
-				//myGun->GunMesh->SetSimulatePhysics(false);
+		myGun->GunSkeletal->SetSimulatePhysics(false);
+		myGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+		myGun->SetActorLocationAndRotation(PlayableCharacter->GetMesh()->GetSocketLocation("GunSocket"), PlayableCharacter->GetMesh()->GetSocketRotation("GunSocket"));
+		myGun->AttachToComponent(PlayableCharacter->OtherPlayer->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
 
-				myGun->AttachToComponent(PlayableCharacter->GetMesh()->GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
+		//myGun
 
-				PlayableCharacter->bGunAttached = true;
-			}
-		}
+		//if (!PlayableCharacter->bGunAttached)
+		//{
+		//	UE_LOG(LogTemp, Warning, TEXT("firsh switch cond!!"));
+
+		//	if (myGun->GetbIsOverlapping())
+		//	{
+		//		UE_LOG(LogTemp, Warning, TEXT("Switching!!"));
+
+		//		myGun->GunSkeletal->SetSimulatePhysics(false);
+
+		//		myGun->AttachToComponent(PlayableCharacter->GetMesh()->GetAttachmentRoot(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
+
+		//		PlayableCharacter->bGunAttached = true;
+		//	}
+		//}
+
+		//if (PlayableCharacter->bGunAttached)
+		//{
+		//	UE_LOG(LogTemp, Warning, TEXT("ditch it!!"));
+		//	myGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+		//	myGun->SetActorLocationAndRotation(PlayableCharacter->GetMesh()->GetSocketLocation("GunSocket"), PlayableCharacter->GetMesh()->GetSocketRotation("GunSocket"));
+		//	PlayableCharacter->bGunAttached = false;
+		//	//myGun->GunMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		//	//myGun->GunMesh->SetSimulatePhysics(true);
+		//}
+
+
 	}
 	
 }

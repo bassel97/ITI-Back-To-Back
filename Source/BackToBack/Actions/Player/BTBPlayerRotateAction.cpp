@@ -2,10 +2,7 @@
 
 
 #include "BTBPlayerRotateAction.h"
-
-#include "BackToBack/AIControllers/BTBAIController.h"
 #include "BackToBack/Characters/BTBCharacter.h"
-#include "BehaviorTree/BlackboardComponent.h"
 
 
 void UBTBPlayerRotateAction::Act(ABTBCharacter* Character)
@@ -15,21 +12,16 @@ void UBTBPlayerRotateAction::Act(ABTBCharacter* Character)
 		return;
 	}
 	
-	const float RotationValue = Character->GetRotationValue();
-	const FTransform CharacterTransform = Character->GetTransform();
-	
-	const FVector RelativeCenterOfRotationWS = CharacterTransform.TransformVector(RelativeCenterOfRotation);
-	const FTransform LocalRotateCenter = FTransform(CharacterTransform.GetRotation(), RelativeCenterOfRotationWS);
+    const float RotationValue = Character->GetRotationValue();
 
-	Character->SetActorTransform(LocalRotateCenter.Inverse() * Character->GetTransform());
-	Character->AddActorLocalRotation(FRotator(0, RotationValue, 0));
-	Character->SetActorTransform(LocalRotateCenter * Character->GetTransform());
+    const FTransform CharacterTransform = Character->GetTransform();
+    const FVector RelativeCenterOfRotationWS = CharacterTransform.TransformVector(RelativeCenterOfRotation);
+    const FTransform LocalRotateCenter = FTransform(CharacterTransform.GetRotation(), RelativeCenterOfRotationWS);
 
-	//Debugging
-#if UE_EDITOR
-		//UE_LOG(LogTemp, Warning, TEXT("Yaw angle is : %f"), Character->GetActorRotation().Yaw);
-#endif
-	
+    Character->SetActorTransform(LocalRotateCenter.Inverse() * Character->GetTransform());
+    Character->AddActorLocalRotation(FRotator(0, RotationValue, 0));
+    Character->SetActorTransform(LocalRotateCenter * Character->GetTransform());
+
 }
 
 

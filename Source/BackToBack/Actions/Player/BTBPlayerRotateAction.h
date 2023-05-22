@@ -19,6 +19,7 @@ class BACKTOBACK_API UBTBPlayerRotateAction : public UBTBCharacterAction
 public:
 
 protected:
+
 	virtual void Act(ABTBCharacter* Character) override;
 
 	UPROPERTY(EditDefaultsOnly)

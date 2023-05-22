@@ -17,8 +17,10 @@ class BACKTOBACK_API AMiniGameOnePlayableCharacter : public ABTBPlayableCharacte
 public:
 
 protected:
-	//virtual float GetRotationValue() override;
-	//virtual void BeginPlay() override;
+	virtual float GetRotationValue() override;
+
+	//virtual bool GetbStartSwitching() override;
+
 	virtual void Die() override;
 	UFUNCTION()
 		void OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,

@@ -21,7 +21,11 @@ class BACKTOBACK_API ABTBCharacter : public ACharacter
 
 public:
 	bool bStartRotate = false;
+
 	float RotationValue;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category= "Gun")
+	bool bStartSwitching;
 
 	virtual void Tick(float DeltaTime) override;
 
@@ -38,7 +42,8 @@ public:
 		bStartJump = Value;
 	}
 
-	/*virtual */float GetRotationValue()
+	UFUNCTION(BlueprintCallable)
+	virtual float GetRotationValue()
 	{
 		return RotationValue;
 	}
@@ -78,7 +83,8 @@ public:
 		bStartPool = Value;
 	}
 
-	bool GetbStartSwitching()
+	/*UFUNCTION(BlueprintCallable)*/
+	/*virtual*/ bool GetbStartSwitching()
 	{
 		return bStartSwitching;
 	}
@@ -99,7 +105,6 @@ private:
 
 	bool bStartPool = false;
 
-	bool bStartSwitching = false;
 
 	float MoveValue;
 
