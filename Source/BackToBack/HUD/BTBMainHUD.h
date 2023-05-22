@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "BTBMainHUD.generated.h"
 
+class UButton;
+
 /**
  * Our version of the HUD MainMenu 
  */
@@ -13,19 +15,31 @@ UCLASS()
 class BACKTOBACK_API UBTBMainHUD : public UUserWidget
 {
 	GENERATED_BODY()
+	
+public:
+	
+protected:
+	virtual void NativeConstruct() override;
+	
+	UFUNCTION()
+	void OnStartClick();
 
+	UFUNCTION()
+	void OnQuitClick();
+	
+private:
+
+
+	
+public:
+	
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		class UButton* Start_BTN;
+	TObjectPtr<UButton> Start_BTN;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		class UButton* Quit_BTN;
-
-	virtual void NativeConstruct() override;
-
-	UFUNCTION()
-		void OnStartClick();
-
-	UFUNCTION()
-		void OnQuitClick();
+	TObjectPtr<UButton> Quit_BTN;
+	
+private:
+	
 };

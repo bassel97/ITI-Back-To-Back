@@ -19,7 +19,6 @@ void ABTBCharacter::Tick(float DeltaTime)
 void ABTBCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
 	SetbStartPool(true);
 }
 

@@ -37,7 +37,6 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<UCameraComponent> Camera;
-
 	
 private:
 

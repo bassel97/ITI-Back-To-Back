@@ -2,6 +2,8 @@
 
 
 #include "BTBPooledObject.h"
+#include "Components/SceneComponent.h"
+#include "Components/StaticMeshComponent.h"
 
 
 ABTBPooledObject::ABTBPooledObject()

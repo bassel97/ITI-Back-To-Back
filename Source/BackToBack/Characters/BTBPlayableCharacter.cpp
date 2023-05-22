@@ -69,8 +69,7 @@ ABTBGun* ABTBPlayableCharacter::GetGun() const
 	return GunActor;
 }
 
-void ABTBPlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ABTBPlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (Cast<ABTBPlayableCharacter>(OtherActor))
 	{
@@ -80,8 +79,7 @@ void ABTBPlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponen
 
 }
 
-void ABTBPlayableCharacter::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-                                            UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+void ABTBPlayableCharacter::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	if (Cast<ABTBPlayableCharacter>(OtherActor))
 	{

@@ -16,8 +16,22 @@ class BACKTOBACK_API UBTTask_ActAction : public UBTTask_BlackboardBase
 {
 	GENERATED_UCLASS_BODY()
 
+public:
+	
+protected:
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	
+private:
+
+	
+	
+public:
+
+protected:
+	
+private:
 	UPROPERTY(EditAnywhere, Category = "Actions")
 	TObjectPtr<UBTBCharacterAction> Action;
-
-	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	
 };
+

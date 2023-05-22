@@ -9,6 +9,7 @@
 #include "BackToBack/Actors/BTBPooledObject.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/ChildActorComponent.h"
 
 ABTBGun::ABTBGun()
 {
@@ -20,17 +21,6 @@ ABTBGun::ABTBGun()
 
 	GunSkeletal = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun Skeleton"));
 	GunSkeletal->SetupAttachment(SceneComponent);
-
-	//CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	//CollisionBox->SetupAttachment(GunSkeletal);
-	//CollisionBox->SetAllMassScale(0.5f);
-}
-
-void ABTBGun::BeginPlay()
-{
-	Super::BeginPlay();
-	//CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBGun::OnBoxOverlap);
-	//CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBGun::OnBoxEndOverlap);
 }
 
 void ABTBGun::Shoot()
@@ -60,30 +50,4 @@ void ABTBGun::Shoot()
 		GunSkeletal->PlayAnimation(ReloadingAnim, false);
 	}
 	
-	
-	
 }
-
-//void ABTBGun::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-//	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-//{
-//	UE_LOG(LogTemp, Warning, TEXT("Gun Overlapping"));
-//	SetIsOverlapping(true);
-//}
-//
-//void ABTBGun::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-//	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-//{
-//	UE_LOG(LogTemp, Warning, TEXT("Gun Overlap end"));
-//	SetIsOverlapping(false);
-//}
-//
-//bool ABTBGun::GetbIsOverlapping()
-//{
-//	return bIsOverlapping;
-//}
-//
-//void ABTBGun::SetIsOverlapping(bool Value)
-//{
-//	bIsOverlapping = Value;
-//}

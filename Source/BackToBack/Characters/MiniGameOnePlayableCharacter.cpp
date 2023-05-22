@@ -30,5 +30,4 @@ void AMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedCo
 	{
 		Die();
 	}
-
 }

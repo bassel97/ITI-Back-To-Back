@@ -25,11 +25,12 @@ EBTNodeResult::Type UBTTask_ActAction::ExecuteTask(UBehaviorTreeComponent& Owner
 	
 	const TObjectPtr<APawn> OwnerPawn = OwnerAIController->GetPawn();
 	const TObjectPtr<ABTBCharacter> BTBCharacter = Cast<ABTBCharacter>(OwnerPawn);
+	
 	if(BTBCharacter->Health > 0)
 	{
 		Action->Act(BTBCharacter);
+		return EBTNodeResult::Succeeded;
 	}
-	//Action->Act(BTBCharacter);
 	
-	return EBTNodeResult::Succeeded;
+	return EBTNodeResult::Failed;
 }

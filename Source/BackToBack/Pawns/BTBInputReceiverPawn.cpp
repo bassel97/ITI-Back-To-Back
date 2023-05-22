@@ -12,6 +12,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "InputActionValue.h"
 #include "BackToBack/GameModes/BTBGameplayGameMode.h"
+#include "BackToBack/Characters/BTBPlayableCharacter.h"
 
 
 void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
@@ -100,7 +101,7 @@ void ABTBInputReceiverPawn::SetAxisInput(const FInputActionValue& Val)
 	AxisInput = Val.Get<FInputActionValue::Axis2D>();
 }
 
-void ABTBInputReceiverPawn::HandleDownButton()
+void ABTBInputReceiverPawn::HandleDownButton() const
 {
 	if (DownButton.bIsDown)
 	{

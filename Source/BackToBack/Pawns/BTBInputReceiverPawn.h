@@ -4,13 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "BTBPawn.h"
-#include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/GameStructs/BTBStructs.h"
 #include "BTBInputReceiverPawn.generated.h"
 
+struct FInputActionValue;
+
 class FGameStructs;
 class UInputAction;
-struct FInputActionValue;
+class ABTBPlayableCharacter;
+class UInputMappingContext;
 
 /**
  * Our InputReceiverPawn
@@ -41,13 +43,9 @@ protected:
 	void LeftButtonInputTriggered(const FInputActionValue& Val);
 	void DownButtonInputTriggered(const FInputActionValue& Val);
 	void UpButtonInputTriggered(const FInputActionValue& Val);
-
 	void SetAxisInput(const FInputActionValue& Val);
 
-	/*void HandleRotateAction();
-	void HandleMoveAction();*/
-
-	void HandleDownButton();
+	void HandleDownButton() const;
 	void HandleUpButton() const;
 	void HandleLeftButton() const;
 	void HandleRightButton() const;

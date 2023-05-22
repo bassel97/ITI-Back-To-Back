@@ -42,11 +42,10 @@ public:
 	TObjectPtr<UChildActorComponent> GunSwitchPosition;
 
 protected:
-
-	UPROPERTY(EditDefaultsOnly, Category="Camera")
+	UPROPERTY(EditDefaultsOnly, Category = "Camera")
 	TObjectPtr<USpringArmComponent> CameraArm;
 
-	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
+	UPROPERTY(VisibleDefaultsOnly, Category = "Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
 
 
@@ -55,6 +54,7 @@ protected:
 	TObjectPtr<UAnimationAsset> DeathAnimation;
 
 	TObjectPtr<ABTBGun> GunActor;
+
 	UFUNCTION()
 	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "BTBGameModeBase.h"
-#include "Blueprint/UserWidget.h"
 #include "BTBGameplayGameMode.generated.h"
 
 class ABTBPlayableCharacter;
@@ -12,6 +11,7 @@ class UBTBSplitScreenDataAsset;
 class UTextureRenderTarget2D;
 class UBTBGameHUD;
 class ABTBGun;
+class UUserWidget;
 
 /**
  * Our Gameplay Game Mode
@@ -56,7 +56,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "GlobalGameScreen")
 	TObjectPtr<UBTBSplitScreenDataAsset> SplitScreenClass;
 	
-	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
+	UPROPERTY(EditDefaultsOnly, Category = "GlobalGameScreen")
 	TSubclassOf<AActor> CameraClass;
 	
 	TObjectPtr<UTextureRenderTarget2D> RenderTexture_1;
@@ -70,7 +70,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
 
-	UPROPERTY(EditDefaultsOnly, Category="Player Weapons")
+	UPROPERTY(EditDefaultsOnly, Category = "Player Weapons")
 	TSubclassOf<ABTBGun> GunClass;
 
 
