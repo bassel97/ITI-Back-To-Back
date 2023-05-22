@@ -17,13 +17,13 @@ class BACKTOBACK_API AMiniGameOnePlayableCharacter : public ABTBPlayableCharacte
 public:
 
 protected:
+	virtual void BeginPlay() override;
 	virtual float GetRotationValue() override;
-
-	//virtual bool GetbStartSwitching() override;
-
+	
 	virtual void Die() override;
+
 	UFUNCTION()
-		void OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	void OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 private:
 

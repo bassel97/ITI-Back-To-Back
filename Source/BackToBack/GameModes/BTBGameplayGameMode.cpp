@@ -42,11 +42,11 @@ void ABTBGameplayGameMode::CreatePlayers()
 
 	UGameplayStatics::GetAllActorsOfClass(World, APlayerStart::StaticClass(), PlayerStartArray);
 
-	FVector PS1_Location = PlayerStartArray[0]->GetActorLocation();
-	FRotator PS1_Rotation = PlayerStartArray[0]->GetActorRotation();
+	const FVector PS1_Location = PlayerStartArray[0]->GetActorLocation();
+	const FRotator PS1_Rotation = PlayerStartArray[0]->GetActorRotation();
 
-	FVector PS2_Location = PlayerStartArray[1]->GetActorLocation();
-	FRotator PS2_Rotation = PlayerStartArray[1]->GetActorRotation();
+	const FVector PS2_Location = PlayerStartArray[1]->GetActorLocation();
+	const FRotator PS2_Rotation = PlayerStartArray[1]->GetActorRotation();
 	
 	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterOne =
 		World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass, PS1_Location, PS1_Rotation);

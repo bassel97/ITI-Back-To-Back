@@ -98,6 +98,11 @@ public:
 	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
 protected:
 	virtual void Die() PURE_VIRTUAL(ABTBCharacter::Die);
+public:
+	UPROPERTY(EditDefaultsOnly, Category = "Health")
+		int32 Health {
+		2
+	};
 private:
 	bool bStartJump = false;
 	

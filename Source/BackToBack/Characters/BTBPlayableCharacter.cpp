@@ -31,7 +31,7 @@ void ABTBPlayableCharacter::RemoveCamera() const
 	}
 }
 
-void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget)
+void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget) const
 {
 	if(IsValid(SceneCaptureCamera))
 	{
@@ -45,7 +45,7 @@ void ABTBPlayableCharacter::SetGun(ABTBGun* Gun)
 	GunActor = Gun;
 }
 
-ABTBGun* ABTBPlayableCharacter::GetGun()
+ABTBGun* ABTBPlayableCharacter::GetGun() const
 {
 	return GunActor;
 }

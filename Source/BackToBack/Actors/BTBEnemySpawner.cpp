@@ -33,7 +33,7 @@ void ABTBEnemySpawner::Tick(float DeltaSeconds)
 			EnemySpawnHandle,
 			this,
 			&ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers,
-			20 /*SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(GetWorld()))*/,
+			SpawnEnemyEvery /*SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(GetWorld()))*/,
 			false
 		);
 	}
@@ -60,7 +60,6 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 
 FVector ABTBEnemySpawner::GetARandomLocationInPlayersRange()
 {
-	//const FVector Center = GetPlayersMidPoint();
 	const double RandomX = FMath::FRandRange(Center.X - OuterRange,Center.X + OuterRange);
 	const double RandomY = FMath::FRandRange(Center.Y - OuterRange,Center.Y + OuterRange);
 

@@ -13,55 +13,16 @@ void UBTBPlayerShootAction::Act(ABTBCharacter* Character)
 	{
 		return;
 	}
+	
 	if (Character->GetbStartShoot())
 	{
-		
-#pragma region Shooting using player
-	/*if (Bullet)
-	{
-		if (GEngine)
+		Gun = Cast<ABTBPlayableCharacter>(Character)->GetGun();
+		if (Gun != nullptr)
 		{
-			GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("We are shooting"));
-			UE_LOG(LogTemp, Warning, TEXT("We are shooting"));
-		}
-		const FVector ShootingOffset = FVector(100.f, 0, 0);
-		const FVector SpawnPos = Character->GetActorLocation() + ShootingOffset;
-		Bullet->SpawnPooledObject(SpawnPos, FRotator().ZeroRotator);
-		Character->SetbStartShoot(false);
-	}
-	else
-	{
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("Bullet is nullptr"));
-			UE_LOG(LogTemp, Warning, TEXT("Bullet is nullptr"));
-		}
-	}*/
-	#pragma endregion
-
-#pragma region Shooting using Gun
-	Gun = Cast<ABTBPlayableCharacter>(Character)->GetGun();
-	if (Gun)
-	{
-		/*if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("We are shooting"));
-			UE_LOG(LogTemp, Warning, TEXT("Gun is shooting"));
-		}*/
-		Gun->Shoot();
-		Character->SetbStartShoot(false);
-	}
-	else
-	{
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(1, 30.f, FColor::Red, TEXT("Gun is nullptr"));
-			UE_LOG(LogTemp, Warning, TEXT("Gun is nullptr"));
+			Gun->Shoot();
+			Character->SetbStartShoot(false);
 		}
 	}
-#pragma endregion
-	}
-	
 	
 }
 

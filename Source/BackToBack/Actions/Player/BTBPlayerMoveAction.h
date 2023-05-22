@@ -20,7 +20,6 @@ class BACKTOBACK_API UBTBPlayerMoveAction : public UBTBCharacterAction
 	GENERATED_BODY()
 
 public:
-	//virtual void Act(ABTBCharacter* Character, bool bIsAI = false) override;
 	virtual void Act(ABTBCharacter* Character) override;
 
 };
