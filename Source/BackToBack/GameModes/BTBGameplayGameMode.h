@@ -73,8 +73,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Player Weapons")
 	TSubclassOf<ABTBGun> GunClass;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Gun Position")
+	FVector GunOffsetPosition;
+
 	TObjectPtr<ABTBGun> Gun;
 	
 private:
-	
+
 };

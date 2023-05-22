@@ -10,7 +10,8 @@ class USpringArmComponent;
 class USceneCaptureComponent2D;
 class UBTBCharacterJumpAction;
 class UMeshComponent;
-
+class UBoxComponent;
+class UChildActorComponent;	
 class ABTBGun;
 
 /**
@@ -33,10 +34,13 @@ public:
 	bool bGunAttached;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	class UBoxComponent* CollisionBox;
+	TObjectPtr <UBoxComponent> CollisionBox;
 
 	TObjectPtr<ABTBPlayableCharacter> OtherPlayer;
-	
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UChildActorComponent> GunSwitchPosition;
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly, Category="Camera")
@@ -44,6 +48,8 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
+
+
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAnimationAsset> DeathAnimation;
@@ -54,7 +60,8 @@ protected:
 
 	UFUNCTION()
 	void OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-    
+
+	FVector playersMidPoin;
 
 	virtual void Die() override;
 

@@ -5,7 +5,19 @@
 #include "BackToBack/Actors/BTBGun.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "Components/BoxComponent.h"
+#include "Components/ChildActorComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+
+
+void ABTBPlayableCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBPlayableCharacter::OnBoxOverlap);
+	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBPlayableCharacter::OnBoxEndOverlap);
+
+	//playersMidPoin = (GetActorLocation() + OtherPlayer->GetActorLocation()) / 2;
+	
+}
 
 
 ABTBPlayableCharacter::ABTBPlayableCharacter()
@@ -17,9 +29,16 @@ ABTBPlayableCharacter::ABTBPlayableCharacter()
 	SceneCaptureCamera->SetupAttachment(CameraArm);
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	CollisionBox->SetupAttachment(GetRootComponent());
+	//CollisionBox->SetupAttachment(GetRootComponent());
 	CollisionBox->SetAllMassScale(0.5);
 	CollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
+
+	GunSwitchPosition = CreateDefaultSubobject<UChildActorComponent>(TEXT("GunSwitchPosition"));
+	GunSwitchPosition->SetupAttachment(GetMesh());
+	//GunSwitchPosition->SetRelativeLocation(playersMidPoin);
+	
+
+
 }
 
 
@@ -73,13 +92,6 @@ void ABTBPlayableCharacter::OnBoxEndOverlap(UPrimitiveComponent* OverlappedCompo
 void ABTBPlayableCharacter::Die()
 {
 	GetMesh()->PlayAnimation(DeathAnimation, false);
-}
-
-void ABTBPlayableCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBPlayableCharacter::OnBoxOverlap);
-	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBPlayableCharacter::OnBoxEndOverlap);
 }
 
 

@@ -21,7 +21,8 @@
 void ABTBGameplayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	GunOffsetPosition = FVector(-35, -50, 30);
+
 	CreatePlayers();
 	SetupPlayersCommunication();
 	CreateUIWidget();
@@ -195,9 +196,15 @@ void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 	{
 		return;
 	}
+
+	FVector PlayersCenter = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
 	
-	EnemySpawner->Center = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
+	EnemySpawner->Center = PlayersCenter;
 	EnemySpawner->Center.Z = 0;
+
+	PlayerCharacterArray[0]->GunSwitchPosition->SetRelativeLocation(PlayersCenter + GunOffsetPosition);
+	PlayerCharacterArray[1]->GunSwitchPosition->SetRelativeLocation(PlayersCenter + (-GunOffsetPosition));
+
 }
 
 FVector2d ABTBGameplayGameMode::GetScreenResolution()
