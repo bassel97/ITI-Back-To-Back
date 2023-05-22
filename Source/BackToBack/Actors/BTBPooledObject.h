@@ -6,6 +6,8 @@
 #include "BTBActor.h"
 #include "BTBPooledObject.generated.h"
 
+class USceneComponent;
+class UStaticMeshComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPooledObjectDespawn, ABTBPooledObject*, PoolActor);
 /**
@@ -18,17 +20,14 @@ class BACKTOBACK_API ABTBPooledObject : public ABTBActor
 
 public:
 	ABTBPooledObject();
-
-	FOnPooledObjectDespawn OnPooledObjectDespawn;
 	
 	void DeactivatePooledObject();
+	void SetPooledObjectActive(bool Value);
 
 	bool IsActive() const
 	{
 		return bIsActive;
 	}
-
-	void SetPooledObjectActive(bool Value);
 
 	void SetPooledObjectLifeSpan(const float Value)
 	{
@@ -45,25 +44,27 @@ public:
 		PoolIndex = Value;
 	}
 	
-
 protected:
-
-	bool bIsActive;
 	
+private:
+
+	
+
+public:
+	FOnPooledObjectDespawn OnPooledObjectDespawn;
+	
+protected:
+	bool bIsActive;
 	int32 PoolIndex;
-
-	float LifeSpan = 0.f;
-
+	float LifeSpan;
 	FTimerHandle LifeSpanTimer;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		class USceneComponent* SceneComponent;
+	TObjectPtr<USceneComponent> SceneComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		class UStaticMeshComponent* StaticMeshComponent;
+	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
 
-	
-
-
+private:
 	
 };

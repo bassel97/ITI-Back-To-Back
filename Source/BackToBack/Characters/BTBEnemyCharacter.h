@@ -14,19 +14,28 @@ class BACKTOBACK_API ABTBEnemyCharacter : public ABTBAICharacter
 {
 	GENERATED_BODY()
 
-
+public:
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void Die() override;
 	void Damage();
 	void DestroyEnemy();
-	UPROPERTY(EditAnywhere,Category="Death Animation")
+
+	UFUNCTION()
+	void OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+private:
+
+	
+
+public:
+	
+protected:
+	UPROPERTY(EditDefaultsOnly,Category = "Death Animation")
 	TObjectPtr<UAnimationAsset> DeathAnimation;
 	
-	UFUNCTION()
-	void OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-			int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 private:
 	FTimerHandle DestroyTimeHandle;
+	
 };

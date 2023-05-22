@@ -7,6 +7,4 @@ ABTBWeaponBase::ABTBWeaponBase()
 {
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
 	RootComponent = SceneComponent;
-
-	
 }

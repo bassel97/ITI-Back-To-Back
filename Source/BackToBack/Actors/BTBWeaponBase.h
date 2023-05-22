@@ -14,12 +14,22 @@ class BACKTOBACK_API ABTBWeaponBase : public ABTBActor
 {
 	GENERATED_BODY()
 
-protected:
+public:
 	ABTBWeaponBase();
+	
+protected:
+	
+private:
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-		USceneComponent* SceneComponent;
 
 	
+public:
+	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<USceneComponent> SceneComponent;
+	
+private:
 	
 };
+

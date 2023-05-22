@@ -20,24 +20,12 @@ class BACKTOBACK_API ABTBCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	bool bStartRotate = false;
-
-	float RotationValue;
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category= "Gun")
-	bool bStartSwitching;
-
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void BeginPlay() override;
-
-
 	bool GetbStartJump()
 	{
 		return bStartJump;
 	}
 	
-	void SetbStartJump(bool Value)
+	void SetbStartJump(const bool Value)
 	{
 		bStartJump = Value;
 	}
@@ -48,7 +36,7 @@ public:
 		return RotationValue;
 	}
 
-	void SetRotationValue(float Value)
+	void SetRotationValue(const float Value)
 	{
 		RotationValue = Value;
 	}
@@ -58,7 +46,7 @@ public:
 		return MoveValue;
 	}
 
-	void SetMoveValue(float Value)
+	void SetMoveValue(const float Value)
 	{
 		MoveValue = Value;
 	}
@@ -68,7 +56,7 @@ public:
 		return bStartShoot;
 	}
 
-	void SetbStartShoot(bool Value)
+	void SetbStartShoot(const bool Value)
 	{
 		bStartShoot = Value;
 	}
@@ -78,7 +66,7 @@ public:
 		return bStartPool;
 	}
 
-	void SetbStartPool(bool Value)
+	void SetbStartPool(const bool Value)
 	{
 		bStartPool = Value;
 	}
@@ -89,29 +77,39 @@ public:
 		return bStartSwitching;
 	}
 
-	void SetbStartSwitching(bool Value)
+	void SetbStartSwitching(const bool Value)
 	{
 		bStartSwitching = Value;
 	}
-
-	UPROPERTY(EditDefaultsOnly)
-	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
+	
 protected:
 	virtual void Die() PURE_VIRTUAL(ABTBCharacter::Die);
+	
+	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
+
+private:
+	
+
+	
 public:
+	UPROPERTY(EditDefaultsOnly)
+	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
-		int32 Health {
-		2
-	};
+	int32 Health { 2 };
+
+	bool bStartRotate = false;
+	float RotationValue;
+
+protected:
+
+	
 private:
 	bool bStartJump = false;
-	
 	bool bStartShoot = false;
-
 	bool bStartPool = false;
-
-
+	bool bStartSwitching = false;
 	float MoveValue;
-
 	
 };

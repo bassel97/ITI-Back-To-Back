@@ -16,14 +16,23 @@ UCLASS()
 class BACKTOBACK_API UBTBPlayerShootAction : public UBTBCharacterAction
 {
 	GENERATED_BODY()
-public:
 
+public:
+	
+protected:
 	virtual void Act(ABTBCharacter* Character) override;
 	
+private:
+
+
+
+public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UBTBObjectPoolComponent> BulletClass;
-	
 	TObjectPtr<ABTBGun> Gun;
-
-
+	
+protected:
+	
+private:
+	
 };

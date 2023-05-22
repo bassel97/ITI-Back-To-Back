@@ -30,11 +30,4 @@ void AMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedCo
 	{
 		Die();
 	}
-
-}
-float AMiniGameOnePlayableCharacter::GetRotationValue()
-{
-	if(RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)	        return 1;
-	else if(Super::GetRotationValue() <= -0.925f && OtherPlayer->RotationValue <= -0.925f)	return -1;
-	 else return 0;
 }

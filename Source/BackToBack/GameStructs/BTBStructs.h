@@ -9,9 +9,6 @@
  * This will hold all the structs that we need for our game
  */
 
-#pragma region GLOBAL GAME STRUCTS
-
-
 USTRUCT(BlueprintType)
 struct FButtonState
 {
@@ -43,6 +40,3 @@ struct FButtonState
 	}
 
 };
-
-
-#pragma endregion GLOBAL GAME STRUCTS

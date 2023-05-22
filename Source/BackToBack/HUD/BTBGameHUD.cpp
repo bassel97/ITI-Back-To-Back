@@ -14,17 +14,6 @@ FVector2d UBTBGameHUD::GetScreenResolution()
 	return Result;
 }
 
-//void UBTBGameHUD::SetScreenBoxEffectMaterial(FName TextureName)
-//{
-//	MainScreenBox->SetTextureParameter(TextureName);
-//	
-//}
-//
-//void UBTBGameHUD::SetImageActive(bool bIsActive)
-//{
-//	//MainScreenImage->SetIsEnabled(bIsActive);
-//}
-
 void UBTBGameHUD::NativeConstruct()
 {
 	Super::NativeConstruct();

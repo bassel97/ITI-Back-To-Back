@@ -16,6 +16,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "BackToBack/Actors/BTBGun.h"
+#include "Blueprint/UserWidget.h"
 
 
 void ABTBGameplayGameMode::BeginPlay()
