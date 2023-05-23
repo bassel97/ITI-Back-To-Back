@@ -27,7 +27,7 @@ public:
 	void RemoveCamera() const;
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget) const;
 	void SetGun(ABTBGun* Gun);
-	ABTBGun* GetGun() const;
+	ABTBGun* GetGun();
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
@@ -48,8 +48,6 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Camera")
 	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
 
-
-
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAnimationAsset> DeathAnimation;
 
@@ -60,6 +58,7 @@ protected:
 
 	UFUNCTION()
 	void OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 
 	FVector playersMidPoin;
 

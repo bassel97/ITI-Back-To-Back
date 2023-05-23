@@ -64,7 +64,7 @@ void ABTBPlayableCharacter::SetGun(ABTBGun* Gun)
 	GunActor = Gun;
 }
 
-ABTBGun* ABTBPlayableCharacter::GetGun() const
+ABTBGun* ABTBPlayableCharacter::GetGun()
 {
 	return GunActor;
 }
@@ -73,7 +73,7 @@ void ABTBPlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponen
 {
 	if (Cast<ABTBPlayableCharacter>(OtherActor))
 	{
-		OtherPlayer->SetbStartSwitching(true);
+		//OtherPlayer->SetbStartSwitching(true);
 		UE_LOG(LogTemp, Warning, TEXT("OverLapping"));
 	}
 

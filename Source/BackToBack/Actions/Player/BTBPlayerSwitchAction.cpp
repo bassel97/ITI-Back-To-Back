@@ -10,8 +10,8 @@
 
 void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 {
-	const TObjectPtr<ABTBPlayableCharacter> PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
-	const TObjectPtr<ABTBGun> MyGun = PlayableCharacter->GetGun();
+	TObjectPtr<ABTBPlayableCharacter> PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
+	TObjectPtr<ABTBGun> MyGun = PlayableCharacter->GetGun();
 
 	if (Character == nullptr)
 	{
@@ -20,10 +20,10 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 	
 	if (Character->GetbStartSwitching())
 	{
-		MyGun->GunSkeletal->SetSimulatePhysics(false);
-		MyGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+		//MyGun->GunSkeletal->SetSimulatePhysics(false);
+		//MyGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
 		MyGun->AttachToComponent(PlayableCharacter->OtherPlayer->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
-
+		Character->SetbStartSwitching(false);
 	}
 	
 }

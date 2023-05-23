@@ -138,7 +138,7 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 {
 	if (LeftButton.bIsDown)
 	{
-		PlayerCharacter->SetbStartSwitching(true);
+		PlayerCharacter->PlayAnimMontage();
 	}
 
 	if (LeftButton.bIsReleased)
