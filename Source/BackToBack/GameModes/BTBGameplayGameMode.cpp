@@ -28,7 +28,6 @@ void ABTBGameplayGameMode::BeginPlay()
 	SetupPlayersCommunication();
 	CreateUIWidget();
 	AssignCameras();
-	AssignGunToPlayer();
 	SetCenterOfPlayersInEnemySpawner();
 }
 
@@ -49,11 +48,11 @@ void ABTBGameplayGameMode::CreatePlayers()
 
 	 FVector PS2_Location = PlayerStartArray[1]->GetActorLocation();
 	 FRotator PS2_Rotation = PlayerStartArray[1]->GetActorRotation();
-	
-	 TObjectPtr<ABTBPlayableCharacter> PlayerCharacterOne =
+
+	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterOne =
 		World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass, PS1_Location, PS1_Rotation);
-	
-	 TObjectPtr<ABTBPlayableCharacter> PlayerCharacterTwo =
+
+	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterTwo =
 		World->SpawnActor<ABTBPlayableCharacter>(PlayableCharTwoClass, PS2_Location, PS2_Rotation);
 
 	PlayerCharacterArray.AddUnique(PlayerCharacterOne);
@@ -170,18 +169,6 @@ void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 	GameWidget->MainScreenImage->SetRenderOpacity(1.0f);
 }
 
-void ABTBGameplayGameMode::AssignGunToPlayer()
-{
-	Gun = GetWorld()->SpawnActor<ABTBGun>(GunClass);
-	if (Gun)
-	{
-		Gun->AttachToComponent(PlayerCharacterArray[0]->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("GunSocket"));
-
-		PlayerCharacterArray[0]->SetGun(Gun);
-		PlayerCharacterArray[1]->SetGun(Gun);
-		//PlayerCharacterArray[0]->bGunAttached = true;
-	}
-}
 
 void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 {

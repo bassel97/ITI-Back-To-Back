@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BTBHumanoidCharacter.h"
+#include "BackToBack/Vehicles/BTBVehicle.h"
 #include "BTBPlayableCharacter.generated.h"
 
 class USpringArmComponent;
@@ -29,46 +30,50 @@ public:
 	void SetGun(ABTBGun* Gun);
 	ABTBGun* GetGun();
 
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	bool bGunAttached;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr <UBoxComponent> CollisionBox;
-
-	TObjectPtr<ABTBPlayableCharacter> OtherPlayer;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<UChildActorComponent> GunSwitchPosition;
-
 protected:
-	UPROPERTY(EditDefaultsOnly, Category = "Camera")
-	TObjectPtr<USpringArmComponent> CameraArm;
-
-	UPROPERTY(VisibleDefaultsOnly, Category = "Camera")
-	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UAnimationAsset> DeathAnimation;
-
-	TObjectPtr<ABTBGun> GunActor;
-
+	virtual void BeginPlay() override;
+	virtual void Die() override;
+	
 	UFUNCTION()
 	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
 	void OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+private:
+
+
+	
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
+	bool bGunAttached;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UBoxComponent> CollisionBox;
+
+	TObjectPtr<ABTBPlayableCharacter> OtherPlayer;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UChildActorComponent> GunSwitchPosition;
+
+	TObjectPtr<ABTBVehicle> Vehicle;
+	
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Camera")
+	TObjectPtr<USpringArmComponent> CameraArm;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Camera")
+	TObjectPtr<USceneCaptureComponent2D> SceneCaptureCamera;
+	
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UAnimationAsset> DeathAnimation;
+
+	TObjectPtr<ABTBGun> GunActor;
 
 	FVector playersMidPoin;
 
-	virtual void Die() override;
 
 private:
 
-public:
-
-protected:
-	virtual void BeginPlay() override;
 
 };

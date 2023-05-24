@@ -31,7 +31,6 @@ protected:
 	void CreateRenderTextures();
 	void CreateUIWidget();
 	void SetSplitScreenTextureToMaterial() const;
-	void AssignGunToPlayer();
 	void SetCenterOfPlayersInEnemySpawner();
 
 	static FVector2d GetScreenResolution();

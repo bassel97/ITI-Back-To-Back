@@ -13,7 +13,7 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 	TObjectPtr<ABTBPlayableCharacter> PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
 	TObjectPtr<ABTBGun> MyGun = PlayableCharacter->GetGun();
 
-	if (Character == nullptr)
+	if (Character == nullptr || MyGun == nullptr)
 	{
 		return;
 	} 

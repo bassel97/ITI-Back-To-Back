@@ -6,6 +6,12 @@
 #include "BackToBack/Actions/Character/BTBCharacterAction.h"
 
 
+ABTBCharacter::ABTBCharacter()
+{
+	RotationValue = 0;
+	MoveValue = 0;
+}
+
 void ABTBCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

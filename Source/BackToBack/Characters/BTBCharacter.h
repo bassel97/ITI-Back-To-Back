@@ -20,6 +20,8 @@ class BACKTOBACK_API ABTBCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
+	ABTBCharacter();
+	
 	bool GetbStartJump()
 	{
 		return bStartJump;
@@ -36,7 +38,7 @@ public:
 		return RotationValue;
 	}
 
-	void SetRotationValue(const float Value)
+	virtual void SetRotationValue(const float Value)
 	{
 		RotationValue = Value;
 	}
@@ -46,7 +48,7 @@ public:
 		return MoveValue;
 	}
 
-	void SetMoveValue(const float Value)
+	virtual void SetMoveValue(const float Value)
 	{
 		MoveValue = Value;
 	}

@@ -138,7 +138,7 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 {
 	if (LeftButton.bIsDown)
 	{
-		PlayerCharacter->PlayAnimMontage();
+		PlayerCharacter->SetbStartSwitching(true);
 	}
 
 	if (LeftButton.bIsReleased)
@@ -156,7 +156,6 @@ void ABTBInputReceiverPawn::HandleRightButton() const
 {
 	if (RightButton.bIsDown)
 	{
-		
 	}
 
 	if (RightButton.bIsReleased)
@@ -217,32 +216,6 @@ void ABTBInputReceiverPawn::HandleAxisInputAction() const
 	PlayerCharacter->SetMoveValue(AxisInput.Y);
 	//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), AxisInput.Y);
 }
-//	}
-//	else
-//	{
-//		PlayerCharacter->SetbStartRotate(false);
-//	}
-//	
-//}
-//void ABTBInputReceiverPawn::HandleMoveAction()
-//{
-//	if (AxisInput.Y != 0)
-//	{
-//		float input = FMath::Clamp(AxisInput.Y, -1.f, 1.f);
-//		//float input = AxisInput.Y;
-//
-//		//float rotSpeed = 30;
-//		PlayerCharacter->SetbStartMove(true);
-//		PlayerCharacter->SetMoveValue(input);
-//		//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), input);
-//	}
-//	else
-//	{
-//		PlayerCharacter->SetbStartMove(false);
-//	}
-//}  
-#pragma endregion
-
 
 void ABTBInputReceiverPawn::ButtonStateSetData(FButtonState& ButtonState, const bool Value)
 {
