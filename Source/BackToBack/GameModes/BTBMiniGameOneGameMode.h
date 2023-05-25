@@ -17,13 +17,18 @@ class BACKTOBACK_API ABTBMiniGameOneGameMode : public ABTBGameplayGameMode
 public:
 
 protected:
+	virtual void BeginPlay() override;
+	
+	void AssignGunToPlayer();
 
 private:
 
+	
 
 public:
 
 protected:
 
 private:
+	
 };
