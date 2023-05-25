@@ -18,7 +18,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	virtual float GetRotationValue() override;
+	/*virtual */float GetRotationValue() /*override*/;
 	
 	virtual void Die() override;
 

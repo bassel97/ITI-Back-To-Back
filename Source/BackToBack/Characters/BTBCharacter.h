@@ -33,7 +33,7 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	virtual float GetRotationValue()
+	/*virtual */float GetRotationValue()
 	{
 		return RotationValue;
 	}

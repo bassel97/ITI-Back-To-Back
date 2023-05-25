@@ -26,17 +26,17 @@ void ABTBEnemySpawner::Tick(float DeltaSeconds)
 	
 	const FVector PlayersMidPoint = Center /*GetPlayersMidPoint()*/ ;
 	
-	if(!EnemySpawnHandle.IsValid())
-	{
-		World->GetTimerManager().SetTimer
-		(
-			EnemySpawnHandle,
-			this,
-			&ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers,
-			SpawnEnemyEvery /*SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(GetWorld()))*/,
-			false
-		);
-	}
+	//if(!EnemySpawnHandle.IsValid())
+	//{
+	//	World->GetTimerManager().SetTimer
+	//	(
+	//		EnemySpawnHandle,
+	//		this,
+	//		&ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers,
+	//		SpawnEnemyEvery /*SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(GetWorld()))*/,
+	//		false
+	//	);
+	//}
 	
 }
 
