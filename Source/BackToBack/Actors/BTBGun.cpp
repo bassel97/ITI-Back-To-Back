@@ -19,6 +19,9 @@ ABTBGun::ABTBGun()
 	ShootingLocation = CreateDefaultSubobject<UChildActorComponent>(TEXT("Shooting Location"));
 	ShootingLocation->SetupAttachment(SceneComponent);
 
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Box"));
+	CollisionBox->SetupAttachment(SceneComponent);
+
 	GunSkeletal = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun Skeleton"));
 	GunSkeletal->SetupAttachment(SceneComponent);
 }

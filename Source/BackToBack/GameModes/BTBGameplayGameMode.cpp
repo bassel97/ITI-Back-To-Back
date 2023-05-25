@@ -175,10 +175,10 @@ void ABTBGameplayGameMode::AssignGunToPlayer()
 	Gun = GetWorld()->SpawnActor<ABTBGun>(GunClass);
 	if (Gun)
 	{
-		Gun->AttachToComponent(PlayerCharacterArray[0]->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, TEXT("GunSocket"));
+		Gun->AttachToComponent(PlayerCharacterArray[0]->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
 
 		PlayerCharacterArray[0]->SetGun(Gun);
-		PlayerCharacterArray[1]->SetGun(Gun);
+		//PlayerCharacterArray[1]->SetGun(Gun);
 		//PlayerCharacterArray[0]->bGunAttached = true;
 	}
 }
@@ -204,8 +204,8 @@ void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 	EnemySpawner->Center = PlayersCenter;
 	EnemySpawner->Center.Z = 0;
 
-	PlayerCharacterArray[0]->GunSwitchPosition->SetRelativeLocation(PlayersCenter + GunOffsetPosition);
-	PlayerCharacterArray[1]->GunSwitchPosition->SetRelativeLocation(PlayersCenter + (-GunOffsetPosition));
+	//PlayerCharacterArray[0]->GunSwitchPosition->SetRelativeLocation(PlayersCenter);
+	//PlayerCharacterArray[1]->GunSwitchPosition->SetRelativeLocation(PlayersCenter);
 
 }
 

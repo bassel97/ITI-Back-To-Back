@@ -11,6 +11,9 @@
 #include "InputAction.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "InputActionValue.h"
+#include "BackToBack/Actions/Character/BTBCharacterAction.h"
+#include "BackToBack/Actions/Player/BTBPlayerSwitchAction.h"
+#include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/GameModes/BTBGameplayGameMode.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 
@@ -138,7 +141,20 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 {
 	if (LeftButton.bIsDown)
 	{
-		PlayerCharacter->PlayAnimMontage();
+
+		
+		PlayerCharacter->SetbStartSwitching(true);
+		//PlayerCharacter->PlayAnimMontage(PlayerCharacter->SwitchMontage);
+
+		//for (auto Element : PlayerCharacter->CharacterActions)
+		//{
+		//	if (Element.)
+		//	{
+		//		
+		//	}
+		//}
+		
+
 	}
 
 	if (LeftButton.bIsReleased)
@@ -146,10 +162,10 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 		
 	}
 
-	//if (LeftButton.bIsHeld)
-	//{
-	//	PlayerCharacter->SetbStartSwitching(true);
-	//}
+	if (LeftButton.bIsHeld)
+	{
+		
+	}
 }
 
 void ABTBInputReceiverPawn::HandleRightButton() const

@@ -25,8 +25,8 @@ protected:
 
 	virtual void Act(ABTBCharacter* Character) override;
 
-	UPROPERTY(EditDefaultsOnly)
-	FVector RelativeCenterOfRotation;
+	//UPROPERTY(EditDefaultsOnly)
+	//FVector RelativeCenterOfRotation;
 
 private:
 

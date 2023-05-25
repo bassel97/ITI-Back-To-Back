@@ -47,6 +47,10 @@ protected:
 	TArray<TObjectPtr<ABTBPlayableCharacter>> PlayerCharacterArray;
 	TArray<TObjectPtr<AActor>> PlayerStartArray;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player mid point")
+	FVector playersMidPoin;
+
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABTBPlayableCharacter> PlayableCharOneClass;
 

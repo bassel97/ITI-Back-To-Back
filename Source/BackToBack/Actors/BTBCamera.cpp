@@ -15,5 +15,5 @@ ABTBCamera::ABTBCamera()
 	Camera->SetupAttachment(CameraArm, USpringArmComponent::SocketName);
 	
 
-	CameraArm->TargetOffset = FVector(-95, -60, 60);
+	CameraArm->TargetOffset = FVector(387.0, 3471.0, 190.0);
 }

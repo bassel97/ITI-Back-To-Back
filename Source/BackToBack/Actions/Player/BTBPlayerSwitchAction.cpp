@@ -13,17 +13,29 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 	TObjectPtr<ABTBPlayableCharacter> PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
 	TObjectPtr<ABTBGun> MyGun = PlayableCharacter->GetGun();
 
-	if (Character == nullptr)
+	if (PlayableCharacter == nullptr)
 	{
 		return;
 	} 
 	
-	if (Character->GetbStartSwitching())
+	if (Character->GetbStartSwitching() )
 	{
+		if (!PlayableCharacter->GetMesh()->IsPlaying())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Is playing"));
+			PlayableCharacter->PlayAnimMontage(PlayableCharacter->SwitchMontage);
+		}
+		
+		//PlayableCharacter->PlayAnimMontage(PlayableCharacter->SwitchMontage);
 		//MyGun->GunSkeletal->SetSimulatePhysics(false);
 		//MyGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+		//PlayableCharacter->SetbStartSwitching(false);
+		////PlayableCharacter->IsOverlapping = false;
+		PlayableCharacter->OtherPlayer->SetGun(MyGun);
+		UE_LOG(LogTemp, Warning, TEXT("The gun is %s"), *MyGun.GetName());
 		MyGun->AttachToComponent(PlayableCharacter->OtherPlayer->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
-		Character->SetbStartSwitching(false);
+		PlayableCharacter->SetGun(nullptr);
+
 	}
 	
 }

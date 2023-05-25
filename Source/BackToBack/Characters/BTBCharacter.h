@@ -71,12 +71,13 @@ public:
 		bStartPool = Value;
 	}
 
-	/*UFUNCTION(BlueprintCallable)*/
-	/*virtual*/ bool GetbStartSwitching()
+	UFUNCTION(BlueprintCallable)
+	bool GetbStartSwitching()
 	{
 		return bStartSwitching;
 	}
 
+	UFUNCTION(BlueprintCallable)
 	void SetbStartSwitching(const bool Value)
 	{
 		bStartSwitching = Value;

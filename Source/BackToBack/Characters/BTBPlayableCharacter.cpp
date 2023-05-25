@@ -6,6 +6,7 @@
 #include "Components/SceneCaptureComponent2D.h"
 #include "Components/BoxComponent.h"
 #include "Components/ChildActorComponent.h"
+#include "Animation/AnimMontage.h"
 #include "GameFramework/SpringArmComponent.h"
 
 
@@ -13,7 +14,7 @@ void ABTBPlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBPlayableCharacter::OnBoxOverlap);
-	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBPlayableCharacter::OnBoxEndOverlap);
+	//CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBPlayableCharacter::OnBoxEndOverlap);
 
 	//playersMidPoin = (GetActorLocation() + OtherPlayer->GetActorLocation()) / 2;
 	
@@ -71,21 +72,20 @@ ABTBGun* ABTBPlayableCharacter::GetGun()
 
 void ABTBPlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<ABTBPlayableCharacter>(OtherActor))
+	if (OtherActor->ActorHasTag("Gun"))
 	{
-		//OtherPlayer->SetbStartSwitching(true);
+		//UE_LOG(LogTemp, Warning, TEXT("Other Actor: %s, Other Comp: %s"))
+		this->SetbStartSwitching(true);
+		//IsOverlapping = true;
 		UE_LOG(LogTemp, Warning, TEXT("OverLapping"));
 	}
 
 }
 
-void ABTBPlayableCharacter::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (Cast<ABTBPlayableCharacter>(OtherActor))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("OverLapping End"));
-	}
-}
+//void ABTBPlayableCharacter::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+//{
+//	IsOverlapping = false;
+//}
 
 void ABTBPlayableCharacter::Die()
 {
