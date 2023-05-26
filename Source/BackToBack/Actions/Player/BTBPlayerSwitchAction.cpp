@@ -20,13 +20,15 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 		return;
 	} 
 	
-	if (PlayableCharacter->IsOverlapping && MyGun != nullptr)
+	if (PlayableCharacter->GetbStartSwitching() && PlayableCharacter->IsOverlapping && MyGun != nullptr )
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("The gun is %s"), *MyGun.GetName());
-		//MyGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
-		MyGun->AttachToComponent(PlayableCharacter->OtherPlayer->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "GunSocket");
 		otherCharacter->SetGun(MyGun);
+		UE_LOG(LogTemp, Warning, TEXT("The gun is %s"), *MyGun.GetName());
+		MyGun->AttachToComponent(otherCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "GunSocket");
 		PlayableCharacter->SetGun(nullptr);
+
+		//PlayableCharacter->IsOverlapping = false;
+		//otherCharacter->IsOverlapping = false;
 	}
 	
 }
