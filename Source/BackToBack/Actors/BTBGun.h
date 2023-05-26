@@ -64,8 +64,8 @@ public:
 protected:
 	
 private:
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	bool bIsOverlapping;
+	//UPROPERTY(VisibleAnywhere, Category = "Components")
+	//bool bIsOverlapping;
 
 	TSubclassOf<UProjectileMovementComponent> ProjectileComponent;
 	int32 Ammo{ 0 };

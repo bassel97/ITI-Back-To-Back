@@ -4,6 +4,7 @@
 #include "BTBMiniGameOneGameMode.h"
 
 #include "BackToBack/Actors/BTBGun.h"
+#include "BackToBack/Characters/BTBMiniGameOnePlayableCharacter.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 
 void ABTBMiniGameOneGameMode::BeginPlay()
@@ -14,10 +15,13 @@ void ABTBMiniGameOneGameMode::BeginPlay()
 
 void ABTBMiniGameOneGameMode::AssignGunToPlayer()
 {
+
+	ABTBMiniGameOnePlayableCharacter* MGOnePlayer = Cast<ABTBMiniGameOnePlayableCharacter>(PlayerCharacterArray[0]);
+
 	Gun = GetWorld()->SpawnActor<ABTBGun>(GunClass);
 	if (Gun)
 	{
-		Gun->AttachToComponent(PlayerCharacterArray[0]->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
-		PlayerCharacterArray[0]->SetGun(Gun);
+		Gun->AttachToComponent(MGOnePlayer->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
+		MGOnePlayer->SetGun(Gun);
 	}
 }

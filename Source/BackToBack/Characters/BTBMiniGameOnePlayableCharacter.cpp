@@ -3,13 +3,31 @@
 
 #include "BTBMiniGameOnePlayableCharacter.h"
 #include "BTBEnemyCharacter.h"
+#include "BackToBack/Actors/BTBGun.h"
+#include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 
 void ABTBMiniGameOnePlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBMiniGameOnePlayableCharacter::OnBoxOverlap);
+	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ABTBMiniGameOnePlayableCharacter::OnBoxEndOverlap);
+
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBMiniGameOnePlayableCharacter::OnEnemyHit);
 }
+
+ABTBMiniGameOnePlayableCharacter::ABTBMiniGameOnePlayableCharacter()
+{
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
+	//CollisionBox->SetupAttachment(GetRootComponent());
+	CollisionBox->SetAllMassScale(0.5);
+	CollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
+
+	GunSwitchPosition = CreateDefaultSubobject<UChildActorComponent>(TEXT("GunSwitchPosition"));
+	GunSwitchPosition->SetupAttachment(GetMesh());
+	//GunSwitchPosition->SetRelativeLocation(playersMidPoin);
+}
+
 
 float ABTBMiniGameOnePlayableCharacter::GetRotationValue()
 {
@@ -30,4 +48,33 @@ void ABTBMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 	{
 		Die();
 	}
+}
+
+void ABTBMiniGameOnePlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Cast<ABTBMiniGameOnePlayableCharacter>(OtherActor) && OtherActor != this)
+	{
+		if (OtherComp->ComponentHasTag("Hand"))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("We: %s, Collided with: %s, "), *this->GetName(), *OtherActor->GetName());
+			IsOverlapping = true;
+		}
+	}
+}
+
+void ABTBMiniGameOnePlayableCharacter::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	IsOverlapping = false;
+}
+
+
+
+void ABTBMiniGameOnePlayableCharacter::SetGun(ABTBGun* Gun)
+{
+	GunActor = Gun;
+}
+
+ABTBGun* ABTBMiniGameOnePlayableCharacter::GetGun()
+{
+	return GunActor;
 }

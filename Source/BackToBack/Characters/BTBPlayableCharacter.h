@@ -9,7 +9,7 @@
 
 class USpringArmComponent;
 class USceneCaptureComponent2D;
-class UBTBCharacterJumpAction;
+//class UBTBCharacterJumpAction;
 class UMeshComponent;
 class UBoxComponent;
 class UChildActorComponent;	
@@ -28,46 +28,17 @@ public:
 	ABTBPlayableCharacter();
 	void RemoveCamera() const;
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget) const;
-	void SetGun(ABTBGun* Gun);
-	ABTBGun* GetGun();
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void Die() override;
-	
-	UFUNCTION()
-	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	//UFUNCTION()
-	//void OnBoxEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 private:
 
 
 	
 public:
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	bool bGunAttached;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	bool IsOverlapping;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	float ControlHandAlpha;
-
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimMontage")
-	TObjectPtr<UAnimMontage> SwitchMontage;
-
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<UBoxComponent> CollisionBox;
-
 	TObjectPtr<ABTBPlayableCharacter> OtherPlayer;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<UChildActorComponent> GunSwitchPosition;
 
 	TObjectPtr<ABTBVehicle> Vehicle;
 	
@@ -81,9 +52,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAnimationAsset> DeathAnimation;
 
-	TObjectPtr<ABTBGun> GunActor;
-
-	FVector playersMidPoin;
+	//FVector playersMidPoin;
 private:
 
 

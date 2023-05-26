@@ -5,6 +5,7 @@
 #include "BackToBack/Actors/BTBObjectPoolComponent.h"
 #include "BackToBack/Actors/BTBGun.h"
 #include "BackToBack/Characters/BTBCharacter.h"
+#include "BackToBack/Characters/BTBMiniGameOnePlayableCharacter.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 
 void UBTBPlayerShootAction::Act(ABTBCharacter* Character)
@@ -16,7 +17,7 @@ void UBTBPlayerShootAction::Act(ABTBCharacter* Character)
 	
 	if (Character->GetbStartShoot())
 	{
-		Gun = Cast<ABTBPlayableCharacter>(Character)->GetGun();
+		Gun = Cast<ABTBMiniGameOnePlayableCharacter>(Character)->GetGun();
 		if (Gun != nullptr)
 		{
 			Gun->Shoot();

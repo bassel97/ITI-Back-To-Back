@@ -5,12 +5,14 @@
 
 #include "BackToBack/Actors/BTBGun.h"
 #include "BackToBack/Characters/BTBCharacter.h"
+#include "BackToBack/Characters/BTBMiniGameOnePlayableCharacter.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 {
-	TObjectPtr<ABTBPlayableCharacter> PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
+	TObjectPtr<ABTBMiniGameOnePlayableCharacter> PlayableCharacter = Cast<ABTBMiniGameOnePlayableCharacter>(Character);
+	TObjectPtr<ABTBMiniGameOnePlayableCharacter> otherCharacter = Cast<ABTBMiniGameOnePlayableCharacter>(PlayableCharacter->OtherPlayer);
 	TObjectPtr<ABTBGun> MyGun = PlayableCharacter->GetGun();
 
 	if (PlayableCharacter == nullptr)
@@ -18,24 +20,27 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 		return;
 	} 
 	
-	if (Character->GetbStartSwitching() )
+	if (PlayableCharacter->IsOverlapping && MyGun != nullptr )
 	{
-		if (!PlayableCharacter->GetMesh()->IsPlaying())
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Is playing"));
-			PlayableCharacter->PlayAnimMontage(PlayableCharacter->SwitchMontage);
-		}
-		
-		//PlayableCharacter->PlayAnimMontage(PlayableCharacter->SwitchMontage);
-		//MyGun->GunSkeletal->SetSimulatePhysics(false);
-		//MyGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
-		//PlayableCharacter->SetbStartSwitching(false);
-		////PlayableCharacter->IsOverlapping = false;
-		PlayableCharacter->OtherPlayer->SetGun(MyGun);
+		otherCharacter->SetGun(MyGun);
 		UE_LOG(LogTemp, Warning, TEXT("The gun is %s"), *MyGun.GetName());
-		MyGun->AttachToComponent(PlayableCharacter->OtherPlayer->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
+		//MyGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+		MyGun->AttachToActor(otherCharacter, FAttachmentTransformRules::SnapToTargetIncludingScale, "GunSocket");
 		PlayableCharacter->SetGun(nullptr);
 
+		//PlayableCharacter->IsOverlapping = false;
+		//otherCharacter->IsOverlapping = false;
 	}
 	
 }
+
+
+
+#pragma region BackUp switch
+//PlayableCharacter->PlayAnimMontage(PlayableCharacter->SwitchMontage);
+//MyGun->GunSkeletal->SetSimulatePhysics(false);
+//MyGun->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+//PlayableCharacter->SetbStartSwitching(false);
+////PlayableCharacter->IsOverlapping = false;
+
+#pragma endregion
