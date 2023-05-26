@@ -23,7 +23,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual float GetRotationValue() override;
-	virtual bool GetbStartSwitching() override;
 	
 	virtual void Die() override;
 

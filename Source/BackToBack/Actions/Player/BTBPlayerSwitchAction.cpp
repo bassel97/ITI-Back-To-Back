@@ -11,24 +11,20 @@
 
 void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 {
-	TObjectPtr<ABTBMiniGameOnePlayableCharacter> PlayableCharacter = Cast<ABTBMiniGameOnePlayableCharacter>(Character);
-	TObjectPtr<ABTBMiniGameOnePlayableCharacter> otherCharacter = Cast<ABTBMiniGameOnePlayableCharacter>(PlayableCharacter->OtherPlayer);
-	TObjectPtr<ABTBGun> MyGun = PlayableCharacter->GetGun();
+	const TObjectPtr<ABTBMiniGameOnePlayableCharacter> PlayableCharacter = Cast<ABTBMiniGameOnePlayableCharacter>(Character);
+	const TObjectPtr<ABTBMiniGameOnePlayableCharacter> OtherCharacter = Cast<ABTBMiniGameOnePlayableCharacter>(PlayableCharacter->OtherPlayer);
+	const TObjectPtr<ABTBGun> Gun = PlayableCharacter->GetGun();
 
 	if (PlayableCharacter == nullptr)
 	{
 		return;
 	} 
 	
-	if (PlayableCharacter->GetbStartSwitching() && PlayableCharacter->IsOverlapping && MyGun != nullptr )
+	if (PlayableCharacter->GetbStartSwitching() && PlayableCharacter->IsOverlapping && Gun != nullptr )
 	{
-		otherCharacter->SetGun(MyGun);
-		UE_LOG(LogTemp, Warning, TEXT("The gun is %s"), *MyGun.GetName());
-		MyGun->AttachToComponent(otherCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "GunSocket");
-		PlayableCharacter->SetGun(nullptr);
-
-		//PlayableCharacter->IsOverlapping = false;
-		//otherCharacter->IsOverlapping = false;
+		OtherCharacter->SetGun(Gun);
+		Gun->AttachToComponent(OtherCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "GunSocket");
+		//PlayableCharacter->SetGun(nullptr);
 	}
 	
 }
