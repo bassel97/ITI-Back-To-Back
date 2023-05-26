@@ -3,17 +3,12 @@
 
 #include "BTBPlayableCharacter.h"
 #include "Components/SceneCaptureComponent2D.h"
-#include "Components/ChildActorComponent.h"
-#include "Animation/AnimMontage.h"
 #include "GameFramework/SpringArmComponent.h"
 
 
 void ABTBPlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//playersMidPoin = (GetActorLocation() + OtherPlayer->GetActorLocation()) / 2;
-	
 }
 
 

@@ -9,7 +9,6 @@
 
 class USpringArmComponent;
 class USceneCaptureComponent2D;
-//class UBTBCharacterJumpAction;
 class UMeshComponent;
 class UBoxComponent;
 class UChildActorComponent;	
@@ -52,7 +51,6 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAnimationAsset> DeathAnimation;
 
-	//FVector playersMidPoin;
 private:
 
 

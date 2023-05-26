@@ -10,11 +10,13 @@ ABTBMotorcycle::ABTBMotorcycle()
 {
 	// StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MotorcycleStaticMesh"));
 	// StaticMesh->SetupAttachment(GetRootComponent());
-	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
-	SetRootComponent(SceneComponent);
+	// SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
+	// SetRootComponent(SceneComponent);
 
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MotorcycleSkeletalMesh"));
-	SkeletalMesh->SetupAttachment(SceneComponent);
+	// SkeletalMesh->SetupAttachment(SceneComponent);
+	SetRootComponent(SkeletalMesh);
+
 	// SkeletalMesh->SetupAttachment(GetRootComponent());
 
 	MaxSpeed = 2000;
@@ -51,7 +53,7 @@ void ABTBMotorcycle::Tick(float DeltaSeconds)
 void ABTBMotorcycle::Steer(const float Value)
 {
 	CurrentSpeed = 0;
-	auto Target = Value * 2000 /*MaxSpeed*/;
+	auto Target = Value * MaxSpeed;
 
 	CurrentSpeed =
 		FMath::FInterpTo(CurrentSpeed, Target, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()),4);
@@ -61,7 +63,7 @@ void ABTBMotorcycle::Steer(const float Value)
 void ABTBMotorcycle::Throttle(const float Value)
 {
 	CurrentSteeringAngle = 0;
-	auto Target = Value * 2000 /*MaxSteeringAngle*/;
+	auto Target = Value * MaxSteeringAngle;
 
 	CurrentSteeringAngle =
 		FMath::FInterpTo(CurrentSteeringAngle, Target, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()),4);

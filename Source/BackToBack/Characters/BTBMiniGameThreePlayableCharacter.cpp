@@ -9,7 +9,7 @@
 void ABTBMiniGameThreePlayableCharacter::SetMoveValue(const float Value)
 {
 	TObjectPtr<ABTBMotorcycle> Motorcycle = Cast<ABTBMotorcycle>(Vehicle);
-	if(ensure(Motorcycle != nullptr))
+	if(Motorcycle != nullptr)
 	{
 		// Throttle
 		Motorcycle->CurrentSpeed =
@@ -25,7 +25,7 @@ void ABTBMiniGameThreePlayableCharacter::SetMoveValue(const float Value)
 void ABTBMiniGameThreePlayableCharacter::SetRotationValue(const float Value)
 {
 	TObjectPtr<ABTBMotorcycle> Motorcycle = Cast<ABTBMotorcycle>(Vehicle);
-	if(ensure(Motorcycle != nullptr))
+	if(Motorcycle != nullptr)
 	{
 		// Steer
 		Motorcycle->CurrentSteeringAngle =

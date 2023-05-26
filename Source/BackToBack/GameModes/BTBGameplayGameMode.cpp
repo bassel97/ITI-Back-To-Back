@@ -3,6 +3,7 @@
 
 #include "BTBGameplayGameMode.h"
 
+#include "BackToBack/Actors/BTBCamera.h"
 #include "BackToBack/Actors/BTBEnemySpawner.h"
 #include "Camera/CameraActor.h"
 #include "BackToBack/Pawns/BTBInputReceiverPawn.h"
@@ -98,7 +99,12 @@ void ABTBGameplayGameMode::AssignCameras()
 		InputReceiverArray[0]->Get_PlayerCharacter()->RemoveCamera();
 		InputReceiverArray[1]->Get_PlayerCharacter()->RemoveCamera();
 
-		 TObjectPtr<AActor>  Camera = World->SpawnActor<AActor>(CameraClass);
+		TObjectPtr<AActor> Camera = World->SpawnActor<AActor>(CameraClass);
+		if(const TObjectPtr<ABTBCamera> BTBCamera = Cast<ABTBCamera>(Camera))
+		{
+			BTBCamera->CameraTargetOffset = SingleCameraTargetOffset;
+		}
+		
 		UGameplayStatics::GetPlayerController(World, 0)->SetViewTarget(Camera);
 		UGameplayStatics::GetPlayerController(World, 1)->SetViewTarget(Camera);
 

@@ -8,7 +8,6 @@
 #include "BTBInputReceiverPawn.generated.h"
 
 struct FInputActionValue;
-
 class FGameStructs;
 class UInputAction;
 class ABTBPlayableCharacter;
@@ -55,7 +54,6 @@ protected:
 	
 private:
 	static void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
-	FTimerHandle TimerHandle;
 	
 public:
 	UPROPERTY(VisibleAnywhere, Category = "Class Variables")
@@ -115,5 +113,7 @@ private:
 	UPROPERTY(VisibleAnywhere, meta = (ClampMin = -1, ClampMax = 1), Category = "Buttons")
 	FVector2D AxisInput;
 	/** Buttons States end*/
-	
+
+	FTimerHandle TimerHandle;
+	FTimerHandle LeftButtonTimerHandle;
 };

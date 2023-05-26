@@ -33,7 +33,7 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	/*virtual */float GetRotationValue()
+	virtual float GetRotationValue()
 	{
 		return RotationValue;
 	}
@@ -74,7 +74,7 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	bool GetbStartSwitching()
+	virtual bool GetbStartSwitching()
 	{
 		return bStartSwitching;
 	}
@@ -103,6 +103,7 @@ public:
 	int32 Health { 2 };
 
 	bool bStartRotate = false;
+	bool bStartSwitching = false;
 	float RotationValue;
 
 protected:
@@ -112,7 +113,6 @@ private:
 	bool bStartJump = false;
 	bool bStartShoot = false;
 	bool bStartPool = false;
-	bool bStartSwitching = false;
 	float MoveValue;
 	
 };

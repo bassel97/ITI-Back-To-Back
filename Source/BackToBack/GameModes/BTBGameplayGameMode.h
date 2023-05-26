@@ -33,11 +33,11 @@ protected:
 	void SetSplitScreenTextureToMaterial() const;
 	void SetCenterOfPlayersInEnemySpawner();
 
-	static FVector2d GetScreenResolution();
+	static FVector2D GetScreenResolution();
 	static FVector2D GetGameViewportSize();
 	
 private:
-
+	
 	
 	
 public:
@@ -82,5 +82,7 @@ protected:
 	TObjectPtr<ABTBGun> Gun;
 	
 private:
+	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
+	FVector SingleCameraTargetOffset;
 
 };

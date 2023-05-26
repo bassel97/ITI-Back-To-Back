@@ -22,7 +22,7 @@ void UBTBPlayerDriveMotorcycleAction::Act(ABTBCharacter* Character)
 	}
 	
 	Motorcycle->Steer(Player->GetMoveValue());
-	Motorcycle->Throttle(Player->GetMoveValue());
+	Motorcycle->Throttle(Player->GetRotationValue());
 	//UE_LOG(LogTemp, Warning, TEXT("DRIVING"));
 
 }

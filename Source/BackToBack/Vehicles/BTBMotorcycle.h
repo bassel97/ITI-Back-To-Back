@@ -35,7 +35,11 @@ public:
 	float CurrentSteeringAngle;
 	float CurrentLeanAngle;
 	float SpeedToRotationFactor;
+
+	UPROPERTY(EditDefaultsOnly, Category="Settings")
 	float MaxSpeed;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Settings")
 	float MaxSteeringAngle;
 
 protected:

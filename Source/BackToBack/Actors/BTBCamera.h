@@ -29,6 +29,7 @@ private:
 	
 	
 public:
+	FVector CameraTargetOffset;
 	
 	
 protected:

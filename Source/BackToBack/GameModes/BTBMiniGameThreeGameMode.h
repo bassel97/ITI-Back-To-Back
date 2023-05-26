@@ -22,6 +22,7 @@ protected:
 
 	void SpawnMotorcycle();
 	void SetPlayersAsChildOfMotorcycle();
+	void AdjustPlayersCameras();
 private:
 
 

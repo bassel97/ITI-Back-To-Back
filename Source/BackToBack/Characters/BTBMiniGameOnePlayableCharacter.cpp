@@ -36,6 +36,11 @@ float ABTBMiniGameOnePlayableCharacter::GetRotationValue()
 	return 0;
 }
 
+bool ABTBMiniGameOnePlayableCharacter::GetbStartSwitching()
+{
+	return bStartSwitching && OtherPlayer->bStartSwitching;
+}
+
 void ABTBMiniGameOnePlayableCharacter::Die()
 {
 	Super::Die();
@@ -52,11 +57,11 @@ void ABTBMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 
 void ABTBMiniGameOnePlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (Cast<ABTBMiniGameOnePlayableCharacter>(OtherActor) && OtherActor != this)
+	if (OtherActor != nullptr && OtherComp != nullptr && OtherActor != this)
 	{
 		if (OtherComp->ComponentHasTag("Hand"))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("We: %s, Collided with: %s, "), *this->GetName(), *OtherActor->GetName());
+			// UE_LOG(LogTemp, Warning, TEXT("We: %s, Collided with: %s, "), *this->GetName(), *OtherActor->GetName());
 			IsOverlapping = true;
 		}
 	}
