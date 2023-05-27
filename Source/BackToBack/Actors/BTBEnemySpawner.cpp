@@ -46,32 +46,6 @@ void ABTBEnemySpawner::BeginPlay()
 	);
 }
 
-// void ABTBEnemySpawner::Tick(float DeltaSeconds)
-// {
-// 	Super::Tick(DeltaSeconds);
-// 	const TObjectPtr<UWorld> World = GetWorld();
-// 	if(!ensure(World != nullptr))
-// 	{
-// 		return;
-// 	}
-//
-// 	
-// 	//const FVector PlayersMidPoint = Center /*GetPlayersMidPoint()*/ ;
-// 	
-// 	//if(!EnemySpawnHandle.IsValid())
-// 	//{
-// 	//	World->GetTimerManager().SetTimer
-// 	//	(
-// 	//		EnemySpawnHandle,
-// 	//		this,
-// 	//		&ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers,
-// 	//		SpawnEnemyEvery /*SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(GetWorld()))*/,
-// 	//		false
-// 	//	);
-// 	//}
-// 	
-// }
-
 void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 {
 	const TObjectPtr<UWorld> World = GetWorld();
@@ -100,7 +74,7 @@ FVector ABTBEnemySpawner::GetARandomLocationInPlayersRange()
 	const double RandomX = FMath::FRandRange(Center.X - OuterRange,Center.X + OuterRange);
 	const double RandomY = FMath::FRandRange(Center.Y - OuterRange,Center.Y + OuterRange);
 
-	FVector RandLoc = FVector(RandomX, RandomY, 1125);
+	FVector RandLoc = FVector(RandomX, RandomY, 200);
 	double Distance = FVector::Distance(Center, RandLoc);
 
 	while (Distance < DistanceFromCenterOfDonutToInnerRange)
