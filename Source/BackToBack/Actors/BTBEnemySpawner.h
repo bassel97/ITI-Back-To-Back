@@ -22,10 +22,12 @@ public:
 	ABTBEnemySpawner();
 
 protected:
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void BeginPlay() override;
+	//virtual void Tick(float DeltaSeconds) override;
 
 	void SpawnAICharacterAtRandomLocationRelativeToPlayers();
 	FVector GetARandomLocationInPlayersRange();
+	void UpdateSpawnEnemyEvery();
 
 private:
 
@@ -48,8 +50,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "AI")
 	float DistanceFromCenterOfDonutToInnerRange;
 
-	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	float SpawnEnemyEvery;
+	//UPROPERTY(EditDefaultsOnly, Category = "AI")
 
+	float SpawnEnemyEvery;
 	FTimerHandle EnemySpawnHandle;
+	FTimerHandle UpdateEnemySpawnHandle;
 };
