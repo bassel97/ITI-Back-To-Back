@@ -23,5 +23,6 @@ void ABTBMiniGameOneGameMode::AssignGunToPlayer()
 	{
 		Gun->AttachToComponent(MGOnePlayer->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
 		MGOnePlayer->SetGun(Gun);
+		MGOnePlayer->bGunAttached = true;
 	}
 }
