@@ -9,11 +9,6 @@
 #include "Curves/CurveFloat.h"
 #include "Kismet/GameplayStatics.h"
 
-ABTBEnemySpawner::ABTBEnemySpawner()
-{
-	PrimaryActorTick.bCanEverTick = true;
-	PrimaryActorTick.bStartWithTickEnabled = true;
-}
 
 void ABTBEnemySpawner::BeginPlay()
 {
@@ -61,7 +56,6 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 	
 	const FVector RandomLocation = GetARandomLocationInPlayersRange();
 	World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
-	// GetWorldTimerManager().ClearTimer(EnemySpawnHandle);
 	
 #if UE_EDITOR
 	UE_LOG(LogTemp, Warning, TEXT("SpawnEnemyEvery = %f"), SpawnEnemyEvery);
