@@ -13,8 +13,10 @@ void ABTBEnemyCharacter::BeginPlay()
 
 void ABTBEnemyCharacter::Die()
 {
-	GetMesh()->PlayAnimation(DeathAnimation,false);
-	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, DeathAnimation->GetPlayLength(), false);
+	//GetMesh()->PlayAnimation(DeathAnimation,false);
+	GetMesh()->SetSimulatePhysics(true);
+	SetActorEnableCollision(ECollisionEnabled::NoCollision);
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 2, false);
 	OnEnemyDeath.Broadcast();
 }
 

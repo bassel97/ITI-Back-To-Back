@@ -94,7 +94,7 @@ FVector ABTBEnemySpawner::GetARandomLocationInPlayersRange()
 	const double RandomX = FMath::FRandRange(Center.X - OuterRange,Center.X + OuterRange);
 	const double RandomY = FMath::FRandRange(Center.Y - OuterRange,Center.Y + OuterRange);
 
-	FVector RandLoc = FVector(RandomX, RandomY, 500);
+	FVector RandLoc = FVector(RandomX, RandomY, 200);
 	double Distance = FVector::Distance(Center, RandLoc);
 
 	while (Distance < DistanceFromCenterOfDonutToInnerRange)
@@ -122,7 +122,7 @@ void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
 	if(!EnemiesArray.IsEmpty())
 	{
 		TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
-		for (const auto Enemy : EnemiesArray)
+		for (auto Enemy : EnemiesArray)
 		{
 			const auto EnemyLoc = Enemy->GetActorLocation();
 			const auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);

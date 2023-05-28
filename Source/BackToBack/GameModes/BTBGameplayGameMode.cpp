@@ -62,7 +62,7 @@ void ABTBGameplayGameMode::BeginPlay()
 
 void ABTBGameplayGameMode::CreatePlayers()
 {
-	UWorld* World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(World != nullptr && PlayableCharOneClass != nullptr
 	 && PlayableCharTwoClass != nullptr))
 	{
@@ -115,7 +115,7 @@ void ABTBGameplayGameMode::SetupPlayersCommunication()
 
 void ABTBGameplayGameMode::AssignCameras()
 {
-	 TObjectPtr<UWorld> World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(SplitScreenClass != nullptr && World != nullptr && CameraClass != nullptr))
 	{
 		return;
@@ -157,7 +157,7 @@ void ABTBGameplayGameMode::AssignCameras()
 
 void ABTBGameplayGameMode::CreateRenderTextures()
 {
-	 FVector2d ScreenSize = GetScreenResolution();
+	const FVector2d ScreenSize = GetScreenResolution();
 	RenderTexture_1 = NewObject<UTextureRenderTarget2D>(this, UTextureRenderTarget2D::StaticClass());
 	RenderTexture_1->InitAutoFormat(ScreenSize.X, ScreenSize.Y);
 	
@@ -170,7 +170,7 @@ void ABTBGameplayGameMode::CreateRenderTextures()
 
 void ABTBGameplayGameMode::CreateUIWidget()
 {
-	 TObjectPtr<UWorld> World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(World != nullptr))
 	{
 		return;
@@ -189,8 +189,7 @@ void ABTBGameplayGameMode::CreateUIWidget()
 
 void ABTBGameplayGameMode::DisplayGameoverHUD()
 {
-
-	TObjectPtr<UWorld> World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if (!ensure(World != nullptr))
 	{
 		return;
@@ -217,7 +216,7 @@ void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 		return;
 	}
 
-	 TObjectPtr<UMaterialInstanceDynamic> DynamicMI =
+	const TObjectPtr<UMaterialInstanceDynamic> DynamicMI =
 		UMaterialInstanceDynamic::Create(SplitScreenMaterialInstance, nullptr);
 	
 	DynamicMI->SetTextureParameterValue(TEXT("Texture1"), RenderTexture_1);
@@ -228,7 +227,7 @@ void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 
 void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 {
-	 TObjectPtr<UWorld> World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(World != nullptr))
 	{
 		return;
@@ -237,7 +236,7 @@ void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 	TObjectPtr<ABTBEnemySpawner> EnemySpawner = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
 	if(EnemySpawner)
 	{
-		FVector PlayersCenter = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
+		const FVector PlayersCenter = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
 
 		EnemySpawner->Center = PlayersCenter;
 		EnemySpawner->Center.Z = 0;

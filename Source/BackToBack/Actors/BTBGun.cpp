@@ -26,7 +26,7 @@ ABTBGun::ABTBGun()
 	GunSkeletal->SetupAttachment(SceneComponent);
 }
 
-void ABTBGun::Shoot()
+void ABTBGun::Shoot(const FVector Direction)
 {
 	if(Ammo <= 5)
 	{
@@ -43,7 +43,7 @@ void ABTBGun::Shoot()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is added"));
 			BulletProjectile->ProjectileGravityScale = 0.f;
-			BulletProjectile->AddForce(GetActorForwardVector() * BulletVelocity );
+			BulletProjectile->AddForce(Direction * BulletVelocity );
 			GunSkeletal->PlayAnimation(ShootingAnim, false);
 		}
 	}
