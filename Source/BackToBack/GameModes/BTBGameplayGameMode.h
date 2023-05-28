@@ -16,6 +16,7 @@ class UBTBGameOverHUD;
 class ABTBGun;
 class UUserWidget;
 class ABTBEnemySpawner;
+class ABTBEnemyCharacter;
 /**
  * Our Gameplay Game Mode
  */
@@ -42,7 +43,9 @@ protected:
 
 	static FVector2D GetScreenResolution();
 	static FVector2D GetGameViewportSize();
+
 	
+	void UpdateScore();
 private:
 	
 	
@@ -90,12 +93,16 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Player Weapons")
 	TSubclassOf<ABTBGun> GunClass;
 
-
+	TObjectPtr<ABTBGun> Gun;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Gun Position")
 	FVector GunOffsetPosition;
 
-	TObjectPtr<ABTBGun> Gun;
-	
+	UPROPERTY(EditDefaultsOnly, Category = "Enemy")
+		TSubclassOf<ABTBEnemyCharacter> EnemyClass;
+
+	TObjectPtr<ABTBEnemyCharacter> Enemy;
+
+	int32 TotalScore = 0;
 private:
 	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
 	FVector SingleCameraTargetOffset;

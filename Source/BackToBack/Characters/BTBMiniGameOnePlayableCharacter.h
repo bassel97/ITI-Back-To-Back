@@ -56,5 +56,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimMontage")
 		TObjectPtr<UAnimMontage> SwitchMontage;
 
+	
+
 	TObjectPtr<ABTBGun> GunActor;
 };

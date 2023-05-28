@@ -18,6 +18,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "BackToBack/Actors/BTBGun.h"
+#include "BackToBack/Characters/BTBEnemyCharacter.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
@@ -40,6 +41,22 @@ void ABTBGameplayGameMode::BeginPlay()
 	
 	PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 	PlayerCharacterArray[1]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
+
+	if(IsValid(EnemyClass))
+	{
+		Enemy = Cast<ABTBEnemyCharacter>(EnemyClass);
+		if(Enemy)
+		{
+			Enemy->OnEnemyDeath.AddDynamic(this, &ABTBGameplayGameMode::UpdateScore);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Enemy is not casted"));
+		}
+		
+	}
+	
+	
 }
 
 
@@ -165,6 +182,7 @@ void ABTBGameplayGameMode::CreateUIWidget()
 		if (GameWidget)
 		{
 			GameWidget->AddToViewport();
+			
 		}
 	}
 }
@@ -246,4 +264,10 @@ FVector2D ABTBGameplayGameMode::GetGameViewportSize()
 	}
 	
 	 return Result;
+}
+
+void ABTBGameplayGameMode::UpdateScore()
+{
+	TotalScore += 10;
+	GameWidget->SetScore(TotalScore);
 }

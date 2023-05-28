@@ -15,7 +15,7 @@ void ABTBEnemyCharacter::Die()
 {
 	GetMesh()->PlayAnimation(DeathAnimation,false);
 	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, DeathAnimation->GetPlayLength(), false);
-	
+	OnEnemyDeath.Broadcast();
 }
 
 void ABTBEnemyCharacter::Damage()

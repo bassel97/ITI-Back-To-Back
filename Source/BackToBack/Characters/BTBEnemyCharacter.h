@@ -6,6 +6,8 @@
 #include "BTBAICharacter.h"
 #include "BTBEnemyCharacter.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEnemyDeath);
 /**
  * 
  */
@@ -15,12 +17,14 @@ class BACKTOBACK_API ABTBEnemyCharacter : public ABTBAICharacter
 	GENERATED_BODY()
 
 public:
-	
+	FOnEnemyDeath OnEnemyDeath;
 protected:
 	virtual void BeginPlay() override;
 	virtual void Die() override;
 	void Damage();
 	void DestroyEnemy();
+
+	
 
 	UFUNCTION()
 	void OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

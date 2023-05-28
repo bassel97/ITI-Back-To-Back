@@ -5,11 +5,12 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
+
 #include "BTBGameHUD.generated.h"
 
 class URetainerBox;
 class UOverlay;
-
+class UTextBlock;
 /**
  * 
  */
@@ -24,11 +25,18 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UImage> MainScreenImage;
-	
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		TObjectPtr<UTextBlock> Score;
+	UFUNCTION()
+		void SetScore(int32 ScoreValue);
+
+	/*UFUNCTION()
+		void InitializeHud(AEndlessRunnerGameModeBase* RunGameMode);*/
 protected:
-	static FVector2d GetScreenResolution();
 	virtual void NativeConstruct() override;
 
+	
 private:
 
 	

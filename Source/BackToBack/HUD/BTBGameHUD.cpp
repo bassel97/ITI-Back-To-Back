@@ -3,20 +3,20 @@
 
 #include "BTBGameHUD.h"
 #include "Components/RetainerBox.h"
+#include "BackToBack/Characters/BTBEnemyCharacter.h"
+#include "Components/TextBlock.h"
 
-FVector2d UBTBGameHUD::GetScreenResolution()
-{
-	FVector2D Result;
-
-	Result.X = GSystemResolution.ResX;
-	Result.Y = GSystemResolution.ResY;
-
-	return Result;
-}
 
 void UBTBGameHUD::NativeConstruct()
 {
 	Super::NativeConstruct();
+
+	Score->SetText(FText::AsNumber(0));
+}
+
+void UBTBGameHUD::SetScore(int32 ScoreValue)
+{
+	Score->SetText(FText::AsNumber(ScoreValue));
 }
 
 
