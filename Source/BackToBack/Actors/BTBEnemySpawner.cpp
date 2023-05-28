@@ -10,10 +10,16 @@
 #include "Kismet/GameplayStatics.h"
 
 
+ABTBEnemySpawner::ABTBEnemySpawner()
+{
+	SetActorTickEnabled(true);
+	PrimaryActorTick.bCanEverTick = true;
+}
+
 void ABTBEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(World != nullptr))
 	{
@@ -39,6 +45,24 @@ void ABTBEnemySpawner::BeginPlay()
 		SpawnEnemyEvery,
 		true
 	);
+
+	World->GetTimerManager().SetTimer
+	(
+		UpdateClosestEnemyToPlayersHandle,
+		this,
+		&ABTBEnemySpawner::UpdateClosestEnemyToPlayers,
+		0.025,
+		true
+	);
+
+	
+}
+
+void ABTBEnemySpawner::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	// UpdateClosestEnemyToPlayers();
 }
 
 void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
@@ -55,7 +79,11 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 	}
 	
 	const FVector RandomLocation = GetARandomLocationInPlayersRange();
-	World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
+	const TObjectPtr<ABTBAICharacter> SpawnedEnemyAI = World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
+	if(SpawnedEnemyAI)
+	{
+		EnemiesArray.AddUnique(SpawnedEnemyAI);
+	}
 	
 #if UE_EDITOR
 	UE_LOG(LogTemp, Warning, TEXT("SpawnEnemyEvery = %f"), SpawnEnemyEvery);
@@ -68,7 +96,7 @@ FVector ABTBEnemySpawner::GetARandomLocationInPlayersRange()
 	const double RandomX = FMath::FRandRange(Center.X - OuterRange,Center.X + OuterRange);
 	const double RandomY = FMath::FRandRange(Center.Y - OuterRange,Center.Y + OuterRange);
 
-	FVector RandLoc = FVector(RandomX, RandomY, 200);
+	FVector RandLoc = FVector(RandomX, RandomY, 500);
 	double Distance = FVector::Distance(Center, RandLoc);
 
 	while (Distance < DistanceFromCenterOfDonutToInnerRange)
@@ -89,4 +117,33 @@ void ABTBEnemySpawner::UpdateSpawnEnemyEvery()
 	}
 	
 	SpawnEnemyEvery = SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(World));
+}
+
+void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
+{
+	if(!EnemiesArray.IsEmpty())
+	{
+		TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
+		for (const auto Enemy : EnemiesArray)
+		{
+			const auto EnemyLoc = Enemy->GetActorLocation();
+			const auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);
+			AICharacterDistancePairs.Add(TPair<ABTBAICharacter*, float>(Enemy, DistanceToCenterOfPlayers));
+		}
+		
+		AICharacterDistancePairs.Sort(
+			[](const TPair<ABTBAICharacter*, float>& A, const TPair<ABTBAICharacter*, float>& B)
+			{
+				return A.Value < B.Value;
+			}
+		);
+
+		ClosestEnemyToPlayers = AICharacterDistancePairs[0].Key;
+	}
+	
+}
+
+ABTBAICharacter* ABTBEnemySpawner::GetClosestEnemyToPlayers()
+{
+	return ClosestEnemyToPlayers;
 }
