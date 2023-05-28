@@ -45,13 +45,24 @@ void ABTBEnemySpawner::BeginPlay()
 		SpawnEnemyEvery,
 		true
 	);
+
+	World->GetTimerManager().SetTimer
+	(
+		UpdateClosestEnemyToPlayersHandle,
+		this,
+		&ABTBEnemySpawner::UpdateClosestEnemyToPlayers,
+		0.025,
+		true
+	);
+
+	
 }
 
 void ABTBEnemySpawner::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	
-	UpdateClosestEnemyToPlayers();
+	// UpdateClosestEnemyToPlayers();
 }
 
 void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
@@ -68,8 +79,11 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 	}
 	
 	const FVector RandomLocation = GetARandomLocationInPlayersRange();
-	auto SpawnedEnemyAI = World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
-	EnemiesArray.Add(SpawnedEnemyAI);
+	const TObjectPtr<ABTBAICharacter> SpawnedEnemyAI = World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
+	if(SpawnedEnemyAI)
+	{
+		EnemiesArray.AddUnique(SpawnedEnemyAI);
+	}
 	
 #if UE_EDITOR
 	UE_LOG(LogTemp, Warning, TEXT("SpawnEnemyEvery = %f"), SpawnEnemyEvery);
@@ -82,7 +96,7 @@ FVector ABTBEnemySpawner::GetARandomLocationInPlayersRange()
 	const double RandomX = FMath::FRandRange(Center.X - OuterRange,Center.X + OuterRange);
 	const double RandomY = FMath::FRandRange(Center.Y - OuterRange,Center.Y + OuterRange);
 
-	FVector RandLoc = FVector(RandomX, RandomY, 200);
+	FVector RandLoc = FVector(RandomX, RandomY, 500);
 	double Distance = FVector::Distance(Center, RandLoc);
 
 	while (Distance < DistanceFromCenterOfDonutToInnerRange)
@@ -110,15 +124,13 @@ void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
 	if(!EnemiesArray.IsEmpty())
 	{
 		TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
-	
 		for (const auto Enemy : EnemiesArray)
 		{
-			auto EnemyLoc = Enemy->GetActorLocation();
-			auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);
+			const auto EnemyLoc = Enemy->GetActorLocation();
+			const auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);
 			AICharacterDistancePairs.Add(TPair<ABTBAICharacter*, float>(Enemy, DistanceToCenterOfPlayers));
 		}
-
-		// Sort the array based on the distance in ascending order
+		
 		AICharacterDistancePairs.Sort(
 			[](const TPair<ABTBAICharacter*, float>& A, const TPair<ABTBAICharacter*, float>& B)
 			{
@@ -128,7 +140,6 @@ void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
 
 		ClosestEnemyToPlayers = AICharacterDistancePairs[0].Key;
 	}
-
 	
 }
 

@@ -62,6 +62,7 @@ private:
 	float SpawnEnemyEvery;
 	FTimerHandle EnemySpawnHandle;
 	FTimerHandle UpdateEnemySpawnHandle;
+	FTimerHandle UpdateClosestEnemyToPlayersHandle;
 	
 	TArray<TObjectPtr<ABTBAICharacter>> EnemiesArray;
 
