@@ -12,8 +12,8 @@
 
 ABTBEnemySpawner::ABTBEnemySpawner()
 {
-	SetActorTickEnabled(true);
-	PrimaryActorTick.bCanEverTick = true;
+	// SetActorTickEnabled(true);
+	// PrimaryActorTick.bCanEverTick = true;
 }
 
 void ABTBEnemySpawner::BeginPlay()
@@ -60,9 +60,7 @@ void ABTBEnemySpawner::BeginPlay()
 
 void ABTBEnemySpawner::Tick(float DeltaSeconds)
 {
-	Super::Tick(DeltaSeconds);
-	
-	// UpdateClosestEnemyToPlayers();
+	// Super::Tick(DeltaSeconds);
 }
 
 void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()

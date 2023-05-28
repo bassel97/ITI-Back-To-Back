@@ -22,25 +22,22 @@
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
 
-//ABTBGameplayGameMode::ABTBGameplayGameMode()
-//{
-//	/*for (auto Player : PlayerCharacterArray)
-//	{
-//		Player->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
-//	}*/
-//	//PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
-//}
+ABTBGameplayGameMode::ABTBGameplayGameMode()
+{
+	GunOffsetPosition = FVector(-35, -50, 30);
+}
 
 void ABTBGameplayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	GunOffsetPosition = FVector(-35, -50, 30);
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
+	
+	//UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
 	CreatePlayers();
 	SetupPlayersCommunication();
 	CreateUIWidget();
 	AssignCameras();
 	SetCenterOfPlayersInEnemySpawner();
+	
 	PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 	PlayerCharacterArray[1]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 }
@@ -57,11 +54,11 @@ void ABTBGameplayGameMode::CreatePlayers()
 
 	UGameplayStatics::GetAllActorsOfClass(World, APlayerStart::StaticClass(), PlayerStartArray);
 
-	 FVector PS1_Location = PlayerStartArray[0]->GetActorLocation();
-	 FRotator PS1_Rotation = PlayerStartArray[0]->GetActorRotation();
+	const FVector PS1_Location = PlayerStartArray[0]->GetActorLocation();
+	const FRotator PS1_Rotation = PlayerStartArray[0]->GetActorRotation();
 
-	 FVector PS2_Location = PlayerStartArray[1]->GetActorLocation();
-	 FRotator PS2_Rotation = PlayerStartArray[1]->GetActorRotation();
+	const FVector PS2_Location = PlayerStartArray[1]->GetActorLocation();
+	const FRotator PS2_Rotation = PlayerStartArray[1]->GetActorRotation();
 
 	const TObjectPtr<ABTBPlayableCharacter> PlayerCharacterOne =
 		World->SpawnActor<ABTBPlayableCharacter>(PlayableCharOneClass, PS1_Location, PS1_Rotation);
@@ -115,7 +112,6 @@ void ABTBGameplayGameMode::AssignCameras()
 		TObjectPtr<AActor> Camera = World->SpawnActor<AActor>(CameraClass);
 		if(const TObjectPtr<ABTBCamera> BTBCamera = Cast<ABTBCamera>(Camera))
 		{
-			//BTBCamera->CameraTargetOffset = SingleCameraTargetOffset;
 			BTBCamera->CameraTargetOffset = FVector(60.f,60.f,200.f);
 		}
 		
@@ -188,11 +184,9 @@ void ABTBGameplayGameMode::DisplayGameoverHUD()
 		GameoverWidget = Cast<UBTBGameOverHUD>(CreateWidget(World, BTBGameoverHUDWidgetClass));
 		if (GameoverWidget)
 		{
-			//GameWidget->RemoveFromParent();
 			GameoverWidget->AddToViewport(10);
 			UGameplayStatics::SetGamePaused(World, true);
 			UGameplayStatics::RemovePlayer(PlayerControllerArray[1], true);
-			//UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(UGameplayStatics::GetPlayerController(GetWorld(), 0), GameoverWidget);
 		}
 	}
 	
@@ -221,9 +215,6 @@ void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 	{
 		return;
 	}
-
-	 /*TObjectPtr<ABTBEnemySpawner> EnemySpawner =
-		Cast<ABTBEnemySpawner>(UGameplayStatics::GetActorOfClass(World, ABTBEnemySpawner::StaticClass()));*/
 
 	TObjectPtr<ABTBEnemySpawner> EnemySpawner = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
 	if(EnemySpawner)

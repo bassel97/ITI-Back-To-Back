@@ -25,7 +25,7 @@ class BACKTOBACK_API ABTBGameplayGameMode : public ABTBGameModeBase
 	GENERATED_BODY()
 
 public:
-	//ABTBGameplayGameMode();
+	ABTBGameplayGameMode();
 protected:
 	virtual void BeginPlay() override;
 	void CreatePlayers();

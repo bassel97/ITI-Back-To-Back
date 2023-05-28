@@ -56,15 +56,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = "AI")
 	float DistanceFromCenterOfDonutToInnerRange;
 
-	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	UBTBGameHUD* HUD;
-
 	float SpawnEnemyEvery;
 	FTimerHandle EnemySpawnHandle;
 	FTimerHandle UpdateEnemySpawnHandle;
 	FTimerHandle UpdateClosestEnemyToPlayersHandle;
 	
 	TArray<TObjectPtr<ABTBAICharacter>> EnemiesArray;
-
 	TObjectPtr<ABTBAICharacter> ClosestEnemyToPlayers;
 };
