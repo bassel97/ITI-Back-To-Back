@@ -109,7 +109,7 @@ void ABTBGameplayGameMode::AssignCameras()
 		UGameplayStatics::GetPlayerController(World, 1)->SetViewTarget(Camera);
 
 		GameWidget->MainScreenBox->SetEffectMaterial(nullptr);
-		GameWidget->MainScreenImage->SetRenderOpacity(1.0f);
+		GameWidget->MainScreenImage->SetRenderOpacity(0.0f);
 	}
 	else
 	{

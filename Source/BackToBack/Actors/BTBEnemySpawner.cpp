@@ -41,6 +41,13 @@ void ABTBEnemySpawner::BeginPlay()
 	);
 }
 
+void ABTBEnemySpawner::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	UpdateClosestEnemyToPlayers();
+}
+
 void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 {
 	const TObjectPtr<UWorld> World = GetWorld();
@@ -55,7 +62,8 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 	}
 	
 	const FVector RandomLocation = GetARandomLocationInPlayersRange();
-	World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
+	auto SpawnedEnemyAI = World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
+	EnemiesArray.Add(SpawnedEnemyAI);
 	
 #if UE_EDITOR
 	UE_LOG(LogTemp, Warning, TEXT("SpawnEnemyEvery = %f"), SpawnEnemyEvery);
@@ -89,4 +97,35 @@ void ABTBEnemySpawner::UpdateSpawnEnemyEvery()
 	}
 	
 	SpawnEnemyEvery = SpawnRateCurveClass->GetFloatValue(UGameplayStatics::GetRealTimeSeconds(World));
+}
+
+void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
+{
+	//TArray<float> Distances;
+	//TMap<ABTBAICharacter*, TPair<FVector, float>> ActorMap;
+	
+	TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
+	
+	for (const auto Enemy : EnemiesArray)
+	{
+		auto EnemyLoc = Enemy->GetActorLocation();
+		auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);
+		AICharacterDistancePairs.Add(TPair<ABTBAICharacter*, float>(Enemy, DistanceToCenterOfPlayers));
+	}
+
+	// Sort the array based on the distance in ascending order
+	AICharacterDistancePairs.Sort(
+		[](const TPair<ABTBAICharacter*, float>& A, const TPair<ABTBAICharacter*, float>& B)
+		{
+			return A.Value < B.Value;
+		}
+	);
+
+	ClosestEnemyToPlayers = AICharacterDistancePairs[0].Key;
+	
+}
+
+ABTBAICharacter* ABTBEnemySpawner::GetClosestEnemyToPlayers()
+{
+	return ClosestEnemyToPlayers;
 }
