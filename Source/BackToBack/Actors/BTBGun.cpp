@@ -43,7 +43,7 @@ void ABTBGun::Shoot()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is added"));
 			BulletProjectile->ProjectileGravityScale = 0.f;
-			BulletProjectile->AddForce(GetActorForwardVector() * 5000.f);
+			BulletProjectile->AddForce(GetActorForwardVector() * BulletVelocity );
 			GunSkeletal->PlayAnimation(ShootingAnim, false);
 		}
 	}
