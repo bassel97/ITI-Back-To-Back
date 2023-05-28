@@ -21,6 +21,7 @@ class BACKTOBACK_API ABTBEnemySpawner : public ABTBActor
 	GENERATED_BODY()
 	
 public:
+	ABTBEnemySpawner();
 
 protected:
 	virtual void BeginPlay() override;

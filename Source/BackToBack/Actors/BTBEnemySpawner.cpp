@@ -10,10 +10,16 @@
 #include "Kismet/GameplayStatics.h"
 
 
+ABTBEnemySpawner::ABTBEnemySpawner()
+{
+	SetActorTickEnabled(true);
+	PrimaryActorTick.bCanEverTick = true;
+}
+
 void ABTBEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(World != nullptr))
 	{
@@ -101,8 +107,6 @@ void ABTBEnemySpawner::UpdateSpawnEnemyEvery()
 
 void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
 {
-	//TArray<float> Distances;
-	//TMap<ABTBAICharacter*, TPair<FVector, float>> ActorMap;
 	if(!EnemiesArray.IsEmpty())
 	{
 		TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
