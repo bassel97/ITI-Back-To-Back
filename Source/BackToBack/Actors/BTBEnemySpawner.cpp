@@ -103,25 +103,28 @@ void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
 {
 	//TArray<float> Distances;
 	//TMap<ABTBAICharacter*, TPair<FVector, float>> ActorMap;
-	
-	TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
-	
-	for (const auto Enemy : EnemiesArray)
+	if(!EnemiesArray.IsEmpty())
 	{
-		auto EnemyLoc = Enemy->GetActorLocation();
-		auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);
-		AICharacterDistancePairs.Add(TPair<ABTBAICharacter*, float>(Enemy, DistanceToCenterOfPlayers));
+		TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
+	
+		for (const auto Enemy : EnemiesArray)
+		{
+			auto EnemyLoc = Enemy->GetActorLocation();
+			auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);
+			AICharacterDistancePairs.Add(TPair<ABTBAICharacter*, float>(Enemy, DistanceToCenterOfPlayers));
+		}
+
+		// Sort the array based on the distance in ascending order
+		AICharacterDistancePairs.Sort(
+			[](const TPair<ABTBAICharacter*, float>& A, const TPair<ABTBAICharacter*, float>& B)
+			{
+				return A.Value < B.Value;
+			}
+		);
+
+		ClosestEnemyToPlayers = AICharacterDistancePairs[0].Key;
 	}
 
-	// Sort the array based on the distance in ascending order
-	AICharacterDistancePairs.Sort(
-		[](const TPair<ABTBAICharacter*, float>& A, const TPair<ABTBAICharacter*, float>& B)
-		{
-			return A.Value < B.Value;
-		}
-	);
-
-	ClosestEnemyToPlayers = AICharacterDistancePairs[0].Key;
 	
 }
 
