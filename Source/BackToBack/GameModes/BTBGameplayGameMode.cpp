@@ -10,6 +10,7 @@
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/DataAssets/BTBSplitScreenDataAsset.h"
 #include "BackToBack/HUD/BTBGameHUD.h"
+#include "BackToBack/HUD/BTBGameoverHUD.h"
 #include "BackToBack/PlayerControllers/BTBPlayerController.h"
 #include "Components/RetainerBox.h"
 #include "Engine/TextureRenderTarget2D.h"
@@ -18,18 +19,30 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "BackToBack/Actors/BTBGun.h"
 #include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 
+
+//ABTBGameplayGameMode::ABTBGameplayGameMode()
+//{
+//	/*for (auto Player : PlayerCharacterArray)
+//	{
+//		Player->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
+//	}*/
+//	//PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
+//}
 
 void ABTBGameplayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	GunOffsetPosition = FVector(-35, -50, 30);
-
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
 	CreatePlayers();
 	SetupPlayersCommunication();
 	CreateUIWidget();
 	AssignCameras();
 	SetCenterOfPlayersInEnemySpawner();
+	PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
+	PlayerCharacterArray[1]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 }
 
 
@@ -102,14 +115,15 @@ void ABTBGameplayGameMode::AssignCameras()
 		TObjectPtr<AActor> Camera = World->SpawnActor<AActor>(CameraClass);
 		if(const TObjectPtr<ABTBCamera> BTBCamera = Cast<ABTBCamera>(Camera))
 		{
-			BTBCamera->CameraTargetOffset = SingleCameraTargetOffset;
+			//BTBCamera->CameraTargetOffset = SingleCameraTargetOffset;
+			BTBCamera->CameraTargetOffset = FVector(60.f,60.f,200.f);
 		}
 		
 		UGameplayStatics::GetPlayerController(World, 0)->SetViewTarget(Camera);
 		UGameplayStatics::GetPlayerController(World, 1)->SetViewTarget(Camera);
 
 		GameWidget->MainScreenBox->SetEffectMaterial(nullptr);
-		GameWidget->MainScreenImage->SetRenderOpacity(1.0f);
+		GameWidget->MainScreenImage->SetRenderOpacity(0.0f);
 	}
 	else
 	{
@@ -159,6 +173,31 @@ void ABTBGameplayGameMode::CreateUIWidget()
 	}
 }
 
+void ABTBGameplayGameMode::DisplayGameoverHUD()
+{
+
+	TObjectPtr<UWorld> World = GetWorld();
+	if (!ensure(World != nullptr))
+	{
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Gameover HUD should be displayed"));
+	if (IsValid(BTBGameoverHUDWidgetClass))
+	{
+		GameoverWidget = Cast<UBTBGameOverHUD>(CreateWidget(World, BTBGameoverHUDWidgetClass));
+		if (GameoverWidget)
+		{
+			//GameWidget->RemoveFromParent();
+			GameoverWidget->AddToViewport(10);
+			UGameplayStatics::SetGamePaused(World, true);
+			UGameplayStatics::RemovePlayer(PlayerControllerArray[1], true);
+			//UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(UGameplayStatics::GetPlayerController(GetWorld(), 0), GameoverWidget);
+		}
+	}
+	
+}
+
 void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 {
 	if(!ensure(GameWidget!=nullptr))
@@ -183,22 +222,17 @@ void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 		return;
 	}
 
-	 TObjectPtr<ABTBEnemySpawner> EnemySpawner =
-		Cast<ABTBEnemySpawner>(UGameplayStatics::GetActorOfClass(World, ABTBEnemySpawner::StaticClass()));
+	 /*TObjectPtr<ABTBEnemySpawner> EnemySpawner =
+		Cast<ABTBEnemySpawner>(UGameplayStatics::GetActorOfClass(World, ABTBEnemySpawner::StaticClass()));*/
 
-	if(!ensure(EnemySpawner != nullptr))
+	TObjectPtr<ABTBEnemySpawner> EnemySpawner = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
+	if(EnemySpawner)
 	{
-		return;
+		FVector PlayersCenter = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
+
+		EnemySpawner->Center = PlayersCenter;
+		EnemySpawner->Center.Z = 0;
 	}
-
-	FVector PlayersCenter = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
-	
-	EnemySpawner->Center = PlayersCenter;
-	EnemySpawner->Center.Z = 0;
-
-	//PlayerCharacterArray[0]->GunSwitchPosition->SetRelativeLocation(PlayersCenter);
-	//PlayerCharacterArray[1]->GunSwitchPosition->SetRelativeLocation(PlayersCenter);
-
 }
 
 FVector2d ABTBGameplayGameMode::GetScreenResolution()
