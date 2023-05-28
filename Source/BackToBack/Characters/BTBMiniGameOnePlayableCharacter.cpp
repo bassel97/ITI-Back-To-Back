@@ -19,13 +19,10 @@ void ABTBMiniGameOnePlayableCharacter::BeginPlay()
 ABTBMiniGameOnePlayableCharacter::ABTBMiniGameOnePlayableCharacter()
 {
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
-	//CollisionBox->SetupAttachment(GetRootComponent());
-	CollisionBox->SetAllMassScale(0.5);
 	CollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "GunSocket");
 
 	GunSwitchPosition = CreateDefaultSubobject<UChildActorComponent>(TEXT("GunSwitchPosition"));
 	GunSwitchPosition->SetupAttachment(GetMesh());
-	//GunSwitchPosition->SetRelativeLocation(playersMidPoin);
 }
 
 
@@ -40,10 +37,6 @@ void ABTBMiniGameOnePlayableCharacter::Die()
 {
 	Super::Die();
 	UE_LOG(LogTemp, Warning, TEXT("Minigame one player died"));
-	/*if(Destroy())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Minigame one player destroyed"));
-	}*/
 }
 
 void ABTBMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -57,12 +50,6 @@ void ABTBMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 		Die();
 	}
 }
-
-
-
-
-
-
 
 //Switch Action
 void ABTBMiniGameOnePlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
