@@ -35,7 +35,7 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		PlayerOne->Possess(SpawnedPlayer);
 	}
 
-	ABTBPlayerController* PlayerTwo = Cast<ABTBPlayerController>(UGameplayStatics::CreatePlayer(World, 1));
+	ABTBPlayerController* PlayerTwo = Cast<ABTBPlayerController>(UGameplayStatics::CreatePlayer(World, 1/*,true*/));
 	if (ensure(PlayerTwo != nullptr))
 	{
 		ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);

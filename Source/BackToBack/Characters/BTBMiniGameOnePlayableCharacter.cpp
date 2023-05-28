@@ -39,17 +39,32 @@ float ABTBMiniGameOnePlayableCharacter::GetRotationValue()
 void ABTBMiniGameOnePlayableCharacter::Die()
 {
 	Super::Die();
+	UE_LOG(LogTemp, Warning, TEXT("Minigame one player died"));
+	/*if(Destroy())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Minigame one player destroyed"));
+	}*/
 }
 
 void ABTBMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
+	UE_LOG(LogTemp, Warning, TEXT("Collision Occured"));
+	if(Cast<ABTBEnemyCharacter>(OtherActor))
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Enemy is casted successfully"));
+		OtherActor->SetActorEnableCollision(ECollisionEnabled::NoCollision);
 		Die();
 	}
 }
 
+
+
+
+
+
+
+//Switch Action
 void ABTBMiniGameOnePlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (Cast<ABTBMiniGameOnePlayableCharacter>(OtherActor) && OtherActor != nullptr && OtherComp != nullptr && OtherActor != this)

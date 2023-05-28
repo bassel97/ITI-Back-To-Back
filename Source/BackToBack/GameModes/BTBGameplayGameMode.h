@@ -6,13 +6,16 @@
 #include "BTBGameModeBase.h"
 #include "BTBGameplayGameMode.generated.h"
 
+
+
 class ABTBPlayableCharacter;
 class UBTBSplitScreenDataAsset;
 class UTextureRenderTarget2D;
 class UBTBGameHUD;
+class UBTBGameOverHUD;
 class ABTBGun;
 class UUserWidget;
-
+class ABTBEnemySpawner;
 /**
  * Our Gameplay Game Mode
  */
@@ -22,7 +25,7 @@ class BACKTOBACK_API ABTBGameplayGameMode : public ABTBGameModeBase
 	GENERATED_BODY()
 
 public:
-	
+	//ABTBGameplayGameMode();
 protected:
 	virtual void BeginPlay() override;
 	void CreatePlayers();
@@ -30,6 +33,10 @@ protected:
 	void AssignCameras();
 	void CreateRenderTextures();
 	void CreateUIWidget();
+
+	UFUNCTION()
+	void DisplayGameoverHUD();
+
 	void SetSplitScreenTextureToMaterial() const;
 	void SetCenterOfPlayersInEnemySpawner();
 
@@ -54,6 +61,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABTBPlayableCharacter> PlayableCharTwoClass;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<ABTBEnemySpawner> EnemySpawnerClass;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GlobalGameScreen")
 	TObjectPtr<UBTBSplitScreenDataAsset> SplitScreenClass;
@@ -68,6 +78,11 @@ protected:
 	TSubclassOf<UUserWidget> BTBGameHUDWidgetClass;
 
 	TObjectPtr<UBTBGameHUD> GameWidget;
+
+	UPROPERTY(EditAnyWhere, Category = "Config")
+		TSubclassOf<UUserWidget> BTBGameoverHUDWidgetClass;
+
+	TObjectPtr<UBTBGameOverHUD> GameoverWidget;
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;

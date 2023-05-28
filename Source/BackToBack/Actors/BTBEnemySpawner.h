@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "BTBActor.h"
+#include "BackToBack/Characters/BTBAICharacter.h"
+#include "BackToBack/HUD/BTBGameHUD.h"
 #include "BTBEnemySpawner.generated.h"
 
 class UCurveFloat;
@@ -19,13 +21,19 @@ class BACKTOBACK_API ABTBEnemySpawner : public ABTBActor
 	GENERATED_BODY()
 	
 public:
+	ABTBEnemySpawner();
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	void SpawnAICharacterAtRandomLocationRelativeToPlayers();
 	FVector GetARandomLocationInPlayersRange();
 	void UpdateSpawnEnemyEvery();
+	void UpdateClosestEnemyToPlayers();
+
+	UFUNCTION(BlueprintCallable)
+	ABTBAICharacter* GetClosestEnemyToPlayers();
 
 private:
 
@@ -48,9 +56,15 @@ private:
 	UPROPERTY(EditAnywhere, Category = "AI")
 	float DistanceFromCenterOfDonutToInnerRange;
 
-	//UPROPERTY(EditDefaultsOnly, Category = "AI")
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	UBTBGameHUD* HUD;
 
 	float SpawnEnemyEvery;
 	FTimerHandle EnemySpawnHandle;
 	FTimerHandle UpdateEnemySpawnHandle;
+	FTimerHandle UpdateClosestEnemyToPlayersHandle;
+	
+	TArray<TObjectPtr<ABTBAICharacter>> EnemiesArray;
+
+	TObjectPtr<ABTBAICharacter> ClosestEnemyToPlayers;
 };

@@ -7,6 +7,8 @@
 #include "BackToBack/Vehicles/BTBVehicle.h"
 #include "BTBPlayableCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDeath);
+
 class USpringArmComponent;
 class USceneCaptureComponent2D;
 class UMeshComponent;
@@ -28,6 +30,9 @@ public:
 	void RemoveCamera() const;
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget) const;
 
+	UPROPERTY()
+	FOnPlayerDeath OnPlayerDeath;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Die() override;
@@ -40,6 +45,8 @@ public:
 	TObjectPtr<ABTBPlayableCharacter> OtherPlayer;
 
 	TObjectPtr<ABTBVehicle> Vehicle;
+
+	bool bIsDead;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")
