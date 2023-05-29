@@ -27,5 +27,8 @@
 			"Name": "EnhancedInput",
 			"Enabled": true
 		}
+	],
+	"TargetPlatforms": [
+		"Windows"
 	]
 }

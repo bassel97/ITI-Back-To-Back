@@ -17,6 +17,7 @@ class UChildActorComponent;
 class ABTBGun;
 class UAnimMontage;
 
+
 /**
  * Our Playable Character
  */
@@ -33,6 +34,7 @@ public:
 	UPROPERTY()
 	FOnPlayerDeath OnPlayerDeath;
 
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void Die() override;
