@@ -2,8 +2,11 @@
 
 
 #include "BTBEnemyCharacter.h"
+
+#include "BackToBack/Actors/BTBEnemySpawner.h"
 #include "BackToBack/Actors/BTBPooledObject.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 void ABTBEnemyCharacter::BeginPlay()
 {
@@ -13,7 +16,6 @@ void ABTBEnemyCharacter::BeginPlay()
 
 void ABTBEnemyCharacter::Die()
 {
-	//GetMesh()->PlayAnimation(DeathAnimation,false);
 	GetMesh()->SetSimulatePhysics(true);
 	SetActorEnableCollision(ECollisionEnabled::NoCollision);
 	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 2, false);
@@ -34,6 +36,10 @@ void ABTBEnemyCharacter::DestroyEnemy()
 	GetMesh()->SetSimulatePhysics(false);
 	if (Destroy())
 	{
+		const auto EnemySpawner =
+			Cast<ABTBEnemySpawner>(UGameplayStatics::GetActorOfClass(GetWorld(), ABTBEnemySpawner::StaticClass()));
+
+		EnemySpawner->EnemiesArray.Remove(this);
 		UE_LOG(LogTemp, Warning, TEXT("Enemy is Destroyed"));
 	}
 	else

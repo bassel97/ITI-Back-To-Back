@@ -40,6 +40,7 @@ private:
 
 public:
 	FVector Center;		// Is Set by GameplayGameMode
+	TArray<TObjectPtr<ABTBAICharacter>> EnemiesArray;
 
 protected:
 
@@ -61,6 +62,6 @@ private:
 	FTimerHandle UpdateEnemySpawnHandle;
 	FTimerHandle UpdateClosestEnemyToPlayersHandle;
 	
-	TArray<TObjectPtr<ABTBAICharacter>> EnemiesArray;
 	TObjectPtr<ABTBAICharacter> ClosestEnemyToPlayers;
+	
 };

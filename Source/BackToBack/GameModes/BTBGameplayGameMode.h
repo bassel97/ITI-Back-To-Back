@@ -56,9 +56,6 @@ protected:
 	TArray<TObjectPtr<ABTBPlayableCharacter>> PlayerCharacterArray;
 	TArray<TObjectPtr<AActor>> PlayerStartArray;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player mid point")
-	//FVector playersMidPoin;
-
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ABTBPlayableCharacter> PlayableCharOneClass;
 
@@ -66,7 +63,7 @@ protected:
 	TSubclassOf<ABTBPlayableCharacter> PlayableCharTwoClass;
 
 	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<ABTBEnemySpawner> EnemySpawnerClass;
+	TSubclassOf<ABTBEnemySpawner> EnemySpawnerClass;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GlobalGameScreen")
 	TObjectPtr<UBTBSplitScreenDataAsset> SplitScreenClass;
@@ -83,7 +80,7 @@ protected:
 	TObjectPtr<UBTBGameHUD> GameWidget;
 
 	UPROPERTY(EditAnyWhere, Category = "Config")
-		TSubclassOf<UUserWidget> BTBGameoverHUDWidgetClass;
+	TSubclassOf<UUserWidget> BTBGameoverHUDWidgetClass;
 
 	TObjectPtr<UBTBGameOverHUD> GameoverWidget;
 
@@ -98,7 +95,7 @@ protected:
 	FVector GunOffsetPosition;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Enemy")
-		TSubclassOf<ABTBEnemyCharacter> EnemyClass;
+	TSubclassOf<ABTBEnemyCharacter> EnemyClass;
 
 	TObjectPtr<ABTBEnemyCharacter> Enemy;
 

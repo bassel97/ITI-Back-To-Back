@@ -18,6 +18,7 @@ class BACKTOBACK_API ABTBEnemyCharacter : public ABTBAICharacter
 
 public:
 	FOnEnemyDeath OnEnemyDeath;
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void Die() override;

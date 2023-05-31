@@ -122,7 +122,7 @@ void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
 	if(!EnemiesArray.IsEmpty())
 	{
 		TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
-		for (auto Enemy : EnemiesArray)
+		for (const auto Enemy : EnemiesArray)
 		{
 			const auto EnemyLoc = Enemy->GetActorLocation();
 			const auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);

@@ -33,6 +33,7 @@ void ABTBGameplayGameMode::BeginPlay()
 	Super::BeginPlay();
 	
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
+
 	CreatePlayers();
 	SetupPlayersCommunication();
 	CreateUIWidget();
@@ -53,7 +54,6 @@ void ABTBGameplayGameMode::BeginPlay()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Enemy is not casted"));
 		}
-		
 	}
 	
 	
@@ -182,7 +182,6 @@ void ABTBGameplayGameMode::CreateUIWidget()
 		if (GameWidget)
 		{
 			GameWidget->AddToViewport();
-			
 		}
 	}
 }
@@ -201,7 +200,7 @@ void ABTBGameplayGameMode::DisplayGameoverHUD()
 		GameoverWidget = Cast<UBTBGameOverHUD>(CreateWidget(World, BTBGameoverHUDWidgetClass));
 		if (GameoverWidget)
 		{
-			GameoverWidget->AddToViewport(10);
+			GameoverWidget->AddToViewport();
 			UGameplayStatics::SetGamePaused(World, true);
 			UGameplayStatics::RemovePlayer(PlayerControllerArray[1], true);
 		}
@@ -233,7 +232,7 @@ void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 		return;
 	}
 
-	TObjectPtr<ABTBEnemySpawner> EnemySpawner = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
+	const TObjectPtr<ABTBEnemySpawner> EnemySpawner = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
 	if(EnemySpawner)
 	{
 		const FVector PlayersCenter = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
