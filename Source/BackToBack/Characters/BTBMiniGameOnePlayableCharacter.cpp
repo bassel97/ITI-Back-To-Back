@@ -36,6 +36,7 @@ float ABTBMiniGameOnePlayableCharacter::GetRotationValue()
 void ABTBMiniGameOnePlayableCharacter::Die()
 {
 	Super::Die();
+	
 	UE_LOG(LogTemp, Warning, TEXT("Minigame one player died"));
 }
 
@@ -70,6 +71,7 @@ void ABTBMiniGameOnePlayableCharacter::OnBoxEndOverlap(UPrimitiveComponent* Over
 
 
 
+//Get and Set GUN
 void ABTBMiniGameOnePlayableCharacter::SetGun(ABTBGun* Gun)
 {
 	GunActor = Gun;

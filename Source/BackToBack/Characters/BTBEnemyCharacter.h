@@ -39,7 +39,14 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly,Category = "Death Animation")
 	TObjectPtr<UAnimationAsset> DeathAnimation;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sound")
+	USoundBase* sound;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
+	UNiagaraSystem* DeathEffect;
+
+
 private:
 	FTimerHandle DestroyTimeHandle;
 	

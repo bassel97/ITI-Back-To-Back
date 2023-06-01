@@ -17,8 +17,9 @@ public class BackToBack : ModuleRules
 			"EnhancedInput",
 			"AIModule", 
 			"GameplayTasks", 
-			"NavigationSystem"  
-		});
+			"NavigationSystem",
+            "Niagara"
+        });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

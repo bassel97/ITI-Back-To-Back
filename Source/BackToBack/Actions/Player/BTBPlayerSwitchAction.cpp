@@ -23,7 +23,6 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 	if (PlayableCharacter->GetbStartSwitching() && PlayableCharacter->IsOverlapping && Gun != nullptr )
 	{
 		OtherCharacter->SetGun(Gun);
-		UE_LOG(LogTemp, Warning, TEXT("The gun is %s"), *Gun.GetName());
 		Gun->AttachToComponent(OtherCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "GunSocket");
 		PlayableCharacter->SetGun(nullptr);
 		OtherCharacter->bGunAttached = true;

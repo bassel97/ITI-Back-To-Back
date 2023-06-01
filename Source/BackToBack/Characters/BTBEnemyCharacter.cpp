@@ -6,6 +6,10 @@
 #include "BackToBack/Actors/BTBEnemySpawner.h"
 #include "BackToBack/Actors/BTBPooledObject.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Particles/WorldPSCPool.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 void ABTBEnemyCharacter::BeginPlay()
@@ -17,7 +21,9 @@ void ABTBEnemyCharacter::BeginPlay()
 void ABTBEnemyCharacter::Die()
 {
 	GetMesh()->SetSimulatePhysics(true);
-	SetActorEnableCollision(ECollisionEnabled::NoCollision);
+	//SetActorEnableCollision(ECollisionEnabled::);
+	UGameplayStatics::PlaySound2D(GetWorld(), sound, 1, 2, 1);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), DeathEffect, GetTransform().GetLocation(), GetTransform().Rotator(), GetTransform().GetScale3D(), true, true, ENCPoolMethod::AutoRelease, true);
 	GetWorld()->GetTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 2, false);
 	OnEnemyDeath.Broadcast();
 }
