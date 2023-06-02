@@ -19,10 +19,10 @@ void UBTBPlayerRotateAction::Act(ABTBCharacter* Character)
     Character->SetActorTransform(LocalRotateCenter.Inverse() * Character->GetTransform());
 	
     const float RotationValue = Character->GetRotationValue();
-	//const FRotator CurrentRotation = Character->GetActorRotation();
+	const FRotator CurrentRotation = Character->GetActorRotation();
 	const FRotator TargetRotation = FRotator(0, RotationValue, 0);
-	//const FQuat SmoothedQuatRotation = FMath::InterpEaseInOut(CurrentRotation.Quaternion(), TargetRotation.Quaternion(), 0.75, 2);
-    Character->AddActorLocalRotation(TargetRotation);
+	const FQuat SmoothedQuatRotation = FQuat::Slerp(CurrentRotation.Quaternion(), TargetRotation.Quaternion(), 0.95/*, 2*/);
+    Character->AddActorLocalRotation(SmoothedQuatRotation);
 
 	Character->SetActorTransform(LocalRotateCenter * Character->GetTransform());
 
