@@ -15,14 +15,13 @@ void ABTBMiniGameOneGameMode::BeginPlay()
 
 void ABTBMiniGameOneGameMode::AssignGunToPlayer()
 {
-
-	ABTBMiniGameOnePlayableCharacter* MGOnePlayer = Cast<ABTBMiniGameOnePlayableCharacter>(PlayerCharacterArray[0]);
+	const TObjectPtr<ABTBMiniGameOnePlayableCharacter> MG1_Player = Cast<ABTBMiniGameOnePlayableCharacter>(PlayerCharacterArray[0]);
 
 	Gun = GetWorld()->SpawnActor<ABTBGun>(GunClass);
 	if (Gun)
 	{
-		Gun->AttachToComponent(MGOnePlayer->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
-		MGOnePlayer->SetGun(Gun);
-		MGOnePlayer->bGunAttached = true;
+		Gun->AttachToComponent(MG1_Player->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("GunSocket"));
+		MG1_Player->SetGun(Gun);
+		MG1_Player->bGunAttached = true;
 	}
 }

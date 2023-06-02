@@ -3,20 +3,23 @@
 
 #include "BTBGameHUD.h"
 #include "Components/RetainerBox.h"
-#include "BackToBack/Characters/BTBEnemyCharacter.h"
 #include "Components/TextBlock.h"
 
 
 void UBTBGameHUD::NativeConstruct()
 {
 	Super::NativeConstruct();
-
 	Score->SetText(FText::AsNumber(0));
 }
 
-void UBTBGameHUD::SetScore(int32 ScoreValue)
+void UBTBGameHUD::SetScore(const int32 Value)
 {
-	Score->SetText(FText::AsNumber(ScoreValue));
+	if(Score)
+	{
+		Score->SetText(FText::AsNumber(Value));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Score is nullptr"));
+	}
 }
-
-

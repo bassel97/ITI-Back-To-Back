@@ -6,6 +6,8 @@
 #include "BTBHumanoidCharacter.h"
 #include "BTBAICharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAIDeath);
+
 /**
  * 
  */
@@ -23,6 +25,8 @@ private:
 	
 
 public:
+	UPROPERTY()
+	FOnAIDeath OnAIDeath;
 	
 protected:
 	

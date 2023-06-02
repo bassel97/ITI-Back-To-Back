@@ -28,13 +28,10 @@ class BACKTOBACK_API ABTBPlayableCharacter : public ABTBHumanoidCharacter
 
 public:
 	ABTBPlayableCharacter();
+	
 	void RemoveCamera() const;
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget) const;
 
-	UPROPERTY()
-	FOnPlayerDeath OnPlayerDeath;
-
-	
 protected:
 	virtual void BeginPlay() override;
 	virtual void Die() override;
@@ -45,10 +42,12 @@ private:
 	
 public:
 	TObjectPtr<ABTBPlayableCharacter> OtherPlayer;
-
 	TObjectPtr<ABTBVehicle> Vehicle;
 
 	bool bIsDead;
+
+	UPROPERTY()
+	FOnPlayerDeath OnPlayerDeath;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera")

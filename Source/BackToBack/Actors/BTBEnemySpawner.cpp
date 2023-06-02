@@ -12,8 +12,8 @@
 
 ABTBEnemySpawner::ABTBEnemySpawner()
 {
-	// SetActorTickEnabled(true);
 	// PrimaryActorTick.bCanEverTick = true;
+	// PrimaryActorTick.bStartWithTickEnabled = true;
 }
 
 void ABTBEnemySpawner::BeginPlay()
@@ -56,11 +56,6 @@ void ABTBEnemySpawner::BeginPlay()
 	);
 
 	
-}
-
-void ABTBEnemySpawner::Tick(float DeltaSeconds)
-{
-	// Super::Tick(DeltaSeconds);
 }
 
 void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
@@ -122,7 +117,7 @@ void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
 	if(!EnemiesArray.IsEmpty())
 	{
 		TArray<TPair<ABTBAICharacter*, float>> AICharacterDistancePairs;
-		for (const auto Enemy : EnemiesArray)
+		for (const auto& Enemy : EnemiesArray)
 		{
 			const auto EnemyLoc = Enemy->GetActorLocation();
 			const auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);

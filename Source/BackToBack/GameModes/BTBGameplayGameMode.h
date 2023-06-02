@@ -6,8 +6,6 @@
 #include "BTBGameModeBase.h"
 #include "BTBGameplayGameMode.generated.h"
 
-
-
 class ABTBPlayableCharacter;
 class UBTBSplitScreenDataAsset;
 class UTextureRenderTarget2D;
@@ -17,6 +15,7 @@ class ABTBGun;
 class UUserWidget;
 class ABTBEnemySpawner;
 class ABTBEnemyCharacter;
+
 /**
  * Our Gameplay Game Mode
  */
@@ -27,16 +26,19 @@ class BACKTOBACK_API ABTBGameplayGameMode : public ABTBGameModeBase
 
 public:
 	ABTBGameplayGameMode();
+	
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+	
 	void CreatePlayers();
 	void SetupPlayersCommunication();
 	void AssignCameras();
 	void CreateRenderTextures();
 	void CreateUIWidget();
+	void IncreaseScoreEveryOneSecond();
 
-	UFUNCTION()
-	void DisplayGameoverHUD();
+	void BindEnemiesDeathEventToUpdateScore();
 
 	void SetSplitScreenTextureToMaterial() const;
 	void SetCenterOfPlayersInEnemySpawner();
@@ -45,7 +47,12 @@ protected:
 	static FVector2D GetGameViewportSize();
 
 	
+	UFUNCTION()
+	void DisplayGameoverHUD();
+	
+	UFUNCTION()
 	void UpdateScore();
+	
 private:
 	
 	
@@ -88,18 +95,22 @@ protected:
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Player Weapons")
-	TSubclassOf<ABTBGun> GunClass;
+	TSubclassOf<ABTBGun> GunClass;	
 
 	TObjectPtr<ABTBGun> Gun;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Gun Position")
 	FVector GunOffsetPosition;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Enemy")
 	TSubclassOf<ABTBEnemyCharacter> EnemyClass;
-
-	TObjectPtr<ABTBEnemyCharacter> Enemy;
+	
+	TObjectPtr<ABTBEnemySpawner> EnemySpawnerPtr;
 
 	int32 TotalScore = 0;
+
+	FTimerHandle IncreaseScoreTimerHandle;
+	
 private:
 	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
 	FVector SingleCameraTargetOffset;

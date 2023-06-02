@@ -25,6 +25,9 @@
 
 ABTBGameplayGameMode::ABTBGameplayGameMode()
 {
+	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = true;
+	
 	GunOffsetPosition = FVector(-35, -50, 30);
 }
 
@@ -33,38 +36,37 @@ void ABTBGameplayGameMode::BeginPlay()
 	Super::BeginPlay();
 	
 	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
-
 	CreatePlayers();
 	SetupPlayersCommunication();
 	CreateUIWidget();
 	AssignCameras();
 	SetCenterOfPlayersInEnemySpawner();
+
+	GetWorldTimerManager().SetTimer(
+		IncreaseScoreTimerHandle,
+		this,
+		&ABTBGameplayGameMode::IncreaseScoreEveryOneSecond,
+		1,
+		true
+	);
 	
 	PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 	PlayerCharacterArray[1]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
+	
+}
 
-	if(IsValid(EnemyClass))
-	{
-		Enemy = Cast<ABTBEnemyCharacter>(EnemyClass);
-		if(Enemy)
-		{
-			Enemy->OnEnemyDeath.AddDynamic(this, &ABTBGameplayGameMode::UpdateScore);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Enemy is not casted"));
-		}
-	}
+void ABTBGameplayGameMode::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
 	
-	
+	BindEnemiesDeathEventToUpdateScore();
 }
 
 
 void ABTBGameplayGameMode::CreatePlayers()
 {
 	const TObjectPtr<UWorld> World = GetWorld();
-	if(!ensure(World != nullptr && PlayableCharOneClass != nullptr
-	 && PlayableCharTwoClass != nullptr))
+	if(!ensure(World != nullptr && PlayableCharOneClass != nullptr && PlayableCharTwoClass != nullptr))
 	{
 		return;
 	}
@@ -186,6 +188,20 @@ void ABTBGameplayGameMode::CreateUIWidget()
 	}
 }
 
+void ABTBGameplayGameMode::IncreaseScoreEveryOneSecond()
+{
+	TotalScore += 1 /*FMath::RandRange(5, 10)*/;
+	GameWidget->SetScore(TotalScore);
+}
+
+void ABTBGameplayGameMode::BindEnemiesDeathEventToUpdateScore()
+{
+	for (const auto& Enemy: EnemySpawnerPtr->EnemiesArray)
+	{
+		Enemy->OnAIDeath.AddUniqueDynamic(this, &ABTBGameplayGameMode::UpdateScore);
+	}
+}
+
 void ABTBGameplayGameMode::DisplayGameoverHUD()
 {
 	const TObjectPtr<UWorld> World = GetWorld();
@@ -232,13 +248,13 @@ void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
 		return;
 	}
 
-	const TObjectPtr<ABTBEnemySpawner> EnemySpawner = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
-	if(EnemySpawner)
+	EnemySpawnerPtr = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
+	if(EnemySpawnerPtr)
 	{
 		const FVector PlayersCenter = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
 
-		EnemySpawner->Center = PlayersCenter;
-		EnemySpawner->Center.Z = 0;
+		EnemySpawnerPtr->Center = PlayersCenter;
+		EnemySpawnerPtr->Center.Z = 0;
 	}
 }
 

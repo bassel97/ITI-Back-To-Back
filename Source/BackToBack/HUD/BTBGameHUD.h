@@ -20,28 +20,25 @@ class BACKTOBACK_API UBTBGameHUD : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	TObjectPtr<URetainerBox> MainScreenBox;
-
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	TObjectPtr<UImage> MainScreenImage;
-
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		TObjectPtr<UTextBlock> Score;
 	UFUNCTION()
-		void SetScore(int32 ScoreValue);
+	void SetScore(int32 Value);
 
-	/*UFUNCTION()
-		void InitializeHud(AEndlessRunnerGameModeBase* RunGameMode);*/
 protected:
 	virtual void NativeConstruct() override;
-
 	
 private:
 
 	
 
 public:
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<URetainerBox> MainScreenBox;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<UImage> MainScreenImage;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<UTextBlock> Score = nullptr;
 	
 protected:
 	

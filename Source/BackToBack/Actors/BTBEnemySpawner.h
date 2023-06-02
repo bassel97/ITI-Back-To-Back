@@ -25,7 +25,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaSeconds) override;
 
 	void SpawnAICharacterAtRandomLocationRelativeToPlayers();
 	FVector GetARandomLocationInPlayersRange();

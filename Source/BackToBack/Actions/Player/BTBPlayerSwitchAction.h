@@ -19,17 +19,13 @@ class BACKTOBACK_API UBTBPlayerSwitchAction : public UBTBCharacterAction
 
 public:
 
-
-
 protected:
-
 	virtual void Act(ABTBCharacter* Character) override;
 
-	//UPROPERTY(EditDefaultsOnly)
-	//FVector RelativeCenterOfRotation;
-
 private:
+	
 
+	
 public:
 
 protected:
