@@ -112,7 +112,7 @@ protected:
 	FTimerHandle IncreaseScoreTimerHandle;
 	
 private:
-	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
-	FVector SingleCameraTargetOffset;
+	// UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
+	// FVector SingleCameraTargetOffset;
 
 };

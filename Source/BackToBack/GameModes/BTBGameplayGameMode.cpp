@@ -134,8 +134,8 @@ void ABTBGameplayGameMode::AssignCameras()
 			BTBCamera->CameraTargetOffset = FVector(60.f,60.f,200.f);
 		}
 		
-		UGameplayStatics::GetPlayerController(World, 0)->SetViewTarget(Camera);
-		UGameplayStatics::GetPlayerController(World, 1)->SetViewTarget(Camera);
+		UGameplayStatics::GetPlayerController(World, 0)->SetViewTargetWithBlend(Camera);
+		UGameplayStatics::GetPlayerController(World, 1)->SetViewTargetWithBlend(Camera);
 
 		GameWidget->MainScreenBox->SetEffectMaterial(nullptr);
 		GameWidget->MainScreenImage->SetRenderOpacity(0.0f);
