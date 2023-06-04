@@ -17,6 +17,7 @@ class BACKTOBACK_API ABTBMiniGameTwoGameMode : public ABTBGameplayGameMode
 public:
 
 protected:
+	virtual void BeginPlay() override;
 
 private:
 

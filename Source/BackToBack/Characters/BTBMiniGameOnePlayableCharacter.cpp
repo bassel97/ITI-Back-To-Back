@@ -47,7 +47,6 @@ void ABTBMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 	if(Cast<ABTBEnemyCharacter>(OtherActor))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Enemy is casted successfully"));
-		OtherActor->SetActorEnableCollision(ECollisionEnabled::NoCollision);
 		Die();
 	}
 }

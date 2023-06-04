@@ -2,3 +2,11 @@
 
 
 #include "BTBMiniGameTwoGameMode.h"
+
+#include "BackToBack/HUD/BTBGameHUD.h"
+
+void ABTBMiniGameTwoGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+	GameWidget->SetVisibility(ESlateVisibility::Hidden);
+}

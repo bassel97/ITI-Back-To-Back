@@ -7,6 +7,8 @@
 #include "BTBCamera.generated.h"
 
 
+class ABTBPlayableCharacter;
+class USphereComponent;
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -22,15 +24,19 @@ public:
 	ABTBCamera();
 
 protected:
-	
-	
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+
+	void InitCamera() const;
+	void GetActivePlayers();
+	void CalculateCameraLocation();
+	void UpdateCameraArm();
+
 private:
 	
 	
 	
 public:
-	FVector CameraTargetOffset;
-	
 	
 protected:
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
@@ -40,6 +46,18 @@ protected:
 	TObjectPtr<UCameraComponent> Camera;
 	
 private:
+	TArray<TObjectPtr<AActor>> Players;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	float CameraAngle/* = -35*/;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	float MinArmLength/* = 500*/;
 
+	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	float MaxArmLength/* = 1500*/;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	float CameraMovementSpeed/* = 0.05f*/;
 	
 };
