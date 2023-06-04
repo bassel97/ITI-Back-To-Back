@@ -27,10 +27,10 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
-	void InitCamera();
+	void InitCamera() const;
 	void GetActivePlayers();
-	void CalculateCameraMovement();
-	void UpdateCameraMovement();
+	void CalculateCameraLocation();
+	void UpdateCameraArm();
 
 private:
 	
@@ -47,8 +47,8 @@ protected:
 	TObjectPtr<UCameraComponent> Camera;
 	
 private:
-	TArray<TObjectPtr<AActor>> ActivePlayers;
-	TArray<float> Distances;
+	TArray<TObjectPtr<AActor>> Players;
+	// TArray<float> Distances;
 
 	UPROPERTY(EditDefaultsOnly, Category="Camera")
 	float MinArmLength/* = 500*/;

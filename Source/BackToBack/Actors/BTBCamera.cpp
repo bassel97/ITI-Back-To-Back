@@ -32,11 +32,11 @@ void ABTBCamera::BeginPlay()
 void ABTBCamera::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	CalculateCameraMovement();
-	UpdateCameraMovement();
+	CalculateCameraLocation();
+	UpdateCameraArm();
 }
 
-void ABTBCamera::InitCamera()
+void ABTBCamera::InitCamera() const
 {
 	CameraArm->TargetOffset = FVector(0, 0, MinArmLength);
 	CameraArm->SetWorldRotation(FRotator(-90, 0, 0));
@@ -49,30 +49,19 @@ void ABTBCamera::GetActivePlayers()
 	{
 		return;
 	}
-	UGameplayStatics::GetAllActorsOfClass(World, ABTBPlayableCharacter::StaticClass(), ActivePlayers);
+	UGameplayStatics::GetAllActorsOfClass(World, ABTBPlayableCharacter::StaticClass(), Players);
 }
 
-void ABTBCamera::CalculateCameraMovement()
+void ABTBCamera::CalculateCameraLocation()
 {
 	const FVector CurrentCameraLocation = CameraArm->GetComponentLocation();
-	const FVector PlayersAvgLocation = UGameplayStatics::GetActorArrayAverageLocation(ActivePlayers);
+	const FVector PlayersAvgLocation = UGameplayStatics::GetActorArrayAverageLocation(Players);
 	const FVector LerpedLocation = UKismetMathLibrary::VLerp(CurrentCameraLocation, PlayersAvgLocation, CameraMoveSpeed);
 	CameraArm->SetWorldLocation(LerpedLocation);
 }
 
-void ABTBCamera::UpdateCameraMovement()
+void ABTBCamera::UpdateCameraArm()
 {
-	for (int i = 0 ; i < ActivePlayers.Num() ; i++)
-	{
-		TObjectPtr<AActor>& Player = ActivePlayers[i];
-		for (int j = i + 1 ; j < ActivePlayers.Num() - 1 ; j++)
-		{
-			Distances.Add(ActivePlayers[j]->GetDistanceTo(Player));
-		}
-	}
-
-	const float MaxDistance = FMath::Max(Distances);
-	CameraArm->TargetArmLength = FMath::Clamp(MaxDistance, MinArmLength, MaxArmLength);
-	Distances.Empty();
-	UE_LOG(LogTemp, Warning, TEXT("%f"), CameraArm->TargetArmLength);
+	const float DistanceBetweenPlayers = Players[0]->GetDistanceTo(Players[1]);
+	CameraArm->TargetArmLength = FMath::Clamp(DistanceBetweenPlayers, MinArmLength, MaxArmLength);
 }
