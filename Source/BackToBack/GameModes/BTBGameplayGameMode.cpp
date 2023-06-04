@@ -11,6 +11,8 @@
 #include "BackToBack/DataAssets/BTBSplitScreenDataAsset.h"
 #include "BackToBack/HUD/BTBGameHUD.h"
 #include "BackToBack/HUD/BTBGameoverHUD.h"
+#include "BackToBack/HUD/BTBPauseMenuHUD.h"
+
 #include "BackToBack/PlayerControllers/BTBPlayerController.h"
 #include "Components/RetainerBox.h"
 #include "Engine/TextureRenderTarget2D.h"
@@ -49,6 +51,9 @@ void ABTBGameplayGameMode::BeginPlay()
 		1,
 		true
 	);
+
+	//New
+	PauseWidget = Cast<UBTBPauseMenuHUD>(CreateWidget(GetWorld(), BTBPauseHUDWidgetClass));//New
 	
 	PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 	PlayerCharacterArray[1]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
@@ -60,6 +65,14 @@ void ABTBGameplayGameMode::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	
 	BindEnemiesDeathEventToUpdateScore();
+
+
+	if (PlayerCharacterArray[0]->GetbIsPaused() || PlayerCharacterArray[1]->GetbIsPaused())
+	{
+		DisplayPauseHUD();
+	}
+
+
 }
 
 
@@ -218,6 +231,29 @@ void ABTBGameplayGameMode::DisplayGameoverHUD()
 		}
 	}
 	
+}
+
+void ABTBGameplayGameMode::DisplayPauseHUD()
+{
+
+	const TObjectPtr<UWorld> World = GetWorld();
+	if (!ensure(World != nullptr))
+	{
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Pause menu HUD should be displayed"));
+	if (IsValid(BTBPauseHUDWidgetClass))
+	{
+		
+		if (PauseWidget)
+		{
+			PauseWidget->AddToViewport(100);
+			UGameplayStatics::SetGamePaused(World, true);
+			PlayerCharacterArray[0]->SetbIsPaused(false);
+			PlayerCharacterArray[1]->SetbIsPaused(false);
+		}
+	}
 }
 
 void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const

@@ -42,6 +42,7 @@ protected:
 	void LeftButtonInputTriggered(const FInputActionValue& Val);
 	void DownButtonInputTriggered(const FInputActionValue& Val);
 	void UpButtonInputTriggered(const FInputActionValue& Val);
+	void StartButtonInputTriggered(const FInputActionValue& Val); //New
 	void SetAxisInput(const FInputActionValue& Val);
 
 	void HandleDownButton() const;
@@ -51,6 +52,7 @@ protected:
 	void HandleRightTrigger();
 	void HandleLeftTrigger() const;
 	void HandleAxisInputAction() const;
+	void HandleStartButton() const; //New
 	
 private:
 	static void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
@@ -58,6 +60,8 @@ private:
 public:
 	UPROPERTY(VisibleAnywhere, Category = "Class Variables")
 	int32 PlayerIndex;
+
+
 	
 	/** Input Actions start*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input Actions")
@@ -80,12 +84,17 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input Actions")
 	TObjectPtr<UInputAction> AxisInputAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input Actions")
+	TObjectPtr<UInputAction> StartButtonInputAction; //New
 	/** Input Actions end*/
 	
 	
 protected:	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input")
 	TObjectPtr<UInputMappingContext> InputMapping;
+
+
 
 	
 private:
@@ -112,8 +121,13 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, meta = (ClampMin = -1, ClampMax = 1), Category = "Buttons")
 	FVector2D AxisInput;
+
+	UPROPERTY(VisibleAnywhere, Category = "Buttons States")
+	FButtonState StartButton = {}; //New
 	/** Buttons States end*/
 
 	FTimerHandle TimerHandle;
 	FTimerHandle LeftButtonTimerHandle;
+
+
 };

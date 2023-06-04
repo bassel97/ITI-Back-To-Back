@@ -73,6 +73,16 @@ public:
 		bStartPool = Value;
 	}
 
+	bool GetbIsPaused()
+	{
+		return bIsPaused;
+	}
+
+	void SetbIsPaused(const bool Value)
+	{
+		bIsPaused = Value;
+	}
+
 	UFUNCTION(BlueprintCallable)
 	virtual bool GetbStartSwitching()
 	{
@@ -113,6 +123,8 @@ private:
 	bool bStartJump = false;
 	bool bStartShoot = false;
 	bool bStartPool = false;
+	bool bIsPaused = false;
 	float MoveValue;
+
 	
 };

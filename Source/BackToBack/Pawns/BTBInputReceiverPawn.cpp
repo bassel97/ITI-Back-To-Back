@@ -16,6 +16,7 @@
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/GameModes/BTBGameplayGameMode.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 
 void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
@@ -30,6 +31,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	HandleRightTrigger();
 	HandleLeftTrigger();
 	HandleAxisInputAction();
+	HandleStartButton(); //New
 	
 	//Reset Button states
 	RightTrigger.ResetDownReleaseState();
@@ -38,6 +40,7 @@ void ABTBInputReceiverPawn::Tick(const float DeltaSeconds)
 	LeftButton.ResetDownReleaseState();
 	DownButton.ResetDownReleaseState();
 	UpButton.ResetDownReleaseState();
+	StartButton.ResetDownReleaseState();//New
 	AxisInput.Zero();
 }
 
@@ -63,6 +66,7 @@ void ABTBInputReceiverPawn::SetupPlayerInputComponent(UInputComponent* PlayerInp
 		PEI->BindAction(LeftButtonInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::LeftButtonInputTriggered);
 		PEI->BindAction(UpButtonInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::UpButtonInputTriggered);
 		PEI->BindAction(DownButtonInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::DownButtonInputTriggered);
+		PEI->BindAction(StartButtonInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::StartButtonInputTriggered);//New
 
 		PEI->BindAction(AxisInputAction, ETriggerEvent::Triggered, this, &ABTBInputReceiverPawn::SetAxisInput);
 		PEI->BindAction(AxisInputAction, ETriggerEvent::Completed, this, &ABTBInputReceiverPawn::SetAxisInput);
@@ -99,10 +103,17 @@ void ABTBInputReceiverPawn::UpButtonInputTriggered(const FInputActionValue& Val)
 	ButtonStateSetData(UpButton, Val.Get<bool>());
 }
 
+void ABTBInputReceiverPawn::StartButtonInputTriggered(const FInputActionValue& Val) //NEW
+{
+	ButtonStateSetData(StartButton, Val.Get<bool>());
+}
+
 void ABTBInputReceiverPawn::SetAxisInput(const FInputActionValue& Val)
 {
 	AxisInput = Val.Get<FInputActionValue::Axis2D>();
 }
+
+
 
 void ABTBInputReceiverPawn::HandleDownButton() const
 {
@@ -159,10 +170,12 @@ void ABTBInputReceiverPawn::HandleRightButton() const
 {
 	if (RightButton.bIsDown)
 	{
+		PlayerCharacter->SetbIsPaused(true);
 	}
 
 	if (RightButton.bIsReleased)
 	{
+		PlayerCharacter->SetbIsPaused(false);
 	}
 
 	if (RightButton.bIsHeld)
@@ -218,6 +231,20 @@ void ABTBInputReceiverPawn::HandleAxisInputAction() const
 	//Moving
 	PlayerCharacter->SetMoveValue(AxisInput.Y);
 	//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), AxisInput.Y);
+}
+
+void ABTBInputReceiverPawn::HandleStartButton() const //New
+{
+	if (RightButton.bIsDown)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Start Pressed"));
+		
+	}
+
+	if (RightButton.bIsReleased)
+	{
+
+	}
 }
 
 void ABTBInputReceiverPawn::ButtonStateSetData(FButtonState& ButtonState, const bool Value)

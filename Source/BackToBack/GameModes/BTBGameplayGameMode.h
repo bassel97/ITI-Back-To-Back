@@ -11,6 +11,7 @@ class UBTBSplitScreenDataAsset;
 class UTextureRenderTarget2D;
 class UBTBGameHUD;
 class UBTBGameOverHUD;
+class UBTBPauseMenuHUD;
 class ABTBGun;
 class UUserWidget;
 class ABTBEnemySpawner;
@@ -49,6 +50,9 @@ protected:
 	
 	UFUNCTION()
 	void DisplayGameoverHUD();
+
+	UFUNCTION()
+	void DisplayPauseHUD();
 	
 	UFUNCTION()
 	void UpdateScore();
@@ -90,6 +94,11 @@ protected:
 	TSubclassOf<UUserWidget> BTBGameoverHUDWidgetClass;
 
 	TObjectPtr<UBTBGameOverHUD> GameoverWidget;
+
+	UPROPERTY(EditAnyWhere, Category = "Config")
+	TSubclassOf<UUserWidget> BTBPauseHUDWidgetClass;
+
+	TObjectPtr<UBTBPauseMenuHUD> PauseWidget;
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
