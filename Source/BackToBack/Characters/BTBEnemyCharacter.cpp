@@ -27,10 +27,14 @@ void ABTBEnemyCharacter::Die()
 	}
 	
 	OnAIDeath.Broadcast();
+	
 	GetMesh()->SetSimulatePhysics(true);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	
 	UGameplayStatics::PlaySound2D(World, sound, 1, 2, 1);
 	UNiagaraFunctionLibrary::SpawnSystemAtLocation(World, DeathEffect, GetTransform().GetLocation(), GetTransform().Rotator(), GetTransform().GetScale3D(), true, true, ENCPoolMethod::AutoRelease, true);
-	GetWorldTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 2, false);
+	GetWorldTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 3, false);
 }
 
 void ABTBEnemyCharacter::Damage()

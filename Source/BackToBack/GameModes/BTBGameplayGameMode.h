@@ -94,10 +94,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Player Weapons")
-	TSubclassOf<ABTBGun> GunClass;	
-
-	TObjectPtr<ABTBGun> Gun;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Gun Position")
 	FVector GunOffsetPosition;

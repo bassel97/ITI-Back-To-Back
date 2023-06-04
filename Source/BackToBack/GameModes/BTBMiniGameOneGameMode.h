@@ -28,6 +28,10 @@ private:
 public:
 
 protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Player Weapons")
+	TSubclassOf<ABTBGun> GunClass;	                        
+                                                            
+	TObjectPtr<ABTBGun> Gun;                                
 
 private:
 	
