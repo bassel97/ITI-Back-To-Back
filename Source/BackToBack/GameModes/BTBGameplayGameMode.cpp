@@ -128,11 +128,7 @@ void ABTBGameplayGameMode::AssignCameras()
 		InputReceiverArray[0]->Get_PlayerCharacter()->RemoveCamera();
 		InputReceiverArray[1]->Get_PlayerCharacter()->RemoveCamera();
 
-		TObjectPtr<AActor> Camera = World->SpawnActor<AActor>(CameraClass);
-		if(const TObjectPtr<ABTBCamera> BTBCamera = Cast<ABTBCamera>(Camera))
-		{
-			BTBCamera->CameraTargetOffset = FVector(60.f,60.f,200.f);
-		}
+		const TObjectPtr<AActor> Camera = World->SpawnActor<AActor>(CameraClass);
 		
 		UGameplayStatics::GetPlayerController(World, 0)->SetViewTargetWithBlend(Camera);
 		UGameplayStatics::GetPlayerController(World, 1)->SetViewTargetWithBlend(Camera);

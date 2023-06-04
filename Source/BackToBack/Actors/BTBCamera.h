@@ -37,7 +37,6 @@ private:
 	
 	
 public:
-	FVector CameraTargetOffset;
 	
 protected:
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
@@ -48,15 +47,17 @@ protected:
 	
 private:
 	TArray<TObjectPtr<AActor>> Players;
-	// TArray<float> Distances;
-
-	UPROPERTY(EditDefaultsOnly, Category="Camera")
+	
+	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	float CameraAngle/* = -35*/;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
 	float MinArmLength/* = 500*/;
 
-	UPROPERTY(EditDefaultsOnly, Category="Camera")
+	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
 	float MaxArmLength/* = 1500*/;
 	
-	UPROPERTY(EditDefaultsOnly, Category="Camera")
-	float CameraMoveSpeed/* = 0.05f*/;
+	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	float CameraMovementSpeed/* = 0.05f*/;
 	
 };

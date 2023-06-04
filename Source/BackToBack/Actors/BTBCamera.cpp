@@ -5,7 +5,6 @@
 
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "Camera/CameraComponent.h"
-#include "Components/SphereComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -38,8 +37,8 @@ void ABTBCamera::Tick(float DeltaSeconds)
 
 void ABTBCamera::InitCamera() const
 {
-	CameraArm->TargetOffset = FVector(0, 0, MinArmLength);
-	CameraArm->SetWorldRotation(FRotator(-90, 0, 0));
+	CameraArm->TargetOffset = FVector(-MinArmLength, 0, MinArmLength);
+	CameraArm->SetWorldRotation(FRotator(CameraAngle, 0, 0));
 }
 	
 void ABTBCamera::GetActivePlayers()
@@ -56,7 +55,7 @@ void ABTBCamera::CalculateCameraLocation()
 {
 	const FVector CurrentCameraLocation = CameraArm->GetComponentLocation();
 	const FVector PlayersAvgLocation = UGameplayStatics::GetActorArrayAverageLocation(Players);
-	const FVector LerpedLocation = UKismetMathLibrary::VLerp(CurrentCameraLocation, PlayersAvgLocation, CameraMoveSpeed);
+	const FVector LerpedLocation = UKismetMathLibrary::VLerp(CurrentCameraLocation, PlayersAvgLocation, CameraMovementSpeed);
 	CameraArm->SetWorldLocation(LerpedLocation);
 }
 
