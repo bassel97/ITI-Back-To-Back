@@ -9,17 +9,18 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
-#include "Particles/WorldPSCPool.h"
 
-void ABTBEnemyCharacter::BeginPlay() {
+void ABTBEnemyCharacter::BeginPlay()
+{
   Super::BeginPlay();
-  GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(
-      this, &ABTBEnemyCharacter::OnWeaponHit);
+  GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBEnemyCharacter::OnWeaponHit);
 }
 
-void ABTBEnemyCharacter::Die() {
+void ABTBEnemyCharacter::Die()
+{
   const TObjectPtr<UWorld> World = GetWorld();
-  if (!ensure(World != nullptr)) {
+  if (!ensure(World != nullptr))
+  {
     return;
   }
 
@@ -28,42 +29,56 @@ void ABTBEnemyCharacter::Die() {
   GetMesh()->SetSimulatePhysics(true);
   GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
   GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
-  // this->GetCharacterMovement()->StopActiveMovement();
+  
   UGameplayStatics::PlaySound2D(World, sound, 1, 2, 1);
+  
   UNiagaraFunctionLibrary::SpawnSystemAtLocation(
-      World, DeathEffect, GetTransform().GetLocation(),
-      GetTransform().Rotator(), GetTransform().GetScale3D(), true, true,
-      ENCPoolMethod::AutoRelease, true);
-  GetWorldTimerManager().SetTimer(DestroyTimeHandle, this,
-                                  &ABTBEnemyCharacter::DestroyEnemy, 3, false);
+    World,
+      DeathEffect,
+      GetTransform().GetLocation(),
+      GetTransform().Rotator(),
+      GetTransform().GetScale3D(),
+      true,
+      true,
+      ENCPoolMethod::AutoRelease,
+      true
+  );
+  
+  GetWorldTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 3, false);
 }
 
-void ABTBEnemyCharacter::Damage() {
+void ABTBEnemyCharacter::Damage()
+{
   Health--;
-  if (Health <= 0) {
+  if (Health <= 0)
+  {
     Die();
   }
 }
 
-void ABTBEnemyCharacter::DestroyEnemy() {
+void ABTBEnemyCharacter::DestroyEnemy()
+{
+  const TObjectPtr<UWorld> World = GetWorld();
+  if (!ensure(World != nullptr))
+  {
+    return;
+  }
+  
   GetMesh()->SetSimulatePhysics(false);
 
-  if (IsValid(this)) {
+  if (IsValid(this))
+    {
     const TObjectPtr<ABTBEnemySpawner> EnemySpawner =
-        Cast<ABTBEnemySpawner>(UGameplayStatics::GetActorOfClass(
-            GetWorld(), ABTBEnemySpawner::StaticClass()));
+        Cast<ABTBEnemySpawner>(UGameplayStatics::GetActorOfClass(World, ABTBEnemySpawner::StaticClass()));
 
     EnemySpawner->EnemiesArray.Remove(this);
     Destroy();
   }
 }
 
-void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent *OverlappedComponent,
-                                     AActor *OtherActor,
-                                     UPrimitiveComponent *OtherComp,
-                                     int32 OtherBodyIndex, bool bFromSweep,
-                                     const FHitResult &SweepResult) {
-  if (ABTBPooledObject *Bullet = Cast<ABTBPooledObject>(OtherActor)) {
+void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) {
+  if (ABTBPooledObject* Bullet = Cast<ABTBPooledObject>(OtherActor))
+  {
     Bullet->DeactivatePooledObject();
     Damage();
   }

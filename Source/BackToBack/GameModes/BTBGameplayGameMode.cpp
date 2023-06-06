@@ -235,7 +235,6 @@ void ABTBGameplayGameMode::DisplayGameoverHUD()
 
 void ABTBGameplayGameMode::DisplayPauseHUD()
 {
-
 	const TObjectPtr<UWorld> World = GetWorld();
 	if (!ensure(World != nullptr))
 	{
@@ -245,13 +244,13 @@ void ABTBGameplayGameMode::DisplayPauseHUD()
 	UE_LOG(LogTemp, Warning, TEXT("Pause menu HUD should be displayed"));
 	if (IsValid(BTBPauseHUDWidgetClass))
 	{
-		
 		if (PauseWidget)
 		{
 			PauseWidget->AddToViewport(100);
 			UGameplayStatics::SetGamePaused(World, true);
 			PlayerCharacterArray[0]->SetbIsPaused(false);
 			PlayerCharacterArray[1]->SetbIsPaused(false);
+
 		}
 	}
 }

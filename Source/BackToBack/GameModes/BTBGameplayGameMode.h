@@ -102,7 +102,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
-
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Gun Position")
 	FVector GunOffsetPosition;
@@ -117,7 +116,5 @@ protected:
 	FTimerHandle IncreaseScoreTimerHandle;
 	
 private:
-	// UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
-	// FVector SingleCameraTargetOffset;
 
 };

@@ -18,7 +18,8 @@ public class BackToBack : ModuleRules
 			"AIModule", 
 			"GameplayTasks", 
 			"NavigationSystem",
-            "Niagara"
+            "Niagara",
+            "UMG"
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

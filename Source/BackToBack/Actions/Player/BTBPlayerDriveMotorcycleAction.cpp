@@ -21,8 +21,8 @@ void UBTBPlayerDriveMotorcycleAction::Act(ABTBCharacter* Character)
 		return;
 	}
 	
-	Motorcycle->Steer(Player->GetMoveValue());
-	Motorcycle->Throttle(Player->GetRotationValue());
+	Motorcycle->Steer(Player->GetUserInput_Y());
+	Motorcycle->Throttle(Player->GetUserInput_X());
 	//UE_LOG(LogTemp, Warning, TEXT("DRIVING"));
 
 }

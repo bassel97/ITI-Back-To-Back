@@ -33,24 +33,24 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	virtual float GetRotationValue()
+	virtual float GetUserInput_X()
 	{
-		return RotationValue;
+		return UserInput_X;
 	}
 
-	virtual void SetRotationValue(const float Value)
+	virtual void SetUserInput_X(const float Value)
 	{
-		RotationValue = Value;
+		UserInput_X = Value;
 	}
 
-	float GetMoveValue()
+	float GetUserInput_Y()
 	{
-		return MoveValue;
+		return UserInput_Y;
 	}
 
-	virtual void SetMoveValue(const float Value)
+	virtual void SetUserInput_Y(const float Value)
 	{
-		MoveValue = Value;
+		UserInput_Y = Value;
 	}
 
 	bool GetbStartShoot()
@@ -114,7 +114,7 @@ public:
 
 	bool bStartRotate = false;
 	bool bStartSwitching = false;
-	float RotationValue;
+	float UserInput_X;
 
 protected:
 
@@ -124,7 +124,6 @@ private:
 	bool bStartShoot = false;
 	bool bStartPool = false;
 	bool bIsPaused = false;
-	float MoveValue;
-
+	float UserInput_Y;
 	
 };

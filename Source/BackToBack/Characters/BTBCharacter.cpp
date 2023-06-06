@@ -8,8 +8,8 @@
 
 ABTBCharacter::ABTBCharacter()
 {
-	RotationValue = 0;
-	MoveValue = 0;
+	UserInput_X = 0;
+	UserInput_Y = 0;
 }
 
 void ABTBCharacter::Tick(float DeltaTime)

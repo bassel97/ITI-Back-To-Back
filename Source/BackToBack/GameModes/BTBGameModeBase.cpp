@@ -22,8 +22,9 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		return;
 	}
 
-	ABTBPlayerController* PlayerOne = Cast<ABTBPlayerController>(UGameplayStatics::GetPlayerController(World, 0));
-	if (ensure(PlayerOne != nullptr))
+	const TObjectPtr<APlayerController> ControllerOne = UGameplayStatics::GetPlayerController(World, 0);
+	const TObjectPtr<ABTBPlayerController> BTBControllerOne = Cast<ABTBPlayerController>(ControllerOne);
+	if (ensure(BTBControllerOne != nullptr))
 	{
 		ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
 
@@ -31,12 +32,13 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		SpawnedPlayer->PlayerIndex = 0;
 		InputReceiverArray.AddUnique(SpawnedPlayer);
 
-		PlayerControllerArray.AddUnique(PlayerOne);
-		PlayerOne->Possess(SpawnedPlayer);
+		PlayerControllerArray.AddUnique(BTBControllerOne);
+		BTBControllerOne->Possess(SpawnedPlayer);
 	}
 
-	ABTBPlayerController* PlayerTwo = Cast<ABTBPlayerController>(UGameplayStatics::CreatePlayer(World, 1/*,true*/));
-	if (ensure(PlayerTwo != nullptr))
+	const TObjectPtr<APlayerController> ControllerTwo = UGameplayStatics::CreatePlayer(World, 1/*,true*/);
+	const TObjectPtr<ABTBPlayerController> BTBControllerTwo = Cast<ABTBPlayerController>(ControllerTwo);
+	if (ensure(BTBControllerTwo != nullptr))
 	{
 		ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
 		
@@ -44,8 +46,8 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		SpawnedPlayer->PlayerIndex = 1;
 		InputReceiverArray.AddUnique(SpawnedPlayer);
 			
-		PlayerControllerArray.AddUnique(PlayerTwo);
-		PlayerTwo->Possess(SpawnedPlayer);
+		PlayerControllerArray.AddUnique(BTBControllerTwo);
+		BTBControllerTwo->Possess(SpawnedPlayer);
 	}
 
 #if UE_EDITOR
@@ -58,5 +60,5 @@ void ABTBGameModeBase::SpawnInputReceivers()
 			FString::Printf(TEXT("InputReceiverArray[%i] = %s, Its Controller = %s"),
 				i, *InputReceiverArray[i]->GetName(), *InputReceiverArray[i]->GetController()->GetName()));
 	}
-#endif	
+#endif
 }

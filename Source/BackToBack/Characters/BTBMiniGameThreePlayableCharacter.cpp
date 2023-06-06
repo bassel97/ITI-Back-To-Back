@@ -6,9 +6,15 @@
 #include "BackToBack/Vehicles/BTBMotorcycle.h"
 #include "Kismet/GameplayStatics.h"
 
-void ABTBMiniGameThreePlayableCharacter::SetMoveValue(const float Value)
+void ABTBMiniGameThreePlayableCharacter::SetUserInput_Y(const float Value)
 {
-	TObjectPtr<ABTBMotorcycle> Motorcycle = Cast<ABTBMotorcycle>(Vehicle);
+	const TObjectPtr<UWorld> World = GetWorld();
+	if (!ensure(World != nullptr))
+	{
+		return;
+	}
+	
+	const TObjectPtr<ABTBMotorcycle> Motorcycle = Cast<ABTBMotorcycle>(Vehicle);
 	if(Motorcycle != nullptr)
 	{
 		// Throttle
@@ -16,15 +22,21 @@ void ABTBMiniGameThreePlayableCharacter::SetMoveValue(const float Value)
 			FMath::FInterpTo(
 				Motorcycle->CurrentSpeed,
 				Value * Motorcycle->MaxSpeed,
-				UGameplayStatics::GetWorldDeltaSeconds(GetWorld()),
+				UGameplayStatics::GetWorldDeltaSeconds(World),
 				4);
 	}
 	
 }
 
-void ABTBMiniGameThreePlayableCharacter::SetRotationValue(const float Value)
+void ABTBMiniGameThreePlayableCharacter::SetUserInput_X(const float Value)
 {
-	TObjectPtr<ABTBMotorcycle> Motorcycle = Cast<ABTBMotorcycle>(Vehicle);
+	const TObjectPtr<UWorld> World = GetWorld();
+	if (!ensure(World != nullptr))
+	{
+		return;
+	}
+	
+	const TObjectPtr<ABTBMotorcycle> Motorcycle = Cast<ABTBMotorcycle>(Vehicle);
 	if(Motorcycle != nullptr)
 	{
 		// Steer
@@ -32,9 +44,8 @@ void ABTBMiniGameThreePlayableCharacter::SetRotationValue(const float Value)
 			FMath::FInterpTo(
 				Motorcycle->CurrentSteeringAngle,
 				Value * Motorcycle->MaxSteeringAngle,
-				UGameplayStatics::GetWorldDeltaSeconds(GetWorld()),
-				4
-				);
+				UGameplayStatics::GetWorldDeltaSeconds(World),
+				4);
 	}
 	
 }

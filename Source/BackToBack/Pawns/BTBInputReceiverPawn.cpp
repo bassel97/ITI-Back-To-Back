@@ -223,14 +223,8 @@ void ABTBInputReceiverPawn::HandleLeftTrigger() const
 
 void ABTBInputReceiverPawn::HandleAxisInputAction() const
 {
-	//Rotating
-	PlayerCharacter->SetRotationValue(AxisInput.X);
-	//UE_LOG(LogTemp, Warning, TEXT("Rotation btn clicked, %f"), AxisInput.X);
-	
-	
-	//Moving
-	PlayerCharacter->SetMoveValue(AxisInput.Y);
-	//UE_LOG(LogTemp, Warning, TEXT("Move btn clicked, %f"), AxisInput.Y);
+	PlayerCharacter->SetUserInput_X(AxisInput.X);
+	PlayerCharacter->SetUserInput_Y(AxisInput.Y);
 }
 
 void ABTBInputReceiverPawn::HandleStartButton() const //New

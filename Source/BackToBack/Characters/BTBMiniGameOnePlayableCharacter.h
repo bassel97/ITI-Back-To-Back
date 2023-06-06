@@ -22,7 +22,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	virtual float GetRotationValue() override;
+	virtual float GetUserInput_X() override;
 	virtual void Die() override;
 
 	UFUNCTION()
