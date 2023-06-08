@@ -14,6 +14,7 @@ class UProjectileMovementComponent;
 class UBoxComponent;
 class UChildActorComponent;
 class UAnimationAsset;
+class UAnimInstance;
 
 /**
  * The player's gun base class
@@ -60,7 +61,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UAnimationAsset> ReloadingAnim;
-	
+
+	UPROPERTY()
+		UAnimInstance* GunAnim;
 protected:
 	
 private:

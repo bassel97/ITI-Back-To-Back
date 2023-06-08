@@ -28,9 +28,24 @@ ABTBMiniGameOnePlayableCharacter::ABTBMiniGameOnePlayableCharacter()
 
 float ABTBMiniGameOnePlayableCharacter::GetRotationValue()
 {
-	if(RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 0.75;
-	if(RotationValue <= -0.975f && OtherPlayer->RotationValue <= -0.975f)		return -0.75;
-	return 0;
+	if(bIsSingleMode)
+	{
+		if(OtherPlayer)
+		{
+			OtherPlayer->SetRotationValue(this->RotationValue);
+		}
+		return this->RotationValue;3
+	}
+	else
+	{
+		if (RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 1;
+		if (RotationValue <= -0.975f && OtherPlayer->RotationValue <= -0.975f)		return -1;
+		return 0;
+	}
+	/*if (RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 1;
+	if (RotationValue <= -0.975f && OtherPlayer->RotationValue <= -0.975f)		return -1;
+	return 0;*/
+	
 }
 
 void ABTBMiniGameOnePlayableCharacter::Die()
