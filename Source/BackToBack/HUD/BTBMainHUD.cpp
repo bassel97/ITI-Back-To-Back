@@ -23,7 +23,7 @@ void UBTBMainHUD::OnStartClick()
 	UWorld* World = GetWorld();
 	if (World != nullptr)
 	{
-		UGameplayStatics::OpenLevel(World, TEXT("TestPreCommit"));
+		UGameplayStatics::OpenLevel(World, TEXT("Level"));
 	}
 }
 

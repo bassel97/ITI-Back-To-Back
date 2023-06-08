@@ -42,8 +42,6 @@ void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextur
 
 void ABTBPlayableCharacter::Die()
 {
-	//GetMesh()->PlayAnimation(DeathAnimation, false);
-	//bIsDead = true;
 	OnPlayerDeath.Broadcast();
 	UE_LOG(LogTemp, Warning, TEXT("Playable character died"));
 }

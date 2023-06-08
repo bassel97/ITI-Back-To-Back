@@ -17,8 +17,8 @@ class BACKTOBACK_API ABTBMiniGameThreePlayableCharacter : public ABTBPlayableCha
 public:
 
 protected:
-	virtual void SetMoveValue(const float Value) override;
-	virtual void SetRotationValue(const float Value) override;
+	virtual void SetUserInput_Y(const float Value) override;
+	virtual void SetUserInput_X(const float Value) override;
 
 private:
 

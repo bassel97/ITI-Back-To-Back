@@ -6,6 +6,7 @@
 #include "BTBGameplayGameMode.h"
 #include "BTBMiniGameTwoGameMode.generated.h"
 
+class ABTBSpear;
 /**
  * 
  */
@@ -17,6 +18,8 @@ class BACKTOBACK_API ABTBMiniGameTwoGameMode : public ABTBGameplayGameMode
 public:
 
 protected:
+	virtual void BeginPlay() override;
+	void AssignSpearToPlayer();
 
 private:
 
@@ -24,6 +27,11 @@ private:
 public:
 
 protected:
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player Weapons")
+		TSubclassOf<ABTBSpear> SpearClass;
+
+	TObjectPtr<ABTBSpear> Spear;
 
 private:
 };

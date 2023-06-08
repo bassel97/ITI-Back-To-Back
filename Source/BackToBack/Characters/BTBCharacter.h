@@ -33,24 +33,24 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable)
-	virtual float GetRotationValue()
+	virtual float GetUserInput_X()
 	{
-		return RotationValue;
+		return UserInput_X;
 	}
 
-	virtual void SetRotationValue(const float Value)
+	virtual void SetUserInput_X(const float Value)
 	{
-		RotationValue = Value;
+		UserInput_X = Value;
 	}
 
-	float GetMoveValue()
+	float GetUserInput_Y()
 	{
-		return MoveValue;
+		return UserInput_Y;
 	}
 
-	virtual void SetMoveValue(const float Value)
+	virtual void SetUserInput_Y(const float Value)
 	{
-		MoveValue = Value;
+		UserInput_Y = Value;
 	}
 
 	bool GetbStartShoot()
@@ -63,6 +63,18 @@ public:
 		bStartShoot = Value;
 	}
 
+	UFUNCTION(BlueprintCallable)
+	bool GetbStartAttack()
+	{
+		return bstartAttack;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	void SetbStartAttack(const bool Value)
+	{
+		bstartAttack = Value;
+	}
+
 	bool GetbStartPool()
 	{
 		return bStartPool;
@@ -71,6 +83,16 @@ public:
 	void SetbStartPool(const bool Value)
 	{
 		bStartPool = Value;
+	}
+
+	bool GetbIsPaused()
+	{
+		return bIsPaused;
+	}
+
+	void SetbIsPaused(const bool Value)
+	{
+		bIsPaused = Value;
 	}
 
 	UFUNCTION(BlueprintCallable)
@@ -104,7 +126,7 @@ public:
 
 	bool bStartRotate = false;
 	bool bStartSwitching = false;
-	float RotationValue;
+	float UserInput_X;
 
 protected:
 
@@ -112,7 +134,9 @@ protected:
 private:
 	bool bStartJump = false;
 	bool bStartShoot = false;
+	bool bstartAttack = false;
 	bool bStartPool = false;
-	float MoveValue;
+	bool bIsPaused = false;
+	float UserInput_Y;
 	
 };

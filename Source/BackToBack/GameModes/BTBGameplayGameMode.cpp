@@ -11,6 +11,8 @@
 #include "BackToBack/DataAssets/BTBSplitScreenDataAsset.h"
 #include "BackToBack/HUD/BTBGameHUD.h"
 #include "BackToBack/HUD/BTBGameoverHUD.h"
+#include "BackToBack/HUD/BTBPauseMenuHUD.h"
+
 #include "BackToBack/PlayerControllers/BTBPlayerController.h"
 #include "Components/RetainerBox.h"
 #include "Engine/TextureRenderTarget2D.h"
@@ -49,6 +51,9 @@ void ABTBGameplayGameMode::BeginPlay()
 		1,
 		true
 	);
+
+	//New
+	
 	
 	PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 	PlayerCharacterArray[1]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
@@ -60,6 +65,14 @@ void ABTBGameplayGameMode::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	
 	BindEnemiesDeathEventToUpdateScore();
+
+
+	if (PlayerCharacterArray[0]->GetbIsPaused() || PlayerCharacterArray[1]->GetbIsPaused())
+	{
+		DisplayPauseHUD();
+	}
+
+
 }
 
 
@@ -128,14 +141,10 @@ void ABTBGameplayGameMode::AssignCameras()
 		InputReceiverArray[0]->Get_PlayerCharacter()->RemoveCamera();
 		InputReceiverArray[1]->Get_PlayerCharacter()->RemoveCamera();
 
-		TObjectPtr<AActor> Camera = World->SpawnActor<AActor>(CameraClass);
-		if(const TObjectPtr<ABTBCamera> BTBCamera = Cast<ABTBCamera>(Camera))
-		{
-			BTBCamera->CameraTargetOffset = FVector(60.f,60.f,200.f);
-		}
+		const TObjectPtr<AActor> Camera = World->SpawnActor<AActor>(CameraClass);
 		
-		UGameplayStatics::GetPlayerController(World, 0)->SetViewTarget(Camera);
-		UGameplayStatics::GetPlayerController(World, 1)->SetViewTarget(Camera);
+		UGameplayStatics::GetPlayerController(World, 0)->SetViewTargetWithBlend(Camera);
+		UGameplayStatics::GetPlayerController(World, 1)->SetViewTargetWithBlend(Camera);
 
 		GameWidget->MainScreenBox->SetEffectMaterial(nullptr);
 		GameWidget->MainScreenImage->SetRenderOpacity(0.0f);
@@ -222,6 +231,29 @@ void ABTBGameplayGameMode::DisplayGameoverHUD()
 		}
 	}
 	
+}
+
+void ABTBGameplayGameMode::DisplayPauseHUD()
+{
+	const TObjectPtr<UWorld> World = GetWorld();
+	if (!ensure(World != nullptr))
+	{
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Pause menu HUD should be displayed"));
+	if (IsValid(BTBPauseHUDWidgetClass))
+	{
+		if (PauseWidget)
+		{
+			PauseWidget = Cast<UBTBPauseMenuHUD>(CreateWidget(GetWorld(), BTBPauseHUDWidgetClass));//New
+			PauseWidget->AddToViewport();
+			UGameplayStatics::SetGamePaused(World, true);
+			PlayerCharacterArray[0]->SetbIsPaused(false);
+			PlayerCharacterArray[1]->SetbIsPaused(false);
+
+		}
+	}
 }
 
 void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const

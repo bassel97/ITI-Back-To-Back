@@ -11,6 +11,7 @@ class UBTBSplitScreenDataAsset;
 class UTextureRenderTarget2D;
 class UBTBGameHUD;
 class UBTBGameOverHUD;
+class UBTBPauseMenuHUD;
 class ABTBGun;
 class UUserWidget;
 class ABTBEnemySpawner;
@@ -49,6 +50,9 @@ protected:
 	
 	UFUNCTION()
 	void DisplayGameoverHUD();
+
+	UFUNCTION()
+	void DisplayPauseHUD();
 	
 	UFUNCTION()
 	void UpdateScore();
@@ -91,13 +95,13 @@ protected:
 
 	TObjectPtr<UBTBGameOverHUD> GameoverWidget;
 
+	UPROPERTY(EditAnyWhere, Category = "Config")
+	TSubclassOf<UUserWidget> BTBPauseHUDWidgetClass;
+
+	TObjectPtr<UBTBPauseMenuHUD> PauseWidget;
+
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TObjectPtr<UMaterialInstance> SplitScreenMaterialInstance;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Player Weapons")
-	TSubclassOf<ABTBGun> GunClass;	
-
-	TObjectPtr<ABTBGun> Gun;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Gun Position")
 	FVector GunOffsetPosition;
@@ -112,7 +116,5 @@ protected:
 	FTimerHandle IncreaseScoreTimerHandle;
 	
 private:
-	UPROPERTY(EditDefaultsOnly, Category="GlobalGameScreen")
-	FVector SingleCameraTargetOffset;
 
 };

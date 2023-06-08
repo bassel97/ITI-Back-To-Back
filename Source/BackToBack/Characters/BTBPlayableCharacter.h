@@ -13,7 +13,7 @@ class USpringArmComponent;
 class USceneCaptureComponent2D;
 class UMeshComponent;
 class UBoxComponent;
-class UChildActorComponent;	
+class UChildActorComponent;
 class ABTBGun;
 class UAnimMontage;
 

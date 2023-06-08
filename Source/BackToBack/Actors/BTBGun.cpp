@@ -40,7 +40,7 @@ void ABTBGun::Shoot(const FVector Direction)
 		Bullet->FinishAddComponent(BulletProjectile, true, Bullet->GetActorTransform());
 		if (!BulletProjectile)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is is not added"));
+			UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is not added"));
 		}
 		else
 		{

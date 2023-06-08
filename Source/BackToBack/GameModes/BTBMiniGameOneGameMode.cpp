@@ -15,8 +15,12 @@ void ABTBMiniGameOneGameMode::BeginPlay()
 
 void ABTBMiniGameOneGameMode::AssignGunToPlayer()
 {
+	if(!ensure(GunClass != nullptr))
+	{
+		return;
+	}
+	
 	const TObjectPtr<ABTBMiniGameOnePlayableCharacter> MG1_Player = Cast<ABTBMiniGameOnePlayableCharacter>(PlayerCharacterArray[0]);
-
 	Gun = GetWorld()->SpawnActor<ABTBGun>(GunClass);
 	if (Gun)
 	{

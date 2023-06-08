@@ -20,7 +20,6 @@ void UBTBGameOverHUD::OnRestartButtonClick()
 {
 	
 	UWorld* World = GetWorld();
-	UE_LOG(LogTemp, Warning, TEXT("Restart is clicked"));
 	if(World)
 	{
 		UKismetSystemLibrary::ExecuteConsoleCommand(World, TEXT("RestartLevel"));
