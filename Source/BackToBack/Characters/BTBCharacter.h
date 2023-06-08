@@ -63,6 +63,18 @@ public:
 		bStartShoot = Value;
 	}
 
+	UFUNCTION(BlueprintCallable)
+	bool GetbStartAttack()
+	{
+		return bstartAttack;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	void SetbStartAttack(const bool Value)
+	{
+		bstartAttack = Value;
+	}
+
 	bool GetbStartPool()
 	{
 		return bStartPool;
@@ -122,6 +134,7 @@ protected:
 private:
 	bool bStartJump = false;
 	bool bStartShoot = false;
+	bool bstartAttack = false;
 	bool bStartPool = false;
 	bool bIsPaused = false;
 	float UserInput_Y;

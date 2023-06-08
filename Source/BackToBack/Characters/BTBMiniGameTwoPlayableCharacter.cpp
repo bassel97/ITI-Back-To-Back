@@ -2,4 +2,23 @@
 
 
 #include "BTBMiniGameTwoPlayableCharacter.h"
+#include "BackToBack/Actors/BTBSpear.h"
 
+ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
+{
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SetSpear(ABTBSpear* Spear)
+{
+	SpearActor = Spear;
+}
+
+ABTBSpear* ABTBMiniGameTwoPlayableCharacter::GetSpear()
+{
+	return SpearActor;
+}
+
+void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+}

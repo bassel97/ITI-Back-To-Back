@@ -7,7 +7,6 @@
 #include "BackToBack/Characters/BTBCharacter.h"
 #include "BackToBack/Characters/BTBMiniGameOnePlayableCharacter.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
-#include "Kismet/GameplayStatics.h"
 
 void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 {

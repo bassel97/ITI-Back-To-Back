@@ -26,5 +26,6 @@ void ABTBCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	SetbStartPool(true);
+	SetbIsPaused(false);
 }
 

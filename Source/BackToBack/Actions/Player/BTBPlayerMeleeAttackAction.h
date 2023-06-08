@@ -7,11 +7,12 @@
 #include "BTBPlayerMeleeAttackAction.generated.h"
 
 /**
- * 
- */
+ **/
 UCLASS()
 class BACKTOBACK_API UBTBPlayerMeleeAttackAction : public UBTBCharacterAction
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void Act(ABTBCharacter* Character) override;
 };
