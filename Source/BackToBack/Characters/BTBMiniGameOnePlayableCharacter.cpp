@@ -26,20 +26,20 @@ ABTBMiniGameOnePlayableCharacter::ABTBMiniGameOnePlayableCharacter()
 }
 
 
-float ABTBMiniGameOnePlayableCharacter::GetRotationValue()
+float ABTBMiniGameOnePlayableCharacter::GetUserInput_X()
 {
 	if(bIsSingleMode)
 	{
 		if(OtherPlayer)
 		{
-			OtherPlayer->SetRotationValue(this->RotationValue);
+			OtherPlayer->SetUserInput_X(this->UserInput_X);
 		}
-		return this->RotationValue;3
+		return this->UserInput_X;
 	}
 	else
 	{
-		if (RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 1;
-		if (RotationValue <= -0.975f && OtherPlayer->RotationValue <= -0.975f)		return -1;
+		if (UserInput_X >= 0.925f && OtherPlayer->UserInput_X >= 0.925f)		return 1;
+		if (UserInput_X <= -0.975f && OtherPlayer->UserInput_X <= -0.975f)		return -1;
 		return 0;
 	}
 	/*if (RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 1;
