@@ -315,6 +315,8 @@ FVector2D ABTBGameplayGameMode::GetGameViewportSize()
 
 void ABTBGameplayGameMode::UpdateScore()
 {
+	GameWidget->PlayAnimation(GameWidget->ScaleIT, 0.0f, 1, EUMGSequencePlayMode::Forward, 1, false);
 	TotalScore += 10;
 	GameWidget->SetScore(TotalScore);
+	
 }
