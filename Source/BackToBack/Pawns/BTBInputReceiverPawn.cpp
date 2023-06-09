@@ -170,12 +170,12 @@ void ABTBInputReceiverPawn::HandleRightButton() const
 {
 	if (RightButton.bIsDown)
 	{
-		PlayerCharacter->SetbIsPaused(true);
+		
 	}
 
 	if (RightButton.bIsReleased)
 	{
-		PlayerCharacter->SetbIsPaused(false);
+
 	}
 
 	if (RightButton.bIsHeld)
@@ -238,6 +238,7 @@ void ABTBInputReceiverPawn::HandleStartButton() const //New
 	if (RightButton.bIsDown)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Start Pressed"));
+		PlayerCharacter->SetbIsPaused(true);
 		
 	}
 

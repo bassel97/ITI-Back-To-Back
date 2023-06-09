@@ -39,7 +39,6 @@ void UBTBPauseMenuHUD::OnResumeBtnClick()
 
 	}
 
-	//UGameplayStatics::SetGamePaused(World, true);
 }
 
 void UBTBPauseMenuHUD::OnQuitBtnClick()

@@ -22,6 +22,7 @@ void UBTBGameOverHUD::OnRestartButtonClick()
 	UWorld* World = GetWorld();
 	if(World)
 	{
-		UKismetSystemLibrary::ExecuteConsoleCommand(World, TEXT("RestartLevel"));
+		//UKismetSystemLibrary::ExecuteConsoleCommand(World, TEXT("RestartLevel"));
+		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 	}
 }
