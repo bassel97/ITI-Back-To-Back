@@ -17,6 +17,8 @@ class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter : public ABTBPlayableChara
 public:
 
 protected:
+	virtual float GetUserInput_X() override;
+	virtual float GetUserInput_Y() override;
 
 private:
 

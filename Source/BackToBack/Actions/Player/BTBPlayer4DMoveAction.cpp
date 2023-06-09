@@ -6,7 +6,6 @@
 #include "BackToBack/AIControllers/BTBAIController.h"
 #include "BackToBack/Characters/BTBCharacter.h"
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetMathLibrary.h"
 
 void UBTBPlayer4DMoveAction::Act(ABTBCharacter* Character)
 {
@@ -23,10 +22,8 @@ void UBTBPlayer4DMoveAction::Act(ABTBCharacter* Character)
 	
 	Character->AddMovementInput(Right, MoveValue_X);
 	Character->AddMovementInput(Forward, MoveValue_Y);
-	
 
-	// const FVector MovementInput = Right * MoveValue_X + Forward * MoveValue_Y;
-	// const FVector NewLocation = Character->GetActorLocation() + MovementInput;
-	// const FRotator NewRotation = MovementInput.Rotation();
-	// Character->SetActorLocationAndRotation(NewLocation, NewRotation);
+	UE_LOG(LogTemp, Warning, TEXT("Move X = %f"), MoveValue_X);
+	UE_LOG(LogTemp, Warning, TEXT("Move Y = %f"), MoveValue_Y);
+	UE_LOG(LogTemp, Warning, TEXT("Forward = %s"), *Forward.ToString());
 }

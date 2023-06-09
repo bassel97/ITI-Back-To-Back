@@ -43,7 +43,7 @@ public:
 		UserInput_X = Value;
 	}
 
-	float GetUserInput_Y()
+	virtual float GetUserInput_Y()
 	{
 		return UserInput_Y;
 	}
@@ -115,6 +115,7 @@ public:
 	bool bStartRotate = false;
 	bool bStartSwitching = false;
 	float UserInput_X;
+	float UserInput_Y;
 
 protected:
 
@@ -124,6 +125,5 @@ private:
 	bool bStartShoot = false;
 	bool bStartPool = false;
 	bool bIsPaused = false;
-	float UserInput_Y;
 	
 };
