@@ -14,7 +14,6 @@ void UBTBGameOverHUD::NativeConstruct()
 	{
 		RestartButton->OnClicked.AddDynamic(this, &UBTBGameOverHUD::OnRestartButtonClick);
 	}
-	//UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(UGameplayStatics::GetPlayerController(GetWorld(), 0),this);
 }
 
 void UBTBGameOverHUD::OnRestartButtonClick()

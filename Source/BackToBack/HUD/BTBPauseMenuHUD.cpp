@@ -13,7 +13,7 @@ void UBTBPauseMenuHUD::NativeConstruct()
 
 	if (ResumeBTN)
 	{
-		ResumeBTN->OnPressed.AddDynamic(this, &UBTBPauseMenuHUD::OnResumeBtnClick);
+		ResumeBTN->OnPressed.AddUniqueDynamic(this, &UBTBPauseMenuHUD::OnResumeBtnClick);
 	}
 
 	if (QuitBTN)

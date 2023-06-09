@@ -188,16 +188,22 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 	if (RightTrigger.bIsDown)
 	{
 		PlayerCharacter->SetbStartShoot(true);
-		UE_LOG(LogTemp, Warning, TEXT("Left click pressed"));
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
+
+		PlayerCharacter->SetbStartAttack(true);
+
 	}
 	
 	if (RightTrigger.bIsReleased)
 	{
 		PlayerCharacter->SetbStartShoot(false);
-		UE_LOG(LogTemp, Warning, TEXT("Left click Released"));
 		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+		PlayerCharacter->SetbStartAttack(false);
+		
+
 	}
+
+	
 	/*if (RightTrigger.bIsHeld)
 	{
 		PlayerCharacter->SetbStartShoot(true);

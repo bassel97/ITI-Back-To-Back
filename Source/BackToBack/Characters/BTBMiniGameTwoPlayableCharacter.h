@@ -6,6 +6,7 @@
 #include "BTBPlayableCharacter.h"
 #include "BTBMiniGameTwoPlayableCharacter.generated.h"
 
+class ABTBSpear;
 /**
  * 
  */
@@ -15,6 +16,10 @@ class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter : public ABTBPlayableChara
 	GENERATED_BODY()
 
 public:
+	ABTBMiniGameTwoPlayableCharacter();
+
+	void SetSpear(ABTBSpear* Spear);
+	ABTBSpear* GetSpear();
 
 protected:
 	virtual float GetUserInput_X() override;
@@ -25,8 +30,10 @@ private:
 
 	
 public:
+	TObjectPtr<ABTBSpear> SpearActor;
 
 protected:
+
 
 private:
 

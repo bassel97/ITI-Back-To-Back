@@ -53,7 +53,7 @@ void ABTBGameplayGameMode::BeginPlay()
 	);
 
 	//New
-	PauseWidget = Cast<UBTBPauseMenuHUD>(CreateWidget(GetWorld(), BTBPauseHUDWidgetClass));//New
+	
 	
 	PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 	PlayerCharacterArray[1]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
@@ -246,7 +246,8 @@ void ABTBGameplayGameMode::DisplayPauseHUD()
 	{
 		if (PauseWidget)
 		{
-			PauseWidget->AddToViewport(100);
+			PauseWidget = Cast<UBTBPauseMenuHUD>(CreateWidget(GetWorld(), BTBPauseHUDWidgetClass));//New
+			PauseWidget->AddToViewport();
 			UGameplayStatics::SetGamePaused(World, true);
 			PlayerCharacterArray[0]->SetbIsPaused(false);
 			PlayerCharacterArray[1]->SetbIsPaused(false);

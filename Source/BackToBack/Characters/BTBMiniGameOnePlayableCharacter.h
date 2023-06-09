@@ -52,7 +52,9 @@ public:
 	bool IsOverlapping;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
-	float ControlHandAlpha;
+		float ControlHandAlpha;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
+		bool bIsSingleMode;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "AnimMontage")
 	TObjectPtr<UAnimMontage> SwitchMontage;
