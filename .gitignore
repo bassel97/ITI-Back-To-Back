@@ -72,3 +72,4 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+Content/BackToBack/Core/PlayerCharacters/MiniGameOne/BP_MG1_P1.uasset
