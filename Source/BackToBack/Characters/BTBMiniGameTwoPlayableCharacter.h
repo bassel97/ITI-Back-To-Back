@@ -19,10 +19,18 @@ public:
 	ABTBMiniGameTwoPlayableCharacter();
 
 	void SetSpear(ABTBSpear* Spear);
+
 	ABTBSpear* GetSpear();
+
+	void Throw();
+
+	void AttachSpearToPlayer();
+
+	void Summon();
 
 protected:
 	virtual float GetUserInput_X() override;
+
 	virtual float GetUserInput_Y() override;
 
 private:
@@ -32,9 +40,22 @@ private:
 public:
 	TObjectPtr<ABTBSpear> SpearActor;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
+		bool bIsThrowing;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
+		bool bIsSummoning;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
+		bool bSpearAttached;
+
+	UPROPERTY()
+		UAnimInstance* MilesAnimInstance;
+
 protected:
 
 
 private:
-
+	UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
+		TObjectPtr<USceneComponent> SpearRetrievalPoint;
 };

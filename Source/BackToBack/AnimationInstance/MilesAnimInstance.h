@@ -14,4 +14,19 @@ class BACKTOBACK_API UMilesAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void NativeInitializeAnimation() override;
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	//class TObjectPtr<AMyLearningPlaygroundCharacter> Miles;
+	UPROPERTY(BlueprintReadOnly)
+		class ABTBMiniGameTwoPlayableCharacter* Miles;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Movement")
+		class UCharacterMovementComponent* MilesMovementComponent;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Movement")
+		float GroundSpeed;
+	UPROPERTY(BlueprintReadOnly, Category = "Throwing")
+		bool bThrow;
 };

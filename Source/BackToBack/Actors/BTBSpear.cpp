@@ -70,11 +70,11 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	{
 		if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
 		{
-			/*if (Player->bIsSummoning)
+			if (Player->GetbStartSummoning())
 			{
 				Player->AttachSpearToPlayer();
-				Stop();
-			}*/
+				StopSpearBounce();
+			}
 		}
 		else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
 		{
@@ -196,9 +196,9 @@ void ABTBSpear::Fall(float GravityScale)
 	ProjectileMovementComponent->ProjectileGravityScale = GravityScale;
 }
 
-void ABTBSpear::Summon(AActor* SummoningActor)
+void ABTBSpear::Summon(const FVector& SummoningLocation)
 {
-	FVector ReturnVector = (SummoningActor->GetActorLocation() - GetActorLocation());
+	FVector ReturnVector = (SummoningLocation - GetActorLocation());
 	FVector ReturnUnitVector = ReturnVector.GetSafeNormal();
 
 	EnemyCounter = 0;

@@ -63,6 +63,26 @@ public:
 		bStartShoot = Value;
 	}
 
+	bool GetbStartThrowing()
+	{
+		return bStartThrowing;
+	}
+
+	void SetbStartThrowing(const bool Value)
+	{
+		bStartThrowing = Value;
+	}
+
+	bool GetbStartSummoning()
+	{
+		return bStartSummoning;
+	}
+
+	void SetbStartSummoning(const bool Value)
+	{
+		bStartSummoning = Value;
+	}
+
 	UFUNCTION(BlueprintCallable)
 	bool GetbStartAttack()
 	{
@@ -138,5 +158,7 @@ private:
 	bool bstartAttack = false;
 	bool bStartPool = false;
 	bool bIsPaused = false;
+	bool bStartThrowing = false;
+	bool bStartSummoning = false;
 	
 };

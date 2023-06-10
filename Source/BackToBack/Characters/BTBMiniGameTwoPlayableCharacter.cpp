@@ -6,11 +6,20 @@
 
 ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
 {
+	MilesAnimInstance = GetMesh()->GetAnimInstance();
+	
+	SpearRetrievalPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spear Retrieval Point"));
+	SpearRetrievalPoint->SetupAttachment(GetRootComponent());
 }
 
 void ABTBMiniGameTwoPlayableCharacter::SetSpear(ABTBSpear* Spear)
 {
 	SpearActor = Spear;
+}
+
+ABTBSpear* ABTBMiniGameTwoPlayableCharacter::GetSpear()
+{
+	return SpearActor;
 }
 
 
@@ -30,3 +39,23 @@ float ABTBMiniGameTwoPlayableCharacter::GetUserInput_Y()
 	return 0;
 }
 
+void ABTBMiniGameTwoPlayableCharacter::Throw()
+{
+	bIsThrowing = true;
+	SetbStartThrowing(false);
+}
+
+void ABTBMiniGameTwoPlayableCharacter::Summon()
+{
+	bIsSummoning = true;
+	SpearActor->Summon(SpearRetrievalPoint->GetComponentLocation());
+}
+
+void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
+{
+	if (!SpearActor->IsAttachedTo(this))
+	{
+		SpearActor->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true),
+			TEXT("RightHandSocket"));
+	}
+}
