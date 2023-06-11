@@ -30,8 +30,8 @@ ABTBSpear::ABTBSpear()
 	ProjectileMovementComponent->ProjectileGravityScale = 0.f;
 	ProjectileMovementComponent->Velocity = FVector().Zero();
 	ProjectileMovementComponent->SetUpdatedComponent(RootComponent);
-	/*ProjectileMovementComponent->SetUpdatedComponent(RootComponent);
-	ProjectileMovementComponent->InitialSpeed = 150.f;
+	
+	/*ProjectileMovementComponent->InitialSpeed = 150.f;
 	ProjectileMovementComponent->MaxSpeed = 200.f;
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->bShouldBounce = false;
