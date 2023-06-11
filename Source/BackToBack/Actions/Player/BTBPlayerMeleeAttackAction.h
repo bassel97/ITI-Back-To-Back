@@ -15,4 +15,9 @@ class BACKTOBACK_API UBTBPlayerMeleeAttackAction : public UBTBCharacterAction
 
 protected:
 	virtual void Act(ABTBCharacter* Character) override;
+
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category = "animation")
+	UAnimMontage* attackMontage;
 };

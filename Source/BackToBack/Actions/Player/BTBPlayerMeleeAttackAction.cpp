@@ -18,6 +18,8 @@ void UBTBPlayerMeleeAttackAction::Act(ABTBCharacter* Character)
 	if (Character->GetbStartAttack())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
+		//Character->PlayAnimMontage(attackMontage,1,NAME_None);
+		//Character->SetbStartAttack(false);
 	}
 	//Character->PlayAnimMontage();
 }
