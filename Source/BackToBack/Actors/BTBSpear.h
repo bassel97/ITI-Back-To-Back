@@ -24,7 +24,7 @@ public:
 
 	void Throw(const FVector& Direction, const float Speed);
 
-	void Summon(const FVector& SummoningLocation);
+	void Summon(AActor* SummoningLocation);
 
 	void ActivateBoxCollision();
 

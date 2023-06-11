@@ -13,10 +13,11 @@
 ABTBSpear::ABTBSpear()
 {
 	SpearMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Spear Mesh"));
-	SpearMesh->SetupAttachment(SceneComponent);
+	//SpearMesh->SetupAttachment(SceneComponent);
+	RootComponent = SpearMesh;
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Box"));
-	CollisionBox->SetupAttachment(SceneComponent);
+	CollisionBox->AttachToComponent(SpearMesh, FAttachmentTransformRules::KeepRelativeTransform);
 
 	BoxTraceStart = CreateDefaultSubobject<USceneComponent>(TEXT("Box Trace BoxTraceStart"));
 	BoxTraceStart->SetupAttachment(SpearMesh);
@@ -28,7 +29,7 @@ ABTBSpear::ABTBSpear()
 	AddOwnedComponent(ProjectileMovementComponent);
 	ProjectileMovementComponent->ProjectileGravityScale = 0.f;
 	ProjectileMovementComponent->Velocity = FVector().Zero();
-	ProjectileMovementComponent->SetUpdatedComponent(SpearMesh);
+	ProjectileMovementComponent->SetUpdatedComponent(RootComponent);
 	/*ProjectileMovementComponent->SetUpdatedComponent(RootComponent);
 	ProjectileMovementComponent->InitialSpeed = 150.f;
 	ProjectileMovementComponent->MaxSpeed = 200.f;
@@ -39,7 +40,7 @@ ABTBSpear::ABTBSpear()
 	ProjectileMovementComponent->HomingAccelerationMagnitude = 200.f;*/
 
 	EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
-	EnemySphereDetection->SetupAttachment(GetRootComponent());
+	EnemySphereDetection->SetupAttachment(RootComponent);
 	EnemySphereDetection->SetSphereRadius(50.f, false);
 }
 
@@ -70,7 +71,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	{
 		if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
 		{
-			if (Player->GetbStartSummoning())
+			if (Player->bIsSummoning)
 			{
 				Player->AttachSpearToPlayer();
 				StopSpearBounce();
@@ -148,7 +149,7 @@ void ABTBSpear::BounceAtEnemies()
 	bool bBounceFinished = false;
 	bool bBounceStarted = false;
 	EnemyCounter++;
-	for (auto EnemyMember : EnemiesArray)
+	for (auto& EnemyMember : EnemiesArray)
 	{
 		if (EnemyMember.Value == false && bBounceStarted == false)
 		{
@@ -196,14 +197,16 @@ void ABTBSpear::Fall(float GravityScale)
 	ProjectileMovementComponent->ProjectileGravityScale = GravityScale;
 }
 
-void ABTBSpear::Summon(const FVector& SummoningLocation)
+void ABTBSpear::Summon(AActor* SummoningLocation)
 {
-	FVector ReturnVector = (SummoningLocation - GetActorLocation());
+	FVector ReturnVector = (SummoningLocation->GetActorLocation() - GetActorLocation());
 	FVector ReturnUnitVector = ReturnVector.GetSafeNormal();
-
+	UE_LOG(LogTemp, Warning, TEXT("Summon unit vector is x:%f, y:%f, z:%f"), ReturnUnitVector.X, ReturnUnitVector.Y, ReturnUnitVector.Z);
 	EnemyCounter = 0;
 	EnemiesArray.Empty();
 	ProjectileMovementComponent->Velocity = ReturnUnitVector * 1000.f;
+	//Fall(0.f);
+	//Throw(ReturnUnitVector, 1000.f);
 }
 
 void ABTBSpear::Retrieve()

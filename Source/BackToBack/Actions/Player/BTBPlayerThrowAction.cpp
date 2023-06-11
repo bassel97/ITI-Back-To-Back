@@ -17,6 +17,7 @@ void UBTBPlayerThrowAction::Act(ABTBCharacter* Character)
         {
             Player->Throw();
             //Player->SetbStartThrowing(false);
+            //Player->SetbStartSummoning(false);
         }
         
     }

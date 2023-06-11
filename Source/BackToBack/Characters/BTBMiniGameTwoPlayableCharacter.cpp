@@ -42,13 +42,14 @@ float ABTBMiniGameTwoPlayableCharacter::GetUserInput_Y()
 void ABTBMiniGameTwoPlayableCharacter::Throw()
 {
 	bIsThrowing = true;
-	SetbStartThrowing(false);
+	//SetbStartThrowing(false);
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Summon()
 {
 	bIsSummoning = true;
-	SpearActor->Summon(SpearRetrievalPoint->GetComponentLocation());
+	//SpearActor->Summon(SpearRetrievalPoint->GetComponentLocation());
+	SpearActor->Summon(this);
 }
 
 void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
@@ -57,5 +58,6 @@ void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
 	{
 		SpearActor->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true),
 			TEXT("RightHandSocket"));
+		bIsThrowing = false;
 	}
 }

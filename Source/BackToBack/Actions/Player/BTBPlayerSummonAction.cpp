@@ -8,19 +8,20 @@
 
 void UBTBPlayerSummonAction::Act(ABTBCharacter* Character)
 {
-    if (Character == nullptr) {
+    if (Character == nullptr) 
+    {
         return;
     }
 
-    if (Character->GetbStartSummoning()) {
-
-
+    if (Character->GetbStartSummoning()) 
+    {
         ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
 
         if (!Player->GetSpear()->IsAttachedTo(Player))
         {
             Player->Summon();
+            //Player->SetbStartThrowing(false);
+            //Player->SetbStartSummoning(false);
         }
-
     }
 }
