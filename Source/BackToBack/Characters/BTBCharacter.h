@@ -148,6 +148,9 @@ public:
 	bool bStartSwitching = false;
 	float UserInput_X;
 	float UserInput_Y;
+	float TickDeltaTime;
+
+	bool bHasMovementInput;
 
 protected:
 

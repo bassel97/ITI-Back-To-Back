@@ -15,7 +15,8 @@ ABTBCharacter::ABTBCharacter()
 void ABTBCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	TickDeltaTime = DeltaTime;
+	
 	for (const auto& Action : CharacterActions)
 	{
 		Action->Act(this);
