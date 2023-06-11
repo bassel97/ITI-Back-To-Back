@@ -70,7 +70,6 @@ void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent *OverlappedComponent,AA
     Bullet->DeactivatePooledObject();
     Damage();
   }
-  if (ABTBSpear* Spear = Cast<ABTBSpear>(OtherActor)) {
-    Damage();
-  }
+  //ABTBSpear* Spear = Cast<ABTBSpear>(OtherActor);
+    //Damage();
 }

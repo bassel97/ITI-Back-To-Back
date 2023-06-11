@@ -81,7 +81,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		}
 		else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
 		{
-			if (EnemiesArray.IsEmpty())
+			if (EnemiesArray.IsEmpty() )
 			{
 				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), EnemySphereDetection->GetScaledSphereRadius());
 			}

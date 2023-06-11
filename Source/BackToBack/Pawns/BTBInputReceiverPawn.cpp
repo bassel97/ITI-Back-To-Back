@@ -160,7 +160,7 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 	if (LeftButton.bIsReleased)
 	{
 		PlayerCharacter->SetbStartSwitching(false);
-		//PlayerCharacter->SetbStartAttack(false);
+		PlayerCharacter->SetbStartAttack(false);
 	}
 
 	if (LeftButton.bIsHeld)
@@ -173,12 +173,10 @@ void ABTBInputReceiverPawn::HandleRightButton() const
 {
 	if (RightButton.bIsDown)
 	{
-		
 	}
 
 	if (RightButton.bIsReleased)
 	{
-
 	}
 
 	if (RightButton.bIsHeld)
