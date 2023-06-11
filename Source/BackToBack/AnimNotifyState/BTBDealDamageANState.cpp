@@ -63,7 +63,6 @@ void UBTBDealDamageANState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSeq
 			Miles->GetSpear()->DeactivateBoxCollision();
 		}
 	}
-	
 }
 
 UBTBDealDamageANState::UBTBDealDamageANState()
