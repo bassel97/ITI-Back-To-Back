@@ -4,6 +4,7 @@
 #include "BTBDealDamageANState.h"
 
 #include "BackToBack/Actors/BTBSpear.h"
+#include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -38,22 +39,31 @@ void UBTBDealDamageANState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSe
 
 void UBTBDealDamageANState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	float TotalDuration, const FAnimNotifyEventReference& EventReference)
-{
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), SpearClass, Spears);
-	//Spear = Cast<ABTBSpear>(Spears[0]);
-	
+{	
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration, EventReference);
-	UE_LOG(LogTemp,Warning,TEXT("Begin"));
-
-	GEngine->AddOnScreenDebugMessage(-1,5.f, FColor::Green,TEXT("NotifyBegin"));
+	if (MeshComp && MeshComp->GetOwner())
+	{
+		ABTBMiniGameTwoPlayableCharacter* Miles = Cast<ABTBMiniGameTwoPlayableCharacter>(MeshComp->GetOwner());
+		if (Miles)
+		{
+			Miles->GetSpear()->ActivateBoxCollision();
+		}
+	}
 }
 
 void UBTBDealDamageANState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	const FAnimNotifyEventReference& EventReference)
 {
 	Super::NotifyEnd(MeshComp, Animation, EventReference);
-	UE_LOG(LogTemp,Warning,TEXT("End"));
-	GEngine->AddOnScreenDebugMessage(-1,5.f, FColor::Green,TEXT("NotifyEnd"));
+	if (MeshComp && MeshComp->GetOwner())
+	{
+		ABTBMiniGameTwoPlayableCharacter* Miles = Cast<ABTBMiniGameTwoPlayableCharacter>(MeshComp->GetOwner());
+		if (Miles)
+		{
+			Miles->GetSpear()->DeactivateBoxCollision();
+		}
+	}
+	
 }
 
 UBTBDealDamageANState::UBTBDealDamageANState()

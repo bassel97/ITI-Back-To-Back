@@ -40,13 +40,15 @@ protected:
 
 private:
 
-	void StopSpearBounce();
+	void StopSpearBounce(AActor* SpearNewParentActor);
 
 	void Fall(float GravityScale);
 
 	void Retrieve();
 
 	void BounceAtEnemies();
+
+	void HomingFunction(bool bIsHoming, float InitialSpeed, float MaxSpeed, float HomingAcceleration, AActor* Target);
 
 	UFUNCTION()
 		void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
