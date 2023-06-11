@@ -30,4 +30,7 @@ public:
 		
 	UPROPERTY(BlueprintReadOnly, Category = "Throwing")
 	bool bThrow;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Throwing")
+	bool bAttack;
 };

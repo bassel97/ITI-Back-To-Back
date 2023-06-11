@@ -50,6 +50,8 @@ void UBTBDealDamageANState::NotifyEnd(USkeletalMeshComponent *MeshComp, UAnimSeq
     ABTBMiniGameTwoPlayableCharacter* Miles = Cast<ABTBMiniGameTwoPlayableCharacter>(MeshComp->GetOwner());
     if (Miles) {
       Miles->GetSpear()->DeactivateBoxCollision();
+
+      Miles->bIsAttacking = false;
     }
   }
 }

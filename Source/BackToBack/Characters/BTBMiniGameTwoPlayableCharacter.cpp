@@ -52,6 +52,11 @@ void ABTBMiniGameTwoPlayableCharacter::Summon()
 	SpearActor->Summon(this);
 }
 
+void ABTBMiniGameTwoPlayableCharacter::Attack()
+{
+	bIsAttacking = true;
+}
+
 void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
 {
 	if (!SpearActor->IsAttachedTo(this))

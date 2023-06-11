@@ -173,12 +173,10 @@ void ABTBInputReceiverPawn::HandleRightButton() const
 {
 	if (RightButton.bIsDown)
 	{
-		
 	}
 
 	if (RightButton.bIsReleased)
 	{
-
 	}
 
 	if (RightButton.bIsHeld)

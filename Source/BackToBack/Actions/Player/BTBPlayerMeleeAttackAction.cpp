@@ -8,7 +8,7 @@
 
 void UBTBPlayerMeleeAttackAction::Act(ABTBCharacter* Character)
 {
-	//const TObjectPtr<ABTBMiniGameTwoPlayableCharacter> MG2PlayableCharacter = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
+	TObjectPtr<ABTBMiniGameTwoPlayableCharacter> MG2PlayableCharacter = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
 
 	if (Character == nullptr)
 	{
@@ -18,6 +18,7 @@ void UBTBPlayerMeleeAttackAction::Act(ABTBCharacter* Character)
 	if (Character->GetbStartAttack())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
+		MG2PlayableCharacter->Attack();
 		//Character->PlayAnimMontage(attackMontage,1,NAME_None);
 		//Character->SetbStartAttack(false);
 	}
