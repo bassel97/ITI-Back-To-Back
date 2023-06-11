@@ -31,7 +31,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Player Weapons")
 		TSubclassOf<ABTBSpear> SpearClass;
 
-	TObjectPtr<ABTBSpear> Spear;
+	TObjectPtr<ABTBSpear> SpearPtr;
 
 private:
 };

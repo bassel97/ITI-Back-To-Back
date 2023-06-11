@@ -20,6 +20,11 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+	void RunTheBehaviourTree();
+	void FillPlayerActorsArray();
+	void UpdateBlackboardClosestPlayerVariable();
+	TObjectPtr<AActor> GetClosestPlayer();
 	
 private:
 	
@@ -31,9 +36,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "BTB_AI")
 	TObjectPtr<UBehaviorTree> AIBehaviorTree;
 
-	UPROPERTY(EditDefaultsOnly, Category = "BTB_AI")
-	TSubclassOf<ABTBPlayableCharacter> PlayableCharacter;
-	
+	TArray<TObjectPtr<AActor>> PlayerActors;
 private:
 	
 };

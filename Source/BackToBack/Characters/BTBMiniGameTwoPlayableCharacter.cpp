@@ -24,7 +24,7 @@ ABTBSpear* ABTBMiniGameTwoPlayableCharacter::GetSpear()
 
 
 // This is DUMB but its fixing an error IDK why this is happening
-// If you remove it, character will spin around its Z axis forever after the first move
+// If you remove it, character will spin around its Z axis forever after the first move / "HAHA" <- from Yusef
 float ABTBMiniGameTwoPlayableCharacter::GetUserInput_X()
 {
 	if(UserInput_X > 0.01)	return UserInput_X;

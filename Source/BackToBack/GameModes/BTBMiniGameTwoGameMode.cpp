@@ -22,11 +22,10 @@ void ABTBMiniGameTwoGameMode::AssignSpearToPlayer()
 	}
 
 	const TObjectPtr<ABTBMiniGameTwoPlayableCharacter> MG2_Player = Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0]);
-	Spear = GetWorld()->SpawnActor<ABTBSpear>(SpearClass);
-	if (Spear)
+	SpearPtr = GetWorld()->SpawnActor<ABTBSpear>(SpearClass);
+	if (SpearPtr)
 	{
-		Spear->AttachToComponent(MG2_Player->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("RightHandSocket"));
-		MG2_Player->SetSpear(Spear);
-		
+		SpearPtr->AttachToComponent(MG2_Player->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("RightHandSocket"));
+		MG2_Player->SetSpear(SpearPtr);
 	}
 }

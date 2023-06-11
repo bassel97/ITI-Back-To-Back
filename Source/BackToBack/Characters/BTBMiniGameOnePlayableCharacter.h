@@ -53,6 +53,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 		float ControlHandAlpha;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Config")
 		bool bIsSingleMode;
 

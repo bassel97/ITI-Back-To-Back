@@ -12,7 +12,6 @@
 #include "BackToBack/HUD/BTBGameHUD.h"
 #include "BackToBack/HUD/BTBGameoverHUD.h"
 #include "BackToBack/HUD/BTBPauseMenuHUD.h"
-
 #include "BackToBack/PlayerControllers/BTBPlayerController.h"
 #include "Components/RetainerBox.h"
 #include "Engine/TextureRenderTarget2D.h"
@@ -42,7 +41,7 @@ void ABTBGameplayGameMode::BeginPlay()
 	SetupPlayersCommunication();
 	CreateUIWidget();
 	AssignCameras();
-	SetCenterOfPlayersInEnemySpawner();
+	CreateEnemySpawnerAndSetCenterOfPlayers();
 
 	GetWorldTimerManager().SetTimer(
 		IncreaseScoreTimerHandle,
@@ -52,9 +51,6 @@ void ABTBGameplayGameMode::BeginPlay()
 		true
 	);
 
-	//New
-	
-	
 	PlayerCharacterArray[0]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 	PlayerCharacterArray[1]->OnPlayerDeath.AddDynamic(this, &ABTBGameplayGameMode::DisplayGameoverHUD);
 	
@@ -66,13 +62,11 @@ void ABTBGameplayGameMode::Tick(float DeltaSeconds)
 	
 	BindEnemiesDeathEventToUpdateScore();
 
-
 	if (PlayerCharacterArray[0]->GetbIsPaused() || PlayerCharacterArray[1]->GetbIsPaused())
 	{
 		DisplayPauseHUD();
 	}
-
-
+	
 }
 
 
@@ -251,8 +245,6 @@ void ABTBGameplayGameMode::DisplayPauseHUD()
 			UGameplayStatics::SetGamePaused(World, true);
 			PlayerCharacterArray[0]->SetbIsPaused(false);
 			PlayerCharacterArray[1]->SetbIsPaused(false);
-			
-
 		}
 	}
 }
@@ -273,7 +265,7 @@ void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 	GameWidget->MainScreenImage->SetRenderOpacity(1.0f);
 }
 
-void ABTBGameplayGameMode::SetCenterOfPlayersInEnemySpawner()
+void ABTBGameplayGameMode::CreateEnemySpawnerAndSetCenterOfPlayers()
 {
 	const TObjectPtr<UWorld> World = GetWorld();
 	if(!ensure(World != nullptr))
@@ -318,5 +310,4 @@ void ABTBGameplayGameMode::UpdateScore()
 	GameWidget->PlayAnimation(GameWidget->ScaleIT, 0.0f, 1, EUMGSequencePlayMode::Forward, 1, false);
 	TotalScore += 10;
 	GameWidget->SetScore(TotalScore);
-	
 }

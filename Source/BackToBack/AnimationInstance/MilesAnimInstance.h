@@ -27,6 +27,7 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement")
 		float GroundSpeed;
+		
 	UPROPERTY(BlueprintReadOnly, Category = "Throwing")
 		bool bThrow;
 };

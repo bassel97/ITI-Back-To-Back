@@ -42,7 +42,7 @@ protected:
 	void BindEnemiesDeathEventToUpdateScore();
 
 	void SetSplitScreenTextureToMaterial() const;
-	void SetCenterOfPlayersInEnemySpawner();
+	void CreateEnemySpawnerAndSetCenterOfPlayers();
 
 	static FVector2D GetScreenResolution();
 	static FVector2D GetGameViewportSize();

@@ -2,7 +2,6 @@
 
 #pragma once
 
-//#include "BackToBack/Characters/BTBCharacter.h"
 #include "CoreMinimal.h"
 #include "BackToBack/Actions/Character/BTBCharacterAction.h"
 #include "BTBPlayer4DMoveAction.generated.h"
@@ -21,4 +20,6 @@ class BACKTOBACK_API UBTBPlayer4DMoveAction : public UBTBCharacterAction
 public:
 	virtual void Act(ABTBCharacter* Character) override;
 
+	UPROPERTY(EditDefaultsOnly, Category="Rotation Setings")
+	float RotationSpeed = 5.0f;
 };

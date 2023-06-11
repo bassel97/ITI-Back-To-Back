@@ -10,22 +10,17 @@
 
 
 void UBTBPlayerShootAction::Act(ABTBCharacter *Character) {
-  if (Character == nullptr) {
+  if (Character == nullptr)
+  {
     return;
   }
 
-  if (Character->GetbStartShoot()) {
-
-    // const auto PlayableCharacter = Cast<ABTBPlayableCharacter>(Character);
-
-    // const auto Camera2D =
-    // PlayableCharacter->GetComponentByClass(USceneCaptureComponent2D::StaticClass());
-    // const auto Camera2DSceneComp = Cast<USceneComponent>(Camera2D);
-    // const auto ShootingDirection =
-    // Camera2DSceneComp->GetComponentRotation().Vector();
+  if (Character->GetbStartShoot())
+  {
     Gun = Cast<ABTBMiniGameOnePlayableCharacter>(Character)->GetGun();
 
-    if (Gun != nullptr) {
+    if (Gun != nullptr)
+    {
       const auto ShootingDirection = Gun->ShootingLocation->GetForwardVector();
       Gun->Shoot(ShootingDirection);
       Character->SetbStartShoot(false);
