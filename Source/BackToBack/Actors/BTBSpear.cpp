@@ -71,7 +71,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 {
 	if (APawn* Pawn = Cast<APawn>(OtherActor))
 	{
-		bool bIsSpearAttached = false;
+		
 		if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
 		{
 			if (Player->bIsSummoning)
@@ -81,16 +81,16 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 			}
 			if (IsAttachedTo(Player))
 			{
-				bIsSpearAttached = true;
+				bIsAttached = true;
 			}
 			else
 			{
-				bIsSpearAttached = false;
+				bIsAttached = false;
 			}
 		}
 		else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
 		{
-			if (EnemiesArray.IsEmpty() && !bIsSpearAttached)
+			if (EnemiesArray.IsEmpty() && !bIsAttached)
 			{
 				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), EnemySphereDetection->GetScaledSphereRadius());
 			}
@@ -110,10 +110,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 					EnemiesArray.RemoveSingle(EnemiesArray[i]);
 				}
 			}
-			if (!IsAttachedTo(Player))
-			{
-				BounceAtEnemies();
-			}
+			BounceAtEnemies();
 		}
 		else
 		{
@@ -191,13 +188,14 @@ void ABTBSpear::BounceAtEnemies()
 		{
 			FVector UD = (TargetEnemy->GetActorLocation() - GetActorLocation()).GetSafeNormal();
 			//HomingFunction(true, 150.f, 200.f, 300.f, TargetEnemy);
-			Throw(UD, 200.f);
+			Throw(UD, 500.f);
 		}
 	}
 }
 
 void ABTBSpear::Throw(const FVector& Direction, const float Speed)
 {
+	bIsAttached = false;
 	ProjectileMovementComponent->Velocity = Direction * Speed;
 }
 
@@ -208,6 +206,7 @@ void ABTBSpear::StopSpearBounce(AActor* SpearNewParentActor)
 	{
 		ProjectileMovementComponent->StopMovementImmediately();
 		Player->AttachSpearToPlayer();
+		bIsAttached = true;
 		Fall(0.f);
 	}
 	//else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(SpearNewParentActor))
@@ -235,7 +234,7 @@ void ABTBSpear::Summon(AActor* SummoningLocation)
 {
 	FVector ReturnVector = (SummoningLocation->GetActorLocation() - GetActorLocation());
 	FVector ReturnUnitVector = ReturnVector.GetSafeNormal();
-	UE_LOG(LogTemp, Warning, TEXT("Summon unit vector is x:%f, y:%f, z:%f"), ReturnUnitVector.X, ReturnUnitVector.Y, ReturnUnitVector.Z);
+
 	EnemyCounter = 0;
 	EnemiesArray.Empty();
 	ActivateBoxCollision();

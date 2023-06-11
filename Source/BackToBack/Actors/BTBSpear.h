@@ -87,5 +87,7 @@ private:
 
 	TArray<TPair<TObjectPtr<AActor>, bool>> EnemiesArray;
 
+	bool bIsAttached = true;
+
 
 };
