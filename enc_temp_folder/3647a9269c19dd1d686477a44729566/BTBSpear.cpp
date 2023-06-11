@@ -185,9 +185,9 @@ void ABTBSpear::BounceAtEnemies()
 			ProjectileMovementComponent->bIsHomingProjectile = true;
 			ProjectileMovementComponent->InitialSpeed = 150.f;
 			ProjectileMovementComponent->MaxSpeed = 200.f;
-			ProjectileMovementComponent->HomingAccelerationMagnitude = 300.f;
+			ProjectileMovementComponent->HomingAccelerationMagnitude = 200.f;
 			ProjectileMovementComponent->HomingTargetComponent = TargetEnemy->GetRootComponent();
-			//Throw(UD, 200.f);
+			Throw(UD, 200.f);
 		}
 	}
 }

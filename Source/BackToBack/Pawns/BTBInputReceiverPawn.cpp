@@ -193,7 +193,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		PlayerCharacter->SetbStartShoot(true);
 		//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
 		PlayerCharacter->SetbStartThrowing(true);
-		//PlayerCharacter->SetbStartSummoning(true);
+		PlayerCharacter->SetbStartSummoning(true);
 
 	}
 	
@@ -203,16 +203,15 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		//GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 		PlayerCharacter->SetbStartThrowing(false);
 		PlayerCharacter->SetbStartSummoning(false);
-		
 
 	}
 
 	
-	if (RightTrigger.bIsHeld)
+	/*if (RightTrigger.bIsHeld)
 	{
 		PlayerCharacter->SetbStartThrowing(false);
 		PlayerCharacter->SetbStartSummoning(true);
-	}
+	}*/
 }
 
 void ABTBInputReceiverPawn::HandleLeftTrigger() const

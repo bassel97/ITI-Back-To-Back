@@ -16,7 +16,7 @@ void UBTBAnimNotifyStateThrow::NotifyBegin(USkeletalMeshComponent* MeshComp, UAn
 
 			Miles->GetSpear()->Throw(Miles->GetActorForwardVector(), 2000.f);
 			Miles->bSpearAttached = Miles->GetSpear()->IsAttachedTo(Miles);
-
+			Miles->GetSpear()->ActivateBoxCollision();
 			if (!Miles->bSpearAttached)
 			{
 				Miles->bIsThrowing = false;
