@@ -153,11 +153,14 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 	if (LeftButton.bIsDown)
 	{
 		PlayerCharacter->SetbStartSwitching(true);
+		//PlayerCharacter->PlayAnimMontage();
+		PlayerCharacter->SetbStartAttack(true);
 	}
 
 	if (LeftButton.bIsReleased)
 	{
 		PlayerCharacter->SetbStartSwitching(false);
+		PlayerCharacter->SetbStartAttack(false);
 	}
 
 	if (LeftButton.bIsHeld)
@@ -188,9 +191,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 	if (RightTrigger.bIsDown)
 	{
 		PlayerCharacter->SetbStartShoot(true);
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
-
-		//PlayerCharacter->SetbStartAttack(true);
+		//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
 		PlayerCharacter->SetbStartThrowing(true);
 		//PlayerCharacter->SetbStartSummoning(true);
 
@@ -199,8 +200,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 	if (RightTrigger.bIsReleased)
 	{
 		PlayerCharacter->SetbStartShoot(false);
-		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
-		//PlayerCharacter->SetbStartAttack(false);
+		//GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 		PlayerCharacter->SetbStartThrowing(false);
 		PlayerCharacter->SetbStartSummoning(false);
 		
