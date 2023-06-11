@@ -20,14 +20,14 @@ public:
 
 	//class TObjectPtr<AMyLearningPlaygroundCharacter> Miles;
 	UPROPERTY(BlueprintReadOnly)
-		class ABTBMiniGameTwoPlayableCharacter* Miles;
+	class ABTBMiniGameTwoPlayableCharacter* Miles;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement")
-		class UCharacterMovementComponent* MilesMovementComponent;
+	class UCharacterMovementComponent* MilesMovementComponent;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement")
-		float GroundSpeed;
+	float GroundSpeed;
 		
 	UPROPERTY(BlueprintReadOnly, Category = "Throwing")
-		bool bThrow;
+	bool bThrow;
 };
