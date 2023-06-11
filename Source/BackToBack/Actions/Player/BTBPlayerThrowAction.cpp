@@ -16,8 +16,6 @@ void UBTBPlayerThrowAction::Act(ABTBCharacter* Character)
         if (Player->GetSpear()->IsAttachedTo(Player))
         {
             Player->Throw();
-            //Player->SetbStartThrowing(false);
-            //Player->SetbStartSummoning(false);
         }
         
     }

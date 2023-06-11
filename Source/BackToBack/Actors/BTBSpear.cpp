@@ -71,6 +71,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 {
 	if (APawn* Pawn = Cast<APawn>(OtherActor))
 	{
+		bool bIsSpearAttached = false;
 		if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
 		{
 			if (Player->bIsSummoning)
@@ -78,10 +79,18 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 				StopSpearBounce(Player);
 				DeactivateBoxCollision();
 			}
+			if (IsAttachedTo(Player))
+			{
+				bIsSpearAttached = true;
+			}
+			else
+			{
+				bIsSpearAttached = false;
+			}
 		}
 		else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
 		{
-			if (EnemiesArray.IsEmpty())
+			if (EnemiesArray.IsEmpty() && !bIsSpearAttached)
 			{
 				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), EnemySphereDetection->GetScaledSphereRadius());
 			}
@@ -101,7 +110,10 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 					EnemiesArray.RemoveSingle(EnemiesArray[i]);
 				}
 			}
-			BounceAtEnemies();
+			if (!IsAttachedTo(Player))
+			{
+				BounceAtEnemies();
+			}
 		}
 		else
 		{

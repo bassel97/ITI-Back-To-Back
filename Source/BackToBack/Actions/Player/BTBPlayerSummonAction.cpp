@@ -20,8 +20,6 @@ void UBTBPlayerSummonAction::Act(ABTBCharacter* Character)
         if (!Player->GetSpear()->IsAttachedTo(Player))
         {
             Player->Summon();
-            //Player->SetbStartThrowing(false);
-            //Player->SetbStartSummoning(false);
         }
     }
 }

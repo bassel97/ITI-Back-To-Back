@@ -6,6 +6,7 @@
 #include "BackToBack/Actors/BTBPooledObject.h"
 #include "BackToBack/Actors/BTBSpear.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraComponent.h"
@@ -18,7 +19,8 @@ void ABTBEnemyCharacter::BeginPlay() {
       this, &ABTBEnemyCharacter::OnWeaponHit);
 }
 
-void ABTBEnemyCharacter::Die() {
+void ABTBEnemyCharacter::Die() 
+{
   const TObjectPtr<UWorld> World = GetWorld();
   if (!ensure(World != nullptr)) {
     return;
@@ -41,7 +43,8 @@ void ABTBEnemyCharacter::Die() {
                                   &ABTBEnemyCharacter::DestroyEnemy, 3, false);
 }
 
-void ABTBEnemyCharacter::Damage() {
+void ABTBEnemyCharacter::Damage() 
+{
   Health--;
   if (Health <= 0) {
     Die();
@@ -65,12 +68,18 @@ void ABTBEnemyCharacter::DestroyEnemy() {
   }
 }
 
-void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent *OverlappedComponent,AActor *OtherActor,UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep,const FHitResult &SweepResult) {
-  if (ABTBPooledObject *Bullet = Cast<ABTBPooledObject>(OtherActor)) {
-    Bullet->DeactivatePooledObject();
-    Damage();
+void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent *OverlappedComponent,AActor *OtherActor,UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep,const FHitResult &SweepResult) 
+{
+  if (ABTBPooledObject *Bullet = Cast<ABTBPooledObject>(OtherActor)) 
+  {
+      Bullet->DeactivatePooledObject();
+      Damage();
   }
-  if (ABTBSpear* Spear = Cast<ABTBSpear>(OtherActor)) {
-    Damage();
+  if (ABTBSpear* Spear = Cast<ABTBSpear>(OtherActor))
+  {
+      if (Cast<UBoxComponent>(OtherComp))
+      {
+          Damage();
+      }
   }
 }
