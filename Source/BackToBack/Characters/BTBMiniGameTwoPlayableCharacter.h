@@ -17,20 +17,14 @@ class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter : public ABTBPlayableChara
 
 public:
 	ABTBMiniGameTwoPlayableCharacter();
-
 	void SetSpear(ABTBSpear* Spear);
-
 	ABTBSpear* GetSpear();
-
 	void Throw();
-
 	void AttachSpearToPlayer();
-
 	void Summon();
 
 protected:
 	virtual float GetUserInput_X() override;
-
 	virtual float GetUserInput_Y() override;
 
 private:
@@ -41,21 +35,21 @@ public:
 	TObjectPtr<ABTBSpear> SpearActor;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
-		bool bIsThrowing;
+	bool bIsThrowing;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
-		bool bIsSummoning;
+	bool bIsSummoning;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
-		bool bSpearAttached;
+	bool bSpearAttached;
 
 	UPROPERTY()
-		UAnimInstance* MilesAnimInstance;
+	UAnimInstance* MilesAnimInstance;
 
 protected:
 
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
-		TObjectPtr<USceneComponent> SpearRetrievalPoint;
+	TObjectPtr<USceneComponent> SpearRetrievalPoint;
 };

@@ -32,15 +32,7 @@ ABTBSpear::ABTBSpear()
 	ProjectileMovementComponent->SetUpdatedComponent(RootComponent);
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
-
-	/*ProjectileMovementComponent->InitialSpeed = 150.f;
-	ProjectileMovementComponent->MaxSpeed = 200.f;
-	ProjectileMovementComponent->bRotationFollowsVelocity = true;
-	ProjectileMovementComponent->bShouldBounce = false;
-	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
-	ProjectileMovementComponent->bIsHomingProjectile = true;
-	ProjectileMovementComponent->HomingAccelerationMagnitude = 200.f;*/
-
+	
 	EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
 	EnemySphereDetection->SetupAttachment(RootComponent);
 	EnemySphereDetection->SetSphereRadius(50.f, false);
@@ -95,6 +87,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 					EnemiesArray.AddUnique(TPair<AActor*, bool>(Enemy, true));
 				}
 			}
+			
 			for (int32 i = 0; i < EnemiesArray.Num(); i++)
 			{
 				if (Cast<ABTBMiniGameTwoPlayableCharacter>(EnemiesArray[i].Key))
@@ -102,6 +95,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 					EnemiesArray.RemoveSingle(EnemiesArray[i]);
 				}
 			}
+			
 			BounceAtEnemies();
 		}
 		else

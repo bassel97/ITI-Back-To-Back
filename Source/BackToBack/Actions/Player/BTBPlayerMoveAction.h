@@ -2,7 +2,6 @@
 
 #pragma once
 
-//#include "BackToBack/Characters/BTBCharacter.h"
 #include "CoreMinimal.h"
 #include "BackToBack/Actions/Character/BTBCharacterAction.h"
 #include "BTBPlayerMoveAction.generated.h"
@@ -12,7 +11,7 @@ class ABTBAICharacter;
 
 
 /**
- * Our Move
+ * Our Move for mini game two (top down)
  */
 UCLASS()
 class BACKTOBACK_API UBTBPlayerMoveAction : public UBTBCharacterAction
