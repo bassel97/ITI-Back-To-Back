@@ -26,7 +26,7 @@ void ABTBEnemySpawner::BeginPlay()
 		return;
 	}
 	
-	UpdateSpawnEnemyEvery();
+	/*UpdateSpawnEnemyEvery();
 	
 	World->GetTimerManager().SetTimer
 	(
@@ -53,7 +53,7 @@ void ABTBEnemySpawner::BeginPlay()
 		&ABTBEnemySpawner::UpdateClosestEnemyToPlayers,
 		0.025,
 		true
-	);
+	);*/
 
 	
 }

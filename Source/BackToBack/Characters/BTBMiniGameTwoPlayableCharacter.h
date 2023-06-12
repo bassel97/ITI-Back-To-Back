@@ -22,6 +22,8 @@ public:
 	void Throw();
 	void AttachSpearToPlayer();
 	void Summon();
+	
+	void Attack();
 
 protected:
 	virtual float GetUserInput_X() override;
@@ -36,6 +38,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
 	bool bIsThrowing;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Attack")
+	bool bIsAttacking;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
 	bool bIsSummoning;

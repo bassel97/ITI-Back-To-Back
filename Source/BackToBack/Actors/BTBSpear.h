@@ -18,53 +18,76 @@ class BACKTOBACK_API ABTBSpear : public ABTBWeaponBase
 {
 	GENERATED_BODY()
 
+		//Methods
 public:
 	ABTBSpear();
-	
+
 	void Throw(const FVector& Direction, const float Speed);
+
 	void Summon(AActor* SummoningLocation);
+
 	void ActivateBoxCollision();
+
 	void DeactivateBoxCollision();
 
 protected:
+
+	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	void StopSpearBounce();
+
+	void StopSpearBounce(AActor* SpearNewParentActor);
+
 	void Fall(float GravityScale);
+
 	void Retrieve();
+
 	void BounceAtEnemies();
-	void PerformSphereTrace(const FVector& StartLocation, const FVector& EndLocation, float Radius);
+
+	void HomingFunction(bool bIsHoming, float InitialSpeed, float MaxSpeed, float HomingAcceleration, AActor* Target);
 
 	UFUNCTION()
-	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
+	void PerformSphereTrace(const FVector& StartLocation, const FVector& EndLocation, float Radius);
+
+	//Fields (Properties)
 public:
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USceneComponent> BoxTraceStart;
 
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USceneComponent> BoxTraceEnd;
+		TObjectPtr<USceneComponent> BoxTraceStart;
+
+	UPROPERTY(VisibleAnywhere)
+		TObjectPtr<USceneComponent> BoxTraceEnd;
 
 protected:
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<UStaticMeshComponent> SpearMesh;
+		TObjectPtr<UStaticMeshComponent> SpearMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision Components")
-	TObjectPtr<UBoxComponent> CollisionBox;
-	
+		TObjectPtr<UBoxComponent> CollisionBox;
+
 	UPROPERTY(VisibleAnywhere, Category = "Collision Components")
-	TObjectPtr<USphereComponent> EnemySphereDetection;
+		TObjectPtr<USphereComponent> EnemySphereDetection;
 
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UProjectileMovementComponent> ProjectileMovementComponent;
+		TObjectPtr<UProjectileMovementComponent> ProjectileMovementComponent;
 
 	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<URotatingMovementComponent> RotatingMovementComponent;
+		TObjectPtr<URotatingMovementComponent> RotatingMovementComponent;
 
 private:
+
 	int32 EnemyCounter = 0;
+
 	TArray<TPair<TObjectPtr<AActor>, bool>> EnemiesArray;
-	
+
+	bool bIsAttached = true;
+
+
 };

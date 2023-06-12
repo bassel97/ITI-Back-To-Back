@@ -35,7 +35,7 @@ ABTBSpear::ABTBSpear()
 	
 	EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
 	EnemySphereDetection->SetupAttachment(RootComponent);
-	EnemySphereDetection->SetSphereRadius(50.f, false);
+	EnemySphereDetection->SetSphereRadius(80.f, false);
 }
 
 void ABTBSpear::BeginPlay()
@@ -63,18 +63,26 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 {
 	if (APawn* Pawn = Cast<APawn>(OtherActor))
 	{
+		
 		if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
 		{
 			if (Player->bIsSummoning)
 			{
-				Player->AttachSpearToPlayer();
-				StopSpearBounce();
+				StopSpearBounce(Player);
 				DeactivateBoxCollision();
+			}
+			if (IsAttachedTo(Player))
+			{
+				bIsAttached = true;
+			}
+			else
+			{
+				bIsAttached = false;
 			}
 		}
 		else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
 		{
-			if (EnemiesArray.IsEmpty())
+			if (EnemiesArray.IsEmpty() && !bIsAttached)
 			{
 				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), EnemySphereDetection->GetScaledSphereRadius());
 			}
@@ -100,7 +108,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		}
 		else
 		{
-			StopSpearBounce();
+			StopSpearBounce(OtherActor);
 		}
 	}
 }
@@ -163,40 +171,53 @@ void ABTBSpear::BounceAtEnemies()
 	}
 	if (bBounceFinished)
 	{
-		StopSpearBounce();
+		StopSpearBounce(TargetEnemy);
 		EnemiesArray.Empty();
 		EnemyCounter = 0;
-		ProjectileMovementComponent->bIsHomingProjectile = false;
-		ProjectileMovementComponent->InitialSpeed = 0.f;
-		ProjectileMovementComponent->MaxSpeed = 0.f;
-		ProjectileMovementComponent->HomingAccelerationMagnitude = 200.f;
+		//HomingFunction(false, 0.f, 0.f, 0.f, nullptr);
 	}
 	else
 	{
 		if (TargetEnemy)
 		{
 			FVector UD = (TargetEnemy->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-			ProjectileMovementComponent->bIsHomingProjectile = true;
-			ProjectileMovementComponent->InitialSpeed = 150.f;
-			ProjectileMovementComponent->MaxSpeed = 200.f;
-			ProjectileMovementComponent->HomingAccelerationMagnitude = 300.f;
-			ProjectileMovementComponent->HomingTargetComponent = TargetEnemy->GetRootComponent();
-			//Throw(UD, 200.f);
+			//HomingFunction(true, 150.f, 200.f, 300.f, TargetEnemy);
+			Throw(UD, 500.f);
 		}
 	}
 }
 
 void ABTBSpear::Throw(const FVector& Direction, const float Speed)
 {
+	bIsAttached = false;
 	ProjectileMovementComponent->Velocity = Direction * Speed;
-	Fall(0.f);
 }
 
-void ABTBSpear::StopSpearBounce()
+
+void ABTBSpear::StopSpearBounce(AActor* SpearNewParentActor)
 {
-	ProjectileMovementComponent->StopMovementImmediately();
-	Fall(0.f);
+	if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(SpearNewParentActor))
+	{
+		ProjectileMovementComponent->StopMovementImmediately();
+		Player->AttachSpearToPlayer();
+		bIsAttached = true;
+		Fall(0.f);
+	}
+	//else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(SpearNewParentActor))
+	//{
+	//	/*ProjectileMovementComponent->StopMovementImmediately();
+	//	AttachToComponent(Enemy->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
+	//	DeactivateBoxCollision();*/
+	//	//ProjectileMovementComponent->StopMovementImmediately();
+	//	Fall(0.05f);
+	//}
+	else
+	{
+		//ProjectileMovementComponent->StopMovementImmediately();
+		Fall(0.05f);
+	}
 }
+
 
 void ABTBSpear::Fall(float GravityScale)
 {
@@ -207,18 +228,30 @@ void ABTBSpear::Summon(AActor* SummoningLocation)
 {
 	FVector ReturnVector = (SummoningLocation->GetActorLocation() - GetActorLocation());
 	FVector ReturnUnitVector = ReturnVector.GetSafeNormal();
-	UE_LOG(LogTemp, Warning, TEXT("Summon unit vector is x:%f, y:%f, z:%f"), ReturnUnitVector.X, ReturnUnitVector.Y, ReturnUnitVector.Z);
+
 	EnemyCounter = 0;
 	EnemiesArray.Empty();
+	ActivateBoxCollision();
+	//HomingFunction(false, 0.f, 0.f, 0.f, nullptr);
 	//ProjectileMovementComponent->Velocity = ReturnUnitVector * 1000.f;
-	ProjectileMovementComponent->bIsHomingProjectile = false;
-	ProjectileMovementComponent->InitialSpeed = 0.f;
-	ProjectileMovementComponent->MaxSpeed = 0.f;
-	ProjectileMovementComponent->Velocity = ReturnUnitVector * 1000.f;
-	//Fall(0.f);
-	//Throw(ReturnUnitVector, 1000.f);
+	Fall(0.f);
+	Throw(ReturnUnitVector, 1000.f);
 }
 
 void ABTBSpear::Retrieve()
 {
+}
+
+
+
+
+void ABTBSpear::HomingFunction(bool bIsHoming, float InitialSpeed, float MaxSpeed, float HomingAcceleration, AActor* Target)
+{
+	ProjectileMovementComponent->bIsHomingProjectile = bIsHoming;
+	ProjectileMovementComponent->InitialSpeed = InitialSpeed;
+	ProjectileMovementComponent->MaxSpeed = MaxSpeed;
+	if (Target)
+	{
+		ProjectileMovementComponent->HomingTargetComponent = Target->GetRootComponent();
+	}
 }
