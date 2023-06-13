@@ -207,14 +207,15 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 		bIsAttached = true;
 		Fall(0.f);
 	}
-	//else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(SpearNewParentActor))
-	//{
-	//	/*ProjectileMovementComponent->StopMovementImmediately();
-	//	AttachToComponent(Enemy->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
-	//	DeactivateBoxCollision();*/
-	//	//ProjectileMovementComponent->StopMovementImmediately();
-	//	Fall(0.05f);
-	//}
+	else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(HitActor))
+	{
+		/*ProjectileMovementComponent->StopMovementImmediately();
+		AttachToComponent(Enemy->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
+		DeactivateBoxCollision();*/
+		//ProjectileMovementComponent->StopMovementImmediately();
+		DeactivateBoxCollision();
+		Fall(0.05f);
+	}
 	else
 	{
 		ProjectileMovementComponent->StopMovementImmediately();
