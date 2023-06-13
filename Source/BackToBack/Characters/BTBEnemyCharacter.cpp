@@ -45,7 +45,19 @@ void ABTBEnemyCharacter::Die()
 
 void ABTBEnemyCharacter::Damage() 
 {
-  Health--;
+	Health--;
+
+		bIsgettingDamaged = true;
+		//GetWorld()->GetTimerManager().SetTimer(TimerHandle,DamageAnimation->GetPlayLength(),false,-1);
+	
+		// GetMesh()->PlayAnimation(DamageAnimation,false);
+
+	if (ensure(DamageEffect))
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, DamageEffect, GetTransform().GetLocation(),
+	GetTransform().Rotator(), GetTransform().GetScale3D(), true, true,
+	ENCPoolMethod::AutoRelease, true);
+	}
   if (Health <= 0) {
     Die();
   }
@@ -82,4 +94,14 @@ void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent *OverlappedComponent,AA
           Damage();
       }
   }
+}
+
+bool ABTBEnemyCharacter::GetGettingDamaged() //added by Jo
+{
+	return bIsgettingDamaged;
+}
+
+void ABTBEnemyCharacter::SetGettingDamaged(bool value) //Added by Jo
+{
+	bIsgettingDamaged = value;
 }

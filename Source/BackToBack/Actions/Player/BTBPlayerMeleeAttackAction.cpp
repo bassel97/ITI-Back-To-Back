@@ -3,6 +3,7 @@
 
 #include "BTBPlayerMeleeAttackAction.h"
 
+#include "BackToBack/Actors/BTBSpear.h"
 #include "BackToBack/Characters/BTBCharacter.h"
 #include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
 
@@ -18,7 +19,18 @@ void UBTBPlayerMeleeAttackAction::Act(ABTBCharacter* Character)
 	if (Character->GetbStartAttack())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("ATTACK"));
-		MG2PlayableCharacter->Attack();
+		//MG2PlayableCharacter->Attack();
+		
+		if (MG2PlayableCharacter->GetSpear() != nullptr)
+		{
+			if (MG2PlayableCharacter->GetSpear()->IsAttachedTo(MG2PlayableCharacter))
+			{
+					MG2PlayableCharacter->SetbIsAttacking(true);
+					
+			}
+			
+		}
+	
 		//Character->PlayAnimMontage(attackMontage,1,NAME_None);
 		//Character->SetbStartAttack(false);
 	}

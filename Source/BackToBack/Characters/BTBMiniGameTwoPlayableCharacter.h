@@ -23,8 +23,14 @@ public:
 	void AttachSpearToPlayer();
 	void Summon();
 	
-	void Attack();
+	// void Attack();
 
+	UFUNCTION(BlueprintCallable)
+	bool GetbIsAttacking();
+
+	UFUNCTION(BlueprintCallable)
+	void SetbIsAttacking(bool Value);
+	
 protected:
 	virtual void BeginPlay() override;
 	// virtual float GetUserInput_X() override;
@@ -44,9 +50,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
 	bool bIsThrowing;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Attack")
-	bool bIsAttacking;
-
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
 	bool bIsSummoning;
 
@@ -61,5 +64,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
-	TObjectPtr<USceneComponent> SpearRetrievalPoint;
+		TObjectPtr<USceneComponent> SpearRetrievalPoint;
+	
+	bool bIsAttacking;
 };

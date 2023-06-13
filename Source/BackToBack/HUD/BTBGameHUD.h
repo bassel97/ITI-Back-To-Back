@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
-
 #include "BTBGameHUD.generated.h"
 
 class URetainerBox;

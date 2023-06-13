@@ -31,6 +31,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Throwing")
 	bool bThrow;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Throwing")
+	UPROPERTY(BlueprintReadWrite, Category = "Throwing")
 	bool bAttack;
 };
