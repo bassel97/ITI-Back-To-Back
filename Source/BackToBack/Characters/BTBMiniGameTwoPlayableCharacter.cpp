@@ -82,11 +82,15 @@ void ABTBMiniGameTwoPlayableCharacter::Summon()
 	SpearActor->Summon(this);
 }
 
-void ABTBMiniGameTwoPlayableCharacter::Attack()
+bool ABTBMiniGameTwoPlayableCharacter::GetbIsAttacking()
 {
-	bIsAttacking = true;
+	return bIsAttacking;
 }
 
+void ABTBMiniGameTwoPlayableCharacter::SetbIsAttacking(bool Value)
+{
+	bIsAttacking = Value;
+}
 
 
 void ABTBMiniGameTwoPlayableCharacter::Die()

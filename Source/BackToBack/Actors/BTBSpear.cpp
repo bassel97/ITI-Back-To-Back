@@ -84,7 +84,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		{
 			if (EnemiesArray.IsEmpty() && !bIsAttached)
 			{
-				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 80.f);
+				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 800.f);
 			}
 
 			for (auto EnemyMember : EnemiesArray)
@@ -177,6 +177,7 @@ void ABTBSpear::BounceAtEnemies()
 		StopSpearBounce(TargetEnemy);
 		EnemiesArray.Empty();
 		EnemyCounter = 0;
+		DeactivateBoxCollision();
 		//HomingFunction(false, 0.f, 0.f, 0.f, nullptr);
 	}
 	else
