@@ -9,8 +9,6 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "BackToBack/Characters/BTBEnemyCharacter.h"
 #include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetMathLibrary.h"
 
 ABTBSpear::ABTBSpear()
 {
@@ -34,19 +32,10 @@ ABTBSpear::ABTBSpear()
 	ProjectileMovementComponent->SetUpdatedComponent(RootComponent);
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
-
-	//Comment 
-	// ProjectileMovementComponent->InitialSpeed = 150.f;
-	// ProjectileMovementComponent->MaxSpeed = 200.f;
-	// ProjectileMovementComponent->bRotationFollowsVelocity = true;
-	// ProjectileMovementComponent->bShouldBounce = false;
-	// ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
-	// ProjectileMovementComponent->bIsHomingProjectile = true;
-	// ProjectileMovementComponent->HomingAccelerationMagnitude = 200.f;
-
-	// EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
-	// EnemySphereDetection->SetupAttachment(RootComponent);
-	// EnemySphereDetection->SetSphereRadius(80.f, false);
+	
+	/*EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
+	EnemySphereDetection->SetupAttachment(RootComponent);
+	EnemySphereDetection->SetSphereRadius(80.f, false);*/
 }
 
 void ABTBSpear::BeginPlay()
@@ -93,9 +82,9 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		}
 		else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
 		{
-			if (EnemiesArray.IsEmpty() && !bIsAttached )
+			if (EnemiesArray.IsEmpty() && !bIsAttached)
 			{
-				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 800.f);
+				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 80.f);
 			}
 
 			for (auto EnemyMember : EnemiesArray)
@@ -117,7 +106,10 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 			
 			BounceAtEnemies();
 		}
-		else
+	}
+	else
+	{
+		if (OtherActor != this)
 		{
 			StopSpearBounce(OtherActor);
 		}
@@ -205,9 +197,9 @@ void ABTBSpear::Throw(const FVector& Direction, const float Speed)
 }
 
 
-void ABTBSpear::StopSpearBounce(AActor* SpearNewParentActor)
+void ABTBSpear::StopSpearBounce(AActor* HitActor)
 {
-	if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(SpearNewParentActor))
+	if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(HitActor))
 	{
 		ProjectileMovementComponent->StopMovementImmediately();
 		Player->AttachSpearToPlayer();
@@ -225,7 +217,7 @@ void ABTBSpear::StopSpearBounce(AActor* SpearNewParentActor)
 	else
 	{
 		ProjectileMovementComponent->StopMovementImmediately();
-		Fall(0);
+		Fall(0.f);
 	}
 }
 
