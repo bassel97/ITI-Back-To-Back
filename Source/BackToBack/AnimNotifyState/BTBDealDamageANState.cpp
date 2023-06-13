@@ -4,22 +4,30 @@
 
 #include "BackToBack/Actors/BTBSpear.h"
 #include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
-#include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
-void UBTBDealDamageANState::NotifyTick(
-    USkeletalMeshComponent *MeshComp, UAnimSequenceBase *Animation,
-    float FrameDeltaTime, const FAnimNotifyEventReference &EventReference) {
+void UBTBDealDamageANState::NotifyTick(USkeletalMeshComponent *MeshComp, UAnimSequenceBase *Animation,float FrameDeltaTime, const FAnimNotifyEventReference &EventReference)
+{
   Super::NotifyTick(MeshComp, Animation, FrameDeltaTime, EventReference);
-  // TArray<AActor*> ActorsToIgnore;
-  // TArray<FHitResult> HitArray;
+  Player = Cast<ABTBMiniGameTwoPlayableCharacter>(MeshComp->GetOwner());
+  TArray<AActor*> ActorsToIgnore;
+  TArray<FHitResult> HitArray;
+  
   // UKismetSystemLibrary::SphereTraceMulti(
-  //     MeshComp, MeshComp->GetSocketLocation("RightHandSocket") * .5,
-  //     MeshComp->GetSocketLocation("SpearEndSocket"), 5.f,
-  //     UEngineTypes::ConvertToTraceType(ECC_Pawn), false, ActorsToIgnore,
-  //     EDrawDebugTrace::Type::ForDuration, HitArray, true, FColor::Blue,
-  //     FColor::Green, 10.f);
+  //     MeshComp,
+  //     Player->GetSpear()->BoxTraceStart->GetComponentLocation(),
+  //     Player->GetSpear()->BoxTraceEnd->GetComponentLocation(),
+  //     5.f,
+  //     UEngineTypes::ConvertToTraceType(ECC_Pawn),
+  //     false,
+  //     ActorsToIgnore,
+  //     EDrawDebugTrace::Type::ForDuration,
+  //     HitArray,
+  //     true,
+  //     FColor::Blue,
+  //     FColor::Green,
+  //      10.f);
   // UE_LOG(LogTemp, Warning, TEXT("Inside"));
 
   // UKismetSystemLibrary::SphereTraceMulti(MeshComp,
@@ -50,8 +58,8 @@ void UBTBDealDamageANState::NotifyEnd(USkeletalMeshComponent *MeshComp, UAnimSeq
     ABTBMiniGameTwoPlayableCharacter* Miles = Cast<ABTBMiniGameTwoPlayableCharacter>(MeshComp->GetOwner());
     if (Miles) {
       Miles->GetSpear()->DeactivateBoxCollision();
-
-      Miles->bIsAttacking = false;
+       //Miles->SetbIsAttacking(false);
+       Miles->SetbStartAttack(false);
     }
   }
 }

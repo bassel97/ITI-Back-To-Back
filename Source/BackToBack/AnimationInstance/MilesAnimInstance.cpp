@@ -28,7 +28,7 @@ void UMilesAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (Miles)
 	{
 		bThrow = Miles->bIsThrowing;
-		bAttack = Miles->bIsAttacking;
+		bAttack = Miles->GetbIsAttacking();
 	}
 
 }

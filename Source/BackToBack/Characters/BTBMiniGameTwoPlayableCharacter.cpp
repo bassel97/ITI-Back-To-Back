@@ -70,21 +70,27 @@ void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 void ABTBMiniGameTwoPlayableCharacter::Throw()
 {
 	bIsThrowing = true;
+	bIsSummoning = false;
 	//SetbStartThrowing(false);
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Summon()
 {
 	bIsSummoning = true;
+	bIsThrowing = false;
 	//SpearActor->Summon(SpearRetrievalPoint->GetComponentLocation());
 	SpearActor->Summon(this);
 }
 
-void ABTBMiniGameTwoPlayableCharacter::Attack()
+bool ABTBMiniGameTwoPlayableCharacter::GetbIsAttacking()
 {
-	bIsAttacking = true;
+	return bIsAttacking;
 }
 
+void ABTBMiniGameTwoPlayableCharacter::SetbIsAttacking(bool Value)
+{
+	bIsAttacking = Value;
+}
 
 
 void ABTBMiniGameTwoPlayableCharacter::Die()

@@ -13,9 +13,14 @@ void UBTBPlayerThrowAction::Act(ABTBCharacter* Character)
     if (Character->GetbStartThrowing())
     {
         ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
-        if (Player->GetSpear()->IsAttachedTo(Player))
+        if (Player->GetSpear() != nullptr)
         {
-            Player->Throw();
+            if (Player->GetSpear()->IsAttachedTo(Player))
+            {
+                Player->Throw();
+            }
         }
+
+        
     }
 }

@@ -33,9 +33,9 @@ ABTBSpear::ABTBSpear()
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
 	
-	EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
+	/*EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
 	EnemySphereDetection->SetupAttachment(RootComponent);
-	EnemySphereDetection->SetSphereRadius(80.f, false);
+	EnemySphereDetection->SetSphereRadius(80.f, false);*/
 }
 
 void ABTBSpear::BeginPlay()
@@ -84,7 +84,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		{
 			if (EnemiesArray.IsEmpty() && !bIsAttached)
 			{
-				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), EnemySphereDetection->GetScaledSphereRadius());
+				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 800.f);
 			}
 
 			for (auto EnemyMember : EnemiesArray)
@@ -106,7 +106,10 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 			
 			BounceAtEnemies();
 		}
-		else
+	}
+	else
+	{
+		if (OtherActor != this)
 		{
 			StopSpearBounce(OtherActor);
 		}
@@ -174,6 +177,7 @@ void ABTBSpear::BounceAtEnemies()
 		StopSpearBounce(TargetEnemy);
 		EnemiesArray.Empty();
 		EnemyCounter = 0;
+		DeactivateBoxCollision();
 		//HomingFunction(false, 0.f, 0.f, 0.f, nullptr);
 	}
 	else
@@ -194,9 +198,9 @@ void ABTBSpear::Throw(const FVector& Direction, const float Speed)
 }
 
 
-void ABTBSpear::StopSpearBounce(AActor* SpearNewParentActor)
+void ABTBSpear::StopSpearBounce(AActor* HitActor)
 {
-	if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(SpearNewParentActor))
+	if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(HitActor))
 	{
 		ProjectileMovementComponent->StopMovementImmediately();
 		Player->AttachSpearToPlayer();
@@ -213,8 +217,8 @@ void ABTBSpear::StopSpearBounce(AActor* SpearNewParentActor)
 	//}
 	else
 	{
-		//ProjectileMovementComponent->StopMovementImmediately();
-		Fall(0.05f);
+		ProjectileMovementComponent->StopMovementImmediately();
+		Fall(0.f);
 	}
 }
 

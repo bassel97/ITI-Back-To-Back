@@ -72,8 +72,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision Components")
 		TObjectPtr<UBoxComponent> CollisionBox;
 
-	UPROPERTY(VisibleAnywhere, Category = "Collision Components")
-		TObjectPtr<USphereComponent> EnemySphereDetection;
+	/*UPROPERTY(VisibleAnywhere, Category = "Collision Components")
+		TObjectPtr<USphereComponent> EnemySphereDetection;*/
 
 	UPROPERTY(EditDefaultsOnly)
 		TObjectPtr<UProjectileMovementComponent> ProjectileMovementComponent;
