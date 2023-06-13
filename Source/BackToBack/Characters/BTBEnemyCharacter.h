@@ -34,9 +34,16 @@ protected:
 	
 private:
 
+	bool bIsgettingDamaged;
 	
 
 public:
+
+	UFUNCTION(BlueprintCallable)
+	bool GetGettingDamaged();
+
+	UFUNCTION(BlueprintCallable)
+	void SetGettingDamaged(bool value);
 	
 protected:
 	UPROPERTY(EditDefaultsOnly,Category = "Death Animation")
@@ -48,6 +55,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
 	UNiagaraSystem* DeathEffect;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
+	UNiagaraSystem* DamageEffect;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage Animation")
+	UAnimationAsset* DamageAnimation;
+
+	//FTimerHandle TimerHandle;
 
 private:
 	FTimerHandle DestroyTimeHandle;

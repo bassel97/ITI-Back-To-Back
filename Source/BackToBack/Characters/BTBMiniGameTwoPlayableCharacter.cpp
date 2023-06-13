@@ -69,7 +69,11 @@ void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 
 void ABTBMiniGameTwoPlayableCharacter::Throw()
 {
-	bIsThrowing = true;
+	if (!GetbIsAttacking())
+	{
+		bIsThrowing = true;
+	}
+	
 	//SetbStartThrowing(false);
 }
 
@@ -80,9 +84,23 @@ void ABTBMiniGameTwoPlayableCharacter::Summon()
 	SpearActor->Summon(this);
 }
 
-void ABTBMiniGameTwoPlayableCharacter::Attack()
+// void ABTBMiniGameTwoPlayableCharacter::Attack()
+// {
+// 	if (GetSpear()->IsAttachedTo(this))
+// 	{
+// 		SetbIsAttacking(true);
+// 	}
+// 	
+// }
+
+bool ABTBMiniGameTwoPlayableCharacter::GetbIsAttacking() // Jo added
 {
-	bIsAttacking = true;
+	return bIsAttacking;
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SetbIsAttacking(bool Value) // Jo added
+{
+	bIsAttacking = Value;
 }
 
 

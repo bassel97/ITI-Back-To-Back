@@ -13,13 +13,16 @@ void UBTBPlayerSummonAction::Act(ABTBCharacter* Character)
         return;
     }
 
-    if (Character->GetbStartSummoning()) 
+    if (Character->GetbStartSummoning())
     {
         ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
-
-        if (!Player->GetSpear()->IsAttachedTo(Player))
+        
+        if (Player->GetSpear() != nullptr)
         {
-            Player->Summon();
+            if (!Player->GetSpear()->IsAttachedTo(Player))
+            {
+                Player->Summon();
+            }
         }
     }
 }

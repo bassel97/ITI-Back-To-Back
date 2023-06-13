@@ -9,6 +9,8 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "BackToBack/Characters/BTBEnemyCharacter.h"
 #include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ABTBSpear::ABTBSpear()
 {
@@ -32,10 +34,19 @@ ABTBSpear::ABTBSpear()
 	ProjectileMovementComponent->SetUpdatedComponent(RootComponent);
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
-	
-	EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
-	EnemySphereDetection->SetupAttachment(RootComponent);
-	EnemySphereDetection->SetSphereRadius(80.f, false);
+
+	//Comment 
+	// ProjectileMovementComponent->InitialSpeed = 150.f;
+	// ProjectileMovementComponent->MaxSpeed = 200.f;
+	// ProjectileMovementComponent->bRotationFollowsVelocity = true;
+	// ProjectileMovementComponent->bShouldBounce = false;
+	// ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
+	// ProjectileMovementComponent->bIsHomingProjectile = true;
+	// ProjectileMovementComponent->HomingAccelerationMagnitude = 200.f;
+
+	// EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
+	// EnemySphereDetection->SetupAttachment(RootComponent);
+	// EnemySphereDetection->SetSphereRadius(80.f, false);
 }
 
 void ABTBSpear::BeginPlay()
@@ -82,9 +93,9 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		}
 		else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
 		{
-			if (EnemiesArray.IsEmpty() && !bIsAttached)
+			if (EnemiesArray.IsEmpty() && !bIsAttached )
 			{
-				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), EnemySphereDetection->GetScaledSphereRadius());
+				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 800.f);
 			}
 
 			for (auto EnemyMember : EnemiesArray)
@@ -213,8 +224,8 @@ void ABTBSpear::StopSpearBounce(AActor* SpearNewParentActor)
 	//}
 	else
 	{
-		//ProjectileMovementComponent->StopMovementImmediately();
-		Fall(0.05f);
+		ProjectileMovementComponent->StopMovementImmediately();
+		Fall(0);
 	}
 }
 

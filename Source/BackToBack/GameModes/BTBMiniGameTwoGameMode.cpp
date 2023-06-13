@@ -11,7 +11,7 @@ void ABTBMiniGameTwoGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	AssignSpearToPlayer();
-	GameWidget->SetVisibility(ESlateVisibility::Hidden);
+	//GameWidget->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void ABTBMiniGameTwoGameMode::AssignSpearToPlayer()
@@ -21,11 +21,15 @@ void ABTBMiniGameTwoGameMode::AssignSpearToPlayer()
 		return;
 	}
 
-	const TObjectPtr<ABTBMiniGameTwoPlayableCharacter> MG2_Player = Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0]);
+	const TObjectPtr<ABTBMiniGameTwoPlayableCharacter> MG2_PlayerOne = Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0]);
+	const TObjectPtr<ABTBMiniGameTwoPlayableCharacter> MG2_PlayerTwo = Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[1]);
 	SpearPtr = GetWorld()->SpawnActor<ABTBSpear>(SpearClass);
+	
 	if (SpearPtr)
 	{
-		SpearPtr->AttachToComponent(MG2_Player->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("RightHandSocket"));
-		MG2_Player->SetSpear(SpearPtr);
+		SpearPtr->AttachToComponent(MG2_PlayerOne->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("RightHandSocket"));
+		MG2_PlayerOne->SetSpear(SpearPtr);
+		MG2_PlayerTwo->SetSpear(SpearPtr);
+		//MG2_Player->bSpearAttached = true;
 	}
 }
