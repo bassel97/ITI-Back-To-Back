@@ -14,7 +14,7 @@ void ABTBMiniGameTwoGameMode::BeginPlay()
 	AssignSpearToPlayer();
 	SetTopDownCameraReferenceForEachPlayer();
 	
-	GameWidget->SetVisibility(ESlateVisibility::Hidden);
+	// GameWidget->SetVisibility(ESlateVisibility::Hidden);
 
 }
 
