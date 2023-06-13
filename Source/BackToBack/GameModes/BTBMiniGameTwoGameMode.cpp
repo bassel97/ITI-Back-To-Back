@@ -10,8 +10,12 @@
 void ABTBMiniGameTwoGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	AssignSpearToPlayer();
+	SetTopDownCameraReferenceForEachPlayer();
+	
 	GameWidget->SetVisibility(ESlateVisibility::Hidden);
+
 }
 
 void ABTBMiniGameTwoGameMode::AssignSpearToPlayer()
@@ -28,4 +32,10 @@ void ABTBMiniGameTwoGameMode::AssignSpearToPlayer()
 		SpearPtr->AttachToComponent(MG2_Player->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("RightHandSocket"));
 		MG2_Player->SetSpear(SpearPtr);
 	}
+}
+
+void ABTBMiniGameTwoGameMode::SetTopDownCameraReferenceForEachPlayer()
+{
+	PlayerCharacterArray[0]->TopDownCameraPtr = SingleCameraPtr;
+	PlayerCharacterArray[1]->TopDownCameraPtr = SingleCameraPtr;
 }

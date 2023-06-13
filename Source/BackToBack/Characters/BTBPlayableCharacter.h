@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BTBHumanoidCharacter.h"
+#include "BackToBack/Actors/BTBCamera.h"
 #include "BackToBack/Vehicles/BTBVehicle.h"
 #include "BTBPlayableCharacter.generated.h"
 

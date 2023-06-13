@@ -29,21 +29,18 @@ void UBTBPauseMenuHUD::NativeConstruct()
 
 void UBTBPauseMenuHUD::OnResumeBtnClick()
 {
-	UWorld* World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if (World)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Resume"));
 		UGameplayStatics::SetGamePaused(World,false);
 		RemoveFromParent();
-
-
 	}
-
 }
 
 void UBTBPauseMenuHUD::OnQuitBtnClick()
 {
-	UWorld* World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if (World)
 	{
 		FGenericPlatformMisc::RequestExit(false);
@@ -53,7 +50,7 @@ void UBTBPauseMenuHUD::OnQuitBtnClick()
 
 void UBTBPauseMenuHUD::OnMainMenuBtnClick()
 {
-	UWorld* World = GetWorld();
+	const TObjectPtr<UWorld> World = GetWorld();
 	if (World)
 	{
 		UGameplayStatics::OpenLevel(World, TEXT("MainMenu"));

@@ -20,6 +20,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	void AssignSpearToPlayer();
+	void SetTopDownCameraReferenceForEachPlayer();
 
 private:
 

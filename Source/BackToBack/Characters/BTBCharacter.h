@@ -9,6 +9,7 @@
 
 class UBTBCharacterAction;
 class UInputMappingContext;
+class ABTBCamera;
 
 /**
  * Our Version of Character.
@@ -140,6 +141,8 @@ private:
 public:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TObjectPtr<UBTBCharacterAction>> CharacterActions;
+
+	TObjectPtr<ABTBCamera> TopDownCameraPtr;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
 	int32 Health { 2 };

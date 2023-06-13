@@ -27,8 +27,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<UButton> MainMenuBTN;
 
-	//UWorld* World = GetWorld();
-
 	virtual void NativeConstruct() override;
 
 	UFUNCTION()

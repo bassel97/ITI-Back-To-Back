@@ -22,6 +22,7 @@
 #include "BackToBack/Characters/BTBEnemyCharacter.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "BackToBack/Actors/BTBCamera.h"
 
 
 ABTBGameplayGameMode::ABTBGameplayGameMode()
@@ -36,7 +37,7 @@ void ABTBGameplayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
+	//UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = true;
 	CreatePlayers();
 	SetupPlayersCommunication();
 	CreateUIWidget();
@@ -46,7 +47,7 @@ void ABTBGameplayGameMode::BeginPlay()
 	GetWorldTimerManager().SetTimer(
 		IncreaseScoreTimerHandle,
 		this,
-		&ABTBGameplayGameMode::IncreaseScoreEveryOneSecond,
+		&ABTBGameplayGameMode::IncreaseScoreEverySecond,
 		1,
 		true
 	);
@@ -64,7 +65,11 @@ void ABTBGameplayGameMode::Tick(float DeltaSeconds)
 
 	if (PlayerCharacterArray[0]->GetbIsPaused() || PlayerCharacterArray[1]->GetbIsPaused())
 	{
-		DisplayPauseHUD();
+		DisplayPauseHUD(true);
+	}
+	else
+	{
+		DisplayPauseHUD(false);
 	}
 	
 }
@@ -135,15 +140,16 @@ void ABTBGameplayGameMode::AssignCameras()
 		InputReceiverArray[0]->Get_PlayerCharacter()->RemoveCamera();
 		InputReceiverArray[1]->Get_PlayerCharacter()->RemoveCamera();
 
-		const TObjectPtr<AActor> Camera = World->SpawnActor<AActor>(CameraClass);
+		SingleCameraPtr = World->SpawnActor<ABTBCamera>(CameraClass);
 		
-		UGameplayStatics::GetPlayerController(World, 0)->SetViewTargetWithBlend(Camera);
-		UGameplayStatics::GetPlayerController(World, 1)->SetViewTargetWithBlend(Camera);
+		UGameplayStatics::GetPlayerController(World, 0)->SetViewTargetWithBlend(SingleCameraPtr);
+		UGameplayStatics::GetPlayerController(World, 1)->SetViewTargetWithBlend(SingleCameraPtr);
 
 		GameWidget->MainScreenBox->SetEffectMaterial(nullptr);
 		GameWidget->MainScreenImage->SetRenderOpacity(0.0f);
 	}
-	else
+	
+	else if (SplitScreenClass->CameraMode == ECameraMode::SplitScreen)
 	{
 		CreateRenderTextures();
 		SetSplitScreenTextureToMaterial();
@@ -191,7 +197,7 @@ void ABTBGameplayGameMode::CreateUIWidget()
 	}
 }
 
-void ABTBGameplayGameMode::IncreaseScoreEveryOneSecond()
+void ABTBGameplayGameMode::IncreaseScoreEverySecond()
 {
 	TotalScore += 1 /*FMath::RandRange(5, 10)*/;
 	GameWidget->SetScore(TotalScore);
@@ -227,26 +233,40 @@ void ABTBGameplayGameMode::DisplayGameoverHUD()
 	
 }
 
-void ABTBGameplayGameMode::DisplayPauseHUD()
+void ABTBGameplayGameMode::DisplayPauseHUD(const bool Visibility)
 {
 	const TObjectPtr<UWorld> World = GetWorld();
 	if (!ensure(World != nullptr))
 	{
 		return;
 	}
-	if (IsValid(BTBPauseHUDWidgetClass))
+
+	if(Visibility)
 	{
-		PauseWidget = Cast<UBTBPauseMenuHUD>(CreateWidget(GetWorld(), BTBPauseHUDWidgetClass));//New
-		if (PauseWidget)
+		if (IsValid(BTBPauseHUDWidgetClass))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Pause menu HUD should be displayed"));
+			PauseWidget = Cast<UBTBPauseMenuHUD>(CreateWidget(World, BTBPauseHUDWidgetClass));//New
+			if (PauseWidget)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Pause menu HUD should be displayed"));
 			
-			PauseWidget->AddToViewport();
-			UGameplayStatics::SetGamePaused(World, true);
-			PlayerCharacterArray[0]->SetbIsPaused(false);
-			PlayerCharacterArray[1]->SetbIsPaused(false);
+				PauseWidget->AddToViewport();
+				UGameplayStatics::SetGamePaused(World, true);
+			
+				PlayerCharacterArray[0]->SetbIsPaused(false);
+				PlayerCharacterArray[1]->SetbIsPaused(false);
+
+			}
 		}
 	}
+	else
+	{
+		if(PauseWidget != nullptr)
+		{
+			PauseWidget->RemoveFromParent();
+		}
+	}
+
 }
 
 void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
@@ -276,7 +296,8 @@ void ABTBGameplayGameMode::CreateEnemySpawnerAndSetCenterOfPlayers()
 	EnemySpawnerPtr = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
 	if(EnemySpawnerPtr)
 	{
-		const FVector PlayersCenter = (PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
+		const FVector PlayersCenter =
+			(PlayerCharacterArray[0]->GetActorLocation() + PlayerCharacterArray[1]->GetActorLocation()) / 2;
 
 		EnemySpawnerPtr->Center = PlayersCenter;
 		EnemySpawnerPtr->Center.Z = 0;
@@ -307,7 +328,16 @@ FVector2D ABTBGameplayGameMode::GetGameViewportSize()
 
 void ABTBGameplayGameMode::UpdateScore()
 {
-	GameWidget->PlayAnimation(GameWidget->ScaleIT, 0.0f, 1, EUMGSequencePlayMode::Forward, 1, false);
+	GameWidget->PlayAnimation
+	(
+		GameWidget->ScaleIT,
+		0.0f,
+		1,
+		EUMGSequencePlayMode::Forward,
+		1,
+		false
+	);
+	
 	TotalScore += 10;
 	GameWidget->SetScore(TotalScore);
 }

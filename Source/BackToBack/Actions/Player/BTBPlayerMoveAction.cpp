@@ -5,6 +5,7 @@
 
 #include "BackToBack/AIControllers/BTBAIController.h"
 #include "BackToBack/Characters/BTBCharacter.h"
+#include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 void UBTBPlayerMoveAction::Act(ABTBCharacter* Character)
@@ -14,18 +15,22 @@ void UBTBPlayerMoveAction::Act(ABTBCharacter* Character)
 		return;
 	}
 	
-	const float MoveValue_X = Character->GetUserInput_X();
-	const FVector Right = Character->GetActorRightVector();
+	if (Character->TopDownCameraPtr != nullptr)
+	{
+		const float MoveValue_X = Character->GetUserInput_X();
+		const FVector CameraRight = Character->TopDownCameraPtr->GetActorRightVector();
 	
-	const float MoveValue_Y = Character->GetUserInput_Y();
-	const FVector Forward = Character->GetActorForwardVector();
-	
-	Character->AddMovementInput(Right, MoveValue_X);
-	Character->AddMovementInput(Forward, MoveValue_Y);
-	
-	const float RotationAngle = MoveValue_X * (540.0f / PI);
-	const FRotator TargetRotation = FRotator(0,RotationAngle * Character->TickDeltaTime,0);
-	Character->AddActorLocalRotation(TargetRotation);
+		const float MoveValue_Y = Character->GetUserInput_Y();
+		const FVector CameraForward = Character->TopDownCameraPtr->GetActorForwardVector();
+
+		if (MoveValue_X != 0 || MoveValue_Y != 0)
+		{
+			Character->AddMovementInput(CameraRight, MoveValue_X);
+			Character->AddMovementInput(CameraForward, MoveValue_Y);
+		}
+	}
+
+
 
 #if UE_EDITOR
 	// UE_LOG(LogTemp, Warning, TEXT("Move X = %f"), MoveValue_X);

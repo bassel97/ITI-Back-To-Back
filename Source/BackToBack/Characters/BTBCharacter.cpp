@@ -4,6 +4,7 @@
 #include "BTBCharacter.h"
 
 #include "BackToBack/Actions/Character/BTBCharacterAction.h"
+#include "BackToBack/Actors/BTBCamera.h"
 
 
 ABTBCharacter::ABTBCharacter()

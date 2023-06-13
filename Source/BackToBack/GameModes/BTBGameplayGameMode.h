@@ -16,6 +16,7 @@ class ABTBGun;
 class UUserWidget;
 class ABTBEnemySpawner;
 class ABTBEnemyCharacter;
+class ABTBCamera;
 
 /**
  * Our Gameplay Game Mode
@@ -37,7 +38,7 @@ protected:
 	void AssignCameras();
 	void CreateRenderTextures();
 	void CreateUIWidget();
-	void IncreaseScoreEveryOneSecond();
+	void IncreaseScoreEverySecond();
 
 	void BindEnemiesDeathEventToUpdateScore();
 
@@ -52,7 +53,7 @@ protected:
 	void DisplayGameoverHUD();
 
 	UFUNCTION()
-	void DisplayPauseHUD();
+	void DisplayPauseHUD(const bool Visibility);
 	
 	UFUNCTION()
 	void UpdateScore();
@@ -81,6 +82,8 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GlobalGameScreen")
 	TSubclassOf<AActor> CameraClass;
+
+	TObjectPtr<ABTBCamera> SingleCameraPtr;
 	
 	TObjectPtr<UTextureRenderTarget2D> RenderTexture_1;
 	TObjectPtr<UTextureRenderTarget2D> RenderTexture_2;
