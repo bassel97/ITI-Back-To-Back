@@ -25,7 +25,7 @@ protected:
 	virtual void Die() override;
 
 	UFUNCTION(BlueprintCallable)
-	void Damage();
+	void GetDamaged();
 	
 	void DestroyEnemy();
 

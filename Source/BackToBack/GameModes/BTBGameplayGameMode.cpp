@@ -241,7 +241,7 @@ void ABTBGameplayGameMode::DisplayPauseHUD(const bool Visibility)
 		return;
 	}
 
-	if(Visibility)
+	if (Visibility)
 	{
 		if (IsValid(BTBPauseHUDWidgetClass))
 		{
@@ -261,7 +261,7 @@ void ABTBGameplayGameMode::DisplayPauseHUD(const bool Visibility)
 	}
 	else
 	{
-		if(PauseWidget != nullptr)
+		if (PauseWidget != nullptr)
 		{
 			PauseWidget->RemoveFromParent();
 		}
@@ -271,7 +271,7 @@ void ABTBGameplayGameMode::DisplayPauseHUD(const bool Visibility)
 
 void ABTBGameplayGameMode::SetSplitScreenTextureToMaterial() const
 {
-	if(!ensure(GameWidget!=nullptr))
+	if(!ensure(GameWidget != nullptr))
 	{
 		return;
 	}

@@ -24,12 +24,12 @@ class BACKTOBACK_API ABTBInputReceiverPawn final : public ABTBPawn
 public:
 	[[nodiscard]] ABTBPlayableCharacter* Get_PlayerCharacter() const
 	{
-		return PlayerCharacter;
+		return PlayerCharacterPtr;
 	}
 
 	void Set_PlayerCharacter(ABTBPlayableCharacter* Player_Character)
 	{
-		this->PlayerCharacter = Player_Character;
+		this->PlayerCharacterPtr = Player_Character;
 	}
 
 protected:
@@ -98,7 +98,7 @@ protected:
 
 	
 private:
-	TObjectPtr<ABTBPlayableCharacter> PlayerCharacter;
+	TObjectPtr<ABTBPlayableCharacter> PlayerCharacterPtr;
 
 	/** Buttons States start*/
 	UPROPERTY(VisibleAnywhere, Category = "Buttons States")

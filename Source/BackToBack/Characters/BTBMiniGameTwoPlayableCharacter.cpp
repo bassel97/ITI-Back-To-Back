@@ -57,14 +57,19 @@ void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 
 	if(Cast<ABTBEnemyCharacter>(OtherActor))
 	{
-		Health--;
-		if(Health <= 0)
-		{
-			bIsDead = true;
-			Die();
-		}
+		// if(Cast<ABTBEnemyCharacter>(OtherActor))
+		// {
+		// 	Health--;
+		// 	if(Health <= 0)
+		// 	{
+		// 		bIsDead = true;
+		// 		Die();
+		// 	}
+		// }
+		bIsDead = true;
+		Die();
+		Destroy();
 	}
-
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Throw()

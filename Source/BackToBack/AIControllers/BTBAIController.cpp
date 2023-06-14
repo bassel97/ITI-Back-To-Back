@@ -11,26 +11,15 @@ void ABTBAIController::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	FillPlayerActorsArray();
 	RunTheBehaviourTree();
 }
 
 void ABTBAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-
-	UpdateBlackboardClosestPlayerVariable();
-}
-
-void ABTBAIController::FillPlayerActorsArray()
-{
-	const TObjectPtr<UWorld> World = GetWorld();
-	if(!ensure(World != nullptr))
-	{
-		return;
-	}
 	
-	UGameplayStatics::GetAllActorsOfClass(World, ABTBPlayableCharacter::StaticClass(), PlayerActors);
+	FillPlayerActorsArrayWithAlivePlayers();
+	UpdateBlackboardClosestPlayerVariable();
 }
 
 void ABTBAIController::RunTheBehaviourTree()
@@ -41,6 +30,17 @@ void ABTBAIController::RunTheBehaviourTree()
 	}
 	
 	RunBehaviorTree(AIBehaviorTree);
+}
+
+void ABTBAIController::FillPlayerActorsArrayWithAlivePlayers()
+{
+	const TObjectPtr<UWorld> World = GetWorld();
+	if(!ensure(World != nullptr))
+	{
+		return;
+	}
+	
+	UGameplayStatics::GetAllActorsOfClass(World, ABTBPlayableCharacter::StaticClass(), PlayerActors);
 }
 
 void ABTBAIController::UpdateBlackboardClosestPlayerVariable()
@@ -54,9 +54,20 @@ void ABTBAIController::UpdateBlackboardClosestPlayerVariable()
 
 TObjectPtr<AActor> ABTBAIController::GetClosestPlayer()
 {
-	if(GetPawn()->GetDistanceTo(PlayerActors[0]) < GetPawn()->GetDistanceTo(PlayerActors[1]))
-	{
-		return PlayerActors[0];
-	}
-	return PlayerActors[1];
+	return PlayerActors.Num() > 1 ?
+		GetPawn()->GetDistanceTo(PlayerActors[0]) < GetPawn()->GetDistanceTo(PlayerActors[1]) ?
+			PlayerActors[0] : PlayerActors[1]
+	: PlayerActors[0];
+
+#pragma region NOT AN EXPLANATION, GET GOOD >_<
+	// if(PlayerActors.Num() > 1)
+	// {
+	// 	if(GetPawn()->GetDistanceTo(PlayerActors[0]) < GetPawn()->GetDistanceTo(PlayerActors[1]))
+	// 	{
+	// 		return PlayerActors[0];
+	// 	}
+	// 	return PlayerActors[1];
+	// }
+	// return PlayerActors[0];
+	#pragma endregion 
 }

@@ -22,7 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	void RunTheBehaviourTree();
-	void FillPlayerActorsArray();
+	void FillPlayerActorsArrayWithAlivePlayers();
 	void UpdateBlackboardClosestPlayerVariable();
 	TObjectPtr<AActor> GetClosestPlayer();
 	

@@ -20,7 +20,5 @@ void UBTBPlayerThrowAction::Act(ABTBCharacter* Character)
                 Player->Throw();
             }
         }
-
-        
     }
 }
