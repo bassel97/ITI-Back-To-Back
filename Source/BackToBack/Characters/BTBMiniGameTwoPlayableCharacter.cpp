@@ -71,6 +71,7 @@ void ABTBMiniGameTwoPlayableCharacter::Throw()
 {
 	bIsThrowing = true;
 	bIsSummoning = false;
+	bIsAttacking = false;
 	//SetbStartThrowing(false);
 }
 
@@ -78,6 +79,7 @@ void ABTBMiniGameTwoPlayableCharacter::Summon()
 {
 	bIsSummoning = true;
 	bIsThrowing = false;
+	bIsAttacking = false;
 	//SpearActor->Summon(SpearRetrievalPoint->GetComponentLocation());
 	SpearActor->Summon(this);
 }

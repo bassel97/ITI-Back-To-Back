@@ -160,7 +160,7 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 	if (LeftButton.bIsReleased)
 	{
 		PlayerCharacter->SetbStartSwitching(false);
-		//PlayerCharacter->SetbStartAttack(false);
+		PlayerCharacter->SetbStartAttack(false);
 	}
 
 	if (LeftButton.bIsHeld)
@@ -203,11 +203,15 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 	}
 
 	
-	/*if (RightTrigger.bIsHeld)
+	if (RightTrigger.bIsHeld)
 	{
-		PlayerCharacter->SetbStartThrowing(false);
-		PlayerCharacter->SetbStartSummoning(true);
-	}*/
+		if (!RightTrigger.bIsDown)
+		{
+			PlayerCharacter->SetbStartThrowing(false);
+		}
+		
+		//PlayerCharacter->SetbStartSummoning(true);
+	}
 }
 
 void ABTBInputReceiverPawn::HandleLeftTrigger() const

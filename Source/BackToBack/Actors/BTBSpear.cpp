@@ -226,13 +226,6 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 		bIsAttached = true;
 		Fall(0.f);
 	}
-	//else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(HitActor))
-	//{
-	//	/*ProjectileMovementComponent->StopMovementImmediately();
-	//	DeactivateBoxCollision();*/
-	//	bIsAttached = false;
-	//	Fall(1.f);
-	//}
 	else
 	{
 		if (HitActor != nullptr)
@@ -249,7 +242,6 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 		}
 		
 	}
-	EnemyCounter = 0;
 }
 
 
