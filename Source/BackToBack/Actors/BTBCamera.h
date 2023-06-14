@@ -48,16 +48,16 @@ protected:
 private:
 	TArray<TObjectPtr<AActor>> Players;
 	
-	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	UPROPERTY(EditAnywhere, Category="Camera | Top Down Settings")
 	float CameraAngle = -35;
 	
-	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	UPROPERTY(EditAnywhere, Category="Camera | Top Down Settings")
 	float MinArmLength = 500;
 
-	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	UPROPERTY(EditAnywhere, Category="Camera | Top Down Settings")
 	float MaxArmLength = 1500;
 	
-	UPROPERTY(EditDefaultsOnly, Category="Camera | Top Down Settings")
+	UPROPERTY(EditAnywhere, Category="Camera | Top Down Settings")
 	float CameraMovementSpeed = 0.05f;
 	
 };

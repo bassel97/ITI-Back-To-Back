@@ -66,7 +66,6 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	TArray<AActor*> SphereActorsToIgnore;
 	if (APawn* Pawn = Cast<APawn>(OtherActor))
 	{
-		
 		if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
 		{
 			SphereActorsToIgnore.Add(Player);
@@ -91,6 +90,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 			{
 				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 800.f, SphereActorsToIgnore);
 			}
+			
 			TArray<AActor*> EnemiesList;
 			int32 EnemiesNum = EnemiesArray.GetKeys(EnemiesList);
 			
