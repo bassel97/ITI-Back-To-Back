@@ -42,7 +42,7 @@ void ABTBEnemySpawner::BeginPlay()
 		EnemySpawnHandle,
 		this,
 		&ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers,
-		SpawnEnemyEvery,
+		/*0.25f*/ SpawnEnemyEvery,
 		true
 	);
 
@@ -72,7 +72,9 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 	}
 	
 	const FVector RandomLocation = GetARandomLocationInPlayersRange();
-	const TObjectPtr<ABTBAICharacter> SpawnedEnemyAI = World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
+	const TObjectPtr<ABTBAICharacter> SpawnedEnemyAI =
+		World->SpawnActor<ABTBAICharacter>(EnemyAIClass, RandomLocation, FRotator::ZeroRotator);
+	
 	if(SpawnedEnemyAI)
 	{
 		EnemiesArray.AddUnique(SpawnedEnemyAI);
