@@ -78,10 +78,10 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 		EnemiesArray.AddUnique(SpawnedEnemyAI);
 	}
 	
-#if UE_EDITOR
-	UE_LOG(LogTemp, Warning, TEXT("SpawnEnemyEvery = %f"), SpawnEnemyEvery);
-	UE_LOG(LogTemp, Warning, TEXT("Just spawned an Enemy"));
-#endif
+//#if UE_EDITOR
+//	UE_LOG(LogTemp, Warning, TEXT("SpawnEnemyEvery = %f"), SpawnEnemyEvery);
+//	UE_LOG(LogTemp, Warning, TEXT("Just spawned an Enemy"));
+//#endif
 }
 
 FVector ABTBEnemySpawner::GetARandomLocationInPlayersRange()

@@ -47,6 +47,8 @@ void ABTBSpear::BeginPlay()
 
 void ABTBSpear::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
+	UE_LOG(LogTemp, Warning, TEXT("Enemy Counter is %d"), EnemyCounter);
 }
 
 void ABTBSpear::ActivateBoxCollision()
@@ -61,11 +63,13 @@ void ABTBSpear::DeactivateBoxCollision()
 
 void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	TArray<AActor*> SphereActorsToIgnore;
 	if (APawn* Pawn = Cast<APawn>(OtherActor))
 	{
 		
 		if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
 		{
+			SphereActorsToIgnore.Add(Player);
 			if (Player->bIsSummoning)
 			{
 				StopSpearBounce(Player);
@@ -82,12 +86,33 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 		}
 		else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(OtherActor))
 		{
+			SphereActorsToIgnore.Add(Enemy);
 			if (EnemiesArray.IsEmpty() && !bIsAttached)
 			{
-				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 800.f);
+				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 800.f, SphereActorsToIgnore);
+			}
+			TArray<AActor*> EnemiesList;
+			int32 EnemiesNum = EnemiesArray.GetKeys(EnemiesList);
+			
+			for (auto EnemyMember : EnemiesArray)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Enemy member name is %s"), *EnemyMember.Key->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("Enemy member value is %d"), EnemyMember.Value);
 			}
 
+			for (int32 i = 0; i < EnemiesNum; i++)
+			{
+				if (EnemiesList[i] == Enemy)
+				{
+					EnemiesArray.Emplace(EnemiesList[i], true);
+				}
+			}
 			for (auto EnemyMember : EnemiesArray)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Enemy member name is %s"), *EnemyMember.Key->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("Enemy member value is %d"), EnemyMember.Value);
+			}
+			/*for (auto EnemyMember : EnemiesArray)
 			{
 				if (EnemyMember.Key == Enemy)
 				{
@@ -95,16 +120,17 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 					EnemiesArray.AddUnique(TPair<AActor*, bool>(Enemy, true));
 				}
 			}
-			
-			for (int32 i = 0; i < EnemiesArray.Num(); i++)
+			/*for (int32 i = 0; i < EnemiesArray.Num(); i++)
 			{
 				if (Cast<ABTBMiniGameTwoPlayableCharacter>(EnemiesArray[i].Key))
 				{
 					EnemiesArray.RemoveSingle(EnemiesArray[i]);
 				}
+			}*/
+			if (!bIsAttached)
+			{
+				BounceAtEnemies();
 			}
-			
-			BounceAtEnemies();
 		}
 	}
 	else
@@ -116,11 +142,15 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	}
 }
 
-void ABTBSpear::PerformSphereTrace(const FVector& StartLocation, const FVector& EndLocation, float Radius)
+void ABTBSpear::PerformSphereTrace(const FVector& StartLocation, const FVector& EndLocation, float Radius, TArray<AActor*> SphereActorsToIgnore)
 {
 	TArray<AActor*> ActorsToIgnore;
 	TArray<FHitResult> HitArray;
 	ActorsToIgnore.Add(this);
+	for (int32 i = 0; i < SphereActorsToIgnore.Num(); i++)
+	{
+		ActorsToIgnore.Add(SphereActorsToIgnore[i]);
+	}
 	bool bTraceWork = UKismetSystemLibrary::SphereTraceMulti(
 		GetWorld(),
 		StartLocation,
@@ -142,9 +172,9 @@ void ABTBSpear::PerformSphereTrace(const FVector& StartLocation, const FVector& 
 		{
 			for (int32 i = 0; i < HitArray.Num(); i++)
 			{
-				if (!Cast<ABTBMiniGameTwoPlayableCharacter>(HitArray[i].GetActor()) && Cast<ABTBEnemyCharacter>(HitArray[i].GetActor()))
+				if (Cast<ABTBEnemyCharacter>(HitArray[i].GetActor()))
 				{
-					EnemiesArray.AddUnique(TPair<AActor*, bool>(HitArray[i].GetActor(), false));
+					EnemiesArray.Add(HitArray[i].GetActor(), false);
 				}
 			}
 		}
@@ -154,9 +184,8 @@ void ABTBSpear::PerformSphereTrace(const FVector& StartLocation, const FVector& 
 void ABTBSpear::BounceAtEnemies()
 {
 	AActor* TargetEnemy = nullptr;
-	bool bBounceFinished = false;
 	bool bBounceStarted = false;
-	EnemyCounter++;
+	
 	for (auto& EnemyMember : EnemiesArray)
 	{
 		if (EnemyMember.Value == false && bBounceStarted == false)
@@ -166,28 +195,18 @@ void ABTBSpear::BounceAtEnemies()
 		else
 		{
 			bBounceStarted = true;
-			if (EnemyCounter == EnemiesArray.Num())
-			{
-				bBounceFinished = true;
-			}
 		}
 	}
-	if (bBounceFinished)
+	if (TargetEnemy)
+	{
+		FVector UD = (TargetEnemy->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+		//HomingFunction(true, 150.f, 200.f, 300.f, TargetEnemy);
+		Throw(UD, 1000.f);
+	}
+	else 
 	{
 		StopSpearBounce(TargetEnemy);
 		EnemiesArray.Empty();
-		EnemyCounter = 0;
-		DeactivateBoxCollision();
-		//HomingFunction(false, 0.f, 0.f, 0.f, nullptr);
-	}
-	else
-	{
-		if (TargetEnemy)
-		{
-			FVector UD = (TargetEnemy->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-			//HomingFunction(true, 150.f, 200.f, 300.f, TargetEnemy);
-			Throw(UD, 500.f);
-		}
 	}
 }
 
@@ -207,20 +226,30 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 		bIsAttached = true;
 		Fall(0.f);
 	}
-	else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(HitActor))
-	{
-		/*ProjectileMovementComponent->StopMovementImmediately();
-		AttachToComponent(Enemy->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
-		DeactivateBoxCollision();*/
-		//ProjectileMovementComponent->StopMovementImmediately();
-		DeactivateBoxCollision();
-		Fall(0.05f);
-	}
+	//else if (ABTBEnemyCharacter* Enemy = Cast<ABTBEnemyCharacter>(HitActor))
+	//{
+	//	/*ProjectileMovementComponent->StopMovementImmediately();
+	//	DeactivateBoxCollision();*/
+	//	bIsAttached = false;
+	//	Fall(1.f);
+	//}
 	else
 	{
-		ProjectileMovementComponent->StopMovementImmediately();
-		Fall(0.f);
+		if (HitActor != nullptr)
+		{
+			ProjectileMovementComponent->StopMovementImmediately();
+			bIsAttached = false;
+			DeactivateBoxCollision();
+			Fall(0.f);
+		}
+		else
+		{
+			bIsAttached = false;
+			Fall(1.f);
+		}
+		
 	}
+	EnemyCounter = 0;
 }
 
 
@@ -240,15 +269,9 @@ void ABTBSpear::Summon(AActor* SummoningLocation)
 	//HomingFunction(false, 0.f, 0.f, 0.f, nullptr);
 	//ProjectileMovementComponent->Velocity = ReturnUnitVector * 1000.f;
 	Fall(0.f);
-	Throw(ReturnUnitVector, 1000.f);
+	Throw(ReturnUnitVector, 2000.f);
+	UE_LOG(LogTemp, Warning, TEXT("Summon from the spear class"));
 }
-
-void ABTBSpear::Retrieve()
-{
-}
-
-
-
 
 void ABTBSpear::HomingFunction(bool bIsHoming, float InitialSpeed, float MaxSpeed, float HomingAcceleration, AActor* Target)
 {

@@ -44,16 +44,18 @@ private:
 
 	void Fall(float GravityScale);
 
-	void Retrieve();
+	//void Retrieve();
 
 	void BounceAtEnemies();
 
 	void HomingFunction(bool bIsHoming, float InitialSpeed, float MaxSpeed, float HomingAcceleration, AActor* Target);
 
+	
+
 	UFUNCTION()
 		void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	void PerformSphereTrace(const FVector& StartLocation, const FVector& EndLocation, float Radius);
+	void PerformSphereTrace(const FVector& StartLocation, const FVector& EndLocation, float Radius, TArray<AActor*> Target);
 
 	//Fields (Properties)
 public:
@@ -72,9 +74,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision Components")
 		TObjectPtr<UBoxComponent> CollisionBox;
 
-	/*UPROPERTY(VisibleAnywhere, Category = "Collision Components")
-		TObjectPtr<USphereComponent> EnemySphereDetection;*/
-
 	UPROPERTY(EditDefaultsOnly)
 		TObjectPtr<UProjectileMovementComponent> ProjectileMovementComponent;
 
@@ -85,9 +84,12 @@ private:
 
 	int32 EnemyCounter = 0;
 
-	TArray<TPair<TObjectPtr<AActor>, bool>> EnemiesArray;
+	//TArray<TPair<TObjectPtr<AActor>, bool>> EnemiesArray;
+	TMap<AActor*,bool> EnemiesArray;
 
 	bool bIsAttached = true;
+
+	
 
 
 };
