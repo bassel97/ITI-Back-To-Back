@@ -127,10 +127,19 @@ public:
 	{
 		bStartSwitching = Value;
 	}
+
+	bool GetbStartDashing()
+	{
+		return bStartDashing;
+	}
+
+	void SetbStartDashing(bool Value)
+	{
+		bStartDashing = Value;
+	}
 	
 protected:
 	virtual void Die() PURE_VIRTUAL(ABTBCharacter::Die);
-	
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 
@@ -166,5 +175,6 @@ private:
 	bool bIsPaused = false;
 	bool bStartThrowing = false;
 	bool bStartSummoning = false;
+	bool bStartDashing = false;
 	
 };
