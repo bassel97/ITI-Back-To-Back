@@ -22,14 +22,23 @@ public:
 	void Throw();
 	void AttachSpearToPlayer();
 	void Summon();
-	
-	// void Attack();
-
 	UFUNCTION(BlueprintCallable)
 	bool GetbIsAttacking();
 
 	UFUNCTION(BlueprintCallable)
 	void SetbIsAttacking(bool Value);
+
+	UFUNCTION(BlueprintCallable)
+	bool GetbIsDashing()
+	{
+		return bIsDashing;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	void SetbIsDashing(bool Value)
+	{
+		bIsDashing = Value;
+	}
 	
 protected:
 	virtual void BeginPlay() override;
@@ -42,8 +51,6 @@ protected:
 
 private:
 
-
-	
 public:
 	TObjectPtr<ABTBSpear> SpearActor;
 
@@ -56,6 +63,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
 	bool bSpearAttached;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Dash Meter")
+	int32 DashMeter = 5;
+
 	UPROPERTY()
 	UAnimInstance* MilesAnimInstance;
 
@@ -67,4 +77,6 @@ private:
 		TObjectPtr<USceneComponent> SpearRetrievalPoint;
 	
 	bool bIsAttacking;
+
+	bool bIsDashing;
 };
