@@ -46,11 +46,11 @@ public:
 	void SetGettingDamaged(bool value);
 	
 protected:
-	UPROPERTY(EditDefaultsOnly,Category = "Death Animation")
+	UPROPERTY(EditDefaultsOnly,Category = "Animation | Death")
 	TObjectPtr<UAnimationAsset> DeathAnimation;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sound")
-	USoundBase* sound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+	USoundBase* DeathSound;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
 	UNiagaraSystem* DeathEffect;
@@ -58,7 +58,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
 	UNiagaraSystem* DamageEffect;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage Animation")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation | Damage")
 	UAnimationAsset* DamageAnimation;
 
 	//FTimerHandle TimerHandle;
@@ -66,4 +66,9 @@ protected:
 private:
 	FTimerHandle DestroyTimeHandle;
 
+	// TObjectPtr<UMaterialInstanceDynamic> ClothMat;
+	// TObjectPtr<UMaterialInstanceDynamic> BodyMat;
+	//
+	// UPROPERTY(EditDefaultsOnly, Category="Effect")
+	// TObjectPtr<UNiagaraSystem> NiagaraDissolveDeathEffect;
 };

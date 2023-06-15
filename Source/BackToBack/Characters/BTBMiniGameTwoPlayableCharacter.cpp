@@ -23,19 +23,25 @@ void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBMiniGameTwoPlayableCharacter::OnEnemyHit);
 }
 
+void ABTBMiniGameTwoPlayableCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	UE_LOG(LogTemp, Warning, TEXT("%s HP = %d"), *GetName(), Health);
+}
+
 void ABTBMiniGameTwoPlayableCharacter::SetSpear(ABTBSpear* Spear)
 {
-	SpearActor = Spear;
+	SpearPtr = Spear;
 }
 
 ABTBSpear* ABTBMiniGameTwoPlayableCharacter::GetSpear()
 {
-	return SpearActor;
+	return SpearPtr;
 }
 
 
-// This is DUMB but its fixing an error IDK why this is happening
-// If you remove it, character will spin around its Z axis forever after the first move / "HAHA" <- from Yusef
+// // This is DUMB but its fixing an error IDK why this is happening
+// // If you remove it, character will spin around its Z axis forever after the first move / "HAHA" <- from Yusef
 // float ABTBMiniGameTwoPlayableCharacter::GetUserInput_X()
 // {
 // 	if(UserInput_X > 0.01)	return UserInput_X;
@@ -50,25 +56,24 @@ ABTBSpear* ABTBMiniGameTwoPlayableCharacter::GetSpear()
 // 	return 0;
 // }
 
+
 void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (bIsDead) return;
 
-	if(Cast<ABTBEnemyCharacter>(OtherActor))
+	if (Cast<ABTBEnemyCharacter>(OtherActor))
 	{
-		// if(Cast<ABTBEnemyCharacter>(OtherActor))
-		// {
-		// 	Health--;
-		// 	if(Health <= 0)
-		// 	{
-		// 		bIsDead = true;
-		// 		Die();
-		// 	}
-		// }
-		bIsDead = true;
-		Die();
-		Destroy();
+		Health--;
+		if (Health <= 0)
+		{
+			bIsDead = true;
+			Die();
+			Destroy();
+		}
+		// bIsDead = true;
+		// Die();
+		// Destroy();
 	}
 }
 
@@ -77,7 +82,6 @@ void ABTBMiniGameTwoPlayableCharacter::Throw()
 	bIsThrowing = true;
 	bIsSummoning = false;
 	bIsAttacking = false;
-	//SetbStartThrowing(false);
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Summon()
@@ -85,8 +89,7 @@ void ABTBMiniGameTwoPlayableCharacter::Summon()
 	bIsSummoning = true;
 	bIsThrowing = false;
 	bIsAttacking = false;
-	//SpearActor->Summon(SpearRetrievalPoint->GetComponentLocation());
-	SpearActor->Summon(this);
+	SpearPtr->Summon(this);
 }
 
 bool ABTBMiniGameTwoPlayableCharacter::GetbIsAttacking()
@@ -105,15 +108,18 @@ void ABTBMiniGameTwoPlayableCharacter::Die()
 	if(bIsDead == true && OtherPlayer->bIsDead == true)
 	{
 		Super::Die();
+
+#if UE_EDITOR
 		UE_LOG(LogTemp, Warning, TEXT("MG2 Players're DEAD"));
+#endif
 	}
 }
 
 void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
 {
-	if (!SpearActor->IsAttachedTo(this))
+	if (!SpearPtr->IsAttachedTo(this))
 	{
-		SpearActor->AttachToComponent
+		SpearPtr->AttachToComponent
 		(
 			GetMesh(),
 			FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true),

@@ -104,7 +104,7 @@ void ABTBInputReceiverPawn::UpButtonInputTriggered(const FInputActionValue& Val)
 	ButtonStateSetData(UpButton, Val.Get<bool>());
 }
 
-void ABTBInputReceiverPawn::StartButtonInputTriggered(const FInputActionValue& Val) //NEW
+void ABTBInputReceiverPawn::StartButtonInputTriggered(const FInputActionValue& Val)
 {
 	ButtonStateSetData(StartButton, Val.Get<bool>());
 }

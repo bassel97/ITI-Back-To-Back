@@ -42,6 +42,7 @@ public:
 	
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 	// virtual float GetUserInput_X() override;
 	// virtual float GetUserInput_Y() override;
 	virtual void Die() override;
@@ -52,7 +53,7 @@ protected:
 private:
 
 public:
-	TObjectPtr<ABTBSpear> SpearActor;
+	TObjectPtr<ABTBSpear> SpearPtr;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
 	bool bIsThrowing;

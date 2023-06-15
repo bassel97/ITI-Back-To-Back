@@ -15,34 +15,42 @@
 
 void ABTBEnemyCharacter::BeginPlay()
 {
-  Super::BeginPlay();
-  GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(
-      this, &ABTBEnemyCharacter::OnWeaponHit);
+	Super::BeginPlay();
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBEnemyCharacter::OnWeaponHit);
+
+	// ClothMat = UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(0), this);
+	// BodyMat = UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(1), this);
 }
 
-void ABTBEnemyCharacter::Die() 
+void ABTBEnemyCharacter::Die()
 {
-  const TObjectPtr<UWorld> World = GetWorld();
-  if (!ensure(World != nullptr)) {
-    return;
-  }
+	const TObjectPtr<UWorld> World = GetWorld();
+	if (!ensure(World != nullptr && DeathSound != nullptr && DeathEffect != nullptr))
+	{
+		return;
+	}
 
-  OnAIDeath.Broadcast();
+	OnAIDeath.Broadcast();
 
-  GetMesh()->SetSimulatePhysics(true);
-  GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
-  GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	GetMesh()->SetSimulatePhysics(true);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 
-  UGameplayStatics::PlaySound2D(World, sound, 1, 2, 1);
+	UGameplayStatics::PlaySound2D(World, DeathSound, 1, 2, 1);
+	
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+		World, DeathEffect, GetTransform().GetLocation(),
+		GetTransform().Rotator(), GetTransform().GetScale3D(), true, true,
+		ENCPoolMethod::AutoRelease, true);
+	
+	// ClothMat->SetScalarParameterValue(TEXT("rad"), 20);
+	// BodyMat->SetScalarParameterValue(TEXT("rad"), 20);
+	//
+	// GetMesh()->SetMaterial(0, ClothMat);
+	// GetMesh()->SetMaterial(1, BodyMat);
 
-  UNiagaraFunctionLibrary::SpawnSystemAtLocation(
-      World, DeathEffect, GetTransform().GetLocation(),
-      GetTransform().Rotator(), GetTransform().GetScale3D(), true, true,
-      ENCPoolMethod::AutoRelease, true);
-
-  GetWorldTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 3, false);
+	GetWorldTimerManager().SetTimer(DestroyTimeHandle, this, &ABTBEnemyCharacter::DestroyEnemy, 3, false);
 }
-
 void ABTBEnemyCharacter::GetDamaged() 
 {
 	if (!ensure(DamageEffect != nullptr))
@@ -74,37 +82,38 @@ void ABTBEnemyCharacter::GetDamaged()
 
 void ABTBEnemyCharacter::DestroyEnemy()
 {
-  const TObjectPtr<UWorld> World = GetWorld();
-  if (!ensure(World != nullptr))
-  {
-    return;
-  }
+	const TObjectPtr<UWorld> World = GetWorld();
+	if (!ensure(World != nullptr))
+	{
+		return;
+	}
 
-  GetMesh()->SetSimulatePhysics(false);
-  if (IsValid(this))
-  {
-    const TObjectPtr<ABTBEnemySpawner> EnemySpawner =
-        Cast<ABTBEnemySpawner>(UGameplayStatics::GetActorOfClass(World, ABTBEnemySpawner::StaticClass()));
+	GetMesh()->SetSimulatePhysics(false);
+	if (IsValid(this))
+	{
+		const TObjectPtr<ABTBEnemySpawner> EnemySpawner =
+			Cast<ABTBEnemySpawner>(UGameplayStatics::GetActorOfClass(World, ABTBEnemySpawner::StaticClass()));
 
-    EnemySpawner->EnemiesArray.Remove(this);
-    Destroy();
-  }
+		EnemySpawner->EnemiesArray.Remove(this);
+		Destroy();
+	}
 }
 
 void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent *OverlappedComponent,AActor *OtherActor,UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep,const FHitResult &SweepResult) 
 {
-  if (ABTBPooledObject *Bullet = Cast<ABTBPooledObject>(OtherActor)) 
-  {
-      Bullet->DeactivatePooledObject();
-      GetDamaged();
-  }
-  if (ABTBSpear* Spear = Cast<ABTBSpear>(OtherActor))
-  {
-      if (Cast<UBoxComponent>(OtherComp))
-      {
-          GetDamaged();
-      }
-  }
+	if (ABTBPooledObject *Bullet = Cast<ABTBPooledObject>(OtherActor)) 
+	{
+		Bullet->DeactivatePooledObject();
+		GetDamaged();
+	}
+	
+	if (ABTBSpear* Spear = Cast<ABTBSpear>(OtherActor))
+	{
+		if (Cast<UBoxComponent>(OtherComp))
+		{
+			GetDamaged();
+		}
+	}
 }
 
 bool ABTBEnemyCharacter::GetGettingDamaged() //added by Jo

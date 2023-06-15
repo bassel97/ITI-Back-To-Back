@@ -22,15 +22,6 @@ class BACKTOBACK_API ABTBInputReceiverPawn final : public ABTBPawn
 	GENERATED_BODY()
 
 public:
-	[[nodiscard]] ABTBPlayableCharacter* Get_PlayerCharacter() const
-	{
-		return PlayerCharacterPtr;
-	}
-
-	void Set_PlayerCharacter(ABTBPlayableCharacter* Player_Character)
-	{
-		this->PlayerCharacterPtr = Player_Character;
-	}
 
 protected:
 	virtual void Tick(float DeltaSeconds) override;
@@ -58,10 +49,10 @@ private:
 	static void ButtonStateSetData(FButtonState& ButtonState, const bool Value);
 	
 public:
+	TObjectPtr<ABTBPlayableCharacter> PlayerCharacterPtr;
+	
 	UPROPERTY(VisibleAnywhere, Category = "Class Variables")
 	int32 PlayerIndex;
-
-
 	
 	/** Input Actions start*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input Actions")
@@ -98,7 +89,7 @@ protected:
 
 	
 private:
-	TObjectPtr<ABTBPlayableCharacter> PlayerCharacterPtr;
+	
 
 	/** Buttons States start*/
 	UPROPERTY(VisibleAnywhere, Category = "Buttons States")

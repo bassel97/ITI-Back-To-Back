@@ -102,8 +102,8 @@ void ABTBGameplayGameMode::CreatePlayers()
 
 	if(InputReceiverArray.Num() >= 2)
 	{
-		InputReceiverArray[0]->Set_PlayerCharacter(PlayerCharacterArray[0]);
-		InputReceiverArray[1]->Set_PlayerCharacter(PlayerCharacterArray[1]);
+		InputReceiverArray[0]->PlayerCharacterPtr = PlayerCharacterArray[0];
+		InputReceiverArray[1]->PlayerCharacterPtr = PlayerCharacterArray[1];
 	}
 
 
@@ -112,7 +112,7 @@ void ABTBGameplayGameMode::CreatePlayers()
 	{
 		UKismetSystemLibrary::PrintString(World,
 			FString::Printf(TEXT("PlayableCharacter[%i] = %s, Its InputReceiverPawn = %s"),
-				i, *PlayerCharacterArray[i]->GetName(), *InputReceiverArray[i]->Get_PlayerCharacter()->GetName()));
+				i, *PlayerCharacterArray[i]->GetName(), *InputReceiverArray[i]->PlayerCharacterPtr->GetName()));
 	}
 #endif
 	
@@ -137,8 +137,8 @@ void ABTBGameplayGameMode::AssignCameras()
 	
 	if (SplitScreenClass->CameraMode == ECameraMode::SingleCamera)
 	{
-		InputReceiverArray[0]->Get_PlayerCharacter()->RemoveCamera();
-		InputReceiverArray[1]->Get_PlayerCharacter()->RemoveCamera();
+		InputReceiverArray[0]->PlayerCharacterPtr->RemoveCamera();
+		InputReceiverArray[1]->PlayerCharacterPtr->RemoveCamera();
 
 		SingleCameraPtr = World->SpawnActor<ABTBCamera>(CameraClass);
 		
