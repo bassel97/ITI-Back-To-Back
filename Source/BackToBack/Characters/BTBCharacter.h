@@ -153,8 +153,11 @@ public:
 
 	TObjectPtr<ABTBCamera> TopDownCameraPtr;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Health")
-	int32 Health { 2 };
+	UPROPERTY(EditAnywhere, Category = "Health")
+	float Health { 2 };
+
+	UPROPERTY(EditAnywhere, meta=(ClampMin = 1, ClampMax = 100), Category = "Health")
+	float MaxHealth { 2 };
 
 	bool bStartRotate = false;
 	bool bStartSwitching = false;

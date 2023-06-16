@@ -11,15 +11,31 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "BackToBack/HUD/BTBEnemyHealthBarHUD.h"
+#include "Components/WidgetComponent.h"
 
+
+ABTBEnemyCharacter::ABTBEnemyCharacter()
+{
+	HealthWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Health Bar Widget Comp"));
+	HealthWidgetComp->SetupAttachment(GetRootComponent());
+}
 
 void ABTBEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBEnemyCharacter::OnWeaponHit);
-
+	
 	// ClothMat = UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(0), this);
 	// BodyMat = UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(1), this);
+
+	Health = MaxHealth;
+}
+
+void ABTBEnemyCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	//UE_LOG(LogTemp, Warning, TEXT("BTBEnemyCharacter Log: %s HP = %d"), *GetName(), Health);
 }
 
 void ABTBEnemyCharacter::Die()
@@ -124,4 +140,9 @@ bool ABTBEnemyCharacter::GetGettingDamaged() //added by Jo
 void ABTBEnemyCharacter::SetGettingDamaged(bool value) //Added by Jo
 {
 	bIsgettingDamaged = value;
+}
+
+float ABTBEnemyCharacter::CalculateHealthPercentage() const
+{
+	return Health / MaxHealth;
 }

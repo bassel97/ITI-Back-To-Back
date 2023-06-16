@@ -26,7 +26,7 @@ void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
 void ABTBMiniGameTwoPlayableCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	UE_LOG(LogTemp, Warning, TEXT("%s HP = %d"), *GetName(), Health);
+	// UE_LOG(LogTemp, Warning, TEXT("BTBMiniGameTwoPlayableCharacter Log: %s HP = %d"), *GetName(), Health);
 }
 
 void ABTBMiniGameTwoPlayableCharacter::SetSpear(ABTBSpear* Spear)
@@ -38,24 +38,6 @@ ABTBSpear* ABTBMiniGameTwoPlayableCharacter::GetSpear()
 {
 	return SpearPtr;
 }
-
-
-// // This is DUMB but its fixing an error IDK why this is happening
-// // If you remove it, character will spin around its Z axis forever after the first move / "HAHA" <- from Yusef
-// float ABTBMiniGameTwoPlayableCharacter::GetUserInput_X()
-// {
-// 	if(UserInput_X > 0.01)	return UserInput_X;
-// 	if(UserInput_X < -0.01)	return UserInput_X;
-// 	return 0;
-// }
-//
-// float ABTBMiniGameTwoPlayableCharacter::GetUserInput_Y()
-// {
-// 	if(UserInput_Y > 0.01)	return UserInput_Y;
-// 	if(UserInput_Y < -0.01)	return UserInput_Y;
-// 	return 0;
-// }
-
 
 void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

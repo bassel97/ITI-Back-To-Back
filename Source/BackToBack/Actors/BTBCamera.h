@@ -42,7 +42,7 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
 	TObjectPtr<USpringArmComponent> CameraArm;
 
-	UPROPERTY(VisibleDefaultsOnly, Category="Camera")
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Camera")
 	TObjectPtr<UCameraComponent> Camera;
 	
 private:

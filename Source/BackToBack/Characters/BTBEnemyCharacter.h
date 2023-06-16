@@ -9,6 +9,7 @@
 
 class UBTBGameHUD;
 class UNiagaraSystem;
+class UWidgetComponent;
 
 /**
  * 
@@ -19,9 +20,11 @@ class BACKTOBACK_API ABTBEnemyCharacter : public ABTBAICharacter
 	GENERATED_BODY()
 
 public:
+	ABTBEnemyCharacter();
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void Die() override;
 
 	UFUNCTION(BlueprintCallable)
@@ -38,12 +41,14 @@ private:
 	
 
 public:
-
 	UFUNCTION(BlueprintCallable)
 	bool GetGettingDamaged();
 
 	UFUNCTION(BlueprintCallable)
 	void SetGettingDamaged(bool value);
+
+	UFUNCTION(BlueprintPure)
+	float CalculateHealthPercentage() const;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly,Category = "Animation | Death")
@@ -62,6 +67,9 @@ protected:
 	UAnimationAsset* DamageAnimation;
 
 	//FTimerHandle TimerHandle;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI | Health")
+	UWidgetComponent* HealthWidgetComp;
 
 private:
 	FTimerHandle DestroyTimeHandle;
