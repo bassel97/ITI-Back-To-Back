@@ -16,6 +16,9 @@ void ABTBMiniGameTwoGameMode::BeginPlay()
 	
 	// GameWidget->SetVisibility(ESlateVisibility::Hidden);
 
+	Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0])->PlayerDash.AddDynamic(this, &ABTBMiniGameTwoGameMode::ChangeDashBar);
+	Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[1])->PlayerDash.AddDynamic(this, &ABTBMiniGameTwoGameMode::ChangeDashBar);
+
 }
 
 void ABTBMiniGameTwoGameMode::AssignSpearToPlayer()
@@ -42,4 +45,9 @@ void ABTBMiniGameTwoGameMode::SetTopDownCameraReferenceForEachPlayer()
 {
 	PlayerCharacterArray[0]->TopDownCameraPtr = SingleCameraPtr;
 	PlayerCharacterArray[1]->TopDownCameraPtr = SingleCameraPtr;
+}
+
+void ABTBMiniGameTwoGameMode::ChangeDashBar(float value)
+{
+	GameWidget->SetDashPercent(value);
 }

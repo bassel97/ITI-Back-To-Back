@@ -13,6 +13,7 @@
 #include "InputActionValue.h"
 #include "BackToBack/Actions/Character/BTBCharacterAction.h"
 #include "BackToBack/Actions/Player/BTBPlayerSwitchAction.h"
+#include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BackToBack/GameModes/BTBGameplayGameMode.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
@@ -222,12 +223,17 @@ void ABTBInputReceiverPawn::HandleLeftTrigger() const
 
 	if (LeftTrigger.bIsReleased)
 	{
-		PlayerCharacterPtr->SetbStartDashing(false);
+		//PlayerCharacterPtr->SetbStartDashing(false);
+		Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterPtr)->SetbIsDashing(false);
+
 	}
 
 	if (LeftTrigger.bIsHeld)
 	{
-		//PlayerCharacter->SetbStartDashing(false);
+		if (!LeftTrigger.bIsDown)
+		{
+			PlayerCharacterPtr->SetbStartDashing(false);
+		}
 	}
 }
 

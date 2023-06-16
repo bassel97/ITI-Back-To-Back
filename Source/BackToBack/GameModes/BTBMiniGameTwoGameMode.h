@@ -22,6 +22,9 @@ protected:
 	void AssignSpearToPlayer();
 	void SetTopDownCameraReferenceForEachPlayer();
 
+	UFUNCTION()
+	void ChangeDashBar(float value);
+
 private:
 
 

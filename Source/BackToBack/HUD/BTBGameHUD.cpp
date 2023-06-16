@@ -10,6 +10,7 @@ void UBTBGameHUD::NativeConstruct()
 {
 	Super::NativeConstruct();
 	Score->SetText(FText::AsNumber(0));
+	DashPercent->SetPercent(1);
 }
 
 void UBTBGameHUD::SetScore(const int32 Value)
@@ -21,5 +22,17 @@ void UBTBGameHUD::SetScore(const int32 Value)
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("Score is nullptr"));
+	}
+}
+
+void UBTBGameHUD::SetDashPercent(float Value)
+{
+	if(DashPercent)
+	{
+		DashPercent->SetPercent(Value);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("NULL Dash"));
 	}
 }

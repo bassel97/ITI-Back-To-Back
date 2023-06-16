@@ -57,6 +57,7 @@ private:
 	float DistanceFromCenterOfDonutToInnerRange;
 
 	float SpawnEnemyEvery;
+	
 	FTimerHandle EnemySpawnHandle;
 	FTimerHandle UpdateEnemySpawnHandle;
 	FTimerHandle UpdateClosestEnemyToPlayersHandle;

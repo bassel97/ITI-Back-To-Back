@@ -18,11 +18,17 @@ class BACKTOBACK_API UBTBGameOverHUD : public UUserWidget
 
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-		UButton* RestartButton;
+	UButton* RestartButton;
+	
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UButton* MainMenuButton;
 
 	virtual void NativeConstruct() override;
 
 	UFUNCTION()
 		void OnRestartButtonClick();
+
+	UFUNCTION()
+	void OnMainMenuButtonClick();
 	
 };

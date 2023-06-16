@@ -239,6 +239,7 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 		{
 			bIsAttached = false;
 			Fall(1.f);
+			
 		}
 		
 	}

@@ -5,6 +5,8 @@
 
 #include "BTBEnemyCharacter.h"
 #include "BTBMiniGameOnePlayableCharacter.h"
+#include "NiagaraFunctionLibrary.h"
+#include "BackToBack/HUD/BTBGameHUD.h"
 #include "BackToBack/Actors/BTBSpear.h"
 #include "Components/CapsuleComponent.h"
 
@@ -14,6 +16,31 @@ ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
 	
 	SpearRetrievalPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spear Retrieval Point"));
 	SpearRetrievalPoint->SetupAttachment(GetRootComponent());
+	//DashMeter = FMath::Clamp(DashMeter, 0.0f,1.f);
+	
+}
+
+void ABTBMiniGameTwoPlayableCharacter::Dash()
+{
+	DashMeter -= 0.2f;
+	if (!(DashMeter < 0) )
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Honga bonga"))
+		LaunchCharacter(GetActorForwardVector()*3500,false,false);
+		SetbIsDashing(true);
+		//float whtIsDashMeterNow = DashMeter;
+		
+		
+		PlayerDash.Broadcast(DashMeter);
+		
+		GetMesh()->GetChildComponent(0)->SetActive(true,true);
+		
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+		{
+			GetMesh()->GetChildComponent(0)->SetActive(false,false);
+		}, 0.2, false);
+	}
 }
 
 void ABTBMiniGameTwoPlayableCharacter::BeginPlay()

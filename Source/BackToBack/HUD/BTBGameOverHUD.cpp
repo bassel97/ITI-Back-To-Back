@@ -14,6 +14,11 @@ void UBTBGameOverHUD::NativeConstruct()
 	{
 		RestartButton->OnClicked.AddDynamic(this, &UBTBGameOverHUD::OnRestartButtonClick);
 	}
+
+	if(MainMenuButton)
+	{
+		MainMenuButton->OnClicked.AddDynamic(this, &UBTBGameOverHUD::OnMainMenuButtonClick);
+	}
 }
 
 void UBTBGameOverHUD::OnRestartButtonClick()
@@ -24,5 +29,14 @@ void UBTBGameOverHUD::OnRestartButtonClick()
 	{
 		//UKismetSystemLibrary::ExecuteConsoleCommand(World, TEXT("RestartLevel"));
 		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	}
+}
+
+void UBTBGameOverHUD::OnMainMenuButtonClick()
+{
+	UWorld* World = GetWorld();
+	if (World != nullptr)
+	{
+		UGameplayStatics::OpenLevel(World, TEXT("MainMenu"));
 	}
 }

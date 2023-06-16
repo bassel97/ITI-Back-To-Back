@@ -5,7 +5,7 @@
 
 #include "BackToBack/Characters/BTBCharacter.h"
 #include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
-#include "GameFramework/CharacterMovementComponent.h"
+
 
 void UBTBPlayerDashAction::Act(ABTBCharacter* Character)
 {
@@ -16,18 +16,16 @@ void UBTBPlayerDashAction::Act(ABTBCharacter* Character)
 		return;
 	}
 
-	if (Character->GetbStartDashing())
+	if (Character->GetbStartDashing() )
 	{
-		UE_LOG(LogTemp,Warning,TEXT("Honga bonga"))
-		Character->LaunchCharacter(Character->GetActorForwardVector()*300,false,false);
-		MG2Player->SetbIsDashing(true);
-		MG2Player->DashMeter -= 1;
+		
+			MG2Player->Dash();
+			//UE_LOG(LogTemp,Warning,TEXT("dashing Is: %f"), MG2Player->DashMeter);
+	}
+
+	if (Character->GetbStartDashing() == false)
+	{
+		MG2Player->SetbIsDashing(false);
 	}
 	
-	// if (!Character->GetbStartDashing())
-	// {
-	// 	Character->GetCharacterMovement()->MaxWalkSpeed = 500.f;
-	// 	Character->GetCharacterMovement()->MaxAcceleration = 2400.f;
-	// 	Character->GetCharacterMovement()->BrakingFriction = 0;
-	// }
 }

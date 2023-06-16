@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
+#include "Components/ProgressBar.h"
 #include "BTBGameHUD.generated.h"
 
 class URetainerBox;
@@ -22,6 +23,9 @@ public:
 	UFUNCTION()
 	void SetScore(int32 Value);
 
+	UFUNCTION()
+	void SetDashPercent(float Value);
+
 protected:
 	virtual void NativeConstruct() override;
 	
@@ -38,6 +42,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	TObjectPtr<UTextBlock> Score = nullptr;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<UProgressBar> DashPercent = nullptr;
 
 	UPROPERTY(Transient, meta = (BindWidgetAnim))
 	UWidgetAnimation* ScaleIT = nullptr;
