@@ -34,9 +34,11 @@ ABTBSpear::ABTBSpear()
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
 	
-	/*EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
-	EnemySphereDetection->SetupAttachment(RootComponent);
-	EnemySphereDetection->SetSphereRadius(80.f, false);*/
+	RotatingMovementComponent = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("Rotating Movement Component"));
+	AddOwnedComponent(RotatingMovementComponent);
+	RotatingMovementComponent->RotationRate = FRotator(0.f, 0.f, 0.f);
+	RotatingMovementComponent->PivotTranslation = FVector(0.f, 0.f, 0.f);
+
 	SpearSpeed = 1000.0f;
 	SpearVFX = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Spear VFX Component"));
 	SpearVFX->SetupAttachment(SpearMesh);
@@ -208,6 +210,7 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 	if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(HitActor))
 	{
 		ProjectileMovementComponent->StopMovementImmediately();
+		RotatingMovementComponent->RotationRate = FRotator().ZeroRotator;
 		Player->AttachSpearToPlayer();
 		bIsAttached = true;
 		SpearVFX->SetAsset(nullptr, false);
@@ -248,6 +251,7 @@ void ABTBSpear::Summon(AActor* SummoningLocation)
 	EnemyCounter = 0;
 	EnemiesArray.Empty();
 	ActivateBoxCollision();
+	RotatingMovementComponent->RotationRate = FRotator(90.f, 0.f, 0.f);
 	Fall(0.f);
 	Throw(ReturnUnitVector, SpearSpeed);
 	UE_LOG(LogTemp, Warning, TEXT("Summon from the spear class"));
