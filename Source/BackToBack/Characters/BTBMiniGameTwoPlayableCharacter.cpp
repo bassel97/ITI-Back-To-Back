@@ -8,6 +8,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "BackToBack/HUD/BTBGameHUD.h"
 #include "BackToBack/Actors/BTBSpear.h"
+#include "NiagaraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SplineComponent.h"
 #include "Components/SplineMeshComponent.h"
@@ -26,6 +27,9 @@ ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
 
 	SplineEndSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SplineEndSphere"));
 	SplineEndSphere->SetupAttachment(SplineComp);
+
+	PlayerSpearVFX = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Spear Summon VFX"));
+	PlayerSpearVFX->SetupAttachment(GetRootComponent());
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Dash()
@@ -56,12 +60,26 @@ void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBMiniGameTwoPlayableCharacter::OnEnemyHit);
+	
+	if (SummonEaseCurve)
+	{
+		FOnTimelineFloat SummonProgress;
+		SummonProgress.BindUFunction(this, FName("SummonUpdate"));
+		FOnTimelineEvent SummonFinished;
+		SummonFinished.BindUFunction(this, FName("SummonFinished"));
+
+		SummonTimeline.AddInterpFloat(SummonEaseCurve, SummonProgress);
+		SummonTimeline.SetTimelineFinishedFunc(SummonFinished);
+		//SummonTimeline.PlayFromStart();
+	}
+
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	// UE_LOG(LogTemp, Warning, TEXT("BTBMiniGameTwoPlayableCharacter Log: %s HP = %d"), *GetName(), Health);
+	SummonTimeline.TickTimeline(DeltaSeconds);
 }
 
 void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -82,6 +100,28 @@ void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 		// Die();
 		// Destroy();
 	}
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SummonUpdate(float Alpha)
+{
+	float Opacity = FMath::Lerp(1, 0, Alpha);
+	PlayerSpearVFX->SetVariableVec3(FName("FadeVector"), FVector(Opacity, 1.0f, 1.0f));
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SummonFinished()
+{
+	PlayerSpearVFX->SetAsset(nullptr, false);
+	//SummonStop();
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SummonStart()
+{
+	SummonTimeline.PlayFromStart();
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SummonStop()
+{
+	SummonTimeline.Reverse();
 }
 
 void ABTBMiniGameTwoPlayableCharacter::DrawSpearPath()
@@ -168,6 +208,8 @@ void ABTBMiniGameTwoPlayableCharacter::Throw()
 
 	DrawSpearPath();
 	// RemoveSpearPathMeshes();
+	GetSpear()->SetPointLightColorAndIntensity(SpearThrownColor, 350.f);
+	//SummonStop();
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Summon()
@@ -176,6 +218,9 @@ void ABTBMiniGameTwoPlayableCharacter::Summon()
 	bIsThrowing = false;
 	bIsAttacking = false;
 	SpearPtr->Summon(this);
+	PlayerSpearVFX->SetAsset(SpearSummonVFX, false);
+	GetSpear()->SetPointLightColorAndIntensity(SpearSummonColor, 350.f);
+	//SummonStop();
 }
 
 bool ABTBMiniGameTwoPlayableCharacter::GetbIsAttacking()
@@ -211,7 +256,8 @@ void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
 			FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true),
 			TEXT("RightHandSocket")
 		);
-		
+		SummonStart();
 		bIsThrowing = false;
 	}
+	
 }

@@ -10,6 +10,10 @@ class UBoxComponent;
 class UProjectileMovementComponent;
 class URotatingMovementComponent;
 class USphereComponent;
+class UNiagaraComponent;
+class UNiagaraSystem;
+class UPointLightComponent;
+
 /**
  * 
  */
@@ -29,6 +33,8 @@ public:
 	void ActivateBoxCollision();
 
 	void DeactivateBoxCollision();
+
+	void SetPointLightColorAndIntensity(FLinearColor Color, float Intensity);
 
 protected:
 
@@ -65,6 +71,18 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 		TObjectPtr<USceneComponent> BoxTraceEnd;
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		TObjectPtr<UNiagaraComponent> SpearVFX;
+
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		TObjectPtr<UPointLightComponent> SpearPointLight;
+
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		TObjectPtr<UNiagaraSystem> SpearThrowVFX;
+
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		FLinearColor SpearInHandColor;
+	
 
 	UPROPERTY(EditDefaultsOnly, Category="Settings")
 		float SpearSpeed;

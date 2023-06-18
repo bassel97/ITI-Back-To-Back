@@ -4,7 +4,7 @@
 
 
 #include "BTBPlayableCharacter.h"
-#include "CoreMinimal.h"
+#include "Components/TimelineComponent.h"
 #include "BTBMiniGameTwoPlayableCharacter.generated.h"
 
 class UBTBGameHUD;
@@ -12,6 +12,8 @@ class UNiagaraSystem;
 class USplineMeshComponent;
 class USplineComponent;
 class ABTBSpear;
+class UNiagaraComponent;
+class UNiagaraSystem;
 /**
  *
  */
@@ -64,6 +66,13 @@ protected:
                           const FHitResult &SweepResult) override;
 
 private:
+	UFUNCTION()
+		void SummonUpdate(float Alpha);
+	UFUNCTION()
+		void SummonFinished();
+
+	void SummonStart();
+	void SummonStop();
 	void DrawSpearPath();
 	void RemoveSpearPathMeshes();
 	void SpawnMeshesBetweenSplinePoints();
@@ -81,8 +90,23 @@ public:
   UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
   bool bSpearAttached;
 
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dash Meter")
-  float DashMeter = 1.0f;
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		TObjectPtr<UNiagaraComponent> PlayerSpearVFX;
+	
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		TObjectPtr<UNiagaraSystem> SpearSummonVFX;
+	
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		FLinearColor SpearThrownColor;
+
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		FLinearColor SpearSummonColor;
+
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		TObjectPtr<UCurveFloat> SummonEaseCurve;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dash Meter")
+		float DashMeter = 1.0f;
 
   bool bIsoverlappingCollectable;
 
@@ -117,4 +141,6 @@ private:
 	bool bIsAttacking;
 
 	bool bIsDashing;
+
+	FTimeline SummonTimeline;
 };

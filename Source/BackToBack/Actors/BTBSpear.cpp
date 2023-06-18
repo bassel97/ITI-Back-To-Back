@@ -8,12 +8,13 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "BackToBack/Characters/BTBEnemyCharacter.h"
+#include "NiagaraComponent.h"
+#include "Components/PointLightComponent.h"
 #include "BackToBack/Characters/BTBMiniGameTwoPlayableCharacter.h"
 
 ABTBSpear::ABTBSpear()
 {
 	SpearMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Spear Mesh"));
-	//SpearMesh->SetupAttachment(SceneComponent);
 	RootComponent = SpearMesh;
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Box"));
@@ -37,6 +38,11 @@ ABTBSpear::ABTBSpear()
 	EnemySphereDetection->SetupAttachment(RootComponent);
 	EnemySphereDetection->SetSphereRadius(80.f, false);*/
 	SpearSpeed = 1000.0f;
+	SpearVFX = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Spear VFX Component"));
+	SpearVFX->SetupAttachment(SpearMesh);
+
+	SpearPointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("Spear Point Light Component"));
+	SpearPointLight->SetupAttachment(SpearMesh);
 }
 
 void ABTBSpear::BeginPlay()
@@ -44,12 +50,12 @@ void ABTBSpear::BeginPlay()
 	Super::BeginPlay();
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABTBSpear::OnBoxOverlap);
 	DeactivateBoxCollision();
+	SetPointLightColorAndIntensity(SpearInHandColor, 200.f);
 }
 
 void ABTBSpear::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("Enemy Counter is %d"), EnemyCounter);
 }
 
 void ABTBSpear::ActivateBoxCollision()
@@ -60,6 +66,12 @@ void ABTBSpear::ActivateBoxCollision()
 void ABTBSpear::DeactivateBoxCollision()
 {
 	CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void ABTBSpear::SetPointLightColorAndIntensity(FLinearColor Color, float Intensity)
+{
+	SpearPointLight->SetLightColor(Color);
+	SpearPointLight->SetIntensity(Intensity);
 }
 
 void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -91,16 +103,8 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 			{
 				PerformSphereTrace(Enemy->GetActorLocation(), Enemy->GetActorLocation(), 800.f, SphereActorsToIgnore);
 			}
-			
 			TArray<AActor*> EnemiesList;
 			int32 EnemiesNum = EnemiesArray.GetKeys(EnemiesList);
-			
-			for (auto EnemyMember : EnemiesArray)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Enemy member name is %s"), *EnemyMember.Key->GetName());
-				UE_LOG(LogTemp, Warning, TEXT("Enemy member value is %d"), EnemyMember.Value);
-			}
-
 			for (int32 i = 0; i < EnemiesNum; i++)
 			{
 				if (EnemiesList[i] == Enemy)
@@ -108,26 +112,6 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 					EnemiesArray.Emplace(EnemiesList[i], true);
 				}
 			}
-			for (auto EnemyMember : EnemiesArray)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Enemy member name is %s"), *EnemyMember.Key->GetName());
-				UE_LOG(LogTemp, Warning, TEXT("Enemy member value is %d"), EnemyMember.Value);
-			}
-			/*for (auto EnemyMember : EnemiesArray)
-			{
-				if (EnemyMember.Key == Enemy)
-				{
-					EnemiesArray.RemoveSingle(TPair<AActor*, bool>(Enemy, false));
-					EnemiesArray.AddUnique(TPair<AActor*, bool>(Enemy, true));
-				}
-			}
-			/*for (int32 i = 0; i < EnemiesArray.Num(); i++)
-			{
-				if (Cast<ABTBMiniGameTwoPlayableCharacter>(EnemiesArray[i].Key))
-				{
-					EnemiesArray.RemoveSingle(EnemiesArray[i]);
-				}
-			}*/
 			if (!bIsAttached)
 			{
 				BounceAtEnemies();
@@ -215,6 +199,7 @@ void ABTBSpear::Throw(const FVector& Direction, const float Speed)
 {
 	bIsAttached = false;
 	ProjectileMovementComponent->Velocity = Direction * Speed;
+	SpearVFX->SetAsset(SpearThrowVFX, false);
 }
 
 
@@ -225,7 +210,10 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 		ProjectileMovementComponent->StopMovementImmediately();
 		Player->AttachSpearToPlayer();
 		bIsAttached = true;
+		SpearVFX->SetAsset(nullptr, false);
+		//Player->SummonStop();
 		Fall(0.f);
+		SetPointLightColorAndIntensity(SpearInHandColor, 200.f);
 	}
 	else
 	{
@@ -260,8 +248,6 @@ void ABTBSpear::Summon(AActor* SummoningLocation)
 	EnemyCounter = 0;
 	EnemiesArray.Empty();
 	ActivateBoxCollision();
-	//HomingFunction(false, 0.f, 0.f, 0.f, nullptr);
-	//ProjectileMovementComponent->Velocity = ReturnUnitVector * 1000.f;
 	Fall(0.f);
 	Throw(ReturnUnitVector, SpearSpeed);
 	UE_LOG(LogTemp, Warning, TEXT("Summon from the spear class"));
