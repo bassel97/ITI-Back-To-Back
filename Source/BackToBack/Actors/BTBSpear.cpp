@@ -31,7 +31,7 @@ ABTBSpear::ABTBSpear()
 	ProjectileMovementComponent->ProjectileGravityScale = 0.f;
 	ProjectileMovementComponent->Velocity = FVector().Zero();
 	ProjectileMovementComponent->SetUpdatedComponent(RootComponent);
-	ProjectileMovementComponent->bRotationFollowsVelocity = true;
+	ProjectileMovementComponent->bRotationFollowsVelocity = false;
 	ProjectileMovementComponent->bInitialVelocityInLocalSpace = true;
 	
 	RotatingMovementComponent = CreateDefaultSubobject<URotatingMovementComponent>(TEXT("Rotating Movement Component"));
@@ -76,8 +76,36 @@ void ABTBSpear::SetPointLightColorAndIntensity(FLinearColor Color, float Intensi
 	SpearPointLight->SetIntensity(Intensity);
 }
 
+
+
 void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	TArray<AActor*> IgnoreActorsArray;
+	IgnoreActorsArray.Add(this);
+	FHitResult HitRes;
+	UKismetSystemLibrary::BoxTraceSingle(
+		GetWorld(),
+		BoxTraceStart->GetComponentLocation(),
+		BoxTraceEnd->GetComponentLocation(),
+		CollisionBox->GetScaledBoxExtent() / 2.f,
+		BoxTraceEnd->GetComponentRotation(),
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		IgnoreActorsArray,
+		EDrawDebugTrace::ForDuration,
+		HitRes,
+		false,
+		FColor::Red,
+		FColor::Green,
+		4.f
+	);
+	if (HitRes.GetActor())
+	{
+		if (!Cast<APawn>(HitRes.GetActor()))
+		{
+			StopSpearBounce(HitRes.GetActor());
+		}
+	}
 	TArray<AActor*> SphereActorsToIgnore;
 	if (APawn* Pawn = Cast<APawn>(OtherActor))
 	{
@@ -118,13 +146,6 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 			{
 				BounceAtEnemies();
 			}
-		}
-	}
-	else
-	{
-		if (OtherActor != this)
-		{
-			StopSpearBounce(OtherActor);
 		}
 	}
 }
@@ -199,9 +220,22 @@ void ABTBSpear::BounceAtEnemies()
 
 void ABTBSpear::Throw(const FVector& Direction, const float Speed)
 {
+	if (bIsSummoning)
+	{
+		ProjectileMovementComponent->bRotationFollowsVelocity = false;
+		RotatingMovementComponent->RotationRate = FRotator(0.f, 1500.f, 0.f);
+		Fall(0.f);
+	}
+	else
+	{
+		ProjectileMovementComponent->bRotationFollowsVelocity = true;
+		RotatingMovementComponent->RotationRate = FRotator(0.f, 0.f, 0.f);
+		Fall(ThrowGravityScale);
+	}
 	bIsAttached = false;
 	ProjectileMovementComponent->Velocity = Direction * Speed;
 	SpearVFX->SetAsset(SpearThrowVFX, false);
+	
 }
 
 
@@ -209,12 +243,9 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 {
 	if (ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(HitActor))
 	{
-		ProjectileMovementComponent->StopMovementImmediately();
-		RotatingMovementComponent->RotationRate = FRotator().ZeroRotator;
 		Player->AttachSpearToPlayer();
-		bIsAttached = true;
+		ResetSpearPhysics();
 		SpearVFX->SetAsset(nullptr, false);
-		//Player->SummonStop();
 		Fall(0.f);
 		SetPointLightColorAndIntensity(SpearInHandColor, 200.f);
 	}
@@ -222,21 +253,29 @@ void ABTBSpear::StopSpearBounce(AActor* HitActor)
 	{
 		if (HitActor != nullptr)
 		{
-			ProjectileMovementComponent->StopMovementImmediately();
-			bIsAttached = false;
-			DeactivateBoxCollision();
-			Fall(0.f);
+			if (!bIsSummoning)
+			{
+				ProjectileMovementComponent->StopMovementImmediately();
+				bIsAttached = false;
+				DeactivateBoxCollision();
+				Fall(0.f);
+			}
 		}
 		else
 		{
 			bIsAttached = false;
-			Fall(1.f);
-			
+			Fall(2.f);
 		}
-		
 	}
 }
 
+void ABTBSpear::ResetSpearPhysics()
+{
+	ProjectileMovementComponent->StopMovementImmediately();
+	RotatingMovementComponent->RotationRate = FRotator().ZeroRotator;
+	bIsAttached = true;
+	bIsSummoning = false;
+}
 
 void ABTBSpear::Fall(float GravityScale)
 {
@@ -245,16 +284,12 @@ void ABTBSpear::Fall(float GravityScale)
 
 void ABTBSpear::Summon(AActor* SummoningLocation)
 {
+	bIsSummoning = true;
 	FVector ReturnVector = (SummoningLocation->GetActorLocation() - GetActorLocation());
 	FVector ReturnUnitVector = ReturnVector.GetSafeNormal();
-
-	EnemyCounter = 0;
 	EnemiesArray.Empty();
 	ActivateBoxCollision();
-	RotatingMovementComponent->RotationRate = FRotator(90.f, 0.f, 0.f);
-	Fall(0.f);
 	Throw(ReturnUnitVector, SpearSpeed);
-	UE_LOG(LogTemp, Warning, TEXT("Summon from the spear class"));
 }
 
 void ABTBSpear::HomingFunction(bool bIsHoming, float InitialSpeed, float MaxSpeed, float HomingAcceleration, AActor* Target)

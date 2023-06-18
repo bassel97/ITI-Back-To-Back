@@ -36,6 +36,8 @@ public:
 
 	void SetPointLightColorAndIntensity(FLinearColor Color, float Intensity);
 
+	void ResetSpearPhysics();
+
 protected:
 
 	// Called when the game starts or when spawned
@@ -82,7 +84,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Spear VFX")
 		FLinearColor SpearInHandColor;
-	
+
+	UPROPERTY(EditAnywhere, Category = "Spear VFX")
+		float ThrowGravityScale;
 
 	UPROPERTY(EditDefaultsOnly, Category="Settings")
 		float SpearSpeed;
@@ -103,12 +107,15 @@ protected:
 
 private:
 
-	int32 EnemyCounter = 0;
 
 	//TArray<TPair<TObjectPtr<AActor>, bool>> EnemiesArray;
 	TMap<AActor*,bool> EnemiesArray;
 
 	bool bIsAttached = true;
+
+	bool bIsSummoning = false;
+
+	
 
 
 };

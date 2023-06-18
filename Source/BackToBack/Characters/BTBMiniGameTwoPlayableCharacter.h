@@ -14,6 +14,7 @@ class USplineComponent;
 class ABTBSpear;
 class UNiagaraComponent;
 class UNiagaraSystem;
+class UBoxComponent;
 /**
  *
  */
@@ -64,6 +65,12 @@ protected:
                           AActor *OtherActor, UPrimitiveComponent *OtherComp,
                           int32 OtherBodyIndex, bool bFromSweep,
                           const FHitResult &SweepResult) override;
+
+  UFUNCTION()
+  void OnActorHit(UPrimitiveComponent* OverlappedComponent,
+	  AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	  int32 OtherBodyIndex, bool bFromSweep,
+	  const FHitResult& SweepResult);
 
 private:
 	UFUNCTION()
@@ -119,10 +126,12 @@ public:
   UPROPERTY(BlueprintAssignable, Category = "EventDispatcher")
   FOnDashValChange PlayerDash;
 
+  UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
+	  TObjectPtr<UBoxComponent> SpearRetrievalBox;
+
 protected:
 private:
-	UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
-		TObjectPtr<USceneComponent> SpearRetrievalPoint;
+	
 
 	UPROPERTY(EditAnywhere, Category = "Spear Path Spline")
 	TObjectPtr<USplineComponent> SplineComp;

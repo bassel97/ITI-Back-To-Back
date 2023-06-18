@@ -10,6 +10,7 @@
 #include "BackToBack/Actors/BTBSpear.h"
 #include "NiagaraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/BoxComponent.h"
 #include "Components/SplineComponent.h"
 #include "Components/SplineMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -18,8 +19,8 @@ ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
 {
 	MilesAnimInstance = GetMesh()->GetAnimInstance();
 	
-	SpearRetrievalPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spear Retrieval Point"));
-	SpearRetrievalPoint->SetupAttachment(GetRootComponent());
+	/*SpearRetrievalPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spear Retrieval Point"));
+	SpearRetrievalPoint->SetupAttachment(GetRootComponent());*/
 	//DashMeter = FMath::Clamp(DashMeter, 0.0f,1.f);
 
 	SplineComp = CreateDefaultSubobject<USplineComponent>(TEXT("SpearPathSpline"));
@@ -60,6 +61,7 @@ void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBMiniGameTwoPlayableCharacter::OnEnemyHit);
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBMiniGameTwoPlayableCharacter::OnActorHit);
 	
 	if (SummonEaseCurve)
 	{
@@ -99,6 +101,15 @@ void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 		// bIsDead = true;
 		// Die();
 		// Destroy();
+	}
+}
+
+void ABTBMiniGameTwoPlayableCharacter::OnActorHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Cast<ABTBSpear>(OtherActor))
+	{
+		SpearPtr->ResetSpearPhysics();
+		AttachSpearToPlayer();
 	}
 }
 
