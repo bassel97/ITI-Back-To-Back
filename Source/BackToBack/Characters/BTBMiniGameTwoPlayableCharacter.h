@@ -66,6 +66,7 @@ protected:
 private:
 	void DrawSpearPath();
 	void RemoveSpearPathMeshes();
+	void SpawnMeshesBetweenSplinePoints();
 
 public:
   TObjectPtr<ABTBSpear> SpearPtr;
@@ -115,5 +116,5 @@ private:
 
 	bool bIsAttacking;
 
-  bool bIsDashing;
+	bool bIsDashing;
 };

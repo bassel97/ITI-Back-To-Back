@@ -47,7 +47,7 @@ void ABTBMiniGameTwoPlayableCharacter::Dash()
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
 		{
 			GetMesh()->GetChildComponent(0)->SetActive(false,false);
-		}, 0.2, false);
+		},0.2, false);
 	}
 }
 
@@ -65,7 +65,7 @@ void ABTBMiniGameTwoPlayableCharacter::Tick(float DeltaSeconds)
 }
 
 void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                                  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (bIsDead) return;
 
@@ -96,7 +96,7 @@ void ABTBMiniGameTwoPlayableCharacter::DrawSpearPath()
 	FPredictProjectilePathResult PathResult;
 
 	PathParams.StartLocation = SplineComp->GetComponentLocation();
-	PathParams.LaunchVelocity = /*SpearPtr->SpearSpeed * */ GetActorForwardVector() * 1000;
+	PathParams.LaunchVelocity = GetActorForwardVector() * 1000;
 	PathParams.MaxSimTime = 3.0f;
 	PathParams.SimFrequency = 20.0f;
 	PathParams.DrawDebugTime = 3.0f;
@@ -120,6 +120,11 @@ void ABTBMiniGameTwoPlayableCharacter::DrawSpearPath()
 	const FVector LastPointLocation = PathResult.PathData[LastIndex].Location;
 	SplineEndSphere->SetWorldLocation(LastPointLocation);
 
+	SpawnMeshesBetweenSplinePoints();
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SpawnMeshesBetweenSplinePoints()
+{
 	for (int i = 0; i < SplineComp->GetNumberOfSplinePoints() - 2; i++)
 	{
 		USplineMeshComponent* SplineMeshComp =
@@ -129,17 +134,21 @@ void ABTBMiniGameTwoPlayableCharacter::DrawSpearPath()
 
 		SplineMeshComp->SetStaticMesh(SplineStaticMesh);
 		SplineMeshComp->SetMaterial(0, SplineMeshMaterial);
+		
 		SplineMeshComp->SetMobility(EComponentMobility::Movable);
 
 		FVector CurrentPointLocation, CurrentPointTangent;
-		SplineComp->GetLocationAndTangentAtSplinePoint(i, CurrentPointLocation, CurrentPointTangent, ESplineCoordinateSpace::Local);
+		SplineComp->GetLocationAndTangentAtSplinePoint(i, CurrentPointLocation, CurrentPointTangent,
+													   ESplineCoordinateSpace::Local);
 
 		FVector NextPointLocation, NextPointTangent;
-		SplineComp->GetLocationAndTangentAtSplinePoint(i + 1, NextPointLocation, NextPointTangent, ESplineCoordinateSpace::Local);
+		SplineComp->GetLocationAndTangentAtSplinePoint(i + 1, NextPointLocation, NextPointTangent,
+													   ESplineCoordinateSpace::Local);
 
-		SplineMeshComp->SetStartAndEnd(CurrentPointLocation, CurrentPointTangent, NextPointLocation, NextPointTangent);
+		SplineMeshComp->SetStartAndEnd(CurrentPointLocation, CurrentPointTangent,
+									   NextPointLocation, NextPointTangent);
 	}
-
+	
 	RegisterAllComponents();
 }
 
