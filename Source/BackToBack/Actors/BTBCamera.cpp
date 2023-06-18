@@ -25,14 +25,16 @@ void ABTBCamera::BeginPlay()
 {
 	Super::BeginPlay();
 	InitCamera();
-	GetActivePlayers();
+	
 }
 
 void ABTBCamera::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	GetActivePlayers();
 	CalculateCameraLocation();
 	UpdateCameraArm();
+	
 }
 
 void ABTBCamera::InitCamera() const
@@ -61,6 +63,16 @@ void ABTBCamera::CalculateCameraLocation()
 
 void ABTBCamera::UpdateCameraArm()
 {
-	const float DistanceBetweenPlayers = Players[0]->GetDistanceTo(Players[1]);
+	float DistanceBetweenPlayers;
+	if (Players.Num() >= 2)
+	{
+		DistanceBetweenPlayers = Players[0]->GetDistanceTo(Players[1]);
+	}
+	else
+	{
+		DistanceBetweenPlayers = 0.0f;
+	}
+	
 	CameraArm->TargetArmLength = FMath::Clamp(DistanceBetweenPlayers, MinArmLength, MaxArmLength);
+	
 }

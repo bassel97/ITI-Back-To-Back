@@ -18,7 +18,12 @@ void ABTBMiniGameTwoGameMode::BeginPlay()
 
 	Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0])->PlayerDash.AddDynamic(this, &ABTBMiniGameTwoGameMode::ChangeDashBar);
 	Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[1])->PlayerDash.AddDynamic(this, &ABTBMiniGameTwoGameMode::ChangeDashBar);
+	
+	const TObjectPtr<ABTBMiniGameTwoPlayableCharacter> MG2_PlayerOne = Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0]);
+	const TObjectPtr<ABTBMiniGameTwoPlayableCharacter> MG2_PlayerTwo = Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[1]);
 
+	MG2_PlayerOne->TheOtherPlayer = MG2_PlayerTwo;
+	MG2_PlayerTwo->TheOtherPlayer = MG2_PlayerOne;
 }
 
 void ABTBMiniGameTwoGameMode::AssignSpearToPlayer()

@@ -10,6 +10,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDeath);
 
+
 class USpringArmComponent;
 class USceneCaptureComponent2D;
 class UMeshComponent;
