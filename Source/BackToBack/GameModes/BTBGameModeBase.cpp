@@ -35,9 +35,17 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		PlayerControllerArray.AddUnique(BTBControllerOne);
 		BTBControllerOne->Possess(SpawnedPlayer);
 	}
-
-	const TObjectPtr<APlayerController> ControllerTwo = UGameplayStatics::CreatePlayer(World, 1/*,true*/);
-	const TObjectPtr<ABTBPlayerController> BTBControllerTwo = Cast<ABTBPlayerController>(ControllerTwo);
+	TObjectPtr<ABTBPlayerController> BTBControllerTwo;
+	if (auto x = UGameplayStatics::GetPlayerController(World, 1))
+	{
+		/*const TObjectPtr<ABTBPlayerController> */BTBControllerTwo = Cast<ABTBPlayerController>(x);
+	}
+	else
+	{
+		/*const TObjectPtr<ABTBPlayerController> */BTBControllerTwo = Cast<ABTBPlayerController>(UGameplayStatics::CreatePlayer(World, 1));
+	}
+	//const TObjectPtr<APlayerController> ControllerTwo = UGameplayStatics::CreatePlayer(World, 1/*,true*/);
+	
 	if (ensure(BTBControllerTwo != nullptr))
 	{
 		ABTBInputReceiverPawn* SpawnedPlayer = World->SpawnActor<ABTBInputReceiverPawn>(BTBInputReceiverClass);
