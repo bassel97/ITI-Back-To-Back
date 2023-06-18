@@ -4,7 +4,6 @@
 #include "BTBPlayableCharacter.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Kismet/GameplayStatics.h"
 
 
 void ABTBPlayableCharacter::BeginPlay()
@@ -44,8 +43,6 @@ void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextur
 void ABTBPlayableCharacter::Die()
 {
 	OnPlayerDeath.Broadcast();
-	this->Destroy();
-	
 	UE_LOG(LogTemp, Warning, TEXT("Playable character died"));
 }
 

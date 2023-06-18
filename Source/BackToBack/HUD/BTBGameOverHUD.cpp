@@ -4,22 +4,8 @@
 #include "BTBGameOverHUD.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "Components/TextBlock.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Components/Button.h"
-
-
-void UBTBGameOverHUD::SetScore(UTextBlock* Value)
-{
-	if(Score)
-	{
-		Score->SetText(Value->GetText());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Score is nullptr"));
-	}
-}
 
 void UBTBGameOverHUD::NativeConstruct()
 {
@@ -33,9 +19,7 @@ void UBTBGameOverHUD::NativeConstruct()
 	{
 		MainMenuButton->OnClicked.AddDynamic(this, &UBTBGameOverHUD::OnMainMenuButtonClick);
 	}
-	
 }
-
 
 void UBTBGameOverHUD::OnRestartButtonClick()
 {

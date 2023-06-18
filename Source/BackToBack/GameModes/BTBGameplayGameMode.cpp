@@ -72,6 +72,35 @@ void ABTBGameplayGameMode::Tick(float DeltaSeconds)
 	{
 		DisplayPauseHUD(false);
 	}
+
+	// if (Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0])->GetbIsDashing() || Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[1])->GetbIsDashing())
+	// {
+	// 	if (GameWidget->DashPercent->GetPercent() != 0)
+	// 	{
+	// 		float WidgetScore = GameWidget->DashPercent->GetPercent();
+	// 		
+	// 		GameWidget->SetDashPercent(WidgetScore - 0.2f);
+	// 	}
+	// }
+
+	// if (Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0])->bIsoverlappingCollectable || Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[1])->bIsoverlappingCollectable)
+	// {
+	// 	ABTBMiniGameTwoPlayableCharacter* MG2Playe1 = Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0]);
+	// 	ABTBMiniGameTwoPlayableCharacter* MG2Playe2 = Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[1]);
+	// 	
+	// 	if (GameWidget->DashPercent->GetPercent() >= 1)
+	// 	{
+	// 		return;
+	// 	}
+	// 	
+	// 	float WidgetScore = GameWidget->DashPercent->GetPercent();
+	// 	
+	// 	GameWidget->SetDashPercent(WidgetScore + 0.2f);
+	// 	MG2Playe1->bIsoverlappingCollectable = false;
+	// 	MG2Playe2->bIsoverlappingCollectable = false;
+	// 	
+	// }
+	
 	
 }
 
@@ -226,9 +255,6 @@ void ABTBGameplayGameMode::DisplayGameoverHUD()
 		GameoverWidget = Cast<UBTBGameOverHUD>(CreateWidget(World, BTBGameoverHUDWidgetClass));
 		if (GameoverWidget)
 		{
-
-			auto theScore = GameWidget->Score;
-			GameoverWidget->SetScore(theScore);
 			GameoverWidget->AddToViewport();
 			UGameplayStatics::SetGamePaused(World, true);
 			UGameplayStatics::RemovePlayer(PlayerControllerArray[1], true);

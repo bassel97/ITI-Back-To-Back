@@ -6,8 +6,6 @@
 #include "GameFramework/GameModeBase.h"
 #include "BTBGameModeBase.generated.h"
 
-
-
 class APlayerStart;
 class ABTBInputReceiverPawn;
 class ABTBPlayerController;
