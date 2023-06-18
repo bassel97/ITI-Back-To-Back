@@ -9,6 +9,8 @@
 
 class UBTBGameHUD;
 class UNiagaraSystem;
+class USplineMeshComponent;
+class USplineComponent;
 class ABTBSpear;
 /**
  *
@@ -23,8 +25,17 @@ class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter
 
 public:
   ABTBMiniGameTwoPlayableCharacter();
-  void SetSpear(ABTBSpear *Spear);
-  ABTBSpear *GetSpear();
+	
+  void SetSpear(ABTBSpear* Spear)
+  {
+  	SpearPtr = Spear;
+  }
+
+  ABTBSpear *GetSpear()
+  {
+  	return SpearPtr;
+  }
+  
   void Throw();
   void AttachSpearToPlayer();
   void Summon();
@@ -53,6 +64,9 @@ protected:
                           const FHitResult &SweepResult) override;
 
 private:
+	void DrawSpearPath();
+	void RemoveSpearPathMeshes();
+
 public:
   TObjectPtr<ABTBSpear> SpearPtr;
   TObjectPtr<UBTBGameHUD> GameWidget;
@@ -82,10 +96,24 @@ public:
 
 protected:
 private:
-  UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
-  TObjectPtr<USceneComponent> SpearRetrievalPoint;
+	UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
+		TObjectPtr<USceneComponent> SpearRetrievalPoint;
 
-  bool bIsAttacking;
+	UPROPERTY(EditAnywhere, Category = "Spear Path Spline")
+	TObjectPtr<USplineComponent> SplineComp;
+
+	UPROPERTY(EditAnywhere, Category = "Spear Path Spline")
+	TObjectPtr<UStaticMesh> SplineStaticMesh;
+
+	UPROPERTY(EditAnywhere, Category = "Spear Path Spline")
+	TObjectPtr<UMaterialInstance> SplineMeshMaterial;
+
+	UPROPERTY(EditAnywhere, Category = "Spear Path Spline")
+	TObjectPtr<UStaticMeshComponent> SplineEndSphere;
+	
+	TArray<TObjectPtr<USplineMeshComponent>> SplineMeshComponents;
+
+	bool bIsAttacking;
 
   bool bIsDashing;
 };

@@ -66,6 +66,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		TObjectPtr<USceneComponent> BoxTraceEnd;
 
+	UPROPERTY(EditDefaultsOnly, Category="Settings")
+		float SpearSpeed;
+
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -88,8 +91,6 @@ private:
 	TMap<AActor*,bool> EnemiesArray;
 
 	bool bIsAttached = true;
-
-	
 
 
 };

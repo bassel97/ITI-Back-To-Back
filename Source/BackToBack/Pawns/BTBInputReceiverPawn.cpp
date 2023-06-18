@@ -202,7 +202,6 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		PlayerCharacterPtr->SetbStartSummoning(false);
 		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 	}
-
 	
 	if (RightTrigger.bIsHeld)
 	{

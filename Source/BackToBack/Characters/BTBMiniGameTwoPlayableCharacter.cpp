@@ -9,6 +9,9 @@
 #include "BackToBack/HUD/BTBGameHUD.h"
 #include "BackToBack/Actors/BTBSpear.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SplineComponent.h"
+#include "Components/SplineMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
 {
@@ -17,7 +20,12 @@ ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
 	SpearRetrievalPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spear Retrieval Point"));
 	SpearRetrievalPoint->SetupAttachment(GetRootComponent());
 	//DashMeter = FMath::Clamp(DashMeter, 0.0f,1.f);
-	
+
+	SplineComp = CreateDefaultSubobject<USplineComponent>(TEXT("SpearPathSpline"));
+	SplineComp->SetupAttachment(GetRootComponent());
+
+	SplineEndSphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SplineEndSphere"));
+	SplineEndSphere->SetupAttachment(SplineComp);
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Dash()
@@ -56,16 +64,6 @@ void ABTBMiniGameTwoPlayableCharacter::Tick(float DeltaSeconds)
 	// UE_LOG(LogTemp, Warning, TEXT("BTBMiniGameTwoPlayableCharacter Log: %s HP = %d"), *GetName(), Health);
 }
 
-void ABTBMiniGameTwoPlayableCharacter::SetSpear(ABTBSpear* Spear)
-{
-	SpearPtr = Spear;
-}
-
-ABTBSpear* ABTBMiniGameTwoPlayableCharacter::GetSpear()
-{
-	return SpearPtr;
-}
-
 void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -86,11 +84,81 @@ void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 	}
 }
 
+void ABTBMiniGameTwoPlayableCharacter::DrawSpearPath()
+{
+	const TObjectPtr<UWorld> World = GetWorld();
+	if (!ensure(World != nullptr && SplineStaticMesh != nullptr && SplineMeshMaterial != nullptr))
+	{
+		return;
+	}
+
+	FPredictProjectilePathParams PathParams;
+	FPredictProjectilePathResult PathResult;
+
+	PathParams.StartLocation = SplineComp->GetComponentLocation();
+	PathParams.LaunchVelocity = /*SpearPtr->SpearSpeed * */ GetActorForwardVector() * 1000;
+	PathParams.MaxSimTime = 3.0f;
+	PathParams.SimFrequency = 20.0f;
+	PathParams.DrawDebugTime = 3.0f;
+	PathParams.DrawDebugType = EDrawDebugTrace::None;
+	PathParams.TraceChannel = ECC_Visibility;
+	PathParams.OverrideGravityZ = -1;
+	PathParams.ActorsToIgnore.Add(this);
+	UGameplayStatics::PredictProjectilePath(World, PathParams, PathResult);
+
+	SplineComp->ClearSplinePoints();
+	SplineMeshComponents.Empty();
+
+	for (auto Point : PathResult.PathData)
+	{
+		SplineComp->AddSplinePoint(Point.Location, ESplineCoordinateSpace::Local);
+	}
+
+	const int32 LastIndex = PathResult.PathData.Num() - 1;
+	SplineComp->SetSplinePointType(LastIndex, ESplinePointType::CurveClamped);
+	
+	const FVector LastPointLocation = PathResult.PathData[LastIndex].Location;
+	SplineEndSphere->SetWorldLocation(LastPointLocation);
+
+	for (int i = 0; i < SplineComp->GetNumberOfSplinePoints() - 2; i++)
+	{
+		USplineMeshComponent* SplineMeshComp =
+			NewObject<USplineMeshComponent>(this, USplineMeshComponent::StaticClass());
+
+		SplineMeshComponents.AddUnique(SplineMeshComp);
+
+		SplineMeshComp->SetStaticMesh(SplineStaticMesh);
+		SplineMeshComp->SetMaterial(0, SplineMeshMaterial);
+		SplineMeshComp->SetMobility(EComponentMobility::Movable);
+
+		FVector CurrentPointLocation, CurrentPointTangent;
+		SplineComp->GetLocationAndTangentAtSplinePoint(i, CurrentPointLocation, CurrentPointTangent, ESplineCoordinateSpace::Local);
+
+		FVector NextPointLocation, NextPointTangent;
+		SplineComp->GetLocationAndTangentAtSplinePoint(i + 1, NextPointLocation, NextPointTangent, ESplineCoordinateSpace::Local);
+
+		SplineMeshComp->SetStartAndEnd(CurrentPointLocation, CurrentPointTangent, NextPointLocation, NextPointTangent);
+	}
+
+	RegisterAllComponents();
+}
+
+void ABTBMiniGameTwoPlayableCharacter::RemoveSpearPathMeshes()
+{
+	for (const auto& SplineMesh : SplineMeshComponents)
+	{
+		SplineMesh->DestroyComponent();
+	}
+}
+
 void ABTBMiniGameTwoPlayableCharacter::Throw()
 {
 	bIsThrowing = true;
 	bIsSummoning = false;
 	bIsAttacking = false;
+
+	DrawSpearPath();
+	// RemoveSpearPathMeshes();
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Summon()

@@ -36,6 +36,7 @@ ABTBSpear::ABTBSpear()
 	/*EnemySphereDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Sphere Detection"));
 	EnemySphereDetection->SetupAttachment(RootComponent);
 	EnemySphereDetection->SetSphereRadius(80.f, false);*/
+	SpearSpeed = 1000.0f;
 }
 
 void ABTBSpear::BeginPlay()
@@ -201,9 +202,9 @@ void ABTBSpear::BounceAtEnemies()
 	{
 		FVector UD = (TargetEnemy->GetActorLocation() - GetActorLocation()).GetSafeNormal();
 		//HomingFunction(true, 150.f, 200.f, 300.f, TargetEnemy);
-		Throw(UD, 1000.f);
+		Throw(UD, SpearSpeed);
 	}
-	else 
+	else
 	{
 		StopSpearBounce(TargetEnemy);
 		EnemiesArray.Empty();
@@ -262,7 +263,7 @@ void ABTBSpear::Summon(AActor* SummoningLocation)
 	//HomingFunction(false, 0.f, 0.f, 0.f, nullptr);
 	//ProjectileMovementComponent->Velocity = ReturnUnitVector * 1000.f;
 	Fall(0.f);
-	Throw(ReturnUnitVector, 2000.f);
+	Throw(ReturnUnitVector, SpearSpeed);
 	UE_LOG(LogTemp, Warning, TEXT("Summon from the spear class"));
 }
 
