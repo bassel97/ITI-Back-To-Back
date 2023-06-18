@@ -192,7 +192,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		PlayerCharacterPtr->SetbStartShoot(true);
 		PlayerCharacterPtr->SetbStartThrowing(true);
 		PlayerCharacterPtr->SetbStartSummoning(true);
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
+		//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
 	}
 	
 	if (RightTrigger.bIsReleased)
@@ -200,7 +200,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		PlayerCharacterPtr->SetbStartShoot(false);
 		PlayerCharacterPtr->SetbStartThrowing(false);
 		PlayerCharacterPtr->SetbStartSummoning(false);
-		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+		//GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 	}
 	
 	if (RightTrigger.bIsHeld)
@@ -209,6 +209,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		{
 			PlayerCharacterPtr->SetbStartThrowing(false);
 		}
+		
 	}
 }
 
@@ -223,7 +224,11 @@ void ABTBInputReceiverPawn::HandleLeftTrigger() const
 	if (LeftTrigger.bIsReleased)
 	{
 		//PlayerCharacterPtr->SetbStartDashing(false);
-		Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterPtr)->SetbIsDashing(false);
+		if (Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterPtr) != nullptr)
+		{
+			Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterPtr)->SetbIsDashing(false);
+		}
+		
 
 	}
 

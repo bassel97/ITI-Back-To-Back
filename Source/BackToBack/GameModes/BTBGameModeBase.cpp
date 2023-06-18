@@ -35,7 +35,7 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		PlayerControllerArray.AddUnique(BTBControllerOne);
 		BTBControllerOne->Possess(SpawnedPlayer);
 	}
-
+	
 	const TObjectPtr<APlayerController> ControllerTwo = UGameplayStatics::CreatePlayer(World, 1/*,true*/);
 	const TObjectPtr<ABTBPlayerController> BTBControllerTwo = Cast<ABTBPlayerController>(ControllerTwo);
 	if (ensure(BTBControllerTwo != nullptr))

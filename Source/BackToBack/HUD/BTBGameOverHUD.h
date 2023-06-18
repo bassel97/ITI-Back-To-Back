@@ -7,7 +7,9 @@
 #include "BTBGameOverHUD.generated.h"
 
 
+class UTextBlock;
 class UButton;
+
 /**
  * 
  */
@@ -16,12 +18,20 @@ class BACKTOBACK_API UBTBGameOverHUD : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+
+	UFUNCTION()
+	void SetScore(UTextBlock* Value);
+	
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* RestartButton;
 	
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* MainMenuButton;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	TObjectPtr<UTextBlock> Score = nullptr;
 
 	virtual void NativeConstruct() override;
 

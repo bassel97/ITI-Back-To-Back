@@ -58,13 +58,9 @@ public:
 protected:
   virtual void BeginPlay() override;
   virtual void Tick(float DeltaSeconds) override;
-  virtual void Die() override;
 
   UFUNCTION()
-  virtual void OnEnemyHit(UPrimitiveComponent *OverlappedComponent,
-                          AActor *OtherActor, UPrimitiveComponent *OtherComp,
-                          int32 OtherBodyIndex, bool bFromSweep,
-                          const FHitResult &SweepResult) override;
+  virtual void OnEnemyHit(UPrimitiveComponent *OverlappedComponent,AActor *OtherActor, UPrimitiveComponent *OtherComp,int32 OtherBodyIndex, bool bFromSweep,const FHitResult &SweepResult) override;
 
   UFUNCTION()
   void OnActorHit(UPrimitiveComponent* OverlappedComponent,
@@ -86,7 +82,7 @@ private:
 
 public:
   TObjectPtr<ABTBSpear> SpearPtr;
-  TObjectPtr<UBTBGameHUD> GameWidget;
+
 
   UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
   bool bIsThrowing;
@@ -119,6 +115,8 @@ public:
 
   UPROPERTY()
   UAnimInstance *MilesAnimInstance;
+
+  ABTBMiniGameTwoPlayableCharacter* TheOtherPlayer;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DashEffect")
   UNiagaraSystem *DashVFX;

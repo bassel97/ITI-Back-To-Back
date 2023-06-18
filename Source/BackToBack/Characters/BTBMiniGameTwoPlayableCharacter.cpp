@@ -42,7 +42,7 @@ void ABTBMiniGameTwoPlayableCharacter::Dash()
 		LaunchCharacter(GetActorForwardVector()*3500,false,false);
 		SetbIsDashing(true);
 		//float whtIsDashMeterNow = DashMeter;
-		
+		TheOtherPlayer->DashMeter = DashMeter;
 		
 		PlayerDash.Broadcast(DashMeter);
 		
@@ -91,15 +91,14 @@ void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 
 	if (Cast<ABTBEnemyCharacter>(OtherActor))
 	{
-		Health--;
-		if (Health <= 0)
-		{
-			bIsDead = true;
-			Die();
-			Destroy();
-		}
-		// bIsDead = true;
-		// Die();
+		// Health--;
+		// if (Health <= 0)
+		// {
+		// 	bIsDead = true;
+		// 	Die();
+		// }
+		bIsDead = true;
+		Die();
 		// Destroy();
 	}
 }
@@ -244,18 +243,6 @@ void ABTBMiniGameTwoPlayableCharacter::SetbIsAttacking(bool Value)
 	bIsAttacking = Value;
 }
 
-
-void ABTBMiniGameTwoPlayableCharacter::Die()
-{
-	if(bIsDead == true && OtherPlayer->bIsDead == true)
-	{
-		Super::Die();
-
-#if UE_EDITOR
-		UE_LOG(LogTemp, Warning, TEXT("MG2 Players're DEAD"));
-#endif
-	}
-}
 
 void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
 {

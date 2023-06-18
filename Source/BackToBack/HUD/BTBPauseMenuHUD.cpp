@@ -53,7 +53,7 @@ void UBTBPauseMenuHUD::OnMainMenuBtnClick()
 	const TObjectPtr<UWorld> World = GetWorld();
 	if (World)
 	{
-		UGameplayStatics::OpenLevel(World, TEXT("MainMenu"));
+		UGameplayStatics::OpenLevel(World, TEXT("MainMenu2"));
 	}
 
 }
