@@ -101,6 +101,7 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	);
 	if (HitRes.GetActor())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("the actor is: %s"), *HitRes.GetActor()->GetName());
 		if (!Cast<APawn>(HitRes.GetActor()))
 		{
 			StopSpearBounce(HitRes.GetActor());

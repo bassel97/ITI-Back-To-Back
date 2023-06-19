@@ -36,6 +36,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision Components")
 	TObjectPtr<UBoxComponent> CollisionBox;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Collectable")
+	float SpawnRate = 60;
+
 	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	// TObjectPtr<UBTBObjectPoolComponent> ItemPool;
 protected:

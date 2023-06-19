@@ -28,7 +28,7 @@ void ABTBCollectableSpawner::BeginPlay()
 	ItemSpawnHandle,
 	this,
 	&ABTBCollectableSpawner::SpawnItems,
-	/*0.25f*/ 60,
+	SpawnRate,
 	true
 );
 }
