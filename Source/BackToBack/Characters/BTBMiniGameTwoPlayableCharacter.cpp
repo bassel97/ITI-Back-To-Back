@@ -53,7 +53,7 @@ void ABTBMiniGameTwoPlayableCharacter::Dash()
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
 		{
 			GetMesh()->GetChildComponent(0)->SetActive(false,false);
-		},0.2, false);
+		},0.2f, false);
 	}
 }
 
@@ -165,6 +165,12 @@ void ABTBMiniGameTwoPlayableCharacter::DrawSpearPath()
 	SplineEndSphere->SetWorldLocation(LastPointLocation);
 
 	SpawnMeshesBetweenSplinePoints();
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle,this,
+		&ABTBMiniGameTwoPlayableCharacter::RemoveSpearPathMeshes,0.2f, false);
+
+	
 }
 
 void ABTBMiniGameTwoPlayableCharacter::SpawnMeshesBetweenSplinePoints()
@@ -210,8 +216,7 @@ void ABTBMiniGameTwoPlayableCharacter::Throw()
 	bIsSummoning = false;
 	bIsAttacking = false;
 
-	DrawSpearPath();
-	// RemoveSpearPathMeshes();
+	//DrawSpearPath();
 	GetSpear()->SetPointLightColorAndIntensity(SpearThrownColor, 350.f);
 	//SummonStop();
 }
