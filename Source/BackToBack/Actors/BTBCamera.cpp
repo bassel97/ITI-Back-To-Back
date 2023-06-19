@@ -61,6 +61,17 @@ void ABTBCamera::CalculateCameraLocation()
 
 void ABTBCamera::UpdateCameraArm()
 {
-	const float DistanceBetweenPlayers = Players[0]->GetDistanceTo(Players[1]);
+	
+	float DistanceBetweenPlayers;
+	if (Players.Num() >= 2)
+	{
+		DistanceBetweenPlayers = Players[0]->GetDistanceTo(Players[1]);
+	}
+	else
+	{
+		DistanceBetweenPlayers = 0.0f;
+	}
+	
 	CameraArm->TargetArmLength = FMath::Clamp(DistanceBetweenPlayers, MinArmLength, MaxArmLength);
+	
 }

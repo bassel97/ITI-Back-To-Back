@@ -22,7 +22,8 @@ class UBoxComponent;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDashValChange, float, DashValue);
 
 UCLASS()
-class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter : public ABTBPlayableCharacter {
+class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter : public ABTBPlayableCharacter
+{
   GENERATED_BODY()
 
 public:
@@ -57,7 +58,6 @@ public:
 protected:
   virtual void BeginPlay() override;
   virtual void Tick(float DeltaSeconds) override;
-  virtual void Die() override;
 
   UFUNCTION()
   virtual void OnEnemyHit(UPrimitiveComponent *OverlappedComponent,

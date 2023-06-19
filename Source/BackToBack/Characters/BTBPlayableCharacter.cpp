@@ -43,7 +43,7 @@ void ABTBPlayableCharacter::AssignRenderTextureToCamera(const TObjectPtr<UTextur
 void ABTBPlayableCharacter::Die()
 {
 	OnPlayerDeath.Broadcast();
-	UE_LOG(LogTemp, Warning, TEXT("Playable character died"));
+	this->Destroy();
 }
 
 

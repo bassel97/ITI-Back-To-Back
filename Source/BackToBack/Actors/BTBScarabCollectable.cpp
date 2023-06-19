@@ -26,8 +26,11 @@ void ABTBScarabCollectable::OnBoxOverlap(UPrimitiveComponent* OverlappedComponen
 {
 	if (ABTBMiniGameTwoPlayableCharacter* MG2Player = Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
 	{
-		UE_LOG(LogTemp,Warning,TEXT("Squash Scarab"));
-		MG2Player->DashMeter += 0.2f;
+		if (MG2Player->DashMeter != 1.f)
+		{
+			MG2Player->DashMeter += 0.2f;
+			Cast<ABTBMiniGameTwoPlayableCharacter>(MG2Player->OtherPlayer)->DashMeter = MG2Player->DashMeter;
+		}
 		
 		MG2Player->bIsoverlappingCollectable = true;
 		MG2Player->PlayerDash.Broadcast(MG2Player->DashMeter);

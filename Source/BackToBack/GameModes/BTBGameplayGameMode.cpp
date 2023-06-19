@@ -255,6 +255,8 @@ void ABTBGameplayGameMode::DisplayGameoverHUD()
 		GameoverWidget = Cast<UBTBGameOverHUD>(CreateWidget(World, BTBGameoverHUDWidgetClass));
 		if (GameoverWidget)
 		{
+			auto theScore = GameWidget->Score;
+			GameoverWidget->SetScore(theScore);
 			GameoverWidget->AddToViewport();
 			UGameplayStatics::SetGamePaused(World, true);
 			UGameplayStatics::RemovePlayer(PlayerControllerArray[1], true);
