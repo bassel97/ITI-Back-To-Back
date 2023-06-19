@@ -26,7 +26,6 @@ void UBTBPlayerMeleeAttackAction::Act(ABTBCharacter* Character)
 			if (MG2PlayableCharacter->GetSpear()->IsAttachedTo(MG2PlayableCharacter))
 			{
 					MG2PlayableCharacter->SetbIsAttacking(true);
-					
 			}
 			
 		}
