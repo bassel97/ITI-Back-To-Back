@@ -25,12 +25,12 @@ void ABTBCamera::BeginPlay()
 {
 	Super::BeginPlay();
 	InitCamera();
-	GetActivePlayers();
 }
 
 void ABTBCamera::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	GetActivePlayers();
 	CalculateCameraLocation();
 	UpdateCameraArm();
 }

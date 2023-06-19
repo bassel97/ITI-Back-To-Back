@@ -21,7 +21,6 @@ void UBTBAnimNotifyStateThrow::NotifyBegin(USkeletalMeshComponent* MeshComp, UAn
 			{
 				Miles->GetSpear()->ActivateBoxCollision();
 				Miles->bIsThrowing = false;
-				//Miles->bIsThrowing = false;	
 			}
 
 		}

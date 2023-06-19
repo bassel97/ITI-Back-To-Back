@@ -17,13 +17,17 @@ void UBTBPlayerSummonAction::Act(ABTBCharacter* Character)
     {
         ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
         
-        if (Player->GetSpear() != nullptr)
+        if (Player->GetSpear() != nullptr && Player != nullptr)
         {
             if (!Player->GetSpear()->IsAttachedTo(Player))
             {
-                if(Cast<ABTBMiniGameTwoPlayableCharacter>(Player->OtherPlayer)->GetSpear()->IsAttachedTo(Cast<ABTBMiniGameTwoPlayableCharacter>(Player->OtherPlayer)))
+                if (Player->OtherPlayer != nullptr)
                 {
-                    Cast<ABTBMiniGameTwoPlayableCharacter>(Player->OtherPlayer)->GetSpear()->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
+                    ABTBMiniGameTwoPlayableCharacter* OtherOther = Cast<ABTBMiniGameTwoPlayableCharacter>(Player->OtherPlayer);
+                    if(OtherOther->GetSpear()->IsAttachedTo(OtherOther))
+                    {
+                        OtherOther->GetSpear()->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
+                    }
                 }
                 Player->Summon();
             }

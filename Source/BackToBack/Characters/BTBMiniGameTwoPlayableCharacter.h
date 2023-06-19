@@ -22,8 +22,7 @@ class UBoxComponent;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDashValChange, float, DashValue);
 
 UCLASS()
-class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter
-    : public ABTBPlayableCharacter {
+class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter : public ABTBPlayableCharacter {
   GENERATED_BODY()
 
 public:
