@@ -43,7 +43,7 @@ void UBTBPauseMenuHUD::OnQuitBtnClick()
 	const TObjectPtr<UWorld> World = GetWorld();
 	if (World)
 	{
-		FGenericPlatformMisc::RequestExit(false);
+		UKismetSystemLibrary::ExecuteConsoleCommand(World, TEXT("Quit"));
 
 	}
 }

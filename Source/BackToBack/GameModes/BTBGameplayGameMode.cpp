@@ -324,6 +324,7 @@ void ABTBGameplayGameMode::CreateEnemySpawnerAndSetCenterOfPlayers()
 	}
 
 	EnemySpawnerPtr = World->SpawnActor<ABTBEnemySpawner>(EnemySpawnerClass);
+	
 	if(EnemySpawnerPtr)
 	{
 		const FVector PlayersCenter =

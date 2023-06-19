@@ -37,6 +37,6 @@ void UBTBGameOverHUD::OnMainMenuButtonClick()
 	UWorld* World = GetWorld();
 	if (World != nullptr)
 	{
-		UGameplayStatics::OpenLevel(World, TEXT("MainMenu"));
+		UGameplayStatics::OpenLevel(World, TEXT("MainMenu2"));
 	}
 }
