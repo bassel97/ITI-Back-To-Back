@@ -35,7 +35,7 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "BTB_AI")
 	TObjectPtr<UBehaviorTree> AIBehaviorTree;
-
+	TObjectPtr<AActor> ClosestPlayer;
 	TArray<TObjectPtr<AActor>> PlayerActors;
 private:
 	

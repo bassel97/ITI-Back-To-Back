@@ -6,6 +6,7 @@
 #include "BackToBack/Characters/BTBAICharacter.h"
 #include "BackToBack/Characters/BTBEnemyCharacter.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
+#include "Components/BoxComponent.h"
 #include "Curves/CurveFloat.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -14,6 +15,9 @@ ABTBEnemySpawner::ABTBEnemySpawner()
 {
 	// PrimaryActorTick.bCanEverTick = true;
 	// PrimaryActorTick.bStartWithTickEnabled = true;
+
+
+
 }
 
 void ABTBEnemySpawner::BeginPlay()

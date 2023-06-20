@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "BTBAICharacter.h"
+#include "BTBMiniGameTwoPlayableCharacter.h"
 #include "BackToBack/HUD/BTBGameHUD.h"
+#include "Components/SphereComponent.h"
 #include "BTBEnemyCharacter.generated.h"
 
+class UBoxComponent;
 class UBTBGameHUD;
 class UNiagaraSystem;
 class UWidgetComponent;
@@ -21,7 +24,8 @@ class BACKTOBACK_API ABTBEnemyCharacter : public ABTBAICharacter
 
 public:
 	ABTBEnemyCharacter();
-
+	void AttackPlayer();
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
@@ -34,6 +38,9 @@ protected:
 
 	UFUNCTION()
 	void OnWeaponHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnPlayerGetCloser(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 private:
 
@@ -49,6 +56,20 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	float CalculateHealthPercentage() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetIsAttackingPlayer()
+	{
+		return bIsAttacking;
+	}
+
+	UFUNCTION(BlueprintCallable)
+	void SetIsAttackingPlayer(bool Value)
+	{
+		bIsAttacking = Value;
+	}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	TObjectPtr<UBoxComponent> CollisionBox;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly,Category = "Animation | Death")
@@ -62,9 +83,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
 	UNiagaraSystem* DamageEffect;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation | Damage")
-	UAnimationAsset* DamageAnimation;
+
+
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<USphereComponent> SphereCollision;
+
 
 	//FTimerHandle TimerHandle;
 
@@ -73,6 +97,8 @@ protected:
 
 private:
 	FTimerHandle DestroyTimeHandle;
+	
+	bool bIsAttacking = false;
 
 	// TObjectPtr<UMaterialInstanceDynamic> ClothMat;
 	// TObjectPtr<UMaterialInstanceDynamic> BodyMat;
@@ -80,3 +106,4 @@ private:
 	// UPROPERTY(EditDefaultsOnly, Category="Effect")
 	// TObjectPtr<UNiagaraSystem> NiagaraDissolveDeathEffect;
 };
+

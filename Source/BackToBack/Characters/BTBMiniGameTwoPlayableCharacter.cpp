@@ -62,6 +62,7 @@ void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBMiniGameTwoPlayableCharacter::OnEnemyHit);
+	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBMiniGameTwoPlayableCharacter::OnActorHit);
 	
 	if (SummonEaseCurve)
@@ -85,16 +86,21 @@ void ABTBMiniGameTwoPlayableCharacter::Tick(float DeltaSeconds)
 	SummonTimeline.TickTimeline(DeltaSeconds);
 }
 
-void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-                                                  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (bIsDead) return;
-
+	
 	if (Cast<ABTBEnemyCharacter>(OtherActor))
 	{
-		bIsDead = true;
-		Die();
+		UE_LOG(LogTemp, Warning, TEXT("Tring to die11111"));
+		if (OtherComp->ComponentHasTag("EnemyHand"))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Tring to die"));
+			bIsDead = true;
+			Die();
+		}
 	}
+
 }
 
 void ABTBMiniGameTwoPlayableCharacter::OnActorHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

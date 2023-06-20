@@ -15,28 +15,49 @@
 #include "NiagaraFunctionLibrary.h"
 
 ABTBEnemyCharacter::ABTBEnemyCharacter() {
-  HealthWidgetComp =
-      CreateDefaultSubobject<UWidgetComponent>(TEXT("Health Bar Widget Comp"));
+  HealthWidgetComp = CreateDefaultSubobject<UWidgetComponent>(TEXT("Health Bar Widget Comp"));
   HealthWidgetComp->SetupAttachment(GetRootComponent());
+
+  CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollider"));
+  CollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "RightHandSocket");
+  CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+  
+  SphereCollision = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Collision"));
+  SphereCollision->SetupAttachment(GetRootComponent());
+  
 }
 
 void ABTBEnemyCharacter::BeginPlay() {
   Super::BeginPlay();
-  GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(
-      this, &ABTBEnemyCharacter::OnWeaponHit);
+  GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBEnemyCharacter::OnWeaponHit);
 
+  SphereCollision->OnComponentBeginOverlap.AddDynamic(this,&ABTBEnemyCharacter::OnPlayerGetCloser);
   // ClothMat = UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(0),
   // this); BodyMat =
   // UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(1), this);
-
   Health = MaxHealth;
 }
 
+
 void ABTBEnemyCharacter::Tick(float DeltaSeconds) {
   Super::Tick(DeltaSeconds);
-  // UE_LOG(LogTemp, Warning, TEXT("BTBEnemyCharacter Log: %s HP = %d"),
-  // *GetName(), Health);
+  // if (!GetIsAttackingPlayer())
+  // {
+  //   CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+  //   //GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+  // }
+  
 }
+
+void ABTBEnemyCharacter::AttackPlayer()
+{
+  //GetCharacterMovement()->SetMovementMode(MOVE_None);
+  //should play the Attack animation
+  SetIsAttackingPlayer(true);
+  UE_LOG(LogTemp,Warning,TEXT("Attaking the niggaa"));
+}
+
+
 
 void ABTBEnemyCharacter::Die() {
   const TObjectPtr<UWorld> World = GetWorld();
@@ -116,6 +137,16 @@ void ABTBEnemyCharacter::OnWeaponHit(UPrimitiveComponent *OverlappedComponent,
     if (Cast<UBoxComponent>(OtherComp)) {
       GetDamaged();
     }
+  }
+}
+
+void ABTBEnemyCharacter::OnPlayerGetCloser(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+  if (Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
+  {
+    AttackPlayer();
+    UE_LOG(LogTemp,Warning,TEXT("Helloooo"));
   }
 }
 

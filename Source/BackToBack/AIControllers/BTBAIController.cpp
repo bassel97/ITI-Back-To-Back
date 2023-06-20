@@ -3,6 +3,7 @@
 
 #include "BTBAIController.h"
 
+#include "BackToBack/Characters/BTBEnemyCharacter.h"
 #include "BackToBack/Characters/BTBPlayableCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -20,6 +21,12 @@ void ABTBAIController::Tick(float DeltaSeconds)
 	
 	FillPlayerActorsArrayWithAlivePlayers();
 	UpdateBlackboardClosestPlayerVariable();
+	
+	// if (GetPawn()->GetDistanceTo(ClosestPlayer) < 50)
+	// {
+	// 	Cast<ABTBEnemyCharacter>(GetPawn())->AttackPlayer();
+	// }
+	
 }
 
 void ABTBAIController::RunTheBehaviourTree()
@@ -47,7 +54,7 @@ void ABTBAIController::UpdateBlackboardClosestPlayerVariable()
 {
 	if(!PlayerActors.IsEmpty())
 	{
-		const TObjectPtr<AActor> ClosestPlayer = GetClosestPlayer();
+		ClosestPlayer = GetClosestPlayer();
 		GetBlackboardComponent()->SetValueAsObject("PlayerActor", ClosestPlayer);
 	}
 }
