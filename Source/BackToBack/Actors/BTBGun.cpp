@@ -52,6 +52,30 @@ void ABTBGun::Shoot(const FVector Direction)
 				BulletProjectile->ProjectileGravityScale = 0.f;
 				BulletProjectile->AddForce(Direction * BulletVelocity);
 			}*/
+			// TArray<AActor*> ActorsToIgnore;
+			// FHitResult HitRes;
+			// bool bHitTrace = UKismetSystemLibrary::LineTraceSingle
+			// (
+			// 	GetWorld(),
+			// 	ShootingLocation->GetComponentToWorld().GetLocation(),
+			// 	FVector(ShootingLocation->GetComponentToWorld().GetLocation().X + 10000.f,0.f,0.f),
+			// 	TraceTypeQuery1,
+			// 	false,
+			// 	ActorsToIgnore,
+			// 	EDrawDebugTrace::ForDuration,
+			// 	HitRes,
+			// 	true,
+			// 	FColor::Red,
+			// 	FColor::Green,
+			// 	5.f
+			// );
+			// if(bHitTrace)
+			// {
+			// 	if(HitRes.GetActor())
+			// 	{
+			// 		if(Cast<APawn*>(HitRes))
+			// 	}
+			// }
 			BulletProjectile->ProjectileGravityScale = 0.f;
 			BulletProjectile->AddForce(Direction * BulletVelocity );
 			GunSkeletal->PlayAnimation(ShootingAnim, false);
