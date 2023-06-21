@@ -109,6 +109,7 @@ void ABTBMiniGameTwoPlayableCharacter::OnActorHit(UPrimitiveComponent* Overlappe
 	{
 		SpearPtr->ResetSpearPhysics();
 		AttachSpearToPlayer();
+		PlayerSpearVFX->SetAsset(nullptr, false);
 	}
 }
 

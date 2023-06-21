@@ -115,6 +115,9 @@ private:
 
 	bool bIsSummoning = false;
 
+	int32 EnemyCounter = 0;
+	int32 SphereTraceDebug = 0;
+
 	
 
 
