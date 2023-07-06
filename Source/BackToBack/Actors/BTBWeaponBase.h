@@ -16,14 +16,7 @@ class BACKTOBACK_API ABTBWeaponBase : public ABTBActor
 
 public:
 	ABTBWeaponBase();
-	
-protected:
-	
-private:
 
-
-	
-public:
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")

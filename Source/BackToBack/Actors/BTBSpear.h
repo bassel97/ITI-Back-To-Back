@@ -22,7 +22,6 @@ class BACKTOBACK_API ABTBSpear : public ABTBWeaponBase
 {
 	GENERATED_BODY()
 
-		//Methods
 public:
 	ABTBSpear();
 
@@ -39,11 +38,9 @@ public:
 	void ResetSpearPhysics();
 
 protected:
-
-	// Called when the game starts or when spawned
+	
 	virtual void BeginPlay() override;
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:
@@ -51,9 +48,7 @@ private:
 	void StopSpearBounce(AActor* SpearNewParentActor);
 
 	void Fall(float GravityScale);
-
-	//void Retrieve();
-
+	
 	void BounceAtEnemies();
 
 	void HomingFunction(bool bIsHoming, float InitialSpeed, float MaxSpeed, float HomingAcceleration, AActor* Target);
@@ -65,7 +60,6 @@ private:
 
 	void PerformSphereTrace(const FVector& StartLocation, const FVector& EndLocation, float Radius, TArray<AActor*> Target);
 
-	//Fields (Properties)
 public:
 
 	UPROPERTY(VisibleAnywhere)
@@ -106,9 +100,7 @@ protected:
 		TObjectPtr<URotatingMovementComponent> RotatingMovementComponent;
 
 private:
-
-
-	//TArray<TPair<TObjectPtr<AActor>, bool>> EnemiesArray;
+	
 	TMap<AActor*,bool> EnemiesArray;
 
 	bool bIsAttached = true;

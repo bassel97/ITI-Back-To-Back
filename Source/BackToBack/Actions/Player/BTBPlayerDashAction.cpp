@@ -18,9 +18,7 @@ void UBTBPlayerDashAction::Act(ABTBCharacter* Character)
 
 	if (Character->GetbStartDashing() )
 	{
-		
 			MG2Player->Dash();
-			//UE_LOG(LogTemp,Warning,TEXT("dashing Is: %f"), MG2Player->DashMeter);
 	}
 
 	if (Character->GetbStartDashing() == false)

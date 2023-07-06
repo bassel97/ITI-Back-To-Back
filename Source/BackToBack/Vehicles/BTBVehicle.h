@@ -14,16 +14,6 @@ class BACKTOBACK_API ABTBVehicle : public APawn
 {
 	GENERATED_BODY()
 
-public:
-
-protected:
-
-private:
-
-
-	
-public:
-
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UStaticMeshComponent> StaticMesh;

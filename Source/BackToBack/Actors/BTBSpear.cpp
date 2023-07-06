@@ -142,7 +142,6 @@ void ABTBSpear::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 			{
 				if (EnemiesList[i] == Enemy)
 				{
-					//EnemiesArray.Emplace(EnemiesList[i], true);
 					EnemiesArray.Remove(EnemiesList[i]);
 				}
 			}
@@ -212,21 +211,8 @@ void ABTBSpear::BounceAtEnemies()
 	if (TargetEnemy)
 	{
 		FVector UD = (TargetEnemy->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-		//HomingFunction(true, 150.f, 200.f, 300.f, TargetEnemy);
 		Throw(UD, SpearSpeed);
 		EnemyCounter++;
-		for (auto& EnemyMember : EnemiesArray)
-		{
-			/*if (EnemyMember.Value == false && bBounceStarted == false)
-			{
-				TargetEnemy = EnemyMember.Key;
-			}
-			else
-			{
-				bBounceStarted = true;
-			}*/
-			UE_LOG(LogTemp, Warning, TEXT("Enemy Name %s, Is Hit: %d"), *EnemyMember.Key->GetName(),EnemyMember.Value);
-		}
 	}
 	else
 	{

@@ -29,13 +29,4 @@ void UBTBPlayerMoveAction::Act(ABTBCharacter* Character)
 			Character->AddMovementInput(CameraForward, MoveValue_Y);
 		}
 	}
-
-
-
-#if UE_EDITOR
-	// UE_LOG(LogTemp, Warning, TEXT("Move X = %f"), MoveValue_X);
-	// UE_LOG(LogTemp, Warning, TEXT("Move Y = %f"), MoveValue_Y);
-	// UE_LOG(LogTemp, Warning, TEXT("InputAngle = %f"), RotationAngle);
-#endif
-	
 }

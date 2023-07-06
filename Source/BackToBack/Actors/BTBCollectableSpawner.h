@@ -38,9 +38,6 @@ public:
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Collectable")
 	float SpawnRate = 60;
-
-	// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	// TObjectPtr<UBTBObjectPoolComponent> ItemPool;
 protected:
 private:
 	FTimerHandle ItemSpawnHandle;

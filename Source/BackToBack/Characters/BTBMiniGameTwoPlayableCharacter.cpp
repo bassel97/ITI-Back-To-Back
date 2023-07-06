@@ -19,10 +19,6 @@ ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
 {
 	MilesAnimInstance = GetMesh()->GetAnimInstance();
 	
-	/*SpearRetrievalPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spear Retrieval Point"));
-	SpearRetrievalPoint->SetupAttachment(GetRootComponent());*/
-	//DashMeter = FMath::Clamp(DashMeter, 0.0f,1.f);
-
 	SplineComp = CreateDefaultSubobject<USplineComponent>(TEXT("SpearPathSpline"));
 	SplineComp->SetupAttachment(GetRootComponent());
 
@@ -40,9 +36,7 @@ void ABTBMiniGameTwoPlayableCharacter::Dash()
 	{
 		UE_LOG(LogTemp,Warning,TEXT("Honga bonga"))
 		LaunchCharacter(GetActorForwardVector()*3500,false,false);
-		SetbIsDashing(true);
-		//float whtIsDashMeterNow = DashMeter;
-		
+		SetbIsDashing(true);		
 		Cast<ABTBMiniGameTwoPlayableCharacter>(OtherPlayer)->DashMeter = DashMeter;
 		
 		PlayerDash.Broadcast(DashMeter);
@@ -74,7 +68,6 @@ void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
 
 		SummonTimeline.AddInterpFloat(SummonEaseCurve, SummonProgress);
 		SummonTimeline.SetTimelineFinishedFunc(SummonFinished);
-		//SummonTimeline.PlayFromStart();
 	}
 
 }
@@ -82,7 +75,6 @@ void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
 void ABTBMiniGameTwoPlayableCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	// UE_LOG(LogTemp, Warning, TEXT("BTBMiniGameTwoPlayableCharacter Log: %s HP = %d"), *GetName(), Health);
 	SummonTimeline.TickTimeline(DeltaSeconds);
 }
 
@@ -92,10 +84,8 @@ void ABTBMiniGameTwoPlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 	
 	if (Cast<ABTBEnemyCharacter>(OtherActor))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tring to die11111"));
 		if (OtherComp->ComponentHasTag("EnemyHand"))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Tring to die"));
 			bIsDead = true;
 			Die();
 		}
@@ -122,7 +112,6 @@ void ABTBMiniGameTwoPlayableCharacter::SummonUpdate(float Alpha)
 void ABTBMiniGameTwoPlayableCharacter::SummonFinished()
 {
 	PlayerSpearVFX->SetAsset(nullptr, false);
-	//SummonStop();
 }
 
 void ABTBMiniGameTwoPlayableCharacter::SummonStart()
@@ -222,10 +211,7 @@ void ABTBMiniGameTwoPlayableCharacter::Throw()
 	bIsThrowing = true;
 	bIsSummoning = false;
 	bIsAttacking = false;
-
-	//DrawSpearPath();
 	GetSpear()->SetPointLightColorAndIntensity(SpearThrownColor, 350.f);
-	//SummonStop();
 }
 
 void ABTBMiniGameTwoPlayableCharacter::Summon()
@@ -236,7 +222,6 @@ void ABTBMiniGameTwoPlayableCharacter::Summon()
 	SpearPtr->Summon(this);
 	PlayerSpearVFX->SetAsset(SpearSummonVFX, false);
 	GetSpear()->SetPointLightColorAndIntensity(SpearSummonColor, 350.f);
-	//SummonStop();
 }
 
 bool ABTBMiniGameTwoPlayableCharacter::GetbIsAttacking()
@@ -248,10 +233,6 @@ void ABTBMiniGameTwoPlayableCharacter::SetbIsAttacking(bool Value)
 {
 	bIsAttacking = Value;
 }
-
-
-
-
 void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
 {
 	if (!SpearPtr->IsAttachedTo(this))

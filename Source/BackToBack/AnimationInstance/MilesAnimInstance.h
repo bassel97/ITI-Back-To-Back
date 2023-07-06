@@ -17,8 +17,7 @@ class BACKTOBACK_API UMilesAnimInstance : public UAnimInstance
 public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
-
-	//class TObjectPtr<AMyLearningPlaygroundCharacter> Miles;
+	
 	UPROPERTY(BlueprintReadOnly)
 	class ABTBMiniGameTwoPlayableCharacter* Miles;
 

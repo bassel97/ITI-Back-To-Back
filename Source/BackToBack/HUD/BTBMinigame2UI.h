@@ -34,7 +34,4 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	TObjectPtr<UTextBlock> Score = nullptr;
-
-	// UPROPERTY(Transient, meta = (BindWidgetAnim))
-	// UWidgetAnimation* ScaleIT = nullptr;
 };

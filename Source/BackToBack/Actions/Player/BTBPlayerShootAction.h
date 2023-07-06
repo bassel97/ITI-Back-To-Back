@@ -21,10 +21,6 @@ public:
 	
 protected:
 	virtual void Act(ABTBCharacter* Character) override;
-	
-private:
-
-
 
 public:
 	UPROPERTY(EditDefaultsOnly)

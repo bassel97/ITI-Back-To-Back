@@ -14,8 +14,6 @@ void ABTBMiniGameTwoGameMode::BeginPlay()
 	AssignSpearToPlayer();
 	SetTopDownCameraReferenceForEachPlayer();
 	
-	// GameWidget->SetVisibility(ESlateVisibility::Hidden);
-
 	Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[0])->PlayerDash.AddDynamic(this, &ABTBMiniGameTwoGameMode::ChangeDashBar);
 	Cast<ABTBMiniGameTwoPlayableCharacter>(PlayerCharacterArray[1])->PlayerDash.AddDynamic(this, &ABTBMiniGameTwoGameMode::ChangeDashBar);
 
@@ -37,7 +35,6 @@ void ABTBMiniGameTwoGameMode::AssignSpearToPlayer()
 		SpearPtr->AttachToComponent(MG2_PlayerOne->GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("RightHandSocket"));
 		MG2_PlayerOne->SetSpear(SpearPtr);
 		MG2_PlayerTwo->SetSpear(SpearPtr);
-		//MG2_Player->bSpearAttached = true;
 	}
 }
 

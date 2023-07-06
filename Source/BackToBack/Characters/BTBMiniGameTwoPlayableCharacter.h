@@ -114,8 +114,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dash Meter")
 		float DashMeter = 1.0f;
 
-  bool bIsoverlappingCollectable;
-
   UPROPERTY()
   UAnimInstance *MilesAnimInstance;
 
@@ -126,12 +124,10 @@ public:
   FOnDashValChange PlayerDash;
 
   UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
-	  TObjectPtr<UBoxComponent> SpearRetrievalBox;
+	TObjectPtr<UBoxComponent> SpearRetrievalBox;
 
 protected:
 private:
-	
-
 	UPROPERTY(EditAnywhere, Category = "Spear Path Spline")
 	TObjectPtr<USplineComponent> SplineComp;
 

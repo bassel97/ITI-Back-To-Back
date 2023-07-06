@@ -84,10 +84,6 @@ void ABTBEnemySpawner::SpawnAICharacterAtRandomLocationRelativeToPlayers()
 		EnemiesArray.AddUnique(SpawnedEnemyAI);
 	}
 	
-//#if UE_EDITOR
-//	UE_LOG(LogTemp, Warning, TEXT("SpawnEnemyEvery = %f"), SpawnEnemyEvery);
-//	UE_LOG(LogTemp, Warning, TEXT("Just spawned an Enemy"));
-//#endif
 }
 
 FVector ABTBEnemySpawner::GetARandomLocationInPlayersRange()
@@ -129,14 +125,12 @@ void ABTBEnemySpawner::UpdateClosestEnemyToPlayers()
 			const auto DistanceToCenterOfPlayers = FVector::DistSquared(EnemyLoc, Center);
 			AICharacterDistancePairs.Add(TPair<ABTBAICharacter*, float>(Enemy, DistanceToCenterOfPlayers));
 		}
-		
 		AICharacterDistancePairs.Sort(
 			[](const TPair<ABTBAICharacter*, float>& A, const TPair<ABTBAICharacter*, float>& B)
 			{
 				return A.Value < B.Value;
 			}
 		);
-
 		ClosestEnemyToPlayers = AICharacterDistancePairs[0].Key;
 	}
 	

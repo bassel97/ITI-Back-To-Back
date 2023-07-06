@@ -9,7 +9,6 @@
 void ABTBPlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	//bIsDead = false;
 }
 
 

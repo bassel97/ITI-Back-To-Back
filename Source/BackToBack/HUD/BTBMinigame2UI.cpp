@@ -11,10 +11,6 @@ void UBTBMinigame2UI::SetScore(int32 Value)
 	{
 		Score->SetText(FText::AsNumber(Value));
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Score is nullptr"));
-	}
 }
 
 void UBTBMinigame2UI::NativeConstruct()

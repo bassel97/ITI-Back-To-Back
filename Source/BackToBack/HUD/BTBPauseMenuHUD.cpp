@@ -32,7 +32,6 @@ void UBTBPauseMenuHUD::OnResumeBtnClick()
 	const TObjectPtr<UWorld> World = GetWorld();
 	if (World)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Resume"));
 		UGameplayStatics::SetGamePaused(World,false);
 		RemoveFromParent();
 	}
@@ -44,7 +43,6 @@ void UBTBPauseMenuHUD::OnQuitBtnClick()
 	if (World)
 	{
 		UKismetSystemLibrary::ExecuteConsoleCommand(World, TEXT("Quit"));
-
 	}
 }
 

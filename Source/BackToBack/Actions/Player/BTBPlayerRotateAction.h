@@ -16,21 +16,12 @@ class BACKTOBACK_API UBTBPlayerRotateAction : public UBTBCharacterAction
 {
 	GENERATED_BODY()
 
-public:
-
 protected:
 	virtual void Act(ABTBCharacter* Character) override;
-	
-private:
-
-	
-	
-public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	FVector RelativeCenterOfRotation;
 
-private:
 
 };

@@ -22,7 +22,6 @@ void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 
 protected:
 	virtual void BeginPlay() override;
-	//virtual void Tick(float DeltaTime) override;
 
 
 private:
@@ -35,5 +34,4 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision Components")
 	TObjectPtr<UBoxComponent> CollisionBox;
-private:
 };

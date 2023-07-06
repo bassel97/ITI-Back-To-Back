@@ -15,20 +15,6 @@ UCLASS()
 class BACKTOBACK_API ABTBPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
-public:
 	
-protected:
-	
-private:
-
-	
-public:
-	
-	
-protected:
-	
-private:
-
 	
 };

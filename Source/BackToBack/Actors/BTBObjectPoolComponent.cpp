@@ -4,18 +4,10 @@
 #include "BTBObjectPoolComponent.h"
 #include "BackToBack/Actors/BTBPooledObject.h"
 
-// Sets default values for this component's properties
 UBTBObjectPoolComponent::UBTBObjectPoolComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
-
-	// ...
 }
-
-
-// Called when the game starts
 void UBTBObjectPoolComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -48,7 +40,6 @@ ABTBPooledObject* UBTBObjectPoolComponent::SpawnPooledObject(FVector SpawnPositi
 {
 	if(ObjectPool.IsEmpty())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Pool is Empty"));
 		return nullptr;
 	}
 	
@@ -90,16 +81,4 @@ void UBTBObjectPoolComponent::OnPooledObjectDespawn(ABTBPooledObject* PooledActo
 	SpawnedPoolIndicies.Remove(PooledActor->GetPoolIndex());
 }
 
-
-
-
-
-
-// Called every frame
-//void UBTBObjectPoolComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-//{
-//	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-//
-//	// ...
-//}
 

@@ -23,13 +23,5 @@ public:
 
 	TObjectPtr<ABTBMiniGameTwoPlayableCharacter> Player;
 public:
-	// ABTBSpear* Spear;
-	// TArray<AActor*> Spears;
-	//
-	// //ABTBMiniGameTwoPlayableCharacter* player;
-	//
-	// UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="Spear")
-	// TSubclassOf<ABTBSpear> SpearClass;
-
 
 };

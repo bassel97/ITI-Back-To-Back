@@ -32,33 +32,18 @@ void ABTBEnemyCharacter::BeginPlay() {
   GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ABTBEnemyCharacter::OnWeaponHit);
 
   SphereCollision->OnComponentBeginOverlap.AddDynamic(this,&ABTBEnemyCharacter::OnPlayerGetCloser);
-  // ClothMat = UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(0),
-  // this); BodyMat =
-  // UMaterialInstanceDynamic::Create(GetMesh()->GetMaterial(1), this);
   Health = MaxHealth;
 }
 
 
 void ABTBEnemyCharacter::Tick(float DeltaSeconds) {
   Super::Tick(DeltaSeconds);
-  // if (!GetIsAttackingPlayer())
-  // {
-  //   CollisionBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-  //   //GetCharacterMovement()->SetMovementMode(MOVE_Walking);
-  // }
-  
 }
 
 void ABTBEnemyCharacter::AttackPlayer()
 {
-  //GetCharacterMovement()->SetMovementMode(MOVE_None);
-  //should play the Attack animation
   SetIsAttackingPlayer(true);
-  UE_LOG(LogTemp,Warning,TEXT("Attaking the niggaa"));
 }
-
-
-
 void ABTBEnemyCharacter::Die() {
   const TObjectPtr<UWorld> World = GetWorld();
   if (!ensure(World != nullptr && DeathSound != nullptr &&
@@ -78,13 +63,6 @@ void ABTBEnemyCharacter::Die() {
       World, DeathEffect, GetTransform().GetLocation(),
       GetTransform().Rotator(), GetTransform().GetScale3D(), true, true,
       ENCPoolMethod::AutoRelease, true);
-
-  // ClothMat->SetScalarParameterValue(TEXT("rad"), 20);
-  // BodyMat->SetScalarParameterValue(TEXT("rad"), 20);
-  //
-  // GetMesh()->SetMaterial(0, ClothMat);
-  // GetMesh()->SetMaterial(1, BodyMat);
-
   GetWorldTimerManager().SetTimer(DestroyTimeHandle, this,
                                   &ABTBEnemyCharacter::DestroyEnemy, 3, false);
 }
@@ -146,16 +124,15 @@ void ABTBEnemyCharacter::OnPlayerGetCloser(UPrimitiveComponent* OverlappedCompon
   if (Cast<ABTBMiniGameTwoPlayableCharacter>(OtherActor))
   {
     AttackPlayer();
-    UE_LOG(LogTemp,Warning,TEXT("Helloooo"));
   }
 }
 
-bool ABTBEnemyCharacter::GetGettingDamaged() // added by Jo
+bool ABTBEnemyCharacter::GetGettingDamaged()
 {
   return bIsgettingDamaged;
 }
 
-void ABTBEnemyCharacter::SetGettingDamaged(bool value) // Added by Jo
+void ABTBEnemyCharacter::SetGettingDamaged(bool value) 
 {
   bIsgettingDamaged = value;
 }

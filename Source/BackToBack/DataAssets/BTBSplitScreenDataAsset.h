@@ -23,21 +23,7 @@ class BACKTOBACK_API UBTBSplitScreenDataAsset final : public UBTBDataAsset
 	GENERATED_BODY()
 	
 public:
-
-	
-protected:
-	
-	
-private:
-
-
-	
-public:
 	UPROPERTY(EditDefaultsOnly, Category="Global Game Screen Mode")
 	ECameraMode CameraMode;
-
-protected:
-
 	
-private:
 };

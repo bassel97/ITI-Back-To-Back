@@ -84,13 +84,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Effect")
 	UNiagaraSystem* DamageEffect;
 
-
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<USphereComponent> SphereCollision;
-
-
-	//FTimerHandle TimerHandle;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="UI | Health")
 	UWidgetComponent* HealthWidgetComp;
@@ -99,11 +94,5 @@ private:
 	FTimerHandle DestroyTimeHandle;
 	
 	bool bIsAttacking = false;
-
-	// TObjectPtr<UMaterialInstanceDynamic> ClothMat;
-	// TObjectPtr<UMaterialInstanceDynamic> BodyMat;
-	//
-	// UPROPERTY(EditDefaultsOnly, Category="Effect")
-	// TObjectPtr<UNiagaraSystem> NiagaraDissolveDeathEffect;
 };
 

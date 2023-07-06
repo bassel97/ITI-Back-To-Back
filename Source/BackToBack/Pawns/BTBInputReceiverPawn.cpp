@@ -217,7 +217,6 @@ void ABTBInputReceiverPawn::HandleLeftTrigger() const
 	if (LeftTrigger.bIsDown)
 	{
 		PlayerCharacterPtr->SetbStartDashing(true);
-		UE_LOG(LogTemp,Warning,TEXT("Dashing"));
 	}
 
 	if (LeftTrigger.bIsReleased)

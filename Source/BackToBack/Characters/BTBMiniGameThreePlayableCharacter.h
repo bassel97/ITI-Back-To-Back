@@ -19,15 +19,6 @@ public:
 protected:
 	virtual void SetUserInput_Y(const float Value) override;
 	virtual void SetUserInput_X(const float Value) override;
-
-private:
-
-
 	
-public:
-
-protected:
-
-private:
 	
 };

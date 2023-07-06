@@ -14,27 +14,6 @@ void UBTBDealDamageANState::NotifyTick(USkeletalMeshComponent *MeshComp, UAnimSe
   TArray<AActor*> ActorsToIgnore;
   TArray<FHitResult> HitArray;
   
-  // UKismetSystemLibrary::SphereTraceMulti(
-  //     MeshComp,
-  //     Player->GetSpear()->BoxTraceStart->GetComponentLocation(),
-  //     Player->GetSpear()->BoxTraceEnd->GetComponentLocation(),
-  //     5.f,
-  //     UEngineTypes::ConvertToTraceType(ECC_Pawn),
-  //     false,
-  //     ActorsToIgnore,
-  //     EDrawDebugTrace::Type::ForDuration,
-  //     HitArray,
-  //     true,
-  //     FColor::Blue,
-  //     FColor::Green,
-  //      10.f);
-  // UE_LOG(LogTemp, Warning, TEXT("Inside"));
-
-  // UKismetSystemLibrary::SphereTraceMulti(MeshComp,
-  // Spear->BoxTraceStart->GetRelativeLocation(),
-  // Spear->BoxTraceEnd->GetRelativeLocation(), 10,
-  // UEngineTypes::ConvertToTraceType(ECC_Pawn), true, PlayerArray,
-  // EDrawDebugTrace::Persistent, HitArray, true);
 }
 
 void UBTBDealDamageANState::NotifyBegin(
@@ -58,7 +37,6 @@ void UBTBDealDamageANState::NotifyEnd(USkeletalMeshComponent *MeshComp, UAnimSeq
     ABTBMiniGameTwoPlayableCharacter* Miles = Cast<ABTBMiniGameTwoPlayableCharacter>(MeshComp->GetOwner());
     if (Miles) {
       Miles->GetSpear()->DeactivateBoxCollision();
-       //Miles->SetbIsAttacking(false);
        Miles->SetbStartAttack(false);
     }
   }

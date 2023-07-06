@@ -14,15 +14,12 @@ void UBTBPlayerDriveMotorcycleAction::Act(ABTBCharacter* Character)
 	{
 		return;
 	}
-	
 	const TObjectPtr<ABTBMotorcycle> Motorcycle = Cast<ABTBMotorcycle>(Player->Vehicle);
 	if(!ensure(Motorcycle != nullptr))
 	{
 		return;
 	}
-	
 	Motorcycle->Steer(Player->GetUserInput_Y());
 	Motorcycle->Throttle(Player->GetUserInput_X());
-	//UE_LOG(LogTemp, Warning, TEXT("DRIVING"));
-
+	
 }

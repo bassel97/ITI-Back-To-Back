@@ -2,5 +2,3 @@
 
 
 #include "BTBCharacterAction.h"
-#include "BackToBack/Characters/BTBCharacter.h"
-#include "BackToBack/Characters/BTBAICharacter.h"

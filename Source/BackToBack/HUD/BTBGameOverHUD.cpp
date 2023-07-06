@@ -30,10 +30,6 @@ void UBTBGameOverHUD::SetScore(UTextBlock* Value)
 	{
 		Score->SetText(Value->GetText());
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Score is nullptr"));
-	}
 }
 void UBTBGameOverHUD::OnRestartButtonClick()
 {

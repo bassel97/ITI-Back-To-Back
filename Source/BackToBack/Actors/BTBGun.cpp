@@ -46,36 +46,6 @@ void ABTBGun::Shoot(const FVector Direction)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Bullet Projectile is added"));
 			GunSkeletal->PlayAnimation(ShootingAnim, false);
-			/*if(GunAnim->WasAnimNotifyNameTriggeredInAnyState(FName("BulletInstance")))
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Bullet is instantiated"));
-				BulletProjectile->ProjectileGravityScale = 0.f;
-				BulletProjectile->AddForce(Direction * BulletVelocity);
-			}*/
-			// TArray<AActor*> ActorsToIgnore;
-			// FHitResult HitRes;
-			// bool bHitTrace = UKismetSystemLibrary::LineTraceSingle
-			// (
-			// 	GetWorld(),
-			// 	ShootingLocation->GetComponentToWorld().GetLocation(),
-			// 	FVector(ShootingLocation->GetComponentToWorld().GetLocation().X + 10000.f,0.f,0.f),
-			// 	TraceTypeQuery1,
-			// 	false,
-			// 	ActorsToIgnore,
-			// 	EDrawDebugTrace::ForDuration,
-			// 	HitRes,
-			// 	true,
-			// 	FColor::Red,
-			// 	FColor::Green,
-			// 	5.f
-			// );
-			// if(bHitTrace)
-			// {
-			// 	if(HitRes.GetActor())
-			// 	{
-			// 		if(Cast<APawn*>(HitRes))
-			// 	}
-			// }
 			BulletProjectile->ProjectileGravityScale = 0.f;
 			BulletProjectile->AddForce(Direction * BulletVelocity );
 			GunSkeletal->PlayAnimation(ShootingAnim, false);

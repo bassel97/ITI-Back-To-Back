@@ -8,16 +8,8 @@
 
 ABTBMotorcycle::ABTBMotorcycle()
 {
-	// StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MotorcycleStaticMesh"));
-	// StaticMesh->SetupAttachment(GetRootComponent());
-	// SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
-	// SetRootComponent(SceneComponent);
-
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MotorcycleSkeletalMesh"));
-	// SkeletalMesh->SetupAttachment(SceneComponent);
 	SetRootComponent(SkeletalMesh);
-
-	// SkeletalMesh->SetupAttachment(GetRootComponent());
 
 	MaxSpeed = 2000;
 	MaxSteeringAngle = 45;
@@ -27,7 +19,6 @@ ABTBMotorcycle::ABTBMotorcycle()
 void ABTBMotorcycle::BeginPlay()
 {
 	Super::BeginPlay();
-	//auto X = SkeletalMesh->GetAnimInstance();
 }
 
 void ABTBMotorcycle::Tick(float DeltaSeconds)
@@ -69,12 +60,3 @@ void ABTBMotorcycle::Throttle(const float Value)
 		FMath::FInterpTo(CurrentSteeringAngle, Target, UGameplayStatics::GetWorldDeltaSeconds(GetWorld()),4);
 }
 
-// void ABTBMotorcycle::LookRight(const float Value)
-// {
-// 	SkeletalMesh->AddRelativeRotation(FRotator(0, Value, 0));
-// }
-//
-// void ABTBMotorcycle::LookUp(const float Value)
-// {
-// 	SkeletalMesh->AddRelativeRotation(FRotator(Value, 0, 0));
-// }

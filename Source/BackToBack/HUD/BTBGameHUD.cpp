@@ -19,10 +19,6 @@ void UBTBGameHUD::SetScore(const int32 Value)
 	{
 		Score->SetText(FText::AsNumber(Value));
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Score is nullptr"));
-	}
 }
 
 void UBTBGameHUD::SetDashPercent(float Value)
@@ -31,8 +27,5 @@ void UBTBGameHUD::SetDashPercent(float Value)
 	{
 		DashPercent->SetPercent(Value);
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("NULL Dash"));
-	}
+
 }

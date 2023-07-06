@@ -8,6 +8,7 @@
 
 class USceneComponent;
 class UStaticMeshComponent;
+class ABTBPooledObject;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPooledObjectDespawn, ABTBPooledObject*, PoolActor);
 /**
@@ -43,11 +44,6 @@ public:
 	{
 		PoolIndex = Value;
 	}
-	
-protected:
-	
-private:
-
 	
 
 public:

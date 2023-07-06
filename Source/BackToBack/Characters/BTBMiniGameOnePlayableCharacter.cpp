@@ -42,10 +42,6 @@ float ABTBMiniGameOnePlayableCharacter::GetUserInput_X()
 		if (UserInput_X <= -0.975f && OtherPlayer->UserInput_X <= -0.975f)		return -1;
 		return 0;
 	}
-	/*if (RotationValue >= 0.925f && OtherPlayer->RotationValue >= 0.925f)		return 1;
-	if (RotationValue <= -0.975f && OtherPlayer->RotationValue <= -0.975f)		return -1;
-	return 0;*/
-	
 }
 
 void ABTBMiniGameOnePlayableCharacter::Die()
@@ -58,7 +54,6 @@ void ABTBMiniGameOnePlayableCharacter::Die()
 void ABTBMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	//UE_LOG(LogTemp, Warning, TEXT("Collision Occured"));
 	if(Cast<ABTBEnemyCharacter>(OtherActor))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Enemy is casted successfully"));
