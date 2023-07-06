@@ -15,10 +15,12 @@
 #include "Components/SplineMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 
+
+
 ABTBMiniGameTwoPlayableCharacter::ABTBMiniGameTwoPlayableCharacter()
 {
 	MilesAnimInstance = GetMesh()->GetAnimInstance();
-	
+
 	SplineComp = CreateDefaultSubobject<USplineComponent>(TEXT("SpearPathSpline"));
 	SplineComp->SetupAttachment(GetRootComponent());
 
@@ -34,9 +36,9 @@ void ABTBMiniGameTwoPlayableCharacter::Dash()
 	DashMeter -= 0.2f;
 	if (!(DashMeter < 0) )
 	{
-		UE_LOG(LogTemp,Warning,TEXT("Honga bonga"))
 		LaunchCharacter(GetActorForwardVector()*3500,false,false);
-		SetbIsDashing(true);		
+		SetbIsDashing(true);
+		
 		Cast<ABTBMiniGameTwoPlayableCharacter>(OtherPlayer)->DashMeter = DashMeter;
 		
 		PlayerDash.Broadcast(DashMeter);
@@ -211,6 +213,7 @@ void ABTBMiniGameTwoPlayableCharacter::Throw()
 	bIsThrowing = true;
 	bIsSummoning = false;
 	bIsAttacking = false;
+
 	GetSpear()->SetPointLightColorAndIntensity(SpearThrownColor, 350.f);
 }
 
@@ -233,6 +236,7 @@ void ABTBMiniGameTwoPlayableCharacter::SetbIsAttacking(bool Value)
 {
 	bIsAttacking = Value;
 }
+
 void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
 {
 	if (!SpearPtr->IsAttachedTo(this))

@@ -156,6 +156,7 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 	{
 		PlayerCharacterPtr->SetbStartSwitching(true);
 		PlayerCharacterPtr->SetbStartAttack(true);
+		//PlayerCharacterPtr->CharacterStates = BTBCharacterStates::HandActions;
 	}
 
 	if (LeftButton.bIsReleased)
@@ -193,6 +194,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		PlayerCharacterPtr->SetbStartThrowing(true);
 		PlayerCharacterPtr->SetbStartSummoning(true);
 		//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
+		//PlayerCharacterPtr->CharacterStates = BTBCharacterStates::Throw;
 	}
 	
 	if (RightTrigger.bIsReleased)

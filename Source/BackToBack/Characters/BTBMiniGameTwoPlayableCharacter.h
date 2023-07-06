@@ -87,6 +87,8 @@ public:
   TObjectPtr<ABTBSpear> SpearPtr;
   TObjectPtr<UBTBGameHUD> GameWidget;
 
+  
+
   UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
   bool bIsThrowing;
 

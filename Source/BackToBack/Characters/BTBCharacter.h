@@ -11,6 +11,14 @@ class UBTBCharacterAction;
 class UInputMappingContext;
 class ABTBCamera;
 
+UENUM()
+enum class BTBCharacterStates : uint8
+{
+	HandActions,
+	Throw
+};
+
+
 /**
  * Our Version of Character.
  */
@@ -32,6 +40,8 @@ public:
 	{
 		bStartJump = Value;
 	}
+
+	BTBCharacterStates CharacterStates;
 
 	UFUNCTION(BlueprintCallable)
 	virtual float GetUserInput_X()
