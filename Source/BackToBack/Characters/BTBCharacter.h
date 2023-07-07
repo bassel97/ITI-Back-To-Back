@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BackToBack/GameEnums/BTBEnums.h"
 #include "GameFramework/Character.h"
 #include "BTBCharacter.generated.h"
 
@@ -10,13 +11,6 @@
 class UBTBCharacterAction;
 class UInputMappingContext;
 class ABTBCamera;
-
-UENUM()
-enum class BTBCharacterStates : uint8
-{
-	HandActions,
-	Throw
-};
 
 
 /**
@@ -41,8 +35,6 @@ public:
 		bStartJump = Value;
 	}
 
-	BTBCharacterStates CharacterStates;
-
 	UFUNCTION(BlueprintCallable)
 	virtual float GetUserInput_X()
 	{
@@ -64,15 +56,15 @@ public:
 		UserInput_Y = Value;
 	}
 
-	bool GetbStartShoot()
-	{
-		return bStartShoot;
-	}
-
-	void SetbStartShoot(const bool Value)
-	{
-		bStartShoot = Value;
-	}
+	// bool GetbStartShoot()
+	// {
+	// 	return bStartShoot;
+	// }
+	//
+	// void SetbStartShoot(const bool Value)
+	// {
+	// 	bStartShoot = Value;
+	// }
 
 	bool GetbStartThrowing()
 	{
@@ -126,17 +118,17 @@ public:
 		bIsPaused = Value;
 	}
 
-	UFUNCTION(BlueprintCallable)
-	virtual bool GetbStartSwitching()
-	{
-		return bStartSwitching;
-	}
-
-	UFUNCTION(BlueprintCallable)
-	void SetbStartSwitching(const bool Value)
-	{
-		bStartSwitching = Value;
-	}
+	// UFUNCTION(BlueprintCallable)
+	// virtual bool GetbStartSwitching()
+	// {
+	// 	return bStartSwitching;
+	// }
+	//
+	// UFUNCTION(BlueprintCallable)
+	// void SetbStartSwitching(const bool Value)
+	// {
+	// 	bStartSwitching = Value;
+	// }
 
 	bool GetbStartDashing()
 	{
@@ -168,23 +160,43 @@ public:
 
 	UPROPERTY(EditAnywhere, meta=(ClampMin = 1, ClampMax = 100), Category = "Health")
 	float MaxHealth { 2 };
-
-	bool bStartRotate = false;
-	bool bStartSwitching = false;
+	
 	float UserInput_X;
 	float UserInput_Y;
 	float TickDeltaTime;
 
-	bool bHasMovementInput;
+	UPROPERTY(BlueprintReadOnly)
+	RightTriggerButtonStates RightTriggerButtonState;
+	
+	UPROPERTY(BlueprintReadOnly)
+	LeftTriggerButtonStates LeftTriggerButtonState;
 
+	UPROPERTY(BlueprintReadOnly)
+	RightButtonStates RightButtonState;
+	
+	UPROPERTY(BlueprintReadOnly)
+	LeftButtonStates LeftButtonState;
+
+	UPROPERTY(BlueprintReadOnly)
+	UpButtonStates UpButtonState;
+
+	UPROPERTY(BlueprintReadOnly)
+	DownButtonStates DownButtonState;
+
+	UPROPERTY(BlueprintReadOnly)
+	StartButtonStates StartButtonState;
+	
 protected:
 
 	
 private:
+	bool bStartRotate = false;
 	bool bStartJump = false;
-	bool bStartShoot = false;
+	// bool bStartSwitching = false;
+	// bool bStartShoot = false;
 	bool bstartAttack = false;
 	bool bStartPool = false;
+	bool bHasMovementInput;
 	bool bIsPaused = false;
 	bool bStartThrowing = false;
 	bool bStartSummoning = false;

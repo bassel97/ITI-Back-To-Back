@@ -19,7 +19,7 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 		return;
 	} 
 	
-	if (PlayableCharacter->GetbStartSwitching() && PlayableCharacter->IsOverlapping && Gun != nullptr )
+	if (PlayableCharacter->LeftButtonState == LeftButtonStates::SwitchGun && PlayableCharacter->IsOverlapping && Gun != nullptr )
 	{
 		OtherCharacter->SetGun(Gun);
 		Gun->AttachToComponent(OtherCharacter->GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, "GunSocket");
@@ -29,6 +29,3 @@ void UBTBPlayerSwitchAction::Act(ABTBCharacter* Character)
 	}
 	
 }
-
-
-

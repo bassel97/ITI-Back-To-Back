@@ -154,14 +154,15 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 {
 	if (LeftButton.bIsDown)
 	{
-		PlayerCharacterPtr->SetbStartSwitching(true);
+		// PlayerCharacterPtr->SetbStartSwitching(true);
+		PlayerCharacterPtr->LeftButtonState = LeftButtonStates::SwitchGun;
+		
 		PlayerCharacterPtr->SetbStartAttack(true);
-		//PlayerCharacterPtr->CharacterStates = BTBCharacterStates::HandActions;
 	}
 
 	if (LeftButton.bIsReleased)
 	{
-		PlayerCharacterPtr->SetbStartSwitching(false);
+		PlayerCharacterPtr->LeftButtonState = LeftButtonStates::None;
 		PlayerCharacterPtr->SetbStartAttack(false);
 	}
 
@@ -190,19 +191,21 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 {
 	if (RightTrigger.bIsDown)
 	{
-		PlayerCharacterPtr->SetbStartShoot(true);
+		//PlayerCharacterPtr->SetbStartShoot(true);
+		PlayerCharacterPtr->RightTriggerButtonState = RightTriggerButtonStates::Shoot;
+		
 		PlayerCharacterPtr->SetbStartThrowing(true);
 		PlayerCharacterPtr->SetbStartSummoning(true);
-		//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ABTBInputReceiverPawn::HandleRightTrigger, 2.0f, false);
-		//PlayerCharacterPtr->CharacterStates = BTBCharacterStates::Throw;
+
 	}
 	
 	if (RightTrigger.bIsReleased)
 	{
-		PlayerCharacterPtr->SetbStartShoot(false);
+		//PlayerCharacterPtr->SetbStartShoot(false);
+		PlayerCharacterPtr->RightTriggerButtonState = RightTriggerButtonStates::None;
+		
 		PlayerCharacterPtr->SetbStartThrowing(false);
 		PlayerCharacterPtr->SetbStartSummoning(false);
-		//GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 	}
 	
 	if (RightTrigger.bIsHeld)
