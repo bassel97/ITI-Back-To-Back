@@ -15,7 +15,7 @@ void UBTBPlayerShootAction::Act(ABTBCharacter *Character) {
     return;
   }
 
-  if (Character->RightTriggerButtonState == RightTriggerButtonStates::Shoot)
+  if (Character->RightTriggerButtonState == ERightTriggerButtonStates::Shoot)
   {
     Gun = Cast<ABTBMiniGameOnePlayableCharacter>(Character)->GetGun();
 
@@ -23,7 +23,7 @@ void UBTBPlayerShootAction::Act(ABTBCharacter *Character) {
     {
       const auto ShootingDirection = Gun->ShootingLocation->GetForwardVector();
       Gun->Shoot(ShootingDirection);
-      Character->RightTriggerButtonState = RightTriggerButtonStates::None;
+      Character->RightTriggerButtonState = ERightTriggerButtonStates::None;
     }
   }
 }

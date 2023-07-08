@@ -10,7 +10,7 @@
  */
 
 UENUM(BlueprintType)
-enum class RightTriggerButtonStates : uint8
+enum class ERightTriggerButtonStates : uint8
 {
 	None,
 	Shoot,
@@ -19,21 +19,21 @@ enum class RightTriggerButtonStates : uint8
 };
 
 UENUM(BlueprintType)
-enum class LeftTriggerButtonStates : uint8
+enum class ELeftTriggerButtonStates : uint8
 {
 	None,
 	Dash
 };
 
 UENUM(BlueprintType)
-enum class RightButtonStates : uint8
+enum class ERightButtonStates : uint8
 {
 	None,
 	Pause
 };
 
 UENUM(BlueprintType)
-enum class LeftButtonStates : uint8
+enum class ELeftButtonStates : uint8
 {
 	None,
 	SwitchGun,
@@ -41,20 +41,20 @@ enum class LeftButtonStates : uint8
 };
 
 UENUM(BlueprintType)
-enum class UpButtonStates : uint8
+enum class EUpButtonStates : uint8
 {
 	None,
 	Jump
 };
 
 UENUM(BlueprintType)
-enum class DownButtonStates : uint8
+enum class EDownButtonStates : uint8
 {
 	None,
 };
 
 UENUM(BlueprintType)
-enum class StartButtonStates : uint8
+enum class EStartButtonStates : uint8
 {
 	None,
 };

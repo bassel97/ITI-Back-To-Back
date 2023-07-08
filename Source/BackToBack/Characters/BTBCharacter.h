@@ -166,25 +166,25 @@ public:
 	float TickDeltaTime;
 
 	UPROPERTY(BlueprintReadOnly)
-	RightTriggerButtonStates RightTriggerButtonState;
+	ERightTriggerButtonStates RightTriggerButtonState;
 	
 	UPROPERTY(BlueprintReadOnly)
-	LeftTriggerButtonStates LeftTriggerButtonState;
+	ELeftTriggerButtonStates LeftTriggerButtonState;
 
 	UPROPERTY(BlueprintReadOnly)
-	RightButtonStates RightButtonState;
+	ERightButtonStates RightButtonState;
 	
 	UPROPERTY(BlueprintReadOnly)
-	LeftButtonStates LeftButtonState;
+	ELeftButtonStates LeftButtonState;
 
 	UPROPERTY(BlueprintReadOnly)
-	UpButtonStates UpButtonState;
+	EUpButtonStates UpButtonState;
 
 	UPROPERTY(BlueprintReadOnly)
-	DownButtonStates DownButtonState;
+	EDownButtonStates DownButtonState;
 
 	UPROPERTY(BlueprintReadOnly)
-	StartButtonStates StartButtonState;
+	EStartButtonStates StartButtonState;
 	
 protected:
 

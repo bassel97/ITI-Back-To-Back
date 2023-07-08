@@ -155,14 +155,14 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 	if (LeftButton.bIsDown)
 	{
 		// PlayerCharacterPtr->SetbStartSwitching(true);
-		PlayerCharacterPtr->LeftButtonState = LeftButtonStates::SwitchGun;
+		PlayerCharacterPtr->LeftButtonState = ELeftButtonStates::SwitchGun;
 		
 		PlayerCharacterPtr->SetbStartAttack(true);
 	}
 
 	if (LeftButton.bIsReleased)
 	{
-		PlayerCharacterPtr->LeftButtonState = LeftButtonStates::None;
+		PlayerCharacterPtr->LeftButtonState = ELeftButtonStates::None;
 		PlayerCharacterPtr->SetbStartAttack(false);
 	}
 
@@ -192,7 +192,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 	if (RightTrigger.bIsDown)
 	{
 		//PlayerCharacterPtr->SetbStartShoot(true);
-		PlayerCharacterPtr->RightTriggerButtonState = RightTriggerButtonStates::Shoot;
+		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::Shoot;
 		
 		PlayerCharacterPtr->SetbStartThrowing(true);
 		PlayerCharacterPtr->SetbStartSummoning(true);
@@ -202,7 +202,7 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 	if (RightTrigger.bIsReleased)
 	{
 		//PlayerCharacterPtr->SetbStartShoot(false);
-		PlayerCharacterPtr->RightTriggerButtonState = RightTriggerButtonStates::None;
+		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::None;
 		
 		PlayerCharacterPtr->SetbStartThrowing(false);
 		PlayerCharacterPtr->SetbStartSummoning(false);
