@@ -35,16 +35,16 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		PlayerControllerArray.AddUnique(BTBControllerOne);
 		BTBControllerOne->Possess(SpawnedPlayer);
 	}
+	
 	TObjectPtr<ABTBPlayerController> BTBControllerTwo;
-	if (auto x = UGameplayStatics::GetPlayerController(World, 1))
+	if (const auto ControllerTwo = UGameplayStatics::GetPlayerController(World, 1))
 	{
-		/*const TObjectPtr<ABTBPlayerController> */BTBControllerTwo = Cast<ABTBPlayerController>(x);
+		BTBControllerTwo = Cast<ABTBPlayerController>(ControllerTwo);
 	}
 	else
 	{
-		/*const TObjectPtr<ABTBPlayerController> */BTBControllerTwo = Cast<ABTBPlayerController>(UGameplayStatics::CreatePlayer(World, 1));
+		BTBControllerTwo = Cast<ABTBPlayerController>(UGameplayStatics::CreatePlayer(World, 1));
 	}
-	//const TObjectPtr<APlayerController> ControllerTwo = UGameplayStatics::CreatePlayer(World, 1/*,true*/);
 	
 	if (ensure(BTBControllerTwo != nullptr))
 	{
@@ -57,16 +57,4 @@ void ABTBGameModeBase::SpawnInputReceivers()
 		PlayerControllerArray.AddUnique(BTBControllerTwo);
 		BTBControllerTwo->Possess(SpawnedPlayer);
 	}
-
-#if UE_EDITOR
-	UKismetSystemLibrary::PrintString(World,TEXT("InputReceiverArray = " + FString::FromInt(InputReceiverArray.Num())));
-	UKismetSystemLibrary::PrintString(World,TEXT("PlayerControllerArray = " + FString::FromInt(PlayerControllerArray.Num())));
-
-	for(int i = 0 ; i < InputReceiverArray.Num() ; i++)
-	{
-		UKismetSystemLibrary::PrintString(World,
-			FString::Printf(TEXT("InputReceiverArray[%i] = %s, Its Controller = %s"),
-				i, *InputReceiverArray[i]->GetName(), *InputReceiverArray[i]->GetController()->GetName()));
-	}
-#endif
 }

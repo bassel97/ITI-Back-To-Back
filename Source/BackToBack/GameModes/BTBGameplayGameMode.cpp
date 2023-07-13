@@ -106,17 +106,6 @@ void ABTBGameplayGameMode::CreatePlayers()
 		InputReceiverArray[0]->PlayerCharacterPtr = PlayerCharacterArray[0];
 		InputReceiverArray[1]->PlayerCharacterPtr = PlayerCharacterArray[1];
 	}
-
-
-#if UE_EDITOR
-	for(int i = 0 ; i < PlayerCharacterArray.Num() ; i++)
-	{
-		UKismetSystemLibrary::PrintString(World,
-			FString::Printf(TEXT("PlayableCharacter[%i] = %s, Its InputReceiverPawn = %s"),
-				i, *PlayerCharacterArray[i]->GetName(), *InputReceiverArray[i]->PlayerCharacterPtr->GetName()));
-	}
-#endif
-	
 }
 
 void ABTBGameplayGameMode::SetupPlayersCommunication()
@@ -155,16 +144,6 @@ void ABTBGameplayGameMode::AssignCameras()
 		CreateRenderTextures();
 		SetSplitScreenTextureToMaterial();
 	}
-
-#if UE_EDITOR
-	for(int i = 0 ; i < PlayerControllerArray.Num() ; i++)
-	{
-		UKismetSystemLibrary::PrintString(World,
-			FString::Printf(TEXT("PlayerControllerArray[%i] = %s, Its ViewTarget = %s"),
-				i, *PlayerControllerArray[i]->GetName(), *PlayerControllerArray[i]->GetViewTarget()->GetName()));
-	}
-#endif
-	
 }
 
 void ABTBGameplayGameMode::CreateRenderTextures()

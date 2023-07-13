@@ -10,7 +10,7 @@ void UBTBPlayerThrowAction::Act(ABTBCharacter* Character)
         return;
     }
 
-    if (Character->GetbStartThrowing())
+    if (Character->RightTriggerButtonState == ERightTriggerButtonStates::Throw)
     {
         ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
         if (Player->GetSpear() != nullptr)

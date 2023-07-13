@@ -66,37 +66,37 @@ public:
 	// 	bStartShoot = Value;
 	// }
 
-	bool GetbStartThrowing()
-	{
-		return bStartThrowing;
-	}
+	// bool GetbStartThrowing()
+	// {
+	// 	return bStartThrowing;
+	// }
+	//
+	// void SetbStartThrowing(const bool Value)
+	// {
+	// 	bStartThrowing = Value;
+	// }
+	//
+	// bool GetbStartSummoning()
+	// {
+	// 	return bStartSummoning;
+	// }
+	//
+	// void SetbStartSummoning(const bool Value)
+	// {
+	// 	bStartSummoning = Value;
+	// }
 
-	void SetbStartThrowing(const bool Value)
-	{
-		bStartThrowing = Value;
-	}
-
-	bool GetbStartSummoning()
-	{
-		return bStartSummoning;
-	}
-
-	void SetbStartSummoning(const bool Value)
-	{
-		bStartSummoning = Value;
-	}
-
-	UFUNCTION(BlueprintCallable)
-	bool GetbStartAttack()
-	{
-		return bstartAttack;
-	}
-
-	UFUNCTION(BlueprintCallable)
-	void SetbStartAttack(const bool Value)
-	{
-		bstartAttack = Value;
-	}
+	// UFUNCTION(BlueprintCallable)
+	// bool GetbStartAttack()
+	// {
+	// 	return bstartAttack;
+	// }
+	//
+	// UFUNCTION(BlueprintCallable)
+	// void SetbStartAttack(const bool Value)
+	// {
+	// 	bstartAttack = Value;
+	// }
 
 	bool GetbStartPool()
 	{
@@ -130,15 +130,15 @@ public:
 	// 	bStartSwitching = Value;
 	// }
 
-	bool GetbStartDashing()
-	{
-		return bStartDashing;
-	}
-
-	void SetbStartDashing(bool Value)
-	{
-		bStartDashing = Value;
-	}
+	// bool GetbStartDashing()
+	// {
+	// 	return bStartDashing;
+	// }
+	//
+	// void SetbStartDashing(bool Value)
+	// {
+	// 	bStartDashing = Value;
+	// }
 	
 protected:
 	virtual void Die() PURE_VIRTUAL(ABTBCharacter::Die);
@@ -194,12 +194,12 @@ private:
 	bool bStartJump = false;
 	// bool bStartSwitching = false;
 	// bool bStartShoot = false;
-	bool bstartAttack = false;
+	// bool bstartAttack = false;
 	bool bStartPool = false;
 	bool bHasMovementInput;
 	bool bIsPaused = false;
-	bool bStartThrowing = false;
-	bool bStartSummoning = false;
-	bool bStartDashing = false;
+	// bool bStartThrowing = false;
+	// bool bStartSummoning = false;
+	// bool bStartDashing = false;
 	
 };

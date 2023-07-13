@@ -13,7 +13,7 @@ void UBTBPlayerSummonAction::Act(ABTBCharacter* Character)
         return;
     }
 
-    if (Character->GetbStartSummoning())
+    if (Character->RightTriggerButtonState == ERightTriggerButtonStates::Summon)
     {
         ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
         

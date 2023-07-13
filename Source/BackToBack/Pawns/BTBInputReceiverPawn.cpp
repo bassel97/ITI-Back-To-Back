@@ -154,16 +154,13 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 {
 	if (LeftButton.bIsDown)
 	{
-		// PlayerCharacterPtr->SetbStartSwitching(true);
 		PlayerCharacterPtr->LeftButtonState = ELeftButtonStates::SwitchGun;
-		
-		PlayerCharacterPtr->SetbStartAttack(true);
+		PlayerCharacterPtr->LeftButtonState = ELeftButtonStates::MeleeAttack;
 	}
 
 	if (LeftButton.bIsReleased)
 	{
 		PlayerCharacterPtr->LeftButtonState = ELeftButtonStates::None;
-		PlayerCharacterPtr->SetbStartAttack(false);
 	}
 
 	if (LeftButton.bIsHeld)
@@ -191,28 +188,21 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 {
 	if (RightTrigger.bIsDown)
 	{
-		//PlayerCharacterPtr->SetbStartShoot(true);
 		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::Shoot;
-		
-		PlayerCharacterPtr->SetbStartThrowing(true);
-		PlayerCharacterPtr->SetbStartSummoning(true);
-
+		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::Throw;
+		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::Summon;
 	}
 	
 	if (RightTrigger.bIsReleased)
 	{
-		//PlayerCharacterPtr->SetbStartShoot(false);
 		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::None;
-		
-		PlayerCharacterPtr->SetbStartThrowing(false);
-		PlayerCharacterPtr->SetbStartSummoning(false);
 	}
 	
 	if (RightTrigger.bIsHeld)
 	{
 		if (!RightTrigger.bIsDown)
 		{
-			PlayerCharacterPtr->SetbStartThrowing(false);
+			PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::None;
 		}
 	}
 }
@@ -221,7 +211,7 @@ void ABTBInputReceiverPawn::HandleLeftTrigger() const
 {
 	if (LeftTrigger.bIsDown)
 	{
-		PlayerCharacterPtr->SetbStartDashing(true);
+		PlayerCharacterPtr->LeftTriggerButtonState = ELeftTriggerButtonStates::Dash;
 	}
 
 	if (LeftTrigger.bIsReleased)
@@ -236,7 +226,7 @@ void ABTBInputReceiverPawn::HandleLeftTrigger() const
 	{
 		if (!LeftTrigger.bIsDown)
 		{
-			PlayerCharacterPtr->SetbStartDashing(false);
+			PlayerCharacterPtr->LeftTriggerButtonState = ELeftTriggerButtonStates::None;
 		}
 	}
 }

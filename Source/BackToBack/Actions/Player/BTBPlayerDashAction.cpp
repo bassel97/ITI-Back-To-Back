@@ -16,12 +16,12 @@ void UBTBPlayerDashAction::Act(ABTBCharacter* Character)
 		return;
 	}
 
-	if (Character->GetbStartDashing() )
+	if (Character->LeftTriggerButtonState == ELeftTriggerButtonStates::Dash)
 	{
 			MG2Player->Dash();
 	}
 
-	if (Character->GetbStartDashing() == false)
+	if (Character->LeftTriggerButtonState == ELeftTriggerButtonStates::None)
 	{
 		MG2Player->SetbIsDashing(false);
 	}

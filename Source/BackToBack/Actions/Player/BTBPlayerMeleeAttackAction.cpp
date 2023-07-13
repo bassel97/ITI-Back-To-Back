@@ -14,7 +14,7 @@ void UBTBPlayerMeleeAttackAction::Act(ABTBCharacter* Character)
 	{
 		return;
 	}
-	if (Character->GetbStartAttack())
+	if (Character->LeftButtonState == ELeftButtonStates::MeleeAttack)
 	{
 		if (MG2PlayableCharacter->GetSpear() != nullptr)
 		{
@@ -22,7 +22,6 @@ void UBTBPlayerMeleeAttackAction::Act(ABTBCharacter* Character)
 			{
 					MG2PlayableCharacter->SetbIsAttacking(true);
 			}
-			
 		}
 	}
 }

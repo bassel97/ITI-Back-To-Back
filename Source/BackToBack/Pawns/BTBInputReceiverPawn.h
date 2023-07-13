@@ -84,13 +84,8 @@ public:
 protected:	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Enhanced Input")
 	TObjectPtr<UInputMappingContext> InputMapping;
-
-
-
 	
 private:
-	
-
 	/** Buttons States start*/
 	UPROPERTY(VisibleAnywhere, Category = "Buttons States")
 	FButtonState RightTrigger = {};
