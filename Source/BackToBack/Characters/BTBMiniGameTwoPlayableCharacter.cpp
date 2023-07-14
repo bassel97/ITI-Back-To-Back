@@ -62,10 +62,15 @@ void ABTBMiniGameTwoPlayableCharacter::SetAndResetLeftButtonEnum(const bool bIsS
 
 void ABTBMiniGameTwoPlayableCharacter::SetAndResetRightTriggerEnum(const bool bIsSet)
 {
-	bIsSet ?
+	if (bIsSet)
+	{
+		RightTriggerButtonState == ERightTriggerButtonStates::Throw ?
+			RightTriggerButtonState = ERightTriggerButtonStates::Summon : RightTriggerButtonState = ERightTriggerButtonStates::Throw;
+	}
+	/*bIsSet ?
 		RightTriggerButtonState == ERightTriggerButtonStates::Throw ?
 			RightTriggerButtonState = ERightTriggerButtonStates::Summon : RightTriggerButtonState = ERightTriggerButtonStates::Throw :
-	RightTriggerButtonState = ERightTriggerButtonStates::None;
+	RightTriggerButtonState = ERightTriggerButtonStates::None;*/
 }
 
 void ABTBMiniGameTwoPlayableCharacter::SetAndResetLeftTriggerEnum(const bool bIsSet)
@@ -270,6 +275,7 @@ void ABTBMiniGameTwoPlayableCharacter::AttachSpearToPlayer()
 			TEXT("RightHandSocket")
 		);
 		SummonStart();
+		RightTriggerButtonState = ERightTriggerButtonStates::None;
 		bIsThrowing = false;
 	}
 	

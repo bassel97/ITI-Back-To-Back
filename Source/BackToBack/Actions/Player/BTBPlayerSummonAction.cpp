@@ -13,24 +13,40 @@ void UBTBPlayerSummonAction::Act(ABTBCharacter* Character)
         return;
     }
 
+    
+    ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
+
+    /*if (Player->GetSpear() != nullptr && Player != nullptr)
+    {
+        if (!Player->GetSpear()->IsAttachedTo(Player))
+        {
+            if (Player->OtherPlayer != nullptr)
+            {
+                ABTBMiniGameTwoPlayableCharacter* OtherOther = Cast<ABTBMiniGameTwoPlayableCharacter>(Player->OtherPlayer);
+                if(OtherOther->GetSpear()->IsAttachedTo(OtherOther))
+                {
+                    OtherOther->GetSpear()->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
+                }
+            }
+            Player->Summon();
+        }
+    }*/
+    
     if (Character->RightTriggerButtonState == ERightTriggerButtonStates::Summon)
     {
-        ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
-        
         if (Player->GetSpear() != nullptr && Player != nullptr)
         {
-            if (!Player->GetSpear()->IsAttachedTo(Player))
+            if (Player->OtherPlayer != nullptr)
             {
-                if (Player->OtherPlayer != nullptr)
+                ABTBMiniGameTwoPlayableCharacter* OtherOther = Cast<ABTBMiniGameTwoPlayableCharacter>(Player->OtherPlayer);
+                if (OtherOther->GetSpear()->IsAttachedTo(OtherOther))
                 {
-                    ABTBMiniGameTwoPlayableCharacter* OtherOther = Cast<ABTBMiniGameTwoPlayableCharacter>(Player->OtherPlayer);
-                    if(OtherOther->GetSpear()->IsAttachedTo(OtherOther))
-                    {
-                        OtherOther->GetSpear()->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
-                    }
+                    OtherOther->GetSpear()->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
                 }
-                Player->Summon();
             }
+
+
+            Player->Summon();
         }
     }
 }

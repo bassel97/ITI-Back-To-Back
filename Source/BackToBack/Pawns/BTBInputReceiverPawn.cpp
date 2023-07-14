@@ -189,10 +189,10 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 		PlayerCharacterPtr->SetAndResetRightTriggerEnum(true);
 	}
 	
-	if (RightTrigger.bIsReleased)
+	/*if (RightTrigger.bIsReleased)
 	{
 		PlayerCharacterPtr->SetAndResetRightTriggerEnum(false);
-	}
+	}*/
 	
 	if (RightTrigger.bIsHeld)
 	{

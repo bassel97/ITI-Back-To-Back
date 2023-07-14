@@ -10,12 +10,24 @@ void UBTBPlayerThrowAction::Act(ABTBCharacter* Character)
         return;
     }
 
-    if (Character->RightTriggerButtonState == ERightTriggerButtonStates::Throw)
+    /*if (Character->RightTriggerButtonState == ERightTriggerButtonStates::Throw)
     {
         ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
         if (Player->GetSpear() != nullptr)
         {
             if (Player->GetSpear()->IsAttachedTo(Player))
+            {
+                Player->Throw();
+            }
+        }
+    }*/
+    
+    ABTBMiniGameTwoPlayableCharacter* Player = Cast<ABTBMiniGameTwoPlayableCharacter>(Character);
+    if (Player->GetSpear() != nullptr)
+    {
+        if (Player->GetSpear()->IsAttachedTo(Player))
+        {
+            if (Character->RightTriggerButtonState == ERightTriggerButtonStates::Throw)
             {
                 Player->Throw();
             }
