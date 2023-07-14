@@ -62,6 +62,29 @@ void ABTBMiniGameOnePlayableCharacter::OnEnemyHit(UPrimitiveComponent* Overlappe
 	}
 }
 
+void ABTBMiniGameOnePlayableCharacter::SetAndResetLeftButtonEnum(const bool bIsSet)
+{
+	bIsSet ?
+		LeftButtonState = ELeftButtonStates::SwitchGun :
+	LeftButtonState = ELeftButtonStates::None;
+}
+
+void ABTBMiniGameOnePlayableCharacter::SetAndResetRightTriggerEnum(const bool bIsSet)
+{
+	bIsSet ?
+		RightTriggerButtonState = ERightTriggerButtonStates::Shoot :
+	RightTriggerButtonState = ERightTriggerButtonStates::None;
+}
+
+void ABTBMiniGameOnePlayableCharacter::SetAndResetLeftTriggerEnum(const bool bIsSet)
+{
+	//TODO: Uncomment and Edit that later if the button is needed in mini game one
+	// bIsSet ?
+	// 	LeftTriggerButtonState = ELeftTriggerButtonStates::None :
+	// LeftTriggerButtonState = ELeftTriggerButtonStates::None;
+	LeftTriggerButtonState = ELeftTriggerButtonStates::None;
+}
+
 //Switch Action
 void ABTBMiniGameOnePlayableCharacter::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {

@@ -33,6 +33,15 @@ public:
 	void RemoveCamera() const;
 	void AssignRenderTextureToCamera(const TObjectPtr<UTextureRenderTarget2D> RenderTarget) const;
 
+	virtual void SetAndResetLeftButtonEnum(const bool bIsSet)
+	PURE_VIRTUAL(ABTBPlayableCharacter::SetAndResetLeftButtonEnum);
+
+	virtual void SetAndResetRightTriggerEnum(const bool bIsSet)
+	PURE_VIRTUAL(ABTBPlayableCharacter::SetAndResetRightTriggerEnum);
+
+	virtual void SetAndResetLeftTriggerEnum(const bool bIsSet)
+	PURE_VIRTUAL(ABTBPlayableCharacter::SetAndResetLeftTriggerEnum);
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void Die() override;

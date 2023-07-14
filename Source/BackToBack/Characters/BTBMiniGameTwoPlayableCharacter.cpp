@@ -53,6 +53,28 @@ void ABTBMiniGameTwoPlayableCharacter::Dash()
 	}
 }
 
+void ABTBMiniGameTwoPlayableCharacter::SetAndResetLeftButtonEnum(const bool bIsSet)
+{
+	bIsSet ?
+		LeftButtonState = ELeftButtonStates::MeleeAttack :
+	LeftButtonState = ELeftButtonStates::None;
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SetAndResetRightTriggerEnum(const bool bIsSet)
+{
+	bIsSet ?
+		RightTriggerButtonState == ERightTriggerButtonStates::Throw ?
+			RightTriggerButtonState = ERightTriggerButtonStates::Summon : RightTriggerButtonState = ERightTriggerButtonStates::Throw :
+	RightTriggerButtonState = ERightTriggerButtonStates::None;
+}
+
+void ABTBMiniGameTwoPlayableCharacter::SetAndResetLeftTriggerEnum(const bool bIsSet)
+{
+	bIsSet ?
+		LeftTriggerButtonState = ELeftTriggerButtonStates::Dash :
+	LeftTriggerButtonState = ELeftTriggerButtonStates::None;
+}
+
 void ABTBMiniGameTwoPlayableCharacter::BeginPlay()
 {
 	Super::BeginPlay();

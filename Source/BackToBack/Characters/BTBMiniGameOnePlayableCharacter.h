@@ -20,6 +20,15 @@ public:
 	void SetGun(ABTBGun* Gun);
 	ABTBGun* GetGun();
 
+	UFUNCTION()
+	virtual void SetAndResetLeftButtonEnum(const bool bIsSet) override;
+
+	UFUNCTION()
+	virtual void SetAndResetRightTriggerEnum(const bool bIsSet) override;
+
+	UFUNCTION()
+	virtual void SetAndResetLeftTriggerEnum(const bool bIsSet) override;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual float GetUserInput_X() override;

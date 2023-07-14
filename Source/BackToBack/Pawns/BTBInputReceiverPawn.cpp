@@ -154,18 +154,16 @@ void ABTBInputReceiverPawn::HandleLeftButton() const
 {
 	if (LeftButton.bIsDown)
 	{
-		PlayerCharacterPtr->LeftButtonState = ELeftButtonStates::SwitchGun;
-		PlayerCharacterPtr->LeftButtonState = ELeftButtonStates::MeleeAttack;
+		PlayerCharacterPtr->SetAndResetLeftButtonEnum(true);
 	}
 
 	if (LeftButton.bIsReleased)
 	{
-		PlayerCharacterPtr->LeftButtonState = ELeftButtonStates::None;
+		PlayerCharacterPtr->SetAndResetLeftButtonEnum(false);
 	}
 
 	if (LeftButton.bIsHeld)
 	{
-		
 	}
 }
 
@@ -188,21 +186,19 @@ void ABTBInputReceiverPawn::HandleRightTrigger()
 {
 	if (RightTrigger.bIsDown)
 	{
-		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::Shoot;
-		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::Throw;
-		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::Summon;
+		PlayerCharacterPtr->SetAndResetRightTriggerEnum(true);
 	}
 	
 	if (RightTrigger.bIsReleased)
 	{
-		PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::None;
+		PlayerCharacterPtr->SetAndResetRightTriggerEnum(false);
 	}
 	
 	if (RightTrigger.bIsHeld)
 	{
 		if (!RightTrigger.bIsDown)
 		{
-			PlayerCharacterPtr->RightTriggerButtonState = ERightTriggerButtonStates::None;
+			PlayerCharacterPtr->SetAndResetRightTriggerEnum(false);
 		}
 	}
 }
@@ -211,7 +207,7 @@ void ABTBInputReceiverPawn::HandleLeftTrigger() const
 {
 	if (LeftTrigger.bIsDown)
 	{
-		PlayerCharacterPtr->LeftTriggerButtonState = ELeftTriggerButtonStates::Dash;
+		PlayerCharacterPtr->SetAndResetLeftTriggerEnum(true);
 	}
 
 	if (LeftTrigger.bIsReleased)
@@ -226,7 +222,7 @@ void ABTBInputReceiverPawn::HandleLeftTrigger() const
 	{
 		if (!LeftTrigger.bIsDown)
 		{
-			PlayerCharacterPtr->LeftTriggerButtonState = ELeftTriggerButtonStates::None;
+			PlayerCharacterPtr->SetAndResetLeftTriggerEnum(false);
 		}
 	}
 }
@@ -246,7 +242,6 @@ void ABTBInputReceiverPawn::HandleStartButton() const
 
 	if (RightButton.bIsReleased)
 	{
-
 	}
 }
 

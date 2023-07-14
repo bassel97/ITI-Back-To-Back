@@ -27,55 +27,66 @@ class BACKTOBACK_API ABTBMiniGameTwoPlayableCharacter : public ABTBPlayableChara
   GENERATED_BODY()
 
 public:
-  ABTBMiniGameTwoPlayableCharacter();
+	ABTBMiniGameTwoPlayableCharacter();
 	
-  void SetSpear(ABTBSpear* Spear)
-  {
-  	SpearPtr = Spear;
-  }
+	void SetSpear(ABTBSpear* Spear)
+	{
+		SpearPtr = Spear;
+	}
 
-  ABTBSpear *GetSpear()
-  {
-  	return SpearPtr;
-  }
+	ABTBSpear* GetSpear() const
+	{
+		return SpearPtr;
+	}
   
-  void Throw();
-  void AttachSpearToPlayer();
-  void Summon();
-  UFUNCTION(BlueprintCallable)
-  bool GetbIsAttacking();
+	void Throw();
+	void AttachSpearToPlayer();
+	void Summon();
+	
+	UFUNCTION(BlueprintCallable)
+	bool GetbIsAttacking();
 
-  UFUNCTION(BlueprintCallable)
-  void SetbIsAttacking(bool Value);
+	UFUNCTION(BlueprintCallable)
+	void SetbIsAttacking(bool Value);
 
-  UFUNCTION(BlueprintCallable)
-  bool GetbIsDashing() { return bIsDashing; }
+	UFUNCTION(BlueprintCallable)
+	bool GetbIsDashing() { return bIsDashing; }
 
-  UFUNCTION(BlueprintCallable)
-  void SetbIsDashing(bool Value) { bIsDashing = Value; }
-  void Dash();
+	UFUNCTION(BlueprintCallable)
+	void SetbIsDashing(bool Value) { bIsDashing = Value; }
+	void Dash();
+	
+	UFUNCTION()
+	virtual void SetAndResetLeftButtonEnum(const bool bIsSet) override;
+
+	UFUNCTION()
+	virtual void SetAndResetRightTriggerEnum(const bool bIsSet) override;
+
+	UFUNCTION()
+	virtual void SetAndResetLeftTriggerEnum(const bool bIsSet) override;
 
 protected:
-  virtual void BeginPlay() override;
-  virtual void Tick(float DeltaSeconds) override;
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 
-  UFUNCTION()
-  virtual void OnEnemyHit(UPrimitiveComponent *OverlappedComponent,
-                          AActor *OtherActor, UPrimitiveComponent *OtherComp,
-                          int32 OtherBodyIndex, bool bFromSweep,
-                          const FHitResult &SweepResult) override;
+	UFUNCTION()
+	virtual void OnEnemyHit(UPrimitiveComponent *OverlappedComponent,
+							AActor *OtherActor, UPrimitiveComponent *OtherComp,
+							int32 OtherBodyIndex, bool bFromSweep,
+							const FHitResult &SweepResult) override;
 
-  UFUNCTION()
-  void OnActorHit(UPrimitiveComponent* OverlappedComponent,
-	  AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	  int32 OtherBodyIndex, bool bFromSweep,
-	  const FHitResult& SweepResult);
+	UFUNCTION()
+	void OnActorHit(UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor, UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex, bool bFromSweep,
+		const FHitResult& SweepResult);
 
 private:
 	UFUNCTION()
-		void SummonUpdate(float Alpha);
+	void SummonUpdate(float Alpha);
+	
 	UFUNCTION()
-		void SummonFinished();
+	void SummonFinished();
 
 	void SummonStart();
 	void SummonStop();
@@ -84,51 +95,51 @@ private:
 	void SpawnMeshesBetweenSplinePoints();
 
 public:
-  TObjectPtr<ABTBSpear> SpearPtr;
-  TObjectPtr<UBTBGameHUD> GameWidget;
+	TObjectPtr<ABTBSpear> SpearPtr;
+	TObjectPtr<UBTBGameHUD> GameWidget;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
+	bool bIsThrowing;
 
-  
+	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
+	bool bIsSummoning;
 
-  UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
-  bool bIsThrowing;
-
-  UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
-  bool bIsSummoning;
-
-  UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
-  bool bSpearAttached;
+	UPROPERTY(BlueprintReadOnly, Category = "Throw Spear")
+	bool bSpearAttached;
 
 	UPROPERTY(EditAnywhere, Category = "Spear VFX")
-		TObjectPtr<UNiagaraComponent> PlayerSpearVFX;
+	TObjectPtr<UNiagaraComponent> PlayerSpearVFX;
 	
 	UPROPERTY(EditAnywhere, Category = "Spear VFX")
-		TObjectPtr<UNiagaraSystem> SpearSummonVFX;
+	TObjectPtr<UNiagaraSystem> SpearSummonVFX;
 	
 	UPROPERTY(EditAnywhere, Category = "Spear VFX")
-		FLinearColor SpearThrownColor;
+	FLinearColor SpearThrownColor;
 
 	UPROPERTY(EditAnywhere, Category = "Spear VFX")
-		FLinearColor SpearSummonColor;
+	FLinearColor SpearSummonColor;
 
 	UPROPERTY(EditAnywhere, Category = "Spear VFX")
-		TObjectPtr<UCurveFloat> SummonEaseCurve;
+	TObjectPtr<UCurveFloat> SummonEaseCurve;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dash Meter")
-		float DashMeter = 1.0f;
+	float DashMeter = 1.0f;
 
-  UPROPERTY()
-  UAnimInstance *MilesAnimInstance;
+	UPROPERTY()
+	UAnimInstance *MilesAnimInstance;
 
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DashEffect")
-  UNiagaraSystem *DashVFX;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DashEffect")
+	UNiagaraSystem *DashVFX;
 
-  UPROPERTY(BlueprintAssignable, Category = "EventDispatcher")
-  FOnDashValChange PlayerDash;
+	UPROPERTY(BlueprintAssignable, Category = "EventDispatcher")
+	FOnDashValChange PlayerDash;
 
-  UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
+	UPROPERTY(EditAnywhere, Category = "Spear Retrieval Point")
 	TObjectPtr<UBoxComponent> SpearRetrievalBox;
 
 protected:
+
+	
 private:
 	UPROPERTY(EditAnywhere, Category = "Spear Path Spline")
 	TObjectPtr<USplineComponent> SplineComp;
