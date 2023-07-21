@@ -56,48 +56,6 @@ public:
 		UserInput_Y = Value;
 	}
 
-	// bool GetbStartShoot()
-	// {
-	// 	return bStartShoot;
-	// }
-	//
-	// void SetbStartShoot(const bool Value)
-	// {
-	// 	bStartShoot = Value;
-	// }
-
-	// bool GetbStartThrowing()
-	// {
-	// 	return bStartThrowing;
-	// }
-	//
-	// void SetbStartThrowing(const bool Value)
-	// {
-	// 	bStartThrowing = Value;
-	// }
-	//
-	// bool GetbStartSummoning()
-	// {
-	// 	return bStartSummoning;
-	// }
-	//
-	// void SetbStartSummoning(const bool Value)
-	// {
-	// 	bStartSummoning = Value;
-	// }
-
-	// UFUNCTION(BlueprintCallable)
-	// bool GetbStartAttack()
-	// {
-	// 	return bstartAttack;
-	// }
-	//
-	// UFUNCTION(BlueprintCallable)
-	// void SetbStartAttack(const bool Value)
-	// {
-	// 	bstartAttack = Value;
-	// }
-
 	bool GetbStartPool()
 	{
 		return bStartPool;
@@ -117,28 +75,6 @@ public:
 	{
 		bIsPaused = Value;
 	}
-
-	// UFUNCTION(BlueprintCallable)
-	// virtual bool GetbStartSwitching()
-	// {
-	// 	return bStartSwitching;
-	// }
-	//
-	// UFUNCTION(BlueprintCallable)
-	// void SetbStartSwitching(const bool Value)
-	// {
-	// 	bStartSwitching = Value;
-	// }
-
-	// bool GetbStartDashing()
-	// {
-	// 	return bStartDashing;
-	// }
-	//
-	// void SetbStartDashing(bool Value)
-	// {
-	// 	bStartDashing = Value;
-	// }
 	
 protected:
 	virtual void Die() PURE_VIRTUAL(ABTBCharacter::Die);
@@ -192,14 +128,7 @@ protected:
 private:
 	bool bStartRotate = false;
 	bool bStartJump = false;
-	// bool bStartSwitching = false;
-	// bool bStartShoot = false;
-	// bool bstartAttack = false;
 	bool bStartPool = false;
 	bool bHasMovementInput;
 	bool bIsPaused = false;
-	// bool bStartThrowing = false;
-	// bool bStartSummoning = false;
-	// bool bStartDashing = false;
-	
 };

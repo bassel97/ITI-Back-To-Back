@@ -227,7 +227,7 @@ void ABTBGameplayGameMode::DisplayPauseHUD(const bool Visibility)
 	{
 		if (IsValid(BTBPauseHUDWidgetClass))
 		{
-			PauseWidget = Cast<UBTBPauseMenuHUD>(CreateWidget(World, BTBPauseHUDWidgetClass));//New
+			PauseWidget = Cast<UBTBPauseMenuHUD>(CreateWidget(World, BTBPauseHUDWidgetClass));
 			if (PauseWidget)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Pause menu HUD should be displayed"));
@@ -237,7 +237,6 @@ void ABTBGameplayGameMode::DisplayPauseHUD(const bool Visibility)
 			
 				PlayerCharacterArray[0]->SetbIsPaused(false);
 				PlayerCharacterArray[1]->SetbIsPaused(false);
-
 			}
 		}
 	}

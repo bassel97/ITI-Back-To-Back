@@ -101,6 +101,7 @@ protected:
 	UPROPERTY(EditAnyWhere, Category = "Config")
 	TSubclassOf<UUserWidget> BTBPauseHUDWidgetClass;
 
+	UPROPERTY(/*To Prevent GC*/)
 	TObjectPtr<UBTBPauseMenuHUD> PauseWidget;
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
